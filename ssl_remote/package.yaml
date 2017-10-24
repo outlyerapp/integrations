@@ -1,0 +1,12 @@
+---
+type: "native"
+deployments:
+  - interval: 600
+    selector:
+      - outlyer.com/type: 'host'
+
+    host: 'www.outlyer.com'
+    port: 443
+    cn: 'c.sni.fastly.net'
+    critical_days: 7
+    warning_days: 30

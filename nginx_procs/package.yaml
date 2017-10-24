@@ -1,0 +1,9 @@
+---
+type: "native"
+deployments:
+  - interval: 5
+    selector:
+      - outlyer.com/type: 'host'
+
+    min_workers: 1
+    max_workers: 5

@@ -1,0 +1,7 @@
+---
+type: "native"
+deployments:
+  - interval: 30
+
+    selector:
+      - outlyer.com/type: 'host'

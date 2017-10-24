@@ -1,0 +1,9 @@
+---
+type: "native"
+deployments:
+  - interval: 10
+    selector:
+      - outlyer.com/type: 'host'
+
+    host: localhost
+    port: 9010

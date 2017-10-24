@@ -1,0 +1,11 @@
+---
+type: "native"
+deployments:
+  - interval: 60
+    selector:
+      - outlyer.com/type: 'host'
+
+    count: 3
+    hosts:
+     - 192.168.0.1
+     - google.com

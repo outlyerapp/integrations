@@ -1,0 +1,8 @@
+---
+type: "native"
+deployments:
+  - interval: 60
+    selector:
+      - outlyer.com/type: 'host'
+
+    access_log: '/var/log/nginx/access.combined.log'

@@ -1,0 +1,10 @@
+---
+type: "native"
+deployments:
+  - interval: 600
+    selector:
+      - outlyer.com/type: 'host'
+
+    cert_path: '/usr/local/etc/openssl/cert.pem'
+    critical_days: 7
+    warning_days: 30
