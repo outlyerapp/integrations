@@ -1,5 +1,7 @@
 ---
 type: "native"
+requirements:
+  - "JPype1-py3==0.5.5.2"
 deployments:
   - interval: 10
     selector:

@@ -6,7 +6,6 @@ import os.path
 from datetime import datetime
 
 logger = logging.getLogger(__name__)
-REQUIREMENTS = ['pyopenssl==17.3.0']
 
 
 class LocalSslExpirationCheck(Plugin):
@@ -44,4 +43,3 @@ class LocalSslExpirationCheck(Plugin):
             return Status.WARNING
         else:
             return Status.CRITICAL
-

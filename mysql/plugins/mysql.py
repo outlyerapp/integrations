@@ -11,7 +11,6 @@ from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGI
 
 
 logger = logging.getLogger(__name__)
-REQUIREMENTS = ['mysqlclient==1.3.12']
 
 RATE_METRICS = [
     "bytes_received",

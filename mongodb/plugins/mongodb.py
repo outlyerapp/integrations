@@ -12,7 +12,6 @@ import time
 
 
 logger = logging.getLogger(__name__)
-REQUIREMENTS = ['pymongo==3.5.1']
 
 RATE_METRICS = [
     "wired_tiger.block_manager.blocks_read",

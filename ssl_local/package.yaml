@@ -1,5 +1,7 @@
 ---
 type: "native"
+requirements:
+  - "pyopenssl==17.3.0"
 deployments:
   - interval: 600
     selector:

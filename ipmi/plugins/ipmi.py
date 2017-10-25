@@ -7,7 +7,6 @@ import pyghmi.exceptions
 from pyghmi.ipmi import command
 
 logger = logging.getLogger(__name__)
-REQUIREMENTS = ['pyghmi==1.0.22']
 
 
 class HttpRequestPlugin(Plugin):
@@ -41,4 +40,3 @@ class HttpRequestPlugin(Plugin):
         except pyghmi.exceptions.IpmiException as ex:
             logger.error('Error connecting to IPMI server')
             return Status.UNKNOWN
-

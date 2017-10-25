@@ -6,7 +6,6 @@ import redis.exceptions
 import re
 
 logger = logging.getLogger(__name__)
-REQUIREMENTS = ['redis==2.10.6']
 
 COUNTER_METRICS = [
     'uptime_in_seconds',

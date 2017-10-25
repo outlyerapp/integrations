@@ -8,7 +8,6 @@ import requests.exceptions
 from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGIN_EXEC
 
 logger = logging.getLogger(__name__)
-REQUIREMENTS = ['requests==2.18.4']
 
 
 class NginxStatusPlugin(Plugin):

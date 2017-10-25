@@ -1,5 +1,7 @@
 ---
 type: "native"
+requirements:
+  - "pymongo==3.5.1"
 deployments:
   - interval: 30
     selector:

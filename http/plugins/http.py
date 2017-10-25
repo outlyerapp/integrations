@@ -11,7 +11,6 @@ import requests.exceptions
 # TODO: replace timer with time.monotonic()
 
 logger = logging.getLogger(__name__)
-REQUIREMENTS = ['requests==2.18.4']
 
 URL = 'https://www.google.com'
 TYPE = 'GET'

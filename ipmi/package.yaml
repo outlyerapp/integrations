@@ -1,5 +1,7 @@
 ---
 type: "native"
+requirements:
+  - "pyghmi==1.0.22"
 deployments:
   - interval: 10
     selector:

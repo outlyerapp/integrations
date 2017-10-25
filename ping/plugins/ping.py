@@ -5,7 +5,6 @@ import re
 import platform
 
 logger = logging.getLogger(__name__)
-REQUIREMENTS = []
 
 
 class PingPlugin(Plugin):

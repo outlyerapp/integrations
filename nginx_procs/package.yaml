@@ -1,5 +1,7 @@
 ---
 type: "native"
+requirements:
+  - "psutil==5.3.1"
 deployments:
   - interval: 5
     selector:

@@ -5,9 +5,7 @@ import re
 import os
 import time
 
-
 logger = logging.getLogger(__name__)
-REQUIREMENTS = []
 
 
 def reverse_readline(filename, buf_size=8192):

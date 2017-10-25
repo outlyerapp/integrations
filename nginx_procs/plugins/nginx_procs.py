@@ -2,9 +2,7 @@ from outlyer_agent.collection import Status, Plugin, PluginTarget
 import logging
 import psutil
 
-
 logger = logging.getLogger(__name__)
-REQUIREMENTS = ['psutil==5.3.1']
 
 
 class NginxProcessesPlugin(Plugin):

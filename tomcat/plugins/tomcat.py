@@ -12,7 +12,6 @@ from outlyer_agent.java.thread import JvmTask
 # TODO: add metrics for each WebModule
 
 logger = logging.getLogger(__name__)
-REQUIREMENTS = ['JPype1-py3==0.5.5.2']
 
 
 class TomcatPlugin(Plugin):

@@ -1,5 +1,7 @@
 ---
 type: "native"
+requirements:
+  - "mysqlclient==1.3.12"
 deployments:
   - interval: 60
     selector:

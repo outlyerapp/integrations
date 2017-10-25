@@ -6,7 +6,6 @@ import socket
 from datetime import datetime
 
 logger = logging.getLogger(__name__)
-REQUIREMENTS = ['pyopenssl==17.3.0']
 
 
 class LocalSslExpirationCheck(Plugin):

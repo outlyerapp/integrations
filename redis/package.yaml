@@ -1,5 +1,7 @@
 ---
 type: "native"
+requirements:
+  - "redis==2.10.6"
 deployments:
   - interval: 30
     selector:
