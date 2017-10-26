@@ -47,8 +47,8 @@ GAUGE_METRICS = [
     # "network.bytes_in",
     # "network.bytes_out",
     "network.num_requests",
-    "network.physical_bytes_in",
-    "network.physical_bytes_out",
+    # "network.physical_bytes_in",
+    # "network.physical_bytes_out",
     "wired_tiger.async.current_work_queue_length",
     "wired_tiger.async.maximum_work_queue_length",
 ]
