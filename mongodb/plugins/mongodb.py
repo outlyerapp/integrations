@@ -44,8 +44,8 @@ RATE_METRICS = [
 GAUGE_METRICS = [
     "connections.available",
     "connections.current",
-    "network.bytes_in",
-    "network.bytes_out",
+    # "network.bytes_in",
+    # "network.bytes_out",
     "network.num_requests",
     "network.physical_bytes_in",
     "network.physical_bytes_out",
