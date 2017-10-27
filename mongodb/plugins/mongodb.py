@@ -1,6 +1,5 @@
 from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGIN_EXEC
 from typing import Dict, Any
-import logging
 import pymongo
 import pymongo.errors
 import re
@@ -11,16 +10,7 @@ import time
 # TODO: MongoClient doesn't seem to be respecting connectTimeoutMS=5000
 
 
-logger = logging.getLogger(__name__)
-
 RATE_METRICS = [
-    "wired_tiger.block_manager.blocks_read",
-    "wired_tiger.block_manager.blocks_written",
-    "wired_tiger.block_manager.bytes_read",
-    "wired_tiger.block_manager.bytes_written",
-    "wired_tiger.block_manager.bytes_written_for_checkpoint",
-    "wired_tiger.block_manager.mapped_blocks_read",
-    "wired_tiger.block_manager.mapped_bytes_read",
     "opcounters.command",
     "opcounters.delete",
     "opcounters.getmore",
@@ -37,6 +27,7 @@ RATE_METRICS = [
     "wired_tiger.block_manager.blocks_written",
     "wired_tiger.block_manager.bytes_read",
     "wired_tiger.block_manager.bytes_written",
+    "wired_tiger.block_manager.bytes_written_for_checkpoint",
     "wired_tiger.block_manager.mapped_blocks_read",
     "wired_tiger.block_manager.mapped_bytes_read",
 ]
@@ -138,7 +129,7 @@ class MongoPlugin(Plugin):
             for k in RATE_METRICS:
                 try:
                     new_val = float(stats[k])
-                    old_val = target.counter(k)._value
+                    old_val = target.counter(k).get()
                     if self.last_collect:
                         elapsed_sec = time_now - self.last_collect
                         per_second = (new_val - old_val) / elapsed_sec
@@ -149,13 +140,15 @@ class MongoPlugin(Plugin):
 
             for k in GAUGE_METRICS:
                 try:
-                    target.gauge(k).set(stats[k])
+                    val = stats[k]
+                    target.gauge(k).set(val)
                 except KeyError:
                     pass
 
             for k in COUNTER_METRICS:
                 try:
-                    target.counter(k).set(stats[k])
+                    val = stats[k]
+                    target.counter(k).set(val)
                 except KeyError:
                     pass
 
@@ -164,13 +157,11 @@ class MongoPlugin(Plugin):
             return Status.OK
 
         except pymongo.errors.ConnectionFailure as ex:
-            logger.error('Cannot connect to MongoDB: ' + ex.args[0])
-
+            self.logger.error('Cannot connect to MongoDB: ' + ex.args[0])
             self.last_collect = None
             return Status.CRITICAL
 
         except Exception as ex:
-            logger.exception('Error in plugin', exc_info=ex)
-
+            self.logger.exception('Error in plugin', exc_info=ex)
             self.last_collect = None
             return Status.UNKNOWN
