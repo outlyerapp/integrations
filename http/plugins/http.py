@@ -1,45 +1,43 @@
-from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGIN_EXEC
-from datetime import datetime
-import time
-import logging
 import requests
 import requests.exceptions
 
+from outlyer_agent.collection import Status, Plugin, PluginTarget
 
-# TODO: add parameters for URL, expect_string, etc.
 # TODO: add search for regex/DOM?
-# TODO: replace timer with time.monotonic()
-
-logger = logging.getLogger(__name__)
-
-URL = 'https://www.google.com'
-TYPE = 'GET'
-HEADERS = {}
-DATA = {}
-PARAMS = {}
-PATTERN = 'Cloud Services at Scale'
-REDIRECT_IS_ERROR = False
-CRITICAL_RESPONSE_TIME = 1.0
-WARNING_RESPONSE_TIME = 0.750
 
 
 class HttpRequestPlugin(Plugin):
 
-    def collect(self, target: PluginTarget):
+    def collect(self, target: PluginTarget) -> Status:
 
-        start_time = datetime.utcnow()
+        url = target.get('url')
+        if not url:
+            self.logger.error('HTTP plugin is not configured')
+            return Status.UNKNOWN
+
+        type = target.get('type', 'GET')
+        params = target.get('params', None)
+        headers = target.get('headers', None)
+        data = target.get('data', None)
+        pattern = target.get('pattern', None)
+        error_on_redirect = target.get('error_on_redirect', False)
+        warning_time = target.get('warning_time', 5.0)
+        critical_time = target.get('critical_time', 10.0)
+
         status = Status.OK  # type: Status
 
-        response = requests.request(TYPE, URL, params=PARAMS, headers=HEADERS, data=DATA)
+        self.logger.info('Sending %s request to %s', type, url)
+        response = requests.request(type, url, params=params, headers=headers, data=data)
         content = ''
 
         target.gauge('status_code').set(float(response.status_code))
-        error_min = 300 if REDIRECT_IS_ERROR else 400
+        error_min = 300 if error_on_redirect else 400
         if response.status_code >= error_min:
             status = Status.CRITICAL
         else:
             content = response.content.decode('utf-8', 'ignore')
-            if PATTERN and PATTERN not in content:
+            if pattern and pattern not in content:
+                self.logger.info('Pattern "%s" not found in response content', pattern)
                 status = Status.CRITICAL
 
         if 'Content-Length' in response.headers:
@@ -47,13 +45,15 @@ class HttpRequestPlugin(Plugin):
         elif content:
             target.gauge('response_size', {'uom': 'bytes'}).set(len(content))
 
-        end_time = datetime.utcnow()
-        elapsed_time = (end_time - start_time).total_seconds()
+        elapsed_time = response.elapsed.total_seconds()
         target.gauge('response_time', {'uom': 'ms'}).set(elapsed_time)
+        self.logger.info('Download of %s finished in %f seconds', url, elapsed_time)
 
-        if elapsed_time >= CRITICAL_RESPONSE_TIME:
+        if elapsed_time >= critical_time:
             status = Status.CRITICAL
-        elif elapsed_time >= WARNING_RESPONSE_TIME:
+        elif elapsed_time >= warning_time:
             status = Status.WARNING
+
+        self.logger.info('Result = %s', str(status))
 
         return status

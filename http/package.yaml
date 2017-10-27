@@ -4,6 +4,14 @@ requirements:
   - "requests==2.18.4"
 deployments:
   - interval: 30
-
     selector:
       - outlyer.com/type: 'host'
+
+    url: 'https://www.outlyer.com'
+    type: GET
+    search_pattern: 'Cloud Services at Scale'
+    error_on_redirect: false
+    warning_time: 0.750
+    critical_time: 1.000
+    headers:
+      Content-Type: text/html
