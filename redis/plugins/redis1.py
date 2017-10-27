@@ -1,11 +1,9 @@
-from outlyer_agent.collection import Status, Plugin, PluginTarget
-from typing import Dict, Any
-import logging
-import redis
-import redis.exceptions
 import re
 
-logger = logging.getLogger(__name__)
+from outlyer_agent.collection import Status, Plugin, PluginTarget
+from typing import Dict, Any
+import redis
+import redis.exceptions
 
 COUNTER_METRICS = [
     'uptime_in_seconds',
@@ -94,12 +92,12 @@ class RedisPlugin(Plugin):
             for key in COUNTER_METRICS:
                 val, labels = split_uom(output[key])
                 labels.update(uom(key))
-                target.counter(key, labels).set(val)
+                target.counter('redis_' + key, labels).set(val)
 
             for key in GAUGE_METRICS:
                 val, labels = split_uom(output[key])
                 labels.update(uom(key))
-                target.counter(key, labels).set(val)
+                target.counter('redis_' + key, labels).set(val)
 
             for key in output.keys():
                 if key.startswith('db'):
@@ -107,7 +105,7 @@ class RedisPlugin(Plugin):
                         val, labels = split_uom(output[key][db_key])
                         labels.update(uom(key))
                         labels['database'] = key
-                        target.gauge(db_key, labels).set(val)
+                        target.gauge('redis_' + db_key, labels).set(val)
 
             return Status.OK
 

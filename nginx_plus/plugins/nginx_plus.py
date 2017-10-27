@@ -1,12 +1,9 @@
-import logging
 import time
 
 import requests
 import requests.exceptions
 
 from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGIN_EXEC
-
-logger = logging.getLogger(__name__)
 
 
 class NginxPlusPlugin(Plugin):
@@ -19,7 +16,7 @@ class NginxPlusPlugin(Plugin):
 
         url = target.get('url', None)
         if not url:
-            logger.error('Nginx server status URL not specified in configuration file')
+            self.logger.error('Nginx server status URL not specified in configuration file')
             return Status.UNKNOWN
 
         time_now = time.monotonic()
@@ -37,41 +34,39 @@ class NginxPlusPlugin(Plugin):
             response.raise_for_status()
             status = response.json()
 
-            target.gauge('connections.active').set(float(status['connections']['active']))
-            target.gauge('connections.idle').set(float(status['connections']['idle']))
+            target.gauge('nginx_connections_active').set(float(status['connections']['active']))
+            target.gauge('nginx_connections_idle').set(float(status['connections']['idle']))
 
-            _per_sec('connections.accepted', status['connections']['accepted'])
-            _per_sec('connections.dropped', status['connections']['dropped'])
+            _per_sec('nginx_connections_accepted', status['connections']['accepted'])
+            _per_sec('nginx_connections_dropped', status['connections']['dropped'])
 
-            _per_sec('ssl.handshakes', status['ssl']['handshakes'])
-            _per_sec('ssl.handshakes_failed', status['ssl']['handshakes_failed'])
-            _per_sec('ssl.session_reuses', status['ssl']['session_reuses'])
+            _per_sec('nginx_ssl_handshakes', status['ssl']['handshakes'])
+            _per_sec('nginx_ssl_handshakes_failed', status['ssl']['handshakes_failed'])
+            _per_sec('nginx_ssl_session_reuses', status['ssl']['session_reuses'])
 
-            target.gauge('requests.current').set(float(status['requests']['current']))
-            _per_sec('requests.total', status['requests']['total'])
+            target.gauge('nginx_requests_current').set(float(status['requests']['current']))
+            _per_sec('nginx_requests_total', status['requests']['total'])
 
             for zone, stats in status['server_zones'].items():
 
                 dim = {'zone': zone}
 
-                target.gauge('processing', dim).set(float(stats['processing']))
+                target.gauge('nginx_processing', dim).set(float(stats['processing']))
 
                 for key in 'requests', 'discarded', 'received', 'sent':
-                    _per_sec(key, stats[key], dim)
+                    _per_sec('nginx_' + key, stats[key], dim)
                 for key, val in stats['responses'].items():
-                    _per_sec(key, val, dim)
+                    _per_sec('nginx_' + key, val, dim)
 
             self.last_collect = time_now
             return Status.OK
 
         except requests.exceptions.HTTPError as ex:
-            logger.error('Unable to connect to Nginx Plus server: ' + ex.args[0])
-
+            self.logger.error('Unable to connect to Nginx Plus server: ' + ex.args[0])
             self.last_collect = None
             return Status.CRITICAL
 
         except Exception as ex:
-            logger.exception('Error in plugin', exc_info=ex)
-
+            self.logger.exception('Error in plugin', exc_info=ex)
             self.last_collect = None
             return Status.UNKNOWN

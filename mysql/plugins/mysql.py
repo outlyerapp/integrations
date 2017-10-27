@@ -1,4 +1,3 @@
-import logging
 import time
 
 import MySQLdb
@@ -9,8 +8,6 @@ from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGI
 
 # TODO: add bool parameter showCommandCounts
 
-
-logger = logging.getLogger(__name__)
 
 RATE_METRICS = [
     "bytes_received",
@@ -122,23 +119,23 @@ class MysqlPlugin(Plugin):
             for k in RATE_METRICS:
                 if self.last_collect:
                     elapsed_sec = time_now - self.last_collect
-                    per_second = (float(stats[k]) - target.counter(k).get()) / elapsed_sec
-                    target.gauge(k + '_per_sec').set(per_second)
-                target.counter(k).set(float(stats[k]))
+                    per_second = (float(stats[k]) - target.counter('mysql_' + k).get()) / elapsed_sec
+                    target.gauge('mysql_' + k + '_per_sec').set(per_second)
+                target.counter('mysql_' + k).set(float(stats[k]))
 
             for k, top, bottom in PERCENTAGE_METRICS:
                 percent = 0.0
                 if float(stats[bottom]) > 0:
                     percent = float(stats[top]) / float(stats[bottom]) * 100.0
-                target.counter(top).set(float(stats[top]))
-                target.counter(bottom).set(float(stats[bottom]))
-                target.gauge(k, {'uom': '%'}).set(percent)
+                target.counter('mysql_' + top).set(float(stats[top]))
+                target.counter('mysql_' + bottom).set(float(stats[bottom]))
+                target.gauge('mysql_' + k, {'uom': '%'}).set(percent)
 
             for k in GAUGE_METRICS:
-                target.gauge(k).set(float(stats[k]))
+                target.gauge('mysql_' + k).set(float(stats[k]))
 
             for k in COUNTER_METRICS:
-                target.counter(k).set(float(stats[k]))
+                target.counter('mysql_' + k).set(float(stats[k]))
 
             self.last_collect = time_now
             return Status.OK
@@ -146,16 +143,15 @@ class MysqlPlugin(Plugin):
         except _mysql_exceptions.MySQLError as ex:
 
             if ex.args[0] >= CR.ERROR_FIRST:
-                logger.error('Unable to connect to MySQL: ' + ex.args[1])
+                self.logger.error('Unable to connect to MySQL: ' + ex.args[1])
                 self.last_collect = None
                 return Status.CRITICAL
             else:
-                logger.error('Unable to collect from MySQL: ' + ex.args[1])
+                self.logger.error('Unable to collect from MySQL: ' + ex.args[1])
                 self.last_collect = None
                 return Status.UNKNOWN
 
         except Exception as ex:
-            logger.exception('Error in plugin', exc_info=ex)
-
+            self.logger.exception('Error in plugin', exc_info=ex)
             self.last_collect = None
             return Status.UNKNOWN

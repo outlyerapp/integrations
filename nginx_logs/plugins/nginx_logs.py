@@ -1,11 +1,8 @@
 from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGIN_EXEC
 from datetime import datetime
-import logging
 import re
 import os
 import time
-
-logger = logging.getLogger(__name__)
 
 
 def reverse_readline(filename, buf_size=8192):
@@ -65,7 +62,7 @@ class NginxLogsPlugin(Plugin):
 
         log_path = target.get('access_log')
         if not log_path:
-            logger.error('Log path not specified in configuration file')
+            self.logger.error('Log path not specified in configuration file')
             return Status.UNKNOWN
 
         interval = target.get('interval', 60)
@@ -91,15 +88,15 @@ class NginxLogsPlugin(Plugin):
                 break
 
             code = data['status']
-            target.gauge(code).inc()
-            target.gauge(code[0] + 'xx').inc()
-            target.gauge('requests').inc()
+            target.gauge('nginx_' + code).inc(1)
+            target.gauge('nginx_' + code[0] + 'xx').inc(1)
+            target.gauge('nginx_requests').inc(1)
 
             if 'request_time' in data:
                 rt = float(data['request_time'])
-                if count == 0 or rt < target.gauge('min', {'uom': 'sec'}).get():
+                if count == 0 or rt < target.gauge('nginx_min_response_time', {'uom': 'sec'}).get():
                     target.gauge('min', {'uom': 'sec'}).set(rt)
-                if count == 0 or rt > target.gauge('max', {'uom': 'sec'}).get():
+                if count == 0 or rt > target.gauge('nginx_max_response_time', {'uom': 'sec'}).get():
                     target.gauge('max', {'uom': 'sec'}).set(rt)
 
                 total += rt
@@ -107,9 +104,9 @@ class NginxLogsPlugin(Plugin):
 
         if count > 0:
             avg = total / count
-            target.gauge('avg', {'uom': 'sec'}).set(avg)
+            target.gauge('nginx_avg_response_time', {'uom': 'sec'}).set(avg)
 
         for code in '1xx', '2xx', '3xx', '4xx', '5xx', 'requests':
-            target.gauge(code + '_per_sec').set(target.gauge(code).get() / interval)
+            target.gauge('nginx_' + code + '_per_sec').set(target.gauge(code).get() / interval)
 
         return Status.OK

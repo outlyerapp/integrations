@@ -1,8 +1,5 @@
 from outlyer_agent.collection import Status, Plugin, PluginTarget
-import logging
 import psutil
-
-logger = logging.getLogger(__name__)
 
 
 class NginxProcessesPlugin(Plugin):
@@ -23,11 +20,13 @@ class NginxProcessesPlugin(Plugin):
                 pass
             except psutil.AccessDenied:
                 pass
+            except psutil.ZombieProcess:
+                pass
             except IndexError:
                 pass
 
-        target.gauge('num_master_procs').set(master_count)
-        target.gauge('num_worker_count').set(worker_count)
+        target.gauge('nginx_master_proc_count').set(master_count)
+        target.gauge('nginx_worker_proc_count').set(worker_count)
 
         if master_count != 1:
             return Status.CRITICAL

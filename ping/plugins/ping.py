@@ -1,10 +1,8 @@
-from outlyer_agent.collection import Status, Plugin, PluginTarget
-import logging
-import subprocess
-import re
 import platform
+import re
+import subprocess
 
-logger = logging.getLogger(__name__)
+from outlyer_agent.collection import Status, Plugin, PluginTarget
 
 
 class PingPlugin(Plugin):
@@ -37,30 +35,32 @@ class PingPlugin(Plugin):
 
             m = re.search(parser_1, output)
             if not m:
-                logger.warning('Unable to parse output from ping command:\n' + output)
+                self.logger.warning('Unable to parse output from ping command:\n' + output)
                 return Status.UNKNOWN
 
-            target.gauge('sent', {'host': host}).set(float(m.group('sent')))
-            target.gauge('received', {'host': host}).set(float(m.group('rcvd')))
-            target.gauge('loss_pct', {'host': host, 'uom': '%'}).set(float(m.group('loss')))
+            target.gauge('ping_sent', {'host': host}).set(float(m.group('sent')))
+            target.gauge('ping_received', {'host': host}).set(float(m.group('rcvd')))
+            target.gauge('ping_loss_pct', {'host': host, 'uom': '%'}).set(float(m.group('loss')))
 
             try:
-                target.gauge('time', {'host': host, 'uom': 'ms'}).set(float(m.group('time')))
+                time = float(m.group('time'))
+                target.gauge('ping_time', {'host': host, 'uom': 'ms'}).set(time)
             except TypeError:
                 pass
 
             m = re.search(parser_2, output)
             if not m:
-                logger.warning('Unable to parse output from ping command:\n' + output)
+                self.logger.warning('Unable to parse output from ping command:\n' + output)
                 return Status.UNKNOWN
 
-            target.gauge('min', {'host': host, 'uom': 'ms'}).set(float(m.group('min')))
-            target.gauge('avg', {'host': host, 'uom': 'ms'}).set(float(m.group('avg')))
-            target.gauge('max', {'host': host, 'uom': 'ms'}).set(float(m.group('max')))
+            target.gauge('ping_min', {'host': host, 'uom': 'ms'}).set(float(m.group('min')))
+            target.gauge('ping_avg', {'host': host, 'uom': 'ms'}).set(float(m.group('avg')))
+            target.gauge('ping_max', {'host': host, 'uom': 'ms'}).set(float(m.group('max')))
 
             try:
-                target.gauge('stddev', {'host': host, 'uom': 'ms'}).set(float(m.group('stddev')))
-            except IndexError:
+                std_dev = float(m.group('stddev'))
+                target.gauge('ping_stddev', {'host': host, 'uom': 'ms'}).set(std_dev)
+            except TypeError:
                 pass
 
         return status

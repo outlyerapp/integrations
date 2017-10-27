@@ -1,11 +1,8 @@
 from outlyer_agent.collection import Status, Plugin, PluginTarget
 from OpenSSL import crypto
-import logging
 import ssl
 import socket
 from datetime import datetime
-
-logger = logging.getLogger(__name__)
 
 
 class LocalSslExpirationCheck(Plugin):
@@ -19,13 +16,13 @@ class LocalSslExpirationCheck(Plugin):
         critical_days = target.get('critical_days', 7)
 
         if not host:
-            logger.error('Hostname not specified in configuration')
+            self.logger.error('Hostname not specified in configuration')
             return Status.UNKNOWN
 
         try:
             cert_data = ssl.get_server_certificate((host, port))
         except socket.gaierror as ex:
-            logger.error('Error retrieving certifcate for %s: %s', host, str(ex))
+            self.logger.error('Error retrieving certifcate for %s: %s', host, str(ex))
             return Status.CRITICAL
 
         cert = crypto.load_certificate(crypto.FILETYPE_PEM, cert_data)
@@ -35,17 +32,17 @@ class LocalSslExpirationCheck(Plugin):
             for x509part in cert.get_subject().get_components():
                 if x509part[0] == b'CN' and x509part[1].decode('utf-8') != expected_cn:
                     cn_match = False
-                    logger.warning('CN for certificate at %s is %s, was expecting %s', host, x509part[1], CN)
+                    self.logger.warning('CN for certificate at %s is %s, was expecting %s', host, x509part[1], CN)
 
         not_before = datetime.strptime(cert.get_notBefore().decode('utf-8'), "%Y%m%d%H%M%SZ")
         if not_before > datetime.now():
-            logger.warning('Certificate is not yet valid: %s', not_before)
+            self.logger.warning('Certificate is not yet valid: %s', not_before)
 
         not_after = datetime.strptime(cert.get_notAfter().decode('utf-8'), "%Y%m%d%H%M%SZ")
         days_left = (not_after - datetime.utcnow()).days
-        logger.info('Certificate expires in %d days', days_left)
+        self.logger.info('Certificate for %s expires in %d days', host, days_left)
 
-        target.gauge('days_remaining', {'uom': 'days', 'host': host, 'port': str(port)}).set(days_left)
+        target.gauge('ssl_days_remaining', {'uom': 'days', 'host': host, 'port': str(port)}).set(days_left)
 
         if days_left <= critical_days or not_before > datetime.now() or not cn_match:
             return Status.CRITICAL
