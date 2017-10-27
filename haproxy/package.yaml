@@ -1,0 +1,8 @@
+---
+type: "native"
+deployments:
+  - interval: 30
+    selector:
+      - outlyer.com/type: 'host'
+
+    haproxy_sock: /usr/local/var/run/haproxy.sock
