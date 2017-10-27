@@ -1,0 +1,12 @@
+---
+type: "native"
+requirements:
+  - "f5-sdk==3.0.3"
+deployments:
+  - interval: 30
+    selector:
+      - outlyer.com/type: 'host'
+
+    host: 192.168.1.13
+    username: admin
+    password: admin
