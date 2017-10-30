@@ -1,0 +1,12 @@
+---
+type: "native"
+requirements:
+  - "requests==2.18.4"
+deployments:
+  - interval: 30
+    selector:
+      - outlyer.com/type: 'host'
+
+    url: 'http://localhost:15672'
+    username: guest
+    password: guest
