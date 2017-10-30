@@ -12,6 +12,7 @@ Each folder in the repository contains an Integration. Under each folder, the fo
 ```
 example
 ├── README.md
+├── logo.png
 ├── dashboards
 │   └── example.yaml
 ├── package.yaml
@@ -20,6 +21,8 @@ example
 └── alerts
     └── example.yaml
 ```
+
+Logo should be 256x256 pixels, in PNG format, with transparent background. Text should be cropped out of the logo.
 
 ## Contributing
 
