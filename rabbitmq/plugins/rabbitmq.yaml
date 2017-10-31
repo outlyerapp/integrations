@@ -7,6 +7,9 @@ deployments:
     selector:
       - outlyer.com/type: 'host'
 
-    url: 'http://localhost:15672'
+    host: 'localhost'
+    port: '15672'
+    protocol: 'http'
+    verify_ssl: True
     username: guest
     password: guest

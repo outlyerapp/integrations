@@ -22,13 +22,18 @@ class RabbitMQPlugin(Plugin):
     def collect(self, target: PluginTarget) -> Status:
 
         try:
-            url = target.get('url', 'http://localhost:15672')
+            host = target.get('host', 'localhost')
+            port = target.get('port', '15672')
+            protocol = target.get('protocol', 'http')
+            verify_ssl = target.get('verify_ssl', True)
             username = target.get('username', 'guest')
             password = target.get('password', 'guest')
 
+            url = (f'{protocol}://{host}:{port}')
+
             # Overview stats
 
-            r = requests.get(f'{url}/api/overview', auth=(username, password))
+            r = requests.get(f'{url}/api/overview', auth=(username, password), timeout=10, verify=verify_ssl)
             r.raise_for_status()
             overview = r.json()  # type: dict
             node_name = overview['node']
@@ -43,7 +48,7 @@ class RabbitMQPlugin(Plugin):
 
             # Node stats
 
-            r = requests.get(f'{url}/api/nodes/{node_name}', auth=(username, password))
+            r = requests.get(f'{url}/api/nodes/{node_name}', auth=(username, password), timeout=10, verify=verify_ssl)
             r.raise_for_status()
             node = r.json()
 
@@ -58,7 +63,7 @@ class RabbitMQPlugin(Plugin):
 
             # Vhost stats
 
-            r = requests.get(f'{url}/api/vhosts', auth=(username, password))
+            r = requests.get(f'{url}/api/vhosts', auth=(username, password), timeout=10, verify=verify_ssl)
             r.raise_for_status()
             vhosts = r.json()  # type: dict
             vhost_names = list()
@@ -78,7 +83,7 @@ class RabbitMQPlugin(Plugin):
 
             for vhost_name in vhost_names:
                 n = urllib.parse.quote(vhost_name, safe='')
-                r = requests.get(f'{url}/api/queues/{n}', auth=(username, password))
+                r = requests.get(f'{url}/api/queues/{n}', auth=(username, password), timeout=10, verify=verify_ssl)
                 r.raise_for_status()
                 for queue in r.json():
                     queue_name = queue['name']
@@ -94,7 +99,7 @@ class RabbitMQPlugin(Plugin):
 
             for vhost_name in vhost_names:
                 n = urllib.parse.quote(vhost_name, safe='')
-                r = requests.get(f'{url}/api/exchanges/{n}', auth=(username, password))
+                r = requests.get(f'{url}/api/exchanges/{n}', auth=(username, password), timeout=10, verify=verify_ssl)
                 r.raise_for_status()
                 for exchange in r.json():
                     exch_name = exchange['name']
