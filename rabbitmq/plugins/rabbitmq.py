@@ -37,6 +37,9 @@ class RabbitMQPlugin(Plugin):
                 for k, v in overview[section].items():
                     if isinstance(v, int):
                         target.gauge(f'rabbitmq_{section}_{k}').set(float(v))
+                    elif isinstance(v, dict):
+                        for l,w in v.items():
+                            target.gauge(f'rabbit_mq{section}_{k}_{l}').set(float(w))
 
             # Node stats
 
