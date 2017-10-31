@@ -36,7 +36,7 @@ class RabbitMQPlugin(Plugin):
             for section in ['message_stats', 'queue_totals', 'object_totals']:
                 for k, v in overview[section].items():
                     if isinstance(v, int):
-                        target.counter(f'rabbitmq_{section}_{k}').set(float(v))
+                        target.gauge(f'rabbitmq_{section}_{k}').set(float(v))
 
             # Node stats
 
