@@ -85,7 +85,8 @@ class RedisPlugin(Plugin):
 
         try:
             r = redis.StrictRedis(host=target.get('host', 'localhost'),
-                                  port=target.get('port', 6379))
+                                  port=target.get('port', 6379),
+                                  password=target.get('password', None))
 
             output = r.info()  # type: Dict[str, Any]
 
@@ -110,5 +111,9 @@ class RedisPlugin(Plugin):
             return Status.OK
 
         except redis.exceptions.ConnectionError as ex:
-            logger.error('Unable to connect to Redis: ' + ex.args[0])
+            self.logger.error('Unable to connect to Redis: ' + ex.args[0])
+            return Status.CRITICAL
+
+        except redis.exceptions.ResponseError as ex:
+            self.logger.error('Unexpected response from Redis server: ' + ex.args[0])
             return Status.CRITICAL
