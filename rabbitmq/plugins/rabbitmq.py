@@ -59,13 +59,13 @@ class RabbitMQPlugin(Plugin):
                 if k in node:
                     target.counter(f'rabbitmq_node_{k}').set(float(node[k]))
                 if f'{k}_details' in node:
-                    target.guages(f'rabbitmq_node_{k}_details_rate').set(float(node[f'{k}_details']['rate']))
+                    target.gauge(f'rabbitmq_node_{k}_details_rate').set(float(node[f'{k}_details']['rate']))
 
             for k in NODE_GAUGES:
                 if k in node:
                     target.gauge(f'rabbitmq_node_{k}').set(float(node[k]))
                 if f'{k}_details' in node:
-                    target.guages(f'rabbitmq_node_{k}_details_rate').set(float(node[f'{k}_details']['rate']))
+                    target.gauge(f'rabbitmq_node_{k}_details_rate').set(float(node[f'{k}_details']['rate']))
 
 
             # Vhost stats
