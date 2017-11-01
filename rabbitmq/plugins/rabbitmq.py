@@ -5,39 +5,18 @@ import urllib.parse
 from outlyer_agent.collection import Status, Plugin, PluginTarget
 
 
-NODE_COUNTERS = [
-'context_switches',
-'gc_bytes_reclaimed',
-'gc_num',
-'io_file_handle_open_attempt_count'
-'io_read_bytes',
-'io_read_count',
-'io_reopen_count',
-'io_seek_count',
-'io_sync_count',
-'io_write_bytes',
-'io_write_count',
-'mnesia_disk_tx_count',
-'mnesia_ram_tx_count',
-'msg_store_read_count',
-'msg_store_write_count',
-'queue_index_journal_write_count',
-'queue_index_read_count',
-'queue_index_write_count',
-]
+NODE_COUNTERS = ['context_switches','gc_bytes_reclaimed','gc_num',
+                 'io_file_handle_open_attempt_count''io_read_bytes','io_read_count',
+                 'io_reopen_count','io_seek_count','io_sync_count',
+                 'io_write_bytes','io_write_count','mnesia_disk_tx_count',
+                 'mnesia_ram_tx_count','msg_store_read_count','msg_store_write_count',
+                 'queue_index_journal_write_count','queue_index_read_count','queue_index_write_count',
+                 'uptime']
 
-NODE_GAUGES = [
-'disk_free',
-'fd_used',
-'io_file_handle_open_attempt_avg_time'
-'io_read_avg_time',
-'io_seek_avg_time',
-'io_sync_avg_time',
-'io_write_avg_time',
-'mem_used',
-'proc_used',
-'sockets_used',
-]
+NODE_GAUGES = ['disk_free','fd_total','fd_used',
+               'io_file_handle_open_attempt_avg_time''io_read_avg_time','io_seek_avg_time',
+               'io_sync_avg_time','io_write_avg_time','mem_used',
+               'proc_total','proc_used','sockets_total', 'sockets_used']
 
 
 class RabbitMQPlugin(Plugin):
