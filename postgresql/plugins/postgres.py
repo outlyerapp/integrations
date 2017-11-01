@@ -17,19 +17,28 @@ class PostgreSQLPlugin(Plugin):
         self.user = target.get('username', None)
         self.password = target.get('password', None)
 
-        self.conn = psycopg2.connect(self.dsn)
-        self.cursor = self.conn.cursor()
+        try:
+            self.conn = psycopg2.connect(self.dsn)
+            self.cursor = self.conn.cursor()
 
-        pg_ver = self.pg_version()
+            pg_ver = self.pg_version()
 
-        self.pg_connection_count(target)
-        self.pg_activity(pg_ver, target)
-        self.pg_lock_stats(target)
-        self.pg_bgwriter_stats(target)
-        self.pg_db_stats(target)
-        self.pg_table_stats(target)
+            self.pg_connection_count(target)
+            self.pg_activity(pg_ver, target)
+            self.pg_lock_stats(target)
+            self.pg_bgwriter_stats(target)
+            self.pg_db_stats(target)
+            self.pg_table_stats(target)
 
-        self.cursor.close()
+            self.cursor.close()
+
+        except psycopg2.OperationalError as ex:
+            self.logger.error('Unable to connect to PostgreSQL: %s', str(ex))
+            return Status.CRITICAL
+
+        except psycopg2.ProgrammingError as ex:
+            self.logger.error('Error executing PostgreSQL plugin: %s', str(ex))
+            return Status.UNKNOWN
 
         return Status.OK
 
