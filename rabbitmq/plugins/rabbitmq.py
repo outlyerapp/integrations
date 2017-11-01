@@ -55,10 +55,12 @@ class RabbitMQPlugin(Plugin):
             target.gauge('rabbitmq_partition_count').set(len(node['partitions']))
 
             for k in NODE_COUNTERS:
-                target.counter(f'rabbitmq_node_{k}').set(float(node[k]))
+                if k in node:
+                    target.counter(f'rabbitmq_node_{k}').set(float(node[k]))
 
             for k in NODE_GAUGES:
-                target.gauge(f'rabbitmq_node_{k}').set(float(node[k]))
+                if k in node:
+                    target.gauge(f'rabbitmq_node_{k}').set(float(node[k]))
 
 
             # Vhost stats
