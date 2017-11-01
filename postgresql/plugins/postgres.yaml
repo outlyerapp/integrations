@@ -1,0 +1,14 @@
+---
+type: "native"
+requirements:
+  - "psycopg2==2.7.3.2"
+deployments:
+  - interval: 30
+    selector:
+      - outlyer.com/type: 'host'
+
+    host: localhost
+    port: 5432
+    dbname: postgres
+    username: root
+    password: 12345
