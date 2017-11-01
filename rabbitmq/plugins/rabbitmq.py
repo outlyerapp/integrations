@@ -5,17 +5,39 @@ import urllib.parse
 from outlyer_agent.collection import Status, Plugin, PluginTarget
 
 
-NODE_COUNTERS = ['gc_num', 'gc_bytes_reclaimed', 'context_switches',
-                 'io_read_count', 'io_read_bytes', 'io_write_count', 'io_write_bytes',
-                 'io_sync_count', 'io_seek_count', 'io_reopen_count',
-                 'mnesia_ram_tx_count', 'mnesia_disk_tx_count',
-                 'msg_store_read_count', 'msg_store_write_count',
-                 'queue_index_journal_write_count', 'queue_index_write_count',
-                 'queue_index_read_count', 'io_file_handle_open_attempt_count']
+NODE_COUNTERS = [
+'context_switches',
+'gc_bytes_reclaimed',
+'gc_num',
+'io_file_handle_open_attempt_count'
+'io_read_bytes',
+'io_read_count',
+'io_reopen_count',
+'io_seek_count',
+'io_sync_count',
+'io_write_bytes',
+'io_write_count',
+'mnesia_disk_tx_count',
+'mnesia_ram_tx_count',
+'msg_store_read_count',
+'msg_store_write_count',
+'queue_index_journal_write_count',
+'queue_index_read_count',
+'queue_index_write_count',
+]
 
-NODE_GAUGES = ['mem_used', 'fd_used', 'sockets_used', 'proc_used',
-               'disk_free', 'io_read_avg_time', 'io_write_avg_time', 'io_sync_avg_time',
-               'io_seek_avg_time', 'io_file_handle_open_attempt_avg_time']
+NODE_GAUGES = [
+'disk_free',
+'fd_used',
+'io_file_handle_open_attempt_avg_time'
+'io_read_avg_time',
+'io_seek_avg_time',
+'io_sync_avg_time',
+'io_write_avg_time',
+'mem_used',
+'proc_used',
+'sockets_used',
+]
 
 
 class RabbitMQPlugin(Plugin):
@@ -57,10 +79,14 @@ class RabbitMQPlugin(Plugin):
             for k in NODE_COUNTERS:
                 if k in node:
                     target.counter(f'rabbitmq_node_{k}').set(float(node[k]))
+                if f'{k}_details' in node:
+                    target.guages(f'rabbitmq_node_{k}_details_rate').set(float(node[f'{k}_details']['rate']))
 
             for k in NODE_GAUGES:
                 if k in node:
                     target.gauge(f'rabbitmq_node_{k}').set(float(node[k]))
+                if f'{k}_details' in node:
+                    target.guages(f'rabbitmq_node_{k}_details_rate').set(float(node[f'{k}_details']['rate']))
 
 
             # Vhost stats
