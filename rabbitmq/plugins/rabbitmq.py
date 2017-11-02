@@ -104,7 +104,9 @@ class RabbitMQPlugin(Plugin):
                             if isinstance(v, int):
                                 target.counter(f'rabbitmq_queue_{k}', labels).set(float(v))
                         for k in ['messages', 'messages_unacknowledged', 'messages_ready', 'reductions']:
-                            target.gauge(f'rabbitmq_queue_{k}', labels).set(float(queue[k]))
+                            if k in queue:
+                                if isinstance(v, int):
+                                    target.gauge(f'rabbitmq_queue_{k}', labels).set(float(queue[k]))
 
             # Exchange stats
 
