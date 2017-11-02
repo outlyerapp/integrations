@@ -32,6 +32,10 @@ class RabbitMQPlugin(Plugin):
 
             url = (f'{protocol}://{host}:{port}')
 
+            # suppress requests/urllib3 ssl warnings when ignoring
+            if not verify_ssl:
+                requests.packages.urllib3.disable_warnings()
+
             # Overview stats
 
             r = requests.get(f'{url}/api/overview', auth=(username, password), timeout=10, verify=verify_ssl)
