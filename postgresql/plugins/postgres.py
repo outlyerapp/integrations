@@ -88,10 +88,10 @@ class PostgreSQLPlugin(Plugin):
         results = self.fetchall(q_activity)
 
         active_results = []
-        active_count = target.gauge('postgres_active_sessions').set(0)
-        idle_count = target.gauge('postgres_idle_sessions').set(0)
-        idle_in_txn_count = target.gauge('postgres_idle_in_transaction_sessions').set(0)
-        waiting_count = target.gauge('postgres_waiting_sessions').set(0)
+        active_count = target.gauge('postgres_active_sessions')
+        idle_count = target.gauge('postgres_idle_sessions')
+        idle_in_txn_count = target.gauge('postgres_idle_in_transaction_sessions')
+        waiting_count = target.gauge('postgres_waiting_sessions')
 
         for state, waiting, xact_start_sec, query_start_sec in results:
             if state == 'active':
