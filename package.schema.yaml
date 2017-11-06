@@ -1,0 +1,16 @@
+---
+type: map
+desc: Describes an Outlyer integration.
+mapping:
+  "title":
+    type: str
+    desc: Short title for the integration (1-2 words).
+    required: yes
+  "description":
+    type: str
+    desc: Longer description of the integration (about one sentence).
+    required: yes
+  "logo":
+    type: str
+    desc: Relative path to a logo for this integration. Should be a 256x256 transparent PNG.
+    required: yes
