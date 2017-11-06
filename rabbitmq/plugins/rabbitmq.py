@@ -32,6 +32,10 @@ class RabbitMQPlugin(Plugin):
 
             url = (f'{protocol}://{host}:{port}')
 
+            # suppress requests/urllib3 ssl warnings when ignoring
+            if not verify_ssl:
+                requests.packages.urllib3.disable_warnings()
+
             # Overview stats
 
             r = requests.get(f'{url}/api/overview', auth=(username, password), timeout=10, verify=verify_ssl)
@@ -100,7 +104,9 @@ class RabbitMQPlugin(Plugin):
                             if isinstance(v, int):
                                 target.counter(f'rabbitmq_queue_{k}', labels).set(float(v))
                         for k in ['messages', 'messages_unacknowledged', 'messages_ready', 'reductions']:
-                            target.gauge(f'rabbitmq_queue_{k}', labels).set(float(queue[k]))
+                            if k in queue:
+                                if isinstance(v, int):
+                                    target.gauge(f'rabbitmq_queue_{k}', labels).set(float(queue[k]))
 
             # Exchange stats
 

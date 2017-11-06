@@ -88,10 +88,10 @@ class PostgreSQLPlugin(Plugin):
         results = self.fetchall(q_activity)
 
         active_results = []
-        active_count = target.gauge('postgres_active_sessions').set(0)
-        idle_count = target.gauge('postgres_idle_sessions').set(0)
-        idle_in_txn_count = target.gauge('postgres_idle_in_transaction_sessions').set(0)
-        waiting_count = target.gauge('postgres_waiting_sessions').set(0)
+        active_count = target.gauge('postgres_active_sessions')
+        idle_count = target.gauge('postgres_idle_sessions')
+        idle_in_txn_count = target.gauge('postgres_idle_in_transaction_sessions')
+        waiting_count = target.gauge('postgres_waiting_sessions')
 
         for state, waiting, xact_start_sec, query_start_sec in results:
             if state == 'active':
@@ -116,9 +116,9 @@ class PostgreSQLPlugin(Plugin):
     def pg_lock_stats(self, target: PluginTarget) -> None:
         results = self.fetchall('SELECT mode, locktype FROM pg_locks')
 
-        access_exclusive = target.gauge('postgres_locks_accessexclusive').set(0)
-        other_exclusive = target.gauge('postgres_locks_otherexclusive').set(0)
-        shared = target.gauge('postgres_locks_shared').set(0)
+        access_exclusive = target.gauge('postgres_locks_accessexclusive')
+        other_exclusive = target.gauge('postgres_locks_otherexclusive')
+        shared = target.gauge('postgres_locks_shared')
 
         for mode, lock_type in results:
             if mode == 'AccessExclusiveLock' and lock_type != 'virtualxid':
