@@ -92,4 +92,5 @@ class KafkaPlugin(Plugin):
                      JmxAttribute('Count')),
         )
 
+        response.upload_target(target)
         return Status.OK
