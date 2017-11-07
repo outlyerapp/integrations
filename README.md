@@ -15,6 +15,11 @@ contributions from users for other services we don't support currently,
 as well as improvements to our existing Integrations (See Contributing 
 section below). 
 
+## Viewing the Showcase
+
+To see a live showcase of all the available integrations, start the
+`showcase.py` script and open a browser to http://localhost:5000.
+
 ## Installing integrations manually
 
 Until [this PR](#) is merged with the agent, you will need to remove the
