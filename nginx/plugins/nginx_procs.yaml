@@ -1,11 +1,18 @@
 ---
 type: "native"
-requirements:
-  - "psutil==5.3.1"
-deployments:
-  - interval: 5
-    selector:
-      - outlyer.com/type: 'host'
+requirements: ["psutil==5.3.1"]
+interval: 10
 
-    min_workers: 1
-    max_workers: 5
+settings:
+  - name: min_workers
+    type: int
+    description: Minimum number of expected worker processes
+    default: 1
+  - name: max_workers
+    type: int
+    description: Maximum number of expected worker processes
+    default: 5
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'

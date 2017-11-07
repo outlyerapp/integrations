@@ -1,8 +1,15 @@
 ---
 type: "native"
-deployments:
-  - interval: 30
-    selector:
-      - outlyer.com/type: 'host'
+interval: 30
 
-    haproxy_sock: /usr/local/var/run/haproxy.sock
+settings:
+  - name: haproxy_sock
+    type: string
+    description: Location of the HAProxy UNIX control socket
+    default: /var/run/haproxy.sock
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'
+    settings:
+      haproxy_sock: /usr/local/var/run/haproxy.sock

@@ -15,6 +15,8 @@ class PrometheusPlugin(Plugin):
         if not endpoints:
             self.logger.error('Prometheus plugin is not configured correctly')
             return Status.UNKNOWN
+        if isinstance(endpoints, str):
+            endpoints = [x.strip() for x in endpoints.split(',')]
 
         status = Status.OK
         for endpoint in endpoints:  # type: dict

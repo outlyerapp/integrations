@@ -1,11 +1,19 @@
 ---
 type: "native"
-deployments:
-  - interval: 60
-    selector:
-      - outlyer.com/type: 'host'
+interval: 60
 
-    count: 3
-    hosts:
-     - 192.168.0.1
-     - google.com
+settings:
+  - name: hosts
+    type: string
+    description: List of hosts to ping, separated by commas
+    default: 192.168.1.1
+  - name: count
+    type: int
+    description: Number of pings to send to each host
+    default: 3
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'
+    settings:
+      hosts: "192.168.0.1, google.com"

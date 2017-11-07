@@ -1,12 +1,22 @@
 ---
 type: "native"
-requirements:
-  - "f5-sdk==3.0.3"
-deployments:
-  - interval: 30
-    selector:
-      - outlyer.com/type: 'host'
+requirements: ["f5-sdk==3.0.3"]
+interval: 30
 
-    host: 192.168.1.13
-    username: admin
-    password: admin
+settings:
+  - name: host
+    type: string
+    required: true
+    description: Hostname of the F5 load balancer
+  - name: username
+    type: string
+    description: Name of a user with admin rights
+    default: admin
+  - name: password
+    type: password
+    description: Password for the admin user
+    default: admin
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'

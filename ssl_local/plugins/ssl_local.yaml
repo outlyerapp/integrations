@@ -1,12 +1,24 @@
 ---
 type: "native"
-requirements:
-  - "pyopenssl==17.3.0"
-deployments:
-  - interval: 600
-    selector:
-      - outlyer.com/type: 'host'
+requirements: ["pyopenssl==17.3.0"]
+interval: 600
 
-    cert_path: '/usr/local/etc/openssl/cert.pem'
-    critical_days: 7
-    warning_days: 30
+settings:
+  - name: cert_path
+    type: string
+    description: Path to the certificate file to be checked
+    default: "/etc/openssl/cert.pem"
+  - name: warning_days
+    type: int
+    description: Threshold for triggering a warning (in days)
+    default: 30
+  - name: critical_days
+    type: int
+    description: Threshold for triggering a critical alert (in days)
+    default: 7
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'
+    settings:
+      name: "/usr/local/etc/openssl/cert.pem"

@@ -1,4 +1,3 @@
-import logging
 import time
 
 from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGIN_EXEC, Metric
@@ -10,8 +9,6 @@ from outlyer_agent.java.thread import JvmTask
 # TODO: add metrics for each Servlet (controlled by flag)
 # TODO: add metrics for each Manager
 # TODO: add metrics for each WebModule
-
-logger = logging.getLogger(__name__)
 
 
 class TomcatPlugin(Plugin):

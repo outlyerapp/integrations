@@ -1,8 +1,15 @@
 ---
 type: "native"
-deployments:
-  - interval: 60
-    selector:
-      - outlyer.com/type: 'host'
+interval: 60
 
-    access_log: '/var/log/nginx/access.combined.log'
+settings:
+  - name: access_log
+    type: string
+    description: Path to the nginx access.log file
+    default: "/var/log/nginx/access.log"
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'
+    settings:
+      access_log: "/var/log/nginx/access.combined.log"

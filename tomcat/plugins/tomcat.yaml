@@ -1,11 +1,18 @@
 ---
 type: "native"
-requirements:
-  - "JPype1-py3==0.5.5.2"
-deployments:
-  - interval: 10
-    selector:
-      - outlyer.com/type: 'host'
+requirements: ["JPype1-py3==0.5.5.2"]
+interval: 30
 
-    host: localhost
-    port: 9010
+settings:
+  - name: host
+    type: string
+    description: Hostname of the Tomcat server
+    default: "localhost"
+  - name: port
+    type: int
+    description: Port number configured for JMX RMI
+    default: 9010
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'

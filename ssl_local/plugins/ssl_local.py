@@ -1,8 +1,9 @@
-from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGIN_EXEC
-from OpenSSL import crypto
-import ssl
 import os.path
 from datetime import datetime
+
+from OpenSSL import crypto
+
+from outlyer_agent.collection import Status, Plugin, PluginTarget
 
 
 class LocalSslExpirationCheck(Plugin):

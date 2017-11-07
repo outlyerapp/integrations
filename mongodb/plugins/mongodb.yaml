@@ -1,11 +1,31 @@
 ---
 type: "native"
-requirements:
-  - "pymongo==3.5.1"
-deployments:
-  - interval: 30
-    selector:
-      - outlyer.com/type: 'host'
+requirements: ["pymongo==3.5.1"]
+interval: 30
 
-    host: localhost
-    port: 27017
+settings:
+  - name: host
+    type: string
+    description: Hostname of the MongoDB server
+    default: "localhost"
+  - name: port
+    type: int
+    description: Port number of the MongoDB server
+    default: 27017
+  - name: ssl
+    type: bool
+    description: If true, use SSL when connecting
+    default: false
+  - name: username
+    type: string
+    description: Name of the MongoDB user
+  - name: password
+    type: password
+    description: Password for the MongoDB user
+  - name: auth_source
+    type: string
+    description: Name of the MongoDB authentication database
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'

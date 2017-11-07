@@ -1,14 +1,34 @@
 ---
 type: "native"
-requirements:
-  - "pyopenssl==17.3.0"
-deployments:
-  - interval: 600
-    selector:
-      - outlyer.com/type: 'host'
+requirements: ["pyopenssl==17.3.0"]
+interval: 600
 
-    host: 'www.outlyer.com'
-    port: 443
-    cn: 'c.sni.fastly.net'
-    critical_days: 7
-    warning_days: 30
+settings:
+  - name: host
+    type: string
+    description: Name of the host to connect to for SSL checks
+  - name: port
+    type: int
+    description: Port number to connect to
+    default: 443
+  - name: cn
+    type: string
+    description: The expected common name (CN) of the certificate (leave blank to skip CN checks)
+  - name: warning_days
+    type: int
+    description: Threshold for triggering a warning (in days)
+    default: 30
+  - name: critical_days
+    type: int
+    description: Threshold for triggering a critical alert (in days)
+    default: 7
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'
+    settings:
+      host: 'www.outlyer.com'
+      port: 443
+      cn: 'c.sni.fastly.net'
+      critical_days: 7
+      warning_days: 30

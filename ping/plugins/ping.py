@@ -9,8 +9,10 @@ class PingPlugin(Plugin):
 
     def collect(self, target: PluginTarget):
 
-        hosts = target.get('hosts', ['192.168.1.1'])
         count = target.get('count', 3)
+        hosts = target.get('hosts', '192.168.1.1')
+        if isinstance(hosts, str):
+            hosts = [x.strip() for x in hosts.split(',')]
 
         command = 'ping -c {count} {host}'
         parser_1 = r'(?P<sent>\d+) packets transmitted, (?P<rcvd>\d+) (?:packets )?received, ' + \

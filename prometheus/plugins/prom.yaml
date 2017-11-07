@@ -1,11 +1,14 @@
 ---
 type: "native"
-requirements:
-  - "requests==2.18.4"
-deployments:
-  - interval: 30
-    selector:
-      - outlyer.com/type: 'host'
+requirements: ["requests==2.18.4"]
+interval: 30
 
-    endpoints:
-      - url: http://localhost:9100/metrics
+settings:
+  - name: endpoints
+    type: string
+    default: "http://localhost:9100/metrics"
+    description: Comma-delimited list of URL's to scrape for Prometheus metrics
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'

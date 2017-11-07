@@ -1,10 +1,16 @@
 ---
 type: "native"
-requirements:
-  - "requests==2.18.4"
-deployments:
-  - interval: 30
-    selector:
-      - outlyer.com/type: 'host'
+requirements: ["requests==2.18.4"]
+interval: 30
 
-    url: https://demo.nginx.com/status
+settings:
+  - name: url
+    type: string
+    description: URL to the Nginx Plus status page
+    required: true
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'
+    settings:
+      url: https://demo.nginx.com/status

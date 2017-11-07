@@ -1,11 +1,18 @@
 ---
 type: "native"
-requirements:
-  - "JPype1-py3==0.5.5.2"
-deployments:
-  - interval: 10
-    selector:
-      - outlyer.com/type: 'host'
+requirements: ["JPype1-py3==0.5.5.2"]
+interval: 30
 
-    host: localhost
-    port: 55555
+settings:
+  - name: host
+    type: string
+    description: Hostname of the Kafka broker
+    default: "localhost"
+  - name: port
+    type: int
+    description: Port number for JMX on the Kafka broker
+    default: 55555
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'

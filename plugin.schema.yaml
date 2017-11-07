@@ -16,7 +16,7 @@ mapping:
       - type: str
   "interval": &interval
     type: int
-    desc: How often the plugin should be executed, in seconds.
+    desc: How often the plugin should be executed, in seconds. May be overriden by deployments.
     required: no
     range: { min: 10, max: 86400 }
     default: 30
@@ -31,7 +31,9 @@ mapping:
             type: str
             required: no
             desc: Name for this descriptor.
-          "interval": *interval
+          "interval":
+            <<: *interval
+            desc: How often the plugin should be executed, in seconds.
           "selector":
             type: seq
             required: yes
@@ -48,7 +50,7 @@ mapping:
             desc: List of plugin-specific settings to apply (e.g. username, password, URL, etc).
             mapping:
               =:
-                type: scalar
+                type: any
                 required: yes
   "settings":
     type: seq
@@ -69,8 +71,19 @@ mapping:
           "type":
             type: str
             required: yes
-            enum: ["string", "password", "url", "int", "float"]
+            enum: ["string", "password", "url", "int", "float", "bool", "enum"]
             desc: Datatype of the field
+          "choices":
+            type: seq
+            required: no
+            sequence:
+              - type: str
+            desc: For enum fields, a list of the allowed values
+          "required":
+            type: bool
+            required: no
+            default: no
+            desc: If true, a value must be supplied for this setting
           "default":
             type: any
             required: no

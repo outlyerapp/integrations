@@ -1,17 +1,44 @@
 ---
 type: "native"
-requirements:
-  - "requests==2.18.4"
-deployments:
-  - interval: 30
-    selector:
-      - outlyer.com/type: 'host'
+requirements: ["requests==2.18.4"]
+interval: 60
 
-    url: 'https://www.outlyer.com'
-    type: GET
-    search_pattern: 'Cloud Services at Scale'
-    error_on_redirect: false
-    warning_time: 0.750
-    critical_time: 1.000
-    headers:
-      Content-Type: text/html
+settings:
+  - name: url
+    type: string
+    required: true
+    description: URL to check
+  - name: type
+    type: enum
+    choices: ["GET", "POST", "PUT", "HEAD", "PATCH", "DELETE", "OPTIONS"]
+    default: "GET"
+    description: Request type to execute
+  - name: search_pattern
+    type: string
+    description: Optional text pattern to search for in the response HTML
+  - name: error_on_redirect
+    type: bool
+    default: false
+    description: If true, redirect responses will result in CRITICAL status
+  - name: warning_time
+    type: float
+    default: 5.0
+    description: Response time threshold to trigger WARNING status
+  - name: critical_time
+    type: float
+    default: 10.0
+    description: Response time threshold to trigger CRITICAL status
+  # headers, data, params are all maps
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'
+    settings:
+      url: 'https://www.outlyer.com'
+      type: GET
+      search_pattern: 'Cloud Services at Scale'
+      error_on_redirect: false
+      warning_time: 0.750
+      critical_time: 1.000
+      headers:
+        Content-Type: text/html

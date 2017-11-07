@@ -1,12 +1,26 @@
 ---
 type: "native"
-requirements:
-  - "pyghmi==1.0.22"
-deployments:
-  - interval: 10
-    selector:
-      - outlyer.com/type: 'host'
+requirements: ["pyghmi==1.0.22"]
+interval: 10
 
-    host: 192.168.1.8
-    username: ADMIN
-    password: ADMIN
+settings:
+  - name: host
+    type: string
+    required: true
+    description: Hostname or IP address of the IPMI BMC
+  - name: username
+    type: string
+    required: true
+    description: Username for IPMI login
+  - name: password
+    type: password
+    required: true
+    description: Password for IPMI login
+
+deployments:
+  - selector:
+      - outlyer.com/type: 'host'
+    settings:
+      host: 192.168.1.8
+      username: ADMIN
+      password: ADMIN
