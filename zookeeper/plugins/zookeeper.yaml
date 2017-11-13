@@ -1,0 +1,10 @@
+---
+type: "native"
+requirements:
+deployments:
+  - interval: 30
+    selector:
+      - outlyer.com/type: 'host'
+    host: "localhost"
+    port: 2181
+    version: "3.4.8-1--1"
