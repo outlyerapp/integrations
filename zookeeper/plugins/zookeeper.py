@@ -1,11 +1,9 @@
 import time
-
 from outlyer_agent.collection import Status, Plugin, PluginTarget
 import sys
 import socket
 import re
 import subprocess
-
 
 class ZookeeperPlugin(Plugin):
     def get_stats(self):
@@ -44,5 +42,4 @@ class ZookeeperPlugin(Plugin):
         del output['zk_server_state']
         for key, value in output.items():
             target.gauge(key, {'zookeeper': key}).set(int(value))
-        print(output)
         return Status.OK
