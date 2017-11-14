@@ -3,7 +3,7 @@ type: "native"
 requirements: ["JPype1-py3==0.5.5.2"]
 interval: 30
 
-settings:
+deployments:
   - name: host
     type: string
     description: Hostname of the Kafka broker
@@ -11,8 +11,6 @@ settings:
   - name: port
     type: int
     description: Port number for JMX on the Kafka broker
-    default: 55555
-
-deployments:
+    default: 9999
   - selector:
       - outlyer.com/type: 'host'
