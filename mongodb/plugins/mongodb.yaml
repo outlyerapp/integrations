@@ -3,7 +3,7 @@ type: "native"
 requirements: ["pymongo==3.5.1"]
 interval: 30
 
-settings:
+deployments:
   - name: host
     type: string
     description: Hostname of the MongoDB server
@@ -25,7 +25,5 @@ settings:
   - name: auth_source
     type: string
     description: Name of the MongoDB authentication database
-
-deployments:
   - selector:
       - outlyer.com/type: 'host'
