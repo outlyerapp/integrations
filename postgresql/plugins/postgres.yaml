@@ -25,9 +25,8 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    settings:
-      host: localhost
-      port: 5432
-      username: root
-      password: 12345
-      dbname: postgres
+    host: localhost
+    port: 5432
+    username: root
+    password: 12345
+    dbname: postgres

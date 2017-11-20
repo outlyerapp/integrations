@@ -1,14 +1,18 @@
 import re
 
+from typing import Sequence
+
 import psycopg2
 import psycopg2.errorcodes
 
 from outlyer_agent.collection import Status, Plugin, PluginTarget
 
 
+# TODO: replication stats
+
+
 # noinspection SqlResolve
 class PostgreSQLPlugin(Plugin):
-
     def collect(self, target: PluginTarget) -> Status:
 
         self.host = target.get('host', 'localhost')
@@ -69,7 +73,6 @@ class PostgreSQLPlugin(Plugin):
         # single session state query avoids multiple scans of pg_stat_activity
         # state is a different column name in postgres 9.2, previous versions will have to update this query accordingly
         if pg_ver >= 9.6:
-            # noinspection SqlResolve
             q_activity = '''
             SELECT state, (CASE wait_event WHEN NULL THEN FALSE ELSE TRUE END) AS waiting,
                 coalesce(extract(EPOCH FROM current_timestamp - xact_start)::INT, 0),
@@ -77,7 +80,6 @@ class PostgreSQLPlugin(Plugin):
             FROM pg_stat_activity
             '''
         else:
-            # noinspection SqlResolve
             q_activity = '''
             SELECT state, waiting,
                 coalesce(extract(EPOCH FROM current_timestamp - xact_start)::INT, 0),
@@ -88,10 +90,10 @@ class PostgreSQLPlugin(Plugin):
         results = self.fetchall(q_activity)
 
         active_results = []
-        active_count = target.gauge('postgres_active_sessions')
-        idle_count = target.gauge('postgres_idle_sessions')
-        idle_in_txn_count = target.gauge('postgres_idle_in_transaction_sessions')
-        waiting_count = target.gauge('postgres_waiting_sessions')
+        active_count = target.gauge('postgres_active_sessions').set(0)
+        idle_count = target.gauge('postgres_idle_sessions').set(0)
+        idle_in_txn_count = target.gauge('postgres_idle_in_transaction_sessions').set(0)
+        waiting_count = target.gauge('postgres_waiting_sessions').set(0)
 
         for state, waiting, xact_start_sec, query_start_sec in results:
             if state == 'active':
@@ -116,9 +118,9 @@ class PostgreSQLPlugin(Plugin):
     def pg_lock_stats(self, target: PluginTarget) -> None:
         results = self.fetchall('SELECT mode, locktype FROM pg_locks')
 
-        access_exclusive = target.gauge('postgres_locks_accessexclusive')
-        other_exclusive = target.gauge('postgres_locks_otherexclusive')
-        shared = target.gauge('postgres_locks_shared')
+        access_exclusive = target.gauge('postgres.locks.accessexclusive').set(0)
+        other_exclusive = target.gauge('postgres.locks.otherexclusive').set(0)
+        shared = target.gauge('postgres.locks.shared').set(0)
 
         for mode, lock_type in results:
             if mode == 'AccessExclusiveLock' and lock_type != 'virtualxid':
@@ -130,49 +132,81 @@ class PostgreSQLPlugin(Plugin):
                 shared.inc()
 
     def pg_bgwriter_stats(self, target: PluginTarget) -> None:
-        q_bg_writer = '''
+        self.pg_run_metric_query('''
           SELECT checkpoints_timed, checkpoints_req, checkpoint_write_time,
                  checkpoint_sync_time, buffers_checkpoint, buffers_clean,
                  buffers_backend, buffers_alloc
           FROM pg_stat_bgwriter
-          '''
-        results = self.fetchall(q_bg_writer)[0]
-        target.counter('postgres_bgwriter_checkpoints_timed').set(results[0] or 0)
-        target.counter('postgres_bgwriter_checkpoints_req').set(results[1] or 0)
-        target.counter('postgres_bgwriter_checkpoint_write_time').set(results[2] or 0)
-        target.counter('postgres_bgwriter_checkpoint_sync_time').set(results[3] or 0)
-        target.counter('postgres_bgwriter_buffers_checkpoint').set(results[4] or 0)
-        target.counter('postgres_bgwriter_buffers_clean').set(results[5] or 0)
-        target.counter('postgres_bgwriter_buffers_backend').set(results[6] or 0)
-        target.counter('postgres_bgwriter_buffers_alloc').set(results[7] or 0)
+          ''',
+                                 (),
+                                 ('postgres.bgwriter.checkpoints_timed',
+                                  'postgres.bgwriter.checkpoints_req',
+                                  'postgres.bgwriter.checkpoint_write_time',
+                                  'postgres.bgwriter.checkpoint_sync_time',
+                                  'postgres.bgwriter.buffers_checkpoint',
+                                  'postgres.bgwriter.buffers_clean',
+                                  'postgres.bgwriter.buffers_backend',
+                                  'postgres.bgwriter.buffers_alloc'), target)
 
     def pg_db_stats(self, target: PluginTarget) -> None:
-        q_stats = '''
-            SELECT datname, xact_commit + xact_rollback, tup_inserted,
-                   tup_updated, tup_deleted, tup_returned + tup_fetched,
-                   blks_read, blks_hit
+        self.pg_run_metric_query('''
+            SELECT datname, numbackends, xact_commit, xact_rollback, tup_inserted,
+                   tup_updated, tup_deleted, tup_returned, tup_fetched,
+                   blks_read, blks_hit, temp_files, temp_bytes, deadlocks,
+                   blk_read_time, blk_write_time
             FROM pg_stat_database
-            '''
-        for row in self.fetchall(q_stats):
-            labels = {'database': row[0]}
-            target.counter('postgres_transactions', labels).set(row[1] or 0)
-            target.counter('postgres_inserts', labels).set(row[2] or 0)
-            target.counter('postgres_updates', labels).set(row[3] or 0)
-            target.counter('postgres_deletes', labels).set(row[4] or 0)
-            target.counter('postgres_reads', labels).set(row[5] or 0)
-            target.counter('postgres_blks_diskread', labels).set(row[6] or 0)
-            target.counter('postgres_blks_memread', labels).set(row[7] or 0)
+            ''',
+                                 ('database',),
+                                 ('postgres.database.num_backends',
+                                  'postgres.database.commits',
+                                  'postgres.database.rollbacks',
+                                  'postgres.database.rows_inserted',
+                                  'postgres.database.rows_updated',
+                                  'postgres.database.rows_deleted',
+                                  'postgres.database.rows_returned',
+                                  'postgres.database.rows_fetched',
+                                  'postgres.database.blocks_read',
+                                  'postgres.database.blocks_cache_hit',
+                                  'postgres.database.temp_files',
+                                  'postgres.database.temp_bytes',
+                                  'postgres.database.deadlocks',
+                                  'postgres.database.block_read_time',
+                                  'postgres.database.block_write_time'), target)
 
     def pg_table_stats(self, target: PluginTarget) -> None:
-        q_table_stats = '''
-            SELECT schemaname, relname, seq_tup_read, idx_tup_fetch,
+        self.pg_run_metric_query('''
+            SELECT schemaname, relname, seq_scan, seq_tup_read, idx_scan, idx_tup_fetch,
+              n_tup_ins, n_tup_upd, n_tup_del, vacuum_count, autovacuum_count,
+              analyze_count, autoanalyze_count, n_live_tup, n_dead_tup,
               extract(EPOCH FROM now() - last_vacuum)::INT/60/60,
               extract(EPOCH FROM now() - last_analyze)::INT/60/60
             FROM pg_stat_all_tables
-            '''
-        for row in self.fetchall(q_table_stats):
-            labels = {'schema': row[0], 'rel': row[1]}
-            target.counter('postgres_tup_seqscan', labels).set(row[2] or 0)
-            target.counter('postgres_tup_idxfetch', labels).set(row[3] or 0)
-            target.counter('postgres_hours_since_last_vacuum', labels).set(row[4] or 0)
-            target.counter('postgres_hours_since_last_analyze', labels).set(row[5] or 0)
+            ''',
+                                 ('schema', 'rel'),
+                                 ('postgres.table.sequential_scans',
+                                  'postgres.table.sequential_scan_rows',
+                                  'postgres.table.index_scans',
+                                  'postgres.table.index_scan_rows',
+                                  'postgres.table.rows_inserted',
+                                  'postgres.table.rows_updated',
+                                  'postgres.table.rows_deleted',
+                                  'postgres.table.vacuum_count',
+                                  'postgres.table.auto_vacuum_count',
+                                  'postgres.table.analyze_count',
+                                  'postgres.table.auto_analyze_count',
+                                  'postgres.table.live_rows',
+                                  'postgres.table.dead_rows',
+                                  'postgres.table.time_since_vacuum',
+                                  'postgres.table.time_since_analyze'), target)
+
+    def pg_run_metric_query(self, sql: str,
+                            label_names: Sequence[str],
+                            metric_names: Sequence[str],
+                            target: PluginTarget) -> None:
+        for row in self.fetchall(sql):
+            assert len(label_names) + len(metric_names) == len(row)
+            row = list(row)
+            labels = {x: row.pop(0) for x in label_names}
+            counters = {x: row.pop(0) or 0 for x in metric_names}
+            for c_name, c_val in counters.items():
+                target.counter(c_name, labels).set(float(c_val))
