@@ -33,12 +33,11 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    settings:
-      url: 'https://www.outlyer.com'
-      type: GET
-      search_pattern: 'Cloud Services at Scale'
-      error_on_redirect: false
-      warning_time: 0.750
-      critical_time: 1.000
-      headers:
-        Content-Type: text/html
+    url: 'https://www.outlyer.com'
+    type: GET
+    search_pattern: 'Cloud Services at Scale'
+    error_on_redirect: false
+    warning_time: 0.750
+    critical_time: 1.000
+    headers:
+      Content-Type: text/html

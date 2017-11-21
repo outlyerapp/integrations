@@ -21,7 +21,6 @@ deployments:
   - interval: 30
     selector:
       - outlyer.com/type: 'host'
-    settings:
-      host: localhost
-      port: 6379
-      password: foobar
+    host: localhost
+    port: 6379
+    password: foobar

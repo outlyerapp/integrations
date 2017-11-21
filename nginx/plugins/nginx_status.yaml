@@ -12,5 +12,4 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    settings:
-      url: http://localhost:8080/nginx_status
+    url: http://localhost:8080/nginx_status

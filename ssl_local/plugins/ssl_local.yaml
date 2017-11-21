@@ -20,5 +20,4 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    settings:
-      name: "/usr/local/etc/openssl/cert.pem"
+    name: "/usr/local/etc/openssl/cert.pem"

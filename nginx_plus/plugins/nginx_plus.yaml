@@ -12,5 +12,4 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    settings:
-      url: https://demo.nginx.com/status
+    url: https://demo.nginx.com/status

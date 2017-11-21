@@ -26,9 +26,8 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    settings:
-      host: 'www.outlyer.com'
-      port: 443
-      cn: 'c.sni.fastly.net'
-      critical_days: 7
-      warning_days: 30
+    host: 'www.outlyer.com'
+    port: 443
+    cn: 'c.sni.fastly.net'
+    critical_days: 7
+    warning_days: 30

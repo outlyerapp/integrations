@@ -15,5 +15,4 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    settings:
-      hosts: "192.168.0.1, google.com"
+    hosts: "192.168.0.1, google.com"

@@ -31,6 +31,5 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    settings:
-      username: guest
-      password: guest
+    username: guest
+    password: guest

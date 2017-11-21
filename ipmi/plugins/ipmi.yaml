@@ -20,7 +20,6 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    settings:
-      host: 192.168.1.8
-      username: ADMIN
-      password: ADMIN
+    host: 192.168.1.8
+    username: ADMIN
+    password: ADMIN

@@ -6,12 +6,11 @@ interval: 30
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    settings:
-      service_url: "service:jmx:rmi:///jndi/rmi://localhost:9010/jmxrmi"
-      standard_metrics: true
-      queries:
-        - name: thread_count
-          type: gauge
-          objectName: "java.lang:type=Threading"
-          attributes:
-            - name: ThreadCount
+    service_url: "service:jmx:rmi:///jndi/rmi://localhost:9010/jmxrmi"
+    standard_metrics: true
+    queries:
+      - name: thread_count
+        type: gauge
+        objectName: "java.lang:type=Threading"
+        attributes:
+          - name: ThreadCount
