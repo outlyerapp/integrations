@@ -29,7 +29,7 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    host: localhost
+    host: 18.216.173.20
     port: 27017
     username: admin
     password: admin

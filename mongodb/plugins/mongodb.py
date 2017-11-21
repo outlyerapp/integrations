@@ -6,11 +6,17 @@ import re
 import time
 
 # TODO: add replication stats
+# TODO: support authentication
 # TODO: add parameter for command metrics (metrics.commands.*.failed|total)
 # TODO: MongoClient doesn't seem to be respecting connectTimeoutMS=5000
 
 
 RATE_METRICS = [
+    "network.bytes_in",
+    "network.bytes_out",
+    "network.num_requests",
+    "network.physical_bytes_in",
+    "network.physical_bytes_out",
     "opcounters.command",
     "opcounters.delete",
     "opcounters.getmore",
@@ -35,11 +41,6 @@ RATE_METRICS = [
 GAUGE_METRICS = [
     "connections.available",
     "connections.current",
-    # "network.bytes_in",
-    # "network.bytes_out",
-    "network.num_requests",
-    # "network.physical_bytes_in",
-    # "network.physical_bytes_out",
     "wired_tiger.async.current_work_queue_length",
     "wired_tiger.async.maximum_work_queue_length",
 ]
@@ -102,19 +103,15 @@ def flatten_dict(d: Dict[str, Any]):
 
 class MongoPlugin(Plugin):
 
-    def __init__(self, name, deployments, host, executor=DEFAULT_PLUGIN_EXEC):
-        super().__init__(name, deployments, host, executor)
-        self.last_collect = None
-
     def collect(self, target: PluginTarget):
 
         host = target.get('host', 'localhost')
         port = target.get('port', 27017)
 
         try:
+            self.logger.info('Connecting to MongoDB on %s:%d', host, port)
             c = pymongo.MongoClient(host=host, port=port,
                                     connectTimeoutMS=5000, socketTimeoutMS=5000)
-            time_now = time.monotonic()
 
             for db_name in c.database_names():
                 db = c.get_database(db_name)
@@ -130,10 +127,6 @@ class MongoPlugin(Plugin):
                 try:
                     new_val = float(stats[k])
                     old_val = target.counter(k).get()
-                    if self.last_collect:
-                        elapsed_sec = time_now - self.last_collect
-                        per_second = (new_val - old_val) / elapsed_sec
-                        target.gauge(k + '_per_sec').set(per_second)
                     target.counter(k).set(new_val)
                 except KeyError:
                     pass
@@ -153,15 +146,12 @@ class MongoPlugin(Plugin):
                     pass
 
             c.close()
-            self.last_collect = time_now
             return Status.OK
 
         except pymongo.errors.ConnectionFailure as ex:
             self.logger.error('Cannot connect to MongoDB: ' + ex.args[0])
-            self.last_collect = None
             return Status.CRITICAL
 
         except Exception as ex:
             self.logger.exception('Error in plugin', exc_info=ex)
-            self.last_collect = None
             return Status.UNKNOWN
