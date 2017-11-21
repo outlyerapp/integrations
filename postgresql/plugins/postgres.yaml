@@ -1,7 +1,7 @@
 ---
 type: "native"
 requirements: ["psycopg2==2.7.3.2"]
-interval: 30
+interval: 10
 
 settings:
   - name: host
@@ -21,12 +21,22 @@ settings:
   - name: dbname
     type: string
     description: Name of the database to query
+  - name: table_stats
+    type: bool
+    default: false
+    description: Report individual metrics for each table
+  - name: index_stats
+    type: bool
+    default: false
+    description: Report individual metrics for each index
+
 
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    host: localhost
+    interval: 10
+    host: 18.216.173.20
     port: 5432
-    username: root
-    password: 12345
-    dbname: postgres
+    username: postgres
+    password: luggage
+    dbname: bench
