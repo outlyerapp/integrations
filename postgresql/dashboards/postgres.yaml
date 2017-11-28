@@ -1,0 +1,397 @@
+description: ""
+icon:
+  color: '#000000'
+  name: dashboard
+labels: []
+name: postgresql
+scopes:
+- defaultvalue: ""
+  labelkey: ol.instance
+- defaultvalue: ""
+  labelkey: database
+theme: light
+title: PostgreSQL
+widgets:
+  chartwidgets:
+  - col: 4
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: StackedBar
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: |-
+          ${@SCOPE},
+          name,postgres.database.commits,:eq,:and,
+          ${@SCOPE},name,postgres.database.rollbacks,:eq,:and,:or,
+          :sum,(,name,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Transaction Volume
+    row: 0
+    width: 4
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: Sessions
+          unit: ""
+          unitposition: After
+      charttype: StackedArea
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,postgres.sessions.(active|idle|waiting|idle_in_transaction),:re,(,name,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Session Count By Type
+    row: 0
+    width: 4
+  - col: 4
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: Rows/sec
+          unit: ""
+          unitposition: After
+      charttype: Area
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,postgres.database.rows_fetched,:eq,:and,:avg
+        visible: true
+      seriesstyle:
+        color: '#38b1aa'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: SELECT Volume
+    row: 2
+    width: 3
+  - col: 7
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: Rows/sec
+          unit: ""
+          unitposition: After
+      charttype: Area
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,postgres.database.rows_inserted,:eq,:and,:avg
+        visible: true
+      seriesstyle:
+        color: '#ca87ec'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: INSERT Volume
+    row: 2
+    width: 3
+  - col: 4
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: Rows/sec
+          unit: ""
+          unitposition: After
+      charttype: Area
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,postgres.database.rows_updated,:eq,:and,:avg
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: UPDATE Volume
+    row: 4
+    width: 3
+  - col: 7
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: Rows/sec
+          unit: ""
+          unitposition: After
+      charttype: Area
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,postgres.database.rows_deleted,:eq,:and,:avg
+        visible: true
+      seriesstyle:
+        color: '#ff826f'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: DELETE Volume
+    row: 4
+    width: 3
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ms
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: |-
+          name,postgres.bgwriter.checkpoint_write_time,:eq,:avg,
+          name,postgres.bgwriter.checkpoint_sync_time,:eq,:avg,(,name,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Background Writer
+    row: 6
+    width: 4
+  imagewidgets: []
+  markdownwidgets:
+  - col: 8
+    height: 2
+    options:
+      content: |
+        <p>Service Status</p>
+
+        <p>All OK!</p>
+      markdown: |-
+        Service Status
+
+        All OK!
+    row: 0
+    width: 2
+  - col: 10
+    height: 6
+    options:
+      content: |
+        <h2>Notes</h2>
+
+        <ul>
+        <li>All rates are being calculated by Atlas, not by the plugin.</li>
+        <li>The “Cache Hit Ratio” is being calculated by an Atlas query. Pretty neat.</li>
+        <li>Scopes are working properly!</li>
+        </ul>
+      markdown: |-
+        ## Notes
+
+         * All rates are being calculated by Atlas, not by the plugin.
+         * The "Cache Hit Ratio" is being calculated by an Atlas query. Pretty neat.
+         * Scopes are working properly!
+    row: 0
+    width: 3
+  numberwidgets:
+  - col: 0
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: null
+      displaymin: null
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: name,postgres.sessions.longest_query,:eq,:max
+        visible: true
+      rounding: None
+      statistic: Max
+      thresholds:
+      - status: Warning
+        threshold: 30
+      title: Longest Query Time
+      unit: ' s'
+      unitposition: After
+    row: 2
+    width: 2
+  - col: 2
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: null
+      displaymin: null
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: name,postgres.sessions.longest_transaction,:eq,:max
+        visible: true
+      rounding: None
+      statistic: Max
+      thresholds:
+      - status: Error
+        threshold: 60
+      title: Longest Transaction Time
+      unit: ' s'
+      unitposition: After
+    row: 2
+    width: 2
+  - col: 0
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 10
+      displaymin: 0
+      displaytrend: BarChart
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: ${@SCOPE},name,postgres.database.deadlocks,:eq,:and,:sum
+        visible: true
+      rounding: None
+      statistic: Sum
+      thresholds:
+      - status: Error
+        threshold: 1
+      title: Total Deadlocks
+      unit: ""
+      unitposition: After
+    row: 4
+    width: 2
+  - col: 2
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 100
+      displaymin: 0
+      displaytrend: Gauge
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: |-
+          ${@SCOPE},name,postgres.database.blocks_hit,:eq,:and,:sum,:dup,
+          ${@SCOPE},name,postgres.database.blocks_read,:eq,:and,:sum,
+          :add,:div,100,:mul
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Cache Hit Ratio
+      unit: '%'
+      unitposition: After
+    row: 4
+    width: 2

@@ -1,0 +1,287 @@
+description: ""
+icon:
+  color: '#000000'
+  name: dashboard
+labels: []
+name: haproxy
+scopes: []
+theme: light
+title: HAProxy
+widgets:
+  chartwidgets:
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: StackedLine
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,haproxy.stot,:eq,:and,:sum,(,pxname,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Connections
+    row: 0
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: StackedArea
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,haproxy.req_tot,:eq,:and,:sum,(,pxname,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Sum
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: HTTP Requests/sec
+    row: 2
+    width: 5
+  - col: 5
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: StackedBar
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,haproxy.hrsp_,:re,:sum,:and,(,name,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: HTTP Response Codes
+    row: 2
+    width: 5
+  - col: 7
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: |-
+          ${@SCOPE},
+          name,haproxy.e,:re,:sum,
+          :and,(,name,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Sum
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Errors
+    row: 0
+    width: 3
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,haproxy.(bin|bout),:re,:sum,:and,(,name,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: I/O
+    row: 4
+    width: 4
+  imagewidgets: []
+  markdownwidgets: []
+  numberwidgets:
+  - col: 0
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: null
+      displaymin: null
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: ${@SCOPE},name,haproxy.scur,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Current Sessions
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 2
+  - col: 0
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 10
+      displaymin: 0
+      displaytrend: Gauge
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: access_time
+      query:
+        query: name,haproxy.qtime,:eq,:avg
+        visible: true
+      rounding: None
+      statistic: Average
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Avg Queue Time
+      unit: ' s'
+      unitposition: After
+    row: 4
+    width: 2
+  - col: 4
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 10
+      displaymin: 0
+      displaytrend: Gauge
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: access_time
+      query:
+        query: name,haproxy.rtime,:eq,:avg
+        visible: true
+      rounding: None
+      statistic: Average
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Avg Response Time
+      unit: ' s'
+      unitposition: After
+    row: 4
+    width: 2
+  - col: 2
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 10
+      displaymin: 0
+      displaytrend: Gauge
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: access_time
+      query:
+        query: name,haproxy.ctime,:eq,:avg
+        visible: true
+      rounding: None
+      statistic: Average
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Avg Connect Time
+      unit: ' s'
+      unitposition: After
+    row: 4
+    width: 2
