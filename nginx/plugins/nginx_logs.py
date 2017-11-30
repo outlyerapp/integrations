@@ -1,8 +1,11 @@
 from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGIN_EXEC
-from datetime import datetime
+from datetime import datetime, timezone
 import re
 import os
-import time
+import logging
+import tzlocal
+
+logger = logging.getLogger(__name__)
 
 
 def reverse_readline(filename, buf_size=8192):
@@ -46,17 +49,33 @@ def find_vars(text):
 
 
 def log_format_2_regex(text):
-    return ''.join('(?P<' + g + '>.*?)' if g else re.escape(c) for g, c in find_vars(text))
-
+    return '^' + ''.join('(?P<' + g + '>.*?)' if g else re.escape(c) for g, c in find_vars(text)) + '$'
 
 
 class NginxLogsPlugin(Plugin):
 
-    COMBINED_FORMAT = '$remote_addr - $remote_user [$time_local] "$request" $status ' \
-                      '$body_bytes_sent "$http_referer" "$http_user_agent"'
+    LOG_FORMATS = [
+        '$remote_addr - $remote_user [$time_local] "$request" $status '
+        '$body_bytes_sent "$http_referer" "$http_user_agent"',
 
-    TIMED_COMBINED_FORMAT = '$remote_addr - $remote_user [$time_local] "$request" $status ' \
-                            '$body_bytes_sent $request_time "$http_referer" "$http_user_agent"'
+        '$remote_addr - $remote_user [$time_local] "$request" $status '
+        '$body_bytes_sent $request_time "$http_referer" "$http_user_agent"',
+
+        '$remote_addr - $remote_user [$time_local] "$request" $status '
+        '$body_bytes_sent "$http_referer" "$http_user_agent" "$request_time"',
+
+        '$remote_addr - $remote_user [$time_local] "$request" $status '
+        '$body_bytes_sent "$http_referer" "$http_user_agent" "$request_time "'
+        '"$upstream_connect_time" "$upstream_header_time" "$upstream_response_time"',
+
+        '$remote_addr - $remote_user [$time_local] "$request" $status '
+        '$body_bytes_sent "$http_referer" "$http_user_agent" $request_time '
+        '$upstream_response_time $pipe'
+    ]
+
+    TIME_FIELDS = [
+        'request_time', 'upstream_connect_time', 'upstream_header_time', 'upstream_response_time'
+    ]
 
     def collect(self, target: PluginTarget):
 
@@ -66,47 +85,78 @@ class NginxLogsPlugin(Plugin):
             return Status.UNKNOWN
 
         interval = target.get('interval', 60)
+        interval = 3600
         count = 0
         total = 0.0
+        warned = False
+
+        metrics = dict()
 
         for code in '1xx', '2xx', '3xx', '4xx', '5xx', 'requests':
-            target.gauge(code).set(0)
+            metrics[f'nginx.{code}'] = 0
 
-        timed_combined_regex = re.compile(log_format_2_regex(NginxLogsPlugin.TIMED_COMBINED_FORMAT))
-        combined_regex = re.compile(log_format_2_regex(NginxLogsPlugin.COMBINED_FORMAT))
+        for k in self.TIME_FIELDS:
+            metrics[f'nginx.total_{k}'] = 0
+            metrics[f'nginx.count_{k}'] = 0
+            metrics[f'nginx.min_{k}'] = 0
+            metrics[f'nginx.max_{k}'] = 0
 
-        timezone = time.strftime("%z", time.localtime())
-        start_time = datetime.now()
+        log_formats = [re.compile(log_format_2_regex(x)) for x in self.LOG_FORMATS]
 
-        for line in reverse_readline(log_path):
+        start_time = datetime.now(tzlocal.get_localzone())
 
-            m = timed_combined_regex.match(line) or combined_regex.match(line)
-            data = m.groupdict()
+        try:
+            for line in reverse_readline(log_path):
 
-            line_time = datetime.strptime(data['time_local'], '%d/%b/%Y:%H:%M:%S ' + timezone)
-            if (start_time - line_time).total_seconds() >= interval:
-                break
+                m = None
+                for pattern in log_formats:
+                    m = pattern.match(line)
+                    if m:
+                        break
+                if not m:
+                    if not warned:
+                        self.logger.warn('log file does not match any known format')
+                    warned = True
+                    continue
 
-            code = data['status']
-            target.gauge('nginx_' + code).inc(1)
-            target.gauge('nginx_' + code[0] + 'xx').inc(1)
-            target.gauge('nginx_requests').inc(1)
+                data = m.groupdict()
 
-            if 'request_time' in data:
-                rt = float(data['request_time'])
-                if count == 0 or rt < target.gauge('nginx_min_response_time', {'uom': 'sec'}).get():
-                    target.gauge('min', {'uom': 'sec'}).set(rt)
-                if count == 0 or rt > target.gauge('nginx_max_response_time', {'uom': 'sec'}).get():
-                    target.gauge('max', {'uom': 'sec'}).set(rt)
+                line_time = datetime.strptime(data['time_local'], '%d/%b/%Y:%H:%M:%S %z')
+                if (start_time - line_time).total_seconds() >= interval:
+                    break
 
-                total += rt
-                count += 1
+                code = data['status']
+                metrics[f'nginx.{code}'] = metrics.get(f'nginx.{code}', 0) + 1
+                metrics[f'nginx.{code[0]}xx'] += 1
+                metrics[f'nginx.requests'] += 1
 
-        if count > 0:
-            avg = total / count
-            target.gauge('nginx_avg_response_time', {'uom': 'sec'}).set(avg)
+                for k in self.TIME_FIELDS:
+                    try:
+                        val = float(data[k])
+                        if metrics[f'nginx.count_{k}'] == 0 or val > metrics[f'nginx.max_{k}']:
+                            metrics[f'nginx.max_{k}'] = val
+                        if metrics[f'nginx.count_{k}'] == 0 or val < metrics[f'nginx.min_{k}']:
+                            metrics[f'nginx.min_{k}'] = val
+                        metrics[f'nginx.count_{k}'] += 1
+                        metrics[f'nginx.total_{k}'] += val
+
+                    except KeyError:
+                        pass
+
+        except FileNotFoundError:
+            self.logger.error('Nginx log file not found: %s', log_path)
+            return Status.UNKNOWN
+
+        for k in self.TIME_FIELDS:
+            if metrics[f'nginx.count_{k}'] > 0:
+                metrics[f'nginx.avg_{k}'] = metrics[f'nginx.total_{k}'] / metrics[f'nginx.count_{k}']
+            del metrics[f'nginx.total_{k}']
+            del metrics[f'nginx.count_{k}']
 
         for code in '1xx', '2xx', '3xx', '4xx', '5xx', 'requests':
-            target.gauge('nginx_' + code + '_per_sec').set(target.gauge(code).get() / interval)
+            metrics[f'nginx.{code}_per_sec'] = metrics[f'nginx.{code}'] / interval
+
+        for k, v in metrics.items():
+            target.gauge(k).set(v)
 
         return Status.OK
