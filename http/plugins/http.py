@@ -10,8 +10,9 @@ class HttpRequestPlugin(Plugin):
 
     def collect(self, target: PluginTarget) -> Status:
 
+        name = target.get('name')
         url = target.get('url')
-        if not url:
+        if not url or not name:
             self.logger.error('HTTP plugin is not configured')
             return Status.UNKNOWN
 
@@ -30,7 +31,7 @@ class HttpRequestPlugin(Plugin):
         response = requests.request(type, url, params=params, headers=headers, data=data)
         content = ''
 
-        target.gauge('status_code').set(float(response.status_code))
+        target.gauge('http.status_code', {'site': name}).set(float(response.status_code))
         error_min = 300 if error_on_redirect else 400
         if response.status_code >= error_min:
             status = Status.CRITICAL
@@ -41,12 +42,12 @@ class HttpRequestPlugin(Plugin):
                 status = Status.CRITICAL
 
         if 'Content-Length' in response.headers:
-            target.gauge('response_size', {'uom': 'bytes'}).set(float(response.headers['Content-Length']))
+            target.gauge('http.response_size', {'site': name, 'uom': 'bytes'}).set(float(response.headers['Content-Length']))
         elif content:
-            target.gauge('response_size', {'uom': 'bytes'}).set(len(content))
+            target.gauge('http.response_size', {'site': name, 'uom': 'bytes'}).set(len(content))
 
         elapsed_time = response.elapsed.total_seconds()
-        target.gauge('response_time', {'uom': 'ms'}).set(elapsed_time)
+        target.gauge('http.response_time', {'site': name, 'uom': 'ms'}).set(elapsed_time)
         self.logger.info('Download of %s finished in %f seconds', url, elapsed_time)
 
         if elapsed_time >= critical_time:
