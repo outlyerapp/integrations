@@ -1,0 +1,109 @@
+description: ""
+icon:
+  color: '#000000'
+  name: dashboard
+labels: []
+name: http
+scopes:
+- defaultvalue: ""
+  labelkey: site
+theme: light
+title: HTTP
+widgets:
+  chartwidgets:
+  - col: 0
+    height: 3
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: sec
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,http.response_time,:eq,:and,:avg,(,site,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Response Time
+    row: 0
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: KBytes
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,http.response_size,:eq,:and,1024,:div,:avg
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Response Size
+    row: 3
+    width: 6
+  imagewidgets: []
+  markdownwidgets: []
+  numberwidgets:
+  - col: 6
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: null
+      displaymin: null
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: ${@SCOPE},name,http.status_code,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 400
+      title: Last Status
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 2
