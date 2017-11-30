@@ -40,9 +40,9 @@ class PingPlugin(Plugin):
                 self.logger.warning('Unable to parse output from ping command:\n' + output)
                 return Status.UNKNOWN
 
-            target.gauge('ping_sent', {'host': host}).set(float(m.group('sent')))
-            target.gauge('ping_received', {'host': host}).set(float(m.group('rcvd')))
-            target.gauge('ping_loss_pct', {'host': host, 'uom': '%'}).set(float(m.group('loss')))
+            target.gauge('ping.sent', {'host': host}).set(float(m.group('sent')))
+            target.gauge('ping.received', {'host': host}).set(float(m.group('rcvd')))
+            target.gauge('ping.loss_pct', {'host': host, 'uom': '%'}).set(float(m.group('loss')))
 
             try:
                 time = float(m.group('time'))
@@ -55,13 +55,13 @@ class PingPlugin(Plugin):
                 self.logger.warning('Unable to parse output from ping command:\n' + output)
                 return Status.UNKNOWN
 
-            target.gauge('ping_min', {'host': host, 'uom': 'ms'}).set(float(m.group('min')))
-            target.gauge('ping_avg', {'host': host, 'uom': 'ms'}).set(float(m.group('avg')))
-            target.gauge('ping_max', {'host': host, 'uom': 'ms'}).set(float(m.group('max')))
+            target.gauge('ping.min', {'host': host, 'uom': 'ms'}).set(float(m.group('min')))
+            target.gauge('ping.avg', {'host': host, 'uom': 'ms'}).set(float(m.group('avg')))
+            target.gauge('ping.max', {'host': host, 'uom': 'ms'}).set(float(m.group('max')))
 
             try:
                 std_dev = float(m.group('stddev'))
-                target.gauge('ping_stddev', {'host': host, 'uom': 'ms'}).set(std_dev)
+                target.gauge('ping.std_dev', {'host': host, 'uom': 'ms'}).set(std_dev)
             except TypeError:
                 pass
 
