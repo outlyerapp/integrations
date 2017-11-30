@@ -66,8 +66,7 @@ class HAProxyPlugin(Plugin):
             if ';csv' not in url:
                 url += ';csv;norefresh'
 
-            response = self.connect_http(url, username, password)
-            data = response.content
+            data = self.connect_http(url, username, password)
 
         if data is None:
             return Status.CRITICAL
