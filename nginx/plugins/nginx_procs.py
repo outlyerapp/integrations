@@ -25,8 +25,8 @@ class NginxProcessesPlugin(Plugin):
             except IndexError:
                 pass
 
-        target.gauge('nginx_master_proc_count').set(master_count)
-        target.gauge('nginx_worker_proc_count').set(worker_count)
+        target.gauge('nginx.master_proc_count').set(master_count)
+        target.gauge('nginx.worker_proc_count').set(worker_count)
 
         if master_count != 1:
             return Status.CRITICAL
