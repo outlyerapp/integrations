@@ -84,6 +84,8 @@ def is_number(val: str):
         return False
 
 
+q = dict()
+
 def _recursive_flatten(src: Dict[str, Any], dest: Dict[str, Any], prefix: str):
     prefix = prefix + '.' if prefix != '' else ''
     for k, v in src.items():
@@ -107,41 +109,56 @@ class MongoPlugin(Plugin):
 
         host = target.get('host', 'localhost')
         port = target.get('port', 27017)
+        username = target.get('username', None)
+        password = target.get('password', None)
+        auth_db = target.get('auth_source', None)
+        connect_timeout = target.get('connect_timeout', 5000)
+        socket_timeout = target.get('socket_timeout', 5000)
 
         try:
-            self.logger.info('Connecting to MongoDB on %s:%d', host, port)
-            c = pymongo.MongoClient(host=host, port=port,
-                                    connectTimeoutMS=5000, socketTimeoutMS=5000)
+            if username:
+                uri = f'mongodb://{username}:{password}@{host}:{port}/'
+                if auth_db:
+                    uri += f'?authSource={auth_db}'
+
+                self.logger.info('Connecting to MongoDB on %s', uri)
+                c = pymongo.MongoClient(uri,
+                                        connectTimeoutMS=connect_timeout,
+                                        socketTimeoutMS=socket_timeout)
+            else:
+                self.logger.info('Connecting to MongoDB on %s:%d', host, port)
+                c = pymongo.MongoClient(host=host, port=port,
+                                        connectTimeoutMS=connect_timeout,
+                                        socketTimeoutMS=socket_timeout)
 
             for db_name in c.database_names():
                 db = c.get_database(db_name)
                 stats = uncamel_dict(db.command('dbstats'))
                 for k, v in stats.items():
                     if is_number(v):
-                        target.gauge(k, {'database': db_name}).set(float(v))
+                        target.gauge('mongodb.' + k, {'database': db_name}).set(float(v))
 
             db = c.get_database('admin')
             stats = uncamel_dict(flatten_dict(db.command('serverStatus')))
 
             for k in RATE_METRICS:
                 try:
-                    new_val = float(stats[k])
-                    old_val = target.counter(k).get()
-                    target.counter(k).set(new_val)
+                    val = float(stats[k])
+                    target.counter('mongodb.' + k).set(val)
                 except KeyError:
                     pass
 
             for k in GAUGE_METRICS:
                 try:
                     val = stats[k]
-                    target.gauge(k).set(val)
+                    target.gauge('mongodb.' + k).set(val)
                 except KeyError:
                     pass
 
             for k in COUNTER_METRICS:
                 try:
                     val = stats[k]
-                    target.counter(k).set(val)
+                    target.counter('mongodb.' + k).set(val)
                 except KeyError:
                     pass
 
@@ -151,6 +168,13 @@ class MongoPlugin(Plugin):
         except pymongo.errors.ConnectionFailure as ex:
             self.logger.error('Cannot connect to MongoDB: ' + ex.args[0])
             return Status.CRITICAL
+
+        except pymongo.errors.OperationFailure as ex:
+            if ex.details['codeName'] == 'AuthenticationFailed':
+                self.logger.error('Error connecting to MongoDB: %s', ex.details['errmsg'])
+            else:
+                self.logger.error('Error executing MongoDB query: %s', ex)
+            return Status.UNKNOWN
 
         except Exception as ex:
             self.logger.exception('Error in plugin', exc_info=ex)

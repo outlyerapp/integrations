@@ -6,16 +6,16 @@ interval: 30
 settings:
   - name: host
     type: string
-    description: Hostname of the MongoDB server
     default: "localhost"
+    description: Hostname of the MongoDB server
   - name: port
     type: int
-    description: Port number of the MongoDB server
     default: 27017
+    description: Port number of the MongoDB server
   - name: ssl
     type: bool
-    description: If true, use SSL when connecting
     default: false
+    description: If true, use SSL when connecting
   - name: username
     type: string
     description: Name of the MongoDB user
@@ -25,13 +25,18 @@ settings:
   - name: auth_source
     type: string
     description: Name of the MongoDB authentication database
+  - name: connect_timeout
+    type: int
+    default: 5000
+    description: Time to wait for connection to MongoDB (in ms)
+  - name: socket_timeout
+    type: int
+    default: 5000
+    description: Time to wait for commands to execute
 
 deployments:
   - selector:
       - outlyer.com/type: 'host'
     host: 18.216.173.20
     port: 27017
-    username: admin
-    password: admin
-    auth_source: admin
-    
+
