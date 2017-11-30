@@ -1,0 +1,446 @@
+description: ""
+icon:
+  color: '#000000'
+  name: dashboard
+labels: []
+name: mysql
+scopes:
+- defaultvalue: ""
+  labelkey: host
+- defaultvalue: ""
+  labelkey: db
+theme: light
+title: MySQL
+widgets:
+  chartwidgets:
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,mysql.select_scan,:eq,:and,:avg
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Full Table Scans
+    row: 2
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,mysql.innodb_row_lock_waits,:eq,:and,atlas.dstype,counter,:eq,:and,:avg
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Row Lock Waits
+    row: 8
+    width: 3
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,mysql.table_locks_waited,:eq,:and,:avg
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Table Lock Waits
+    row: 4
+    width: 3
+  - col: 4
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,mysql.connection_errors_,:re,:and,:avg,(,name,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Connection Errors
+    row: 0
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,mysql.created_tmp_disk_tables,:eq,:and,:avg
+        visible: true
+      seriesstyle:
+        color: '#ff5e44'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Temp Tables Created on Disk
+    row: 4
+    width: 3
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,mysql.created_tmp_files,:eq,:and,:avg
+        visible: true
+      seriesstyle:
+        color: '#ff5e44'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Temp Files Created
+    row: 6
+    width: 3
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,mysql.slow_queries,:eq,:and,:avg
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Slow Queries
+    row: 2
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: msec
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,mysql.innodb_row_lock_time,:eq,atlas.dstype,counter,:eq,:and,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Max Row Lock Time
+    row: 6
+    width: 3
+  - col: 6
+    height: 3
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: rows
+          unit: k
+          unitposition: After
+      charttype: StackedArea
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,mysql.innodb_rows_,:re,:and,:sum,(,name,),:by,1000,:div
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Rows Per Second
+    row: 2
+    width: 4
+  - col: 6
+    height: 3
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: StackedBar
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,mysql.com_(commit|rollback),:re,:and,:sum,(,name,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Transactions
+    row: 5
+    width: 4
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: MB/sec
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: |
+          ${@SCOPE},name,mysql.innodb_page_size,:eq,:and,:sum,
+          ${@SCOPE},name,mysql.innodb_pages_written,:eq,:and,:sum,:mul,1048576,:div,
+          ${@SCOPE},name,mysql.innodb_page_size,:eq,:and,:sum,
+          ${@SCOPE},name,mysql.innodb_pages_read,:eq,:and,:sum,:mul,1048576,:div
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: InnoDB Disk Activity
+    row: 8
+    width: 7
+  imagewidgets: []
+  markdownwidgets: []
+  numberwidgets:
+  - col: 0
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: null
+      displaymin: null
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: ${@SCOPE},name,mysql.threads_connected,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Connections
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 2
+  - col: 2
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: null
+      displaymin: null
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: ${@SCOPE},name,mysql.threads_running,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Running
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 2
