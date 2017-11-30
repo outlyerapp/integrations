@@ -9,7 +9,31 @@ from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGI
 # TODO: add bool parameter showCommandCounts
 
 
-RATE_METRICS = [
+GAUGE_METRICS = [
+    "innodb_buffer_pool_pages_dirty",
+    "innodb_data_pending_fsyncs",
+    "innodb_data_pending_reads",
+    "innodb_data_pending_writes",
+    "innodb_os_log_pending_fsyncs",
+    "innodb_os_log_pending_writes",
+    "innodb_page_size",
+    "innodb_num_open_files",
+    "ongoing_anonymous_transaction_count",
+    "open_files",
+    "open_streams",
+    "open_table_definitions",
+    "open_tables",
+    "threads_connected",
+    "threads_running",
+]
+
+COUNTER_METRICS = [
+    "opened_files",
+    "opened_table_definitions",
+    "opened_tables",
+    "table_locks_waited",
+    "table_open_cache_hits",
+    "table_open_cache_misses",
     "bytes_received",
     "bytes_sent",
     "connection_errors_accept",
@@ -19,6 +43,9 @@ RATE_METRICS = [
     "connection_errors_select",
     "connection_errors_tcpwrap",
     "connections",
+    "created_tmp_disk_tables",
+    "created_tmp_files",
+    "created_tmp_tables",
     "table_locks_immediate",
     "table_open_cache_hits",
     "table_open_cache_misses",
@@ -45,6 +72,8 @@ RATE_METRICS = [
     "innodb_pages_created",
     "innodb_pages_read",
     "innodb_pages_written",
+    "innodb_row_lock_time",
+    "innodb_row_lock_waits",
     "innodb_rows_deleted",
     "innodb_rows_inserted",
     "innodb_rows_read",
@@ -56,58 +85,31 @@ RATE_METRICS = [
     "select_range",
     "select_range_check",
     "select_scan",
+    "slow_launch_threads",
+    "slow_queries",
+    "sort_merge_passes",
     "sort_range",
     "sort_rows",
     "sort_scan",
-]
-
-PERCENTAGE_METRICS = [
-    ("table_open_cache_ratio", "table_open_cache_hits", "table_open_cache_misses"),
-]
-
-GAUGE_METRICS = [
-    "open_files",
-    "open_streams",
-    "open_table_definitions",
-    "open_tables",
-    "threads_connected",
-    "threads_running",
-    "innodb_data_pending_fsyncs",
-    "innodb_data_pending_reads",
-    "innodb_data_pending_writes",
-    "innodb_os_log_pending_fsyncs",
-    "innodb_os_log_pending_writes",
-    "innodb_row_lock_time",
-    "innodb_row_lock_time_avg",
-    "innodb_row_lock_time_max",
-    "innodb_row_lock_waits",
-    "innodb_num_open_files",
-    "open_tables",
-]
-
-COUNTER_METRICS = [
-    "opened_files",
-    "opened_table_definitions",
-    "opened_tables",
     "table_locks_waited",
+    "table_open_cache_hits",
+    "table_open_cache_misses",
+    "table_open_cache_overflows",
 ]
 
 
 class MysqlPlugin(Plugin):
-    def __init__(self, name, deployments, host, executor=DEFAULT_PLUGIN_EXEC):
-        super().__init__(name, deployments, host, executor)
-        self.last_collect = None
 
     def collect(self, target: PluginTarget):
 
-        time_now = time.monotonic()
+        host = target.get('host', '127.0.0.1')
+        port = target.get('port', 3306)
+        user = target.get('username', 'root')
+        password = target.get('password', 'mysql')
+        db = target.get('database', 'mysql')
 
         try:
-            conn = MySQLdb.connect(host=target.get('host', '127.0.0.1'),
-                                   port=target.get('port', 3306),
-                                   user=target.get('username', 'root'),
-                                   passwd=target.get('passwd', 'mysql'),
-                                   db=target.get('database', 'mysql'))  # type: MySQLdb.Connection
+            conn = MySQLdb.connect(host=host, port=port, user=user, password=password, db=db)
 
             cursor = conn.cursor()
             stats = dict()
@@ -116,42 +118,38 @@ class MysqlPlugin(Plugin):
                 stats[row[0].lower()] = row[1]
             cursor.close()
 
-            for k in RATE_METRICS:
-                if self.last_collect:
-                    elapsed_sec = time_now - self.last_collect
-                    per_second = (float(stats[k]) - target.counter('mysql_' + k).get()) / elapsed_sec
-                    target.gauge('mysql_' + k + '_per_sec').set(per_second)
-                target.counter('mysql_' + k).set(float(stats[k]))
-
-            for k, top, bottom in PERCENTAGE_METRICS:
-                percent = 0.0
-                if float(stats[bottom]) > 0:
-                    percent = float(stats[top]) / float(stats[bottom]) * 100.0
-                target.counter('mysql_' + top).set(float(stats[top]))
-                target.counter('mysql_' + bottom).set(float(stats[bottom]))
-                target.gauge('mysql_' + k, {'uom': '%'}).set(percent)
+            labels = {
+                'host': host,
+                'port': str(port),
+                'username': user,
+                'db': db
+            }
 
             for k in GAUGE_METRICS:
-                target.gauge('mysql_' + k).set(float(stats[k]))
+                try:
+                    val = float(stats[k])
+                    target.gauge(f'mysql.{k}', labels).set(val)
+                except ValueError:
+                    pass
 
             for k in COUNTER_METRICS:
-                target.counter('mysql_' + k).set(float(stats[k]))
+                try:
+                    val = float(stats[k])
+                    target.counter(f'mysql.{k}', labels).set(val)
+                except ValueError:
+                    pass
 
-            self.last_collect = time_now
             return Status.OK
 
         except _mysql_exceptions.MySQLError as ex:
 
             if ex.args[0] >= CR.ERROR_FIRST:
                 self.logger.error('Unable to connect to MySQL: ' + ex.args[1])
-                self.last_collect = None
                 return Status.CRITICAL
             else:
                 self.logger.error('Unable to collect from MySQL: ' + ex.args[1])
-                self.last_collect = None
                 return Status.UNKNOWN
 
         except Exception as ex:
             self.logger.exception('Error in plugin', exc_info=ex)
-            self.last_collect = None
             return Status.UNKNOWN
