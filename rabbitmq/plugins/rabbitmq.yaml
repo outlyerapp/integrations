@@ -26,10 +26,29 @@ settings:
   - name: password
     type: password
     description: Password for the RabbitMQ user
+  - name: vhost_stats
+    type: bool
+    default: false
+    description: Gather metrics for each virtual host
+  - name: queue_stats
+    type: bool
+    default: false
+    description: Gather metrics for each queue
+  - name: exchange_stats
+    type: bool
+    default: false
+    description: Gather metrics for each exchange
 
 
 deployments:
   - selector:
       - outlyer.com/type: 'host'
+    interval: 10
+    host: localhost
+    port: 15672
+    protocol: http
     username: guest
     password: guest
+    vhost_stats: true
+    queue_stats: true
+    exchange_stats: true
