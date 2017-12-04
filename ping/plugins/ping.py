@@ -42,7 +42,7 @@ class PingPlugin(Plugin):
 
             target.gauge('ping.sent', {'host': host}).set(float(m.group('sent')))
             target.gauge('ping.received', {'host': host}).set(float(m.group('rcvd')))
-            target.gauge('ping.loss_pct', {'host': host, 'uom': '%'}).set(float(m.group('loss')))
+            target.gauge('ping.loss_pct', {'host': host, 'uom': 'percent'}).set(float(m.group('loss')))
 
             try:
                 time = float(m.group('time'))
