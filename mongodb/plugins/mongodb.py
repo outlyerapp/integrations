@@ -1,9 +1,12 @@
-from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGIN_EXEC
+#!/usr/bin/env python3
+
+from outlyer_plugin import Status, Plugin
 from typing import Dict, Any
 import pymongo
 import pymongo.errors
 import re
 import time
+import sys
 
 # TODO: add replication stats
 # TODO: support authentication
@@ -105,15 +108,15 @@ def flatten_dict(d: Dict[str, Any]):
 
 class MongoPlugin(Plugin):
 
-    def collect(self, target: PluginTarget):
+    def collect(self, _):
 
-        host = target.get('host', 'localhost')
-        port = target.get('port', 27017)
-        username = target.get('username', None)
-        password = target.get('password', None)
-        auth_db = target.get('auth_source', None)
-        connect_timeout = target.get('connect_timeout', 5000)
-        socket_timeout = target.get('socket_timeout', 5000)
+        host = self.get('host', 'localhost')
+        port = self.get('port', 27017)
+        username = self.get('username', None)
+        password = self.get('password', None)
+        auth_db = self.get('auth_source', None)
+        connect_timeout = self.get('connect_timeout', 5000)
+        socket_timeout = self.get('socket_timeout', 5000)
 
         try:
             if username:
@@ -136,7 +139,7 @@ class MongoPlugin(Plugin):
                 stats = uncamel_dict(db.command('dbstats'))
                 for k, v in stats.items():
                     if is_number(v):
-                        target.gauge('mongodb.' + k, {'database': db_name}).set(float(v))
+                        self.gauge('mongodb.' + k, {'database': db_name}).set(float(v))
 
             db = c.get_database('admin')
             stats = uncamel_dict(flatten_dict(db.command('serverStatus')))
@@ -144,21 +147,21 @@ class MongoPlugin(Plugin):
             for k in RATE_METRICS:
                 try:
                     val = float(stats[k])
-                    target.counter('mongodb.' + k).set(val)
+                    self.counter('mongodb.' + k).set(val)
                 except KeyError:
                     pass
 
             for k in GAUGE_METRICS:
                 try:
                     val = stats[k]
-                    target.gauge('mongodb.' + k).set(val)
+                    self.gauge('mongodb.' + k).set(val)
                 except KeyError:
                     pass
 
             for k in COUNTER_METRICS:
                 try:
                     val = stats[k]
-                    target.counter('mongodb.' + k).set(val)
+                    self.counter('mongodb.' + k).set(val)
                 except KeyError:
                     pass
 
@@ -179,3 +182,8 @@ class MongoPlugin(Plugin):
         except Exception as ex:
             self.logger.exception('Error in plugin', exc_info=ex)
             return Status.UNKNOWN
+
+
+if __name__ == '__main__':
+  # To run the collection
+  sys.exit(MongoPlugin().run())
