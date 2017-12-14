@@ -1,9 +1,11 @@
-import re
+#!/usr/bin/env python3
 
-from outlyer_agent.collection import Status, Plugin, PluginTarget
+import re
+from outlyer_plugin import Status, Plugin
 from typing import Dict, Any
 import redis
 import redis.exceptions
+import sys
 
 COUNTER_METRICS = [
     'uptime_in_seconds',
@@ -71,7 +73,7 @@ def split_uom(val):
 
 class RedisPlugin(Plugin):
 
-    def collect(self, target: PluginTarget):
+    def collect(self, _):
 
         def uom(k: str) -> dict:
             if k.endswith('_time_sec'):
@@ -84,21 +86,21 @@ class RedisPlugin(Plugin):
                 return {}
 
         try:
-            r = redis.StrictRedis(host=target.get('host', 'localhost'),
-                                  port=target.get('port', 6379),
-                                  password=target.get('password', None))
+            r = redis.StrictRedis(host=self.get('host', 'localhost'),
+                                  port=self.get('port', 6379),
+                                  password=self.get('password', None))
 
             output = r.info()  # type: Dict[str, Any]
 
             for key in COUNTER_METRICS:
                 val, labels = split_uom(output[key])
                 labels.update(uom(key))
-                target.counter('redis_' + key, labels).set(val)
+                self.counter('redis_' + key, labels).set(val)
 
             for key in GAUGE_METRICS:
                 val, labels = split_uom(output[key])
                 labels.update(uom(key))
-                target.counter('redis_' + key, labels).set(val)
+                self.counter('redis_' + key, labels).set(val)
 
             for key in output.keys():
                 if key.startswith('db'):
@@ -106,7 +108,7 @@ class RedisPlugin(Plugin):
                         val, labels = split_uom(output[key][db_key])
                         labels.update(uom(key))
                         labels['database'] = key
-                        target.gauge('redis_' + db_key, labels).set(val)
+                        self.gauge('redis_' + db_key, labels).set(val)
 
             return Status.OK
 
@@ -117,3 +119,8 @@ class RedisPlugin(Plugin):
         except redis.exceptions.ResponseError as ex:
             self.logger.error('Unexpected response from Redis server: ' + ex.args[0])
             return Status.CRITICAL
+
+
+if __name__ == '__main__':
+  # To run the collection
+  sys.exit(RedisPlugin().run())
