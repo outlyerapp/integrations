@@ -18,7 +18,7 @@ section below).
 ## Viewing the Showcase
 
 To see a live showcase of all the available integrations, start the
-`showcase.py` script and open a browser to http://localhost:5000.
+`./_showcase/showcase.py` script and open a browser to http://localhost:5000.
 
 ## Installing integrations manually
 
@@ -81,6 +81,6 @@ pull request. In general, we follow the "fork-and-pull" Git workflow.
 
 ## Schema validation
 
-The Python script in `validate.py` will check all plugin and package
+The Python script in `./_test/validate.py` will check all plugin and package
 YAML files to ensure correctness. Please run it before committing to
 this repo or submitting a pull request.

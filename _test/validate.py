@@ -12,10 +12,10 @@ pykwalify.init_logging(logging.FATAL)
 
 passed = failed = 0
 
-for file in glob.iglob('./*/package.yaml'):
+for file in glob.iglob('../*/package.yaml'):
     c = pykwalify.core.Core(
         source_file=file,
-        schema_files=['./package.schema.yaml'],
+        schema_files=['../package.schema.yaml'],
     )
     c.validate(raise_exception=False)
     if c.validation_errors:
@@ -27,10 +27,10 @@ for file in glob.iglob('./*/package.yaml'):
         passed += 1
 
 
-for file in glob.iglob('./*/plugins/*.yaml', recursive=True):
+for file in glob.iglob('../*/plugins/*.yaml', recursive=True):
     c = pykwalify.core.Core(
         source_file=file,
-        schema_files=['./plugin.schema.yaml'],
+        schema_files=['../plugin.schema.yaml'],
     )
     c.validate(raise_exception=False)
     if c.validation_errors:

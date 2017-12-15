@@ -4,12 +4,12 @@ import yaml
 from flask import Flask, render_template, send_from_directory
 
 app = Flask(__name__)
+top = pathlib.Path('..')
 
 
 @app.route('/')
 def showcase():
     integrations = dict()
-    top = pathlib.Path('.')
     for package in top.glob('*/package.yaml'):  # type: pathlib.Path
         package_name = package.parent.name
         package_yaml = yaml.safe_load(open(package, 'r'))
@@ -21,7 +21,7 @@ def showcase():
 
 @app.route('/logo/<package>/<path:filename>')
 def custom_static(package, filename):
-    return send_from_directory(package, filename)
+    return send_from_directory(str(top.absolute()) + '/' + package, filename)
 
 if __name__ == '__main__':
     app.run()
