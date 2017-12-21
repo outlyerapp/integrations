@@ -11,12 +11,13 @@ class ZookeeperPlugin(Plugin):
     def get_stats(self):
         """ Get ZooKeeper server stats as a map """
         data = self._send_cmd('mntr')
-        stuff={}
+        result={}
         decoded_data = data.decode('utf-8')
         for line in decoded_data.split('\n'):
             if len(line) > 1:
-                stuff[line.split()[0]] = line.split()[1]
-        return stuff
+                result[line.split()[0]] = line.split()[1]
+        return result
+
     def _create_socket(self):
         return socket.socket()
 
@@ -25,7 +26,7 @@ class ZookeeperPlugin(Plugin):
         s = self._create_socket()
         s.settimeout(self._timeout)
         s.connect(self._address)
-        s.send(str.encode('mntr'))
+        s.send(str.encode(cmd))
         data = s.recv(2048)
         s.close()
         return data
@@ -36,8 +37,12 @@ class ZookeeperPlugin(Plugin):
         self.zk_version = self.get('version', '0')
         self._address = (HOST, int(PORT))
         self._timeout = 10
+        # Test the server is running in a non-error state
+        if self._send_cmd('ruok') == 'imok':
+            status = Status.OK
+        else:
+            status = Status.CRITICAL
         output = self.get_stats()
-        status = Status.OK
         if output['zk_version'] != (self.zk_version + ','):
             status = Status.CRITICAL
         del output['zk_version']
