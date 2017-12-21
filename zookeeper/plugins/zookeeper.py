@@ -1,5 +1,7 @@
+#!/usr/bin/env python3
+
 import time
-from outlyer_agent.collection import Status, Plugin, PluginTarget
+from outlyer_plugin import Status, Plugin
 import sys
 import socket
 import re
@@ -28,10 +30,10 @@ class ZookeeperPlugin(Plugin):
         s.close()
         return data
 
-    def collect(self, target: PluginTarget) -> Status:
-        HOST = target.get('host')
-        PORT = target.get('port')
-        self.zk_version = target.get('version')
+    def collect(self, _) -> Status:
+        HOST = self.get('host', 'localhost')
+        PORT = self.get('port', 2181)
+        self.zk_version = self.get('version', '0')
         self._address = (HOST, int(PORT))
         self._timeout = 10
         output = self.get_stats()
@@ -41,5 +43,9 @@ class ZookeeperPlugin(Plugin):
         del output['zk_version']
         del output['zk_server_state']
         for key, value in output.items():
-            target.gauge(key, {'zookeeper': key}).set(int(value))
+            self.gauge(key, {'zookeeper': key}).set(int(value))
         return Status.OK
+
+if __name__ == '__main__':
+    # To run the collection
+    sys.exit(ZookeeperPlugin().run())
