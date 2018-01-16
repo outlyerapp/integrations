@@ -41,8 +41,8 @@ body {
 }
 
 .card > img {
-  width: 48px;
-  height: 48px;
+  width: 100px;
+  height: 100px;
   display: block;
   margin: 0 auto .75rem;
 }
