@@ -1,16 +1,19 @@
+#!/usr/bin/env python3
+
 import platform
 import re
 import subprocess
+import sys
 
-from outlyer_agent.collection import Status, Plugin, PluginTarget
+from outlyer_plugin import Plugin, Status
 
 
 class PingPlugin(Plugin):
 
-    def collect(self, target: PluginTarget):
+    def collect(self, _):
 
-        count = target.get('count', 3)
-        hosts = target.get('hosts', '192.168.1.1')
+        count = self.get('count', 3)
+        hosts = self.get('hosts', '192.168.1.1')
         if isinstance(hosts, str):
             hosts = [x.strip() for x in hosts.split(',')]
 
@@ -40,13 +43,13 @@ class PingPlugin(Plugin):
                 self.logger.warning('Unable to parse output from ping command:\n' + output)
                 return Status.UNKNOWN
 
-            target.gauge('ping.sent', {'host': host}).set(float(m.group('sent')))
-            target.gauge('ping.received', {'host': host}).set(float(m.group('rcvd')))
-            target.gauge('ping.loss_pct', {'host': host, 'uom': 'percent'}).set(float(m.group('loss')))
+            self.gauge('ping.sent', {'host': host}).set(float(m.group('sent')))
+            self.gauge('ping.received', {'host': host}).set(float(m.group('rcvd')))
+            self.gauge('ping.loss_pct', {'host': host, 'uom': 'percent'}).set(float(m.group('loss')))
 
             try:
                 time = float(m.group('time'))
-                target.gauge('ping_time', {'host': host, 'uom': 'ms'}).set(time)
+                self.gauge('ping_time', {'host': host, 'uom': 'ms'}).set(time)
             except TypeError:
                 pass
 
@@ -55,14 +58,18 @@ class PingPlugin(Plugin):
                 self.logger.warning('Unable to parse output from ping command:\n' + output)
                 return Status.UNKNOWN
 
-            target.gauge('ping.min', {'host': host, 'uom': 'ms'}).set(float(m.group('min')))
-            target.gauge('ping.avg', {'host': host, 'uom': 'ms'}).set(float(m.group('avg')))
-            target.gauge('ping.max', {'host': host, 'uom': 'ms'}).set(float(m.group('max')))
+            self.gauge('ping.min', {'host': host, 'uom': 'ms'}).set(float(m.group('min')))
+            self.gauge('ping.avg', {'host': host, 'uom': 'ms'}).set(float(m.group('avg')))
+            self.gauge('ping.max', {'host': host, 'uom': 'ms'}).set(float(m.group('max')))
 
             try:
                 std_dev = float(m.group('stddev'))
-                target.gauge('ping.std_dev', {'host': host, 'uom': 'ms'}).set(std_dev)
+                self.gauge('ping.std_dev', {'host': host, 'uom': 'ms'}).set(std_dev)
             except TypeError:
                 pass
 
         return status
+
+
+if __name__ == '__main__':
+    sys.exit(PingPlugin().run())

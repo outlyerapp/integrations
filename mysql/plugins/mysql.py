@@ -1,10 +1,12 @@
-import time
+#!/usr/bin/env python3
+
+import sys
 
 import MySQLdb
 import _mysql_exceptions
 from MySQLdb.constants import CR
 
-from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGIN_EXEC
+from outlyer_plugin import Status, Plugin
 
 # TODO: add bool parameter showCommandCounts
 
@@ -100,13 +102,13 @@ COUNTER_METRICS = [
 
 class MysqlPlugin(Plugin):
 
-    def collect(self, target: PluginTarget):
+    def collect(self, _):
 
-        host = target.get('host', '127.0.0.1')
-        port = target.get('port', 3306)
-        user = target.get('username', 'root')
-        password = target.get('password', 'mysql')
-        db = target.get('database', 'mysql')
+        host = self.get('host', '127.0.0.1')
+        port = self.get('port', 3306)
+        user = self.get('username', 'root')
+        password = self.get('password', 'mysql')
+        db = self.get('database', 'mysql')
 
         try:
             conn = MySQLdb.connect(host=host, port=port, user=user, password=password, db=db)
@@ -128,14 +130,14 @@ class MysqlPlugin(Plugin):
             for k in GAUGE_METRICS:
                 try:
                     val = float(stats[k])
-                    target.gauge(f'mysql.{k}', labels).set(val)
+                    self.gauge(f'mysql.{k}', labels).set(val)
                 except ValueError:
                     pass
 
             for k in COUNTER_METRICS:
                 try:
                     val = float(stats[k])
-                    target.counter(f'mysql.{k}', labels).set(val)
+                    self.counter(f'mysql.{k}', labels).set(val)
                 except ValueError:
                     pass
 
@@ -153,3 +155,7 @@ class MysqlPlugin(Plugin):
         except Exception as ex:
             self.logger.exception('Error in plugin', exc_info=ex)
             return Status.UNKNOWN
+
+
+if __name__ == '__main__':
+    sys.exit(MysqlPlugin().run())

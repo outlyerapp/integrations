@@ -1,21 +1,25 @@
+#!/usr/bin/env python3
+
 import socket
 import ssl
+import sys
+
 from datetime import datetime
 
 from OpenSSL import crypto
 
-from outlyer_agent.collection import Status, Plugin, PluginTarget
+from outlyer_plugin import Plugin, Status
 
 
-class LocalSslExpirationCheck(Plugin):
+class RemoteSslExpirationCheck(Plugin):
 
-    def collect(self, target: PluginTarget):
+    def collect(self, _):
 
-        host = target.get('host')
-        port = target.get('port', 443)
-        expected_cn = target.get('cn', None)
-        warning_days = target.get('warning_days', 30)
-        critical_days = target.get('critical_days', 7)
+        host = self.get('host')
+        port = self.get('port', 443)
+        expected_cn = self.get('cn', None)
+        warning_days = self.get('warning_days', 30)
+        critical_days = self.get('critical_days', 7)
 
         if not host:
             self.logger.error('Hostname not specified in configuration')
@@ -34,7 +38,8 @@ class LocalSslExpirationCheck(Plugin):
             for x509part in cert.get_subject().get_components():
                 if x509part[0] == b'CN' and x509part[1].decode('utf-8') != expected_cn:
                     cn_match = False
-                    self.logger.warning('CN for certificate at %s is %s, was expecting %s', host, x509part[1], CN)
+                    self.logger.warning('CN for certificate at %s is %s, was expecting %s',
+                                        host, x509part[1], expected_cn)
 
         not_before = datetime.strptime(cert.get_notBefore().decode('utf-8'), "%Y%m%d%H%M%SZ")
         if not_before > datetime.now():
@@ -44,7 +49,7 @@ class LocalSslExpirationCheck(Plugin):
         days_left = (not_after - datetime.utcnow()).days
         self.logger.info('Certificate for %s expires in %d days', host, days_left)
 
-        target.gauge('ssl_days_remaining', {'uom': 'days', 'host': host, 'port': str(port)}).set(days_left)
+        self.gauge('ssl_days_remaining', {'uom': 'days', 'host': host, 'port': str(port)}).set(days_left)
 
         if days_left <= critical_days or not_before > datetime.now() or not cn_match:
             return Status.CRITICAL
@@ -52,3 +57,7 @@ class LocalSslExpirationCheck(Plugin):
             return Status.WARNING
         else:
             return Status.OK
+
+
+if __name__ == '__main__':
+    sys.exit(RemoteSslExpirationCheck().run())

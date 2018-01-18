@@ -1,9 +1,14 @@
+#!/usr/bin/env python3
+
 import csv
 import io
 import socket
+import sys
+
 import requests
 
-from outlyer_agent.collection import Status, Plugin, PluginTarget
+from outlyer_plugin import Plugin, Status
+
 
 class HAProxyPlugin(Plugin):
 
@@ -48,16 +53,16 @@ class HAProxyPlugin(Plugin):
     def translate_status(self, status):
         return self.STATUS_MAP.get(status, 2)
 
-    def collect(self, target: PluginTarget) -> Status:
+    def collect(self, _) -> Status:
 
         data = None
-        if target.get('mode', 'socket') == 'socket':
-            sock_path = target.get('haproxy_sock', '/var/run/haproxy.sock')
+        if self.get('mode', 'socket') == 'socket':
+            sock_path = self.get('haproxy_sock', '/var/run/haproxy.sock')
             data = self.connect_socket(sock_path)
         else:
-            url = target.get('url')
-            username = target.get('username')
-            password = target.get('password')
+            url = self.get('url')
+            username = self.get('username')
+            password = self.get('password')
 
             if not url:
                 self.logger.error('HTTP mode specified but no URL provided')
@@ -84,7 +89,7 @@ class HAProxyPlugin(Plugin):
             for k in self.COUNTER_METRICS:
                 try:
                     val = float(row[k])
-                    target.counter(f'haproxy.{k}', labels).set(val)
+                    self.counter(f'haproxy.{k}', labels).set(val)
                 except KeyError:
                     pass
                 except ValueError:
@@ -93,10 +98,14 @@ class HAProxyPlugin(Plugin):
             for k in self.GAUGE_METRICS:
                 try:
                     val = float(row[k])
-                    target.gauge(f'haproxy.{k}', labels).set(val)
+                    self.gauge(f'haproxy.{k}', labels).set(val)
                 except KeyError:
                     pass
                 except ValueError:
                     pass
 
         return Status.OK
+
+
+if __name__ == '__main__':
+    sys.exit(HAProxyPlugin().run())

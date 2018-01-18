@@ -1,32 +1,35 @@
+#!/usr/bin/env python3
+
 import re
+import sys
 
 from typing import Sequence
 
 import psycopg2
 import psycopg2.errorcodes
 
-from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGIN_EXEC
+from outlyer_plugin import Plugin, Status, LOGGER
 
 
 # TODO: replication stats
 
 
-# noinspection SqlResolve
+# noinspection SqlResolve,SqlDialectInspection,SqlNoDataSourceInspection
 class PostgreSQLPlugin(Plugin):
 
 
-    def __init__(self, name, deployments, host, logger, executor=DEFAULT_PLUGIN_EXEC):
-        super().__init__(name, deployments, host, logger, executor)
+    def __init__(self, logger=LOGGER):
+        super().__init__(logger)
         self.host = self.port = self.dbname = self.user = self.password = None
         self.conn = self.cursor = None
 
-    def collect(self, target: PluginTarget) -> Status:
+    def collect(self, _) -> Status:
 
-        self.host = target.get('host', 'localhost')
-        self.port = target.get('port', 5432)
-        self.dbname = target.get('dbname', 'postgres')
-        self.user = target.get('username', None)
-        self.password = target.get('password', None)
+        self.host = self.get('host', 'localhost')
+        self.port = self.get('port', 5432)
+        self.dbname = self.get('dbname', 'postgres')
+        self.user = self.get('username', None)
+        self.password = self.get('password', None)
 
         try:
             self.conn = psycopg2.connect(self.dsn)
@@ -34,19 +37,19 @@ class PostgreSQLPlugin(Plugin):
 
             pg_ver = self.pg_version()
 
-            self.pg_connection_count(target)
-            self.pg_activity(pg_ver, target)
-            self.pg_lock_stats(target)
-            self.pg_bgwriter_stats(target)
-            self.pg_db_stats(target)
+            self.pg_connection_count(self)
+            self.pg_activity(pg_ver, self)
+            self.pg_lock_stats(self)
+            self.pg_bgwriter_stats(self)
+            self.pg_db_stats(self)
 
-            if target.get('table_stats', False):
-                self.pg_table_stats(target)
-                self.pg_table_io_stats(target)
+            if self.get('table_stats', False):
+                self.pg_table_stats(self)
+                self.pg_table_io_stats(self)
 
-            if target.get('index_stats', False):
-                self.pg_index_stats(target)
-                self.pg_index_io_stats(target)
+            if self.get('index_stats', False):
+                self.pg_index_stats(self)
+                self.pg_index_io_stats(self)
 
             self.cursor.close()
 
@@ -79,12 +82,12 @@ class PostgreSQLPlugin(Plugin):
         ver_match = re.match(r'^PostgreSQL (?P<ver>\d+\.\d+)', r)
         return float(ver_match.group('ver'))
 
-    def pg_connection_count(self, target: PluginTarget) -> None:
+    def pg_connection_count(self, _) -> None:
         self.logger.info('fetching PG connection count')
         r = self.fetchall('SELECT sum(numbackends) FROM pg_stat_database;')
-        target.gauge('postgres.connections').set(float(r[0][0]))
+        self.gauge('postgres.connections').set(float(r[0][0]))
 
-    def pg_activity(self, pg_ver: float, target: PluginTarget) -> None:
+    def pg_activity(self, pg_ver: float, _) -> None:
         self.logger.info('fetching PG activity stats')
         # single session state query avoids multiple scans of pg_stat_activity
         # state is a different column name in postgres 9.2, previous versions will have to update this query accordingly
@@ -106,10 +109,10 @@ class PostgreSQLPlugin(Plugin):
         results = self.fetchall(q_activity)
 
         active_results = []
-        active_count = target.gauge('postgres.sessions.active').set(0)
-        idle_count = target.gauge('postgres.sessions.idle').set(0)
-        idle_in_txn_count = target.gauge('postgres.sessions.idle_in_transaction').set(0)
-        waiting_count = target.gauge('postgres.sessions.waiting').set(0)
+        active_count = self.gauge('postgres.sessions.active').set(0)
+        idle_count = self.gauge('postgres.sessions.idle').set(0)
+        idle_in_txn_count = self.gauge('postgres.sessions.idle_in_transaction').set(0)
+        waiting_count = self.gauge('postgres.sessions.waiting').set(0)
 
         for state, waiting, xact_start_sec, query_start_sec in results:
             if state == 'active':
@@ -125,20 +128,20 @@ class PostgreSQLPlugin(Plugin):
 
         # determine longest transaction in seconds
         sorted_by_xact = sorted(results, key=lambda tup: tup[2], reverse=True)
-        target.gauge('postgres.sessions.longest_transaction', {'uom': 'seconds'}).set((sorted_by_xact[0])[2])
+        self.gauge('postgres.sessions.longest_transaction', {'uom': 'seconds'}).set((sorted_by_xact[0])[2])
 
         # determine longest active query in seconds
         sorted_by_query = sorted(active_results, reverse=True)
-        target.gauge('postgres.sessions.longest_query', {'uom': 'seconds'}).set(sorted_by_query[0])
+        self.gauge('postgres.sessions.longest_query', {'uom': 'seconds'}).set(sorted_by_query[0])
 
-    def pg_lock_stats(self, target: PluginTarget) -> None:
+    def pg_lock_stats(self, _) -> None:
         self.logger.info('fetching PG lock stats')
 
         results = self.fetchall('SELECT mode, locktype FROM pg_locks')
 
-        access_exclusive = target.gauge('postgres.locks.accessexclusive').set(0)
-        other_exclusive = target.gauge('postgres.locks.otherexclusive').set(0)
-        shared = target.gauge('postgres.locks.shared').set(0)
+        access_exclusive = self.gauge('postgres.locks.accessexclusive').set(0)
+        other_exclusive = self.gauge('postgres.locks.otherexclusive').set(0)
+        shared = self.gauge('postgres.locks.shared').set(0)
 
         for mode, lock_type in results:
             if mode == 'AccessExclusiveLock' and lock_type != 'virtualxid':
@@ -149,7 +152,7 @@ class PostgreSQLPlugin(Plugin):
             if 'Share' in mode and lock_type != 'virtualxid':
                 shared.inc()
 
-    def pg_bgwriter_stats(self, target: PluginTarget) -> None:
+    def pg_bgwriter_stats(self, _) -> None:
         self.logger.info('fetching PG bgwriter stats')
         self.pg_run_metric_query('''
           SELECT checkpoints_timed, checkpoints_req, checkpoint_write_time,
@@ -165,9 +168,9 @@ class PostgreSQLPlugin(Plugin):
                                   'postgres.bgwriter.buffers_checkpoint',
                                   'postgres.bgwriter.buffers_clean',
                                   'postgres.bgwriter.buffers_backend',
-                                  'postgres.bgwriter.buffers_alloc'), target)
+                                  'postgres.bgwriter.buffers_alloc'))
 
-    def pg_db_stats(self, target: PluginTarget) -> None:
+    def pg_db_stats(self, _) -> None:
         self.logger.info('fetching PG database stats')
         self.pg_run_metric_query('''
             SELECT datname, xact_commit, xact_rollback, tup_inserted,
@@ -190,9 +193,9 @@ class PostgreSQLPlugin(Plugin):
                                   'postgres.database.temp_bytes',
                                   'postgres.database.deadlocks',
                                   'postgres.database.block_read_time',
-                                  'postgres.database.block_write_time'), target)
+                                  'postgres.database.block_write_time'))
 
-    def pg_table_stats(self, target: PluginTarget) -> None:
+    def pg_table_stats(self, _) -> None:
         self.logger.info('fetching PG table stats')
         self.pg_run_metric_query('''
             SELECT schemaname, relname, seq_scan, seq_tup_read, idx_scan, idx_tup_fetch,
@@ -217,12 +220,12 @@ class PostgreSQLPlugin(Plugin):
                                   'postgres.table.live_rows',
                                   'postgres.table.dead_rows',
                                   'postgres.table.time_since_vacuum',
-                                  'postgres.table.time_since_analyze'), target)
+                                  'postgres.table.time_since_analyze'))
 
-    def pg_table_io_stats(self, target: PluginTarget) -> None:
+    def pg_table_io_stats(self, _) -> None:
         self.logger.info('fetching PG table IO stats')
         self.pg_run_metric_query('''
-          SELECT schemaname, relname, heap_blks_read, heap_blks_hit, 
+          SELECT schemaname, relname, heap_blks_read, heap_blks_hit,
             idx_blks_read, idx_blks_hit, toast_blks_read, toast_blks_hit,
             tidx_blks_read, tidx_blks_hit
           FROM pg_statio_all_tables
@@ -236,9 +239,9 @@ class PostgreSQLPlugin(Plugin):
                                   'postgres.table_io.toast_blocks_hit',
                                   'postgres.table_io.toast_index_blocks_read',
                                   'postgres.table_io.toast_index_blocks_hit',
-                                  ), target)
+                                  ))
 
-    def pg_index_stats(self, target: PluginTarget) -> None:
+    def pg_index_stats(self, _) -> None:
         self.logger.info('fetching PG index stats')
         self.pg_run_metric_query('''
           SELECT schemaname, relname, indexrelname, idx_scan, idx_tup_read, idx_tup_fetch
@@ -248,9 +251,9 @@ class PostgreSQLPlugin(Plugin):
                                  ('postgres.index.scans',
                                   'postgres.index.rows_read',
                                   'postgres.index.rows_fetched',
-                                  ), target)
+                                  ))
 
-    def pg_index_io_stats(self, target: PluginTarget) -> None:
+    def pg_index_io_stats(self, _) -> None:
         self.logger.info('fetching PG index IO stats')
         self.pg_run_metric_query('''
           SELECT schemaname, relname, indexrelname, idx_blks_read, idx_blks_hit
@@ -258,13 +261,12 @@ class PostgreSQLPlugin(Plugin):
           ''',
                                  ('schema', 'rel', 'index'),
                                  ('postgres.index_io.blocks_read',
-                                  'postgres.index_io.blocks_hit'), target)
+                                  'postgres.index_io.blocks_hit'))
 
 
     def pg_run_metric_query(self, sql: str,
                             label_names: Sequence[str],
-                            metric_names: Sequence[str],
-                            target: PluginTarget) -> None:
+                            metric_names: Sequence[str]) -> None:
         for row in self.fetchall(sql):
             assert len(label_names) + len(metric_names) == len(row)
 
@@ -273,4 +275,8 @@ class PostgreSQLPlugin(Plugin):
             counters = {x: row.pop(0) or 0 for x in metric_names}
 
             for c_name, c_val in counters.items():
-                target.counter(c_name, labels).set(float(c_val))
+                self.counter(c_name, labels).set(float(c_val))
+
+
+if __name__ == '__main__':
+    sys.exit(PostgreSQLPlugin().run())

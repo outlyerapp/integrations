@@ -1,6 +1,6 @@
 ---
 type: "native"
-interval: 60
+interval: 10
 
 settings:
   - name: hosts
@@ -15,4 +15,5 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
+    interval: 10
     hosts: "192.168.0.1, google.com"

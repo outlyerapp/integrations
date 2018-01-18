@@ -1,37 +1,32 @@
-import logging
+#!/usr/bin/env python3
 
-from outlyer_agent.collection import Status, Plugin, PluginTarget
+import sys
+
+from outlyer_plugin import Status, Plugin
 from outlyer_agent.java import load_queries_from_yaml
 from outlyer_agent.java.thread import JvmTask
 
-# TODO: calculate derived metrics (rates, percentages, etc.)
 # TODO: calculate major/minor GC stats
-
-logger = logging.getLogger(__name__)
 
 
 class JavaJmxPlugin(Plugin):
 
-    def collect(self, target: PluginTarget):
+    def collect(self, _):
 
-        jmx_url = target.get('service_url')
+        jmx_url = self.get('service_url')
         if not jmx_url:
-            logger.error('JMX service URL not specified in configuration file')
+            self.logger.error('JMX service URL not specified in configuration file')
             return Status.UNKNOWN
 
-        queries = load_queries_from_yaml(target.get('queries'))
-        with_standards = target.get('standard_metrics', True)
+        queries = load_queries_from_yaml(self.get('queries'))
+        with_standards = self.get('standard_metrics', True)
 
         response = JvmTask().get_metrics(jmx_url, *queries,
                                          include_std_jvm_metrics=with_standards)
-        response.upload_target(target)
+        response.upload_target(self)
 
         return Status.OK
 
 
 if __name__ == '__main__':
-    logging.basicConfig(level=logging.DEBUG)
-    task = JvmTask()
-    task.get_metrics("service:jmx:rmi:///jndi/rmi://localhost:9010/jmxrmi",
-                     include_std_jvm_metrics=True)
-    task.shutdown()
+    sys.exit(JavaJmxPlugin().run())

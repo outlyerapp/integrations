@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 import re
 from outlyer_plugin import Status, Plugin
 from typing import Dict, Any

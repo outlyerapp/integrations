@@ -1,29 +1,32 @@
+#!/usr/bin/env python3
+
+import sys
 import requests
 import requests.exceptions
 
-from outlyer_agent.collection import Status, Plugin, PluginTarget
+from outlyer_plugin import Plugin, Status
 
 # TODO: add search for regex/DOM?
 
 
 class HttpRequestPlugin(Plugin):
 
-    def collect(self, target: PluginTarget) -> Status:
+    def collect(self, _) -> Status:
 
-        name = target.get('name')
-        url = target.get('url')
+        name = self.get('name')
+        url = self.get('url')
         if not url or not name:
             self.logger.error('HTTP plugin is not configured')
             return Status.UNKNOWN
 
-        type = target.get('type', 'GET')
-        params = target.get('params', None)
-        headers = target.get('headers', None)
-        data = target.get('data', None)
-        pattern = target.get('pattern', None)
-        error_on_redirect = target.get('error_on_redirect', False)
-        warning_time = target.get('warning_time', 5.0)
-        critical_time = target.get('critical_time', 10.0)
+        type = self.get('type', 'GET')
+        params = self.get('params', None)
+        headers = self.get('headers', None)
+        data = self.get('data', None)
+        pattern = self.get('pattern', None)
+        error_on_redirect = self.get('error_on_redirect', False)
+        warning_time = self.get('warning_time', 5.0)
+        critical_time = self.get('critical_time', 10.0)
 
         status = Status.OK  # type: Status
 
@@ -31,7 +34,7 @@ class HttpRequestPlugin(Plugin):
         response = requests.request(type, url, params=params, headers=headers, data=data)
         content = ''
 
-        target.gauge('http.status_code', {'site': name}).set(float(response.status_code))
+        self.gauge('http.status_code', {'site': name}).set(float(response.status_code))
         error_min = 300 if error_on_redirect else 400
         if response.status_code >= error_min:
             status = Status.CRITICAL
@@ -42,12 +45,12 @@ class HttpRequestPlugin(Plugin):
                 status = Status.CRITICAL
 
         if 'Content-Length' in response.headers:
-            target.gauge('http.response_size', {'site': name, 'uom': 'bytes'}).set(float(response.headers['Content-Length']))
+            self.gauge('http.response_size', {'site': name, 'uom': 'bytes'}).set(float(response.headers['Content-Length']))
         elif content:
-            target.gauge('http.response_size', {'site': name, 'uom': 'bytes'}).set(len(content))
+            self.gauge('http.response_size', {'site': name, 'uom': 'bytes'}).set(len(content))
 
         elapsed_time = response.elapsed.total_seconds()
-        target.gauge('http.response_time', {'site': name, 'uom': 'ms'}).set(elapsed_time)
+        self.gauge('http.response_time', {'site': name, 'uom': 'ms'}).set(elapsed_time)
         self.logger.info('Download of %s finished in %f seconds', url, elapsed_time)
 
         if elapsed_time >= critical_time:
@@ -58,3 +61,7 @@ class HttpRequestPlugin(Plugin):
         self.logger.info('Result = %s', str(status))
 
         return status
+
+
+if __name__ == '__main__':
+    sys.exit(HttpRequestPlugin().run())

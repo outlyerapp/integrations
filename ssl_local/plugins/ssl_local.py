@@ -1,18 +1,22 @@
+#!/usr/bin/env python3
+
 import os.path
+import sys
+
 from datetime import datetime
 
 from OpenSSL import crypto
 
-from outlyer_agent.collection import Status, Plugin, PluginTarget
+from outlyer_plugin import Plugin, Status
 
 
 class LocalSslExpirationCheck(Plugin):
 
-    def collect(self, target: PluginTarget):
+    def collect(self, _):
 
-        cert_path = target.get('cert_path')
-        warning_days = target.get('warning_days', 30)
-        critical_days = target.get('critical_days', 7)
+        cert_path = self.get('cert_path')
+        warning_days = self.get('warning_days', 30)
+        critical_days = self.get('critical_days', 7)
 
         if not cert_path:
             self.logger.error('Path to certificate file not specified in configuration')
@@ -33,7 +37,7 @@ class LocalSslExpirationCheck(Plugin):
         days_left = (not_after - datetime.utcnow()).days
         self.logger.info('Certificate %s expires in %d days', cert_path, days_left)
 
-        target.gauge('ssl_days_remaining', {'uom': 'days', 'certificate_file': cert_path}).set(days_left)
+        self.gauge('ssl_days_remaining', {'uom': 'days', 'certificate_file': cert_path}).set(days_left)
 
         if days_left > warning_days:
             return Status.OK
@@ -41,3 +45,8 @@ class LocalSslExpirationCheck(Plugin):
             return Status.WARNING
         else:
             return Status.CRITICAL
+
+
+if __name__ == '__main__':
+    sys.exit(LocalSslExpirationCheck().run())
+

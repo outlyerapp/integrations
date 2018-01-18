@@ -1,5 +1,6 @@
 ---
 type: "native"
+requirements: ["pytz==2017.3"]
 interval: 60
 
 settings:
@@ -11,4 +12,4 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    access_log: "/var/log/nginx/access.combined.log"
+    access_log: "/usr/local/var/log/nginx/agent.log"

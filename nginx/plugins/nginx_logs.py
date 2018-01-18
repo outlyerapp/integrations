@@ -1,11 +1,14 @@
-from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGIN_EXEC
-from datetime import datetime, timezone
-import re
+#!/usr/bin/env python3
+
 import os
-import logging
+import re
+import sys
+
+from datetime import datetime
+
 import tzlocal
 
-logger = logging.getLogger(__name__)
+from outlyer_plugin import Status, Plugin
 
 
 def reverse_readline(filename, buf_size=8192):
@@ -22,7 +25,7 @@ def reverse_readline(filename, buf_size=8192):
             remaining_size -= buf_size
             lines = buffer.split('\n')
             # the first line of the buffer is probably not a complete line so
-            # we'll save it and append it to the last line of the next buffer
+            # we'll save it and append it to the last line of the next bzuffer
             # we read
             if segment is not None:
                 # if the previous chunk starts right from the beginning of line
@@ -77,14 +80,14 @@ class NginxLogsPlugin(Plugin):
         'request_time', 'upstream_connect_time', 'upstream_header_time', 'upstream_response_time'
     ]
 
-    def collect(self, target: PluginTarget):
+    def collect(self, _):
 
-        log_path = target.get('access_log')
+        log_path = self.get('access_log')
         if not log_path:
             self.logger.error('Log path not specified in configuration file')
             return Status.UNKNOWN
 
-        interval = target.get('interval', 60)
+        interval = self.get('interval', 60)
         interval = 3600
         count = 0
         total = 0.0
@@ -157,6 +160,10 @@ class NginxLogsPlugin(Plugin):
             metrics[f'nginx.{code}_per_sec'] = metrics[f'nginx.{code}'] / interval
 
         for k, v in metrics.items():
-            target.gauge(k).set(v)
+            self.gauge(k).set(v)
 
         return Status.OK
+
+
+if __name__ == '__main__':
+    sys.exit(NginxLogsPlugin().run())

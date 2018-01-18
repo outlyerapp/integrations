@@ -1,4 +1,7 @@
+#!/usr/bin/env python3
+
 import json
+import sys
 
 from datetime import datetime, timedelta
 
@@ -8,7 +11,7 @@ from pyVim import connect
 from pyVmomi import vim
 from pyVmomi.VmomiSupport import ManagedObject
 
-from outlyer_agent.collection import Status, Plugin, PluginTarget
+from outlyer_plugin import Plugin, Status
 from outlyer_agent.java import canonicalize_name
 
 # TODO: metrics for individual VMs
@@ -54,7 +57,6 @@ class VmwarePlugin(Plugin):
         return metric_ids
 
     def get_metrics_for_object(self,
-                               target: PluginTarget,
                                content: vim.ServiceInstanceContent,
                                perf_counters: Dict[str, str],
                                host: ManagedObject,
@@ -88,18 +90,18 @@ class VmwarePlugin(Plugin):
             val = float(sum(result.value)) / len(result.value)
 
             if name.endswith('_summation'):
-                target.counter(name, labels).set(val)
+                self.counter(name, labels).set(val)
             else:
-                target.gauge(name, labels).set(val)
+                self.gauge(name, labels).set(val)
 
 
-    def collect(self, target: PluginTarget) -> Status:
+    def collect(self, _) -> Status:
 
-        proto = target.get('protocol', 'https')
-        port = target.get('port', 443)
-        hostname = target.get('host')
-        username = target.get('username')
-        password = target.get('password')
+        proto = self.get('protocol', 'https')
+        port = self.get('port', 443)
+        hostname = self.get('host')
+        username = self.get('username')
+        password = self.get('password')
         if not hostname or not username or not password:
             self.logger.error('Incomplete configuration for F5 LTM plugin')
             return Status.UNKNOWN
@@ -115,7 +117,7 @@ class VmwarePlugin(Plugin):
         objects = hosts + vms
 
         for obj in objects:
-            self.get_metrics_for_object(target, content, perf_counters, obj, '*',
+            self.get_metrics_for_object(content, perf_counters, obj, '*',
                                         'cpu.system.summation',
                                         'cpu.wait.summation',
                                         'cpu.ready.summation',
@@ -160,3 +162,8 @@ class VmwarePlugin(Plugin):
         connect.Disconnect(srv)
 
         return Status.OK
+
+
+if __name__ == '__main__':
+    sys.exit(VmwarePlugin().run())
+

@@ -1,18 +1,20 @@
+#!/usr/bin/env python3
+
 import time
 import sys
 
-from outlyer_agent.collection import Status, Plugin, PluginTarget
+from outlyer_plugin import Status, Plugin
 from outlyer_agent.java import MetricType
 from outlyer_agent.java.request import JmxQuery, JmxAttribute
 from outlyer_agent.java.thread import JvmTask
 
 
 class KafkaPlugin(Plugin):
-    def collect(self, target: PluginTarget):
+    def collect(self, _):
         time_now = time.monotonic()
 
-        host = target.get('host', 'localhost')
-        port = target.get('port', 9999)
+        host = self.get('host', 'localhost')
+        port = self.get('port', 9999)
         jmx_url = f'service:jmx:rmi:///jndi/rmi://{host}:{port}/jmxrmi'
 
         response = JvmTask().get_metrics(
@@ -93,5 +95,9 @@ class KafkaPlugin(Plugin):
                      JmxAttribute('Count')),
         )
 
-        response.upload_target(target)
+        response.upload_target(self)
         return Status.OK
+
+
+if __name__ == '__main__':
+    sys.exit(KafkaPlugin().run())

@@ -28,9 +28,9 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    host: 127.0.0.1
+    host: 13.58.1.108
     port: 3306
     username: root
-    password: mysql
-    database: mysql
+    password: just4u
+    database: broadleaf
     

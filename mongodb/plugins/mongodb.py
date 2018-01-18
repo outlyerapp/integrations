@@ -87,8 +87,6 @@ def is_number(val: str):
         return False
 
 
-q = dict()
-
 def _recursive_flatten(src: Dict[str, Any], dest: Dict[str, Any], prefix: str):
     prefix = prefix + '.' if prefix != '' else ''
     for k, v in src.items():
@@ -185,5 +183,4 @@ class MongoPlugin(Plugin):
 
 
 if __name__ == '__main__':
-  # To run the collection
-  sys.exit(MongoPlugin().run())
+    sys.exit(MongoPlugin().run())

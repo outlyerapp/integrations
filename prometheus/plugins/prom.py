@@ -1,17 +1,20 @@
+#!/usr/bin/env python3
+
 import re
+import sys
 
 import requests
 import requests.auth
 import requests.exceptions
 
-from outlyer_agent.collection import Status, Plugin, PluginTarget
+from outlyer_plugin import Plugin, Status
 
 
 class PrometheusPlugin(Plugin):
 
-    def collect(self, target: PluginTarget) -> Status:
+    def collect(self, _) -> Status:
 
-        endpoints = target.get('endpoints')
+        endpoints = self.get('endpoints')
         if not endpoints:
             self.logger.error('Prometheus plugin is not configured correctly')
             return Status.UNKNOWN
@@ -67,8 +70,12 @@ class PrometheusPlugin(Plugin):
                         labels.update({x[0]: x[1] for x in re.findall(r'(\w+)="([^"]*)"', label_str)})
 
                     if type_str == 'counter':
-                        target.counter(name, labels).set(value)
+                        self.counter(name, labels).set(value)
                     else:
-                        target.gauge(name, labels).set(value)
+                        self.gauge(name, labels).set(value)
 
         return status
+
+
+if __name__ == '__main__':
+    sys.exit(PrometheusPlugin().run())

@@ -1,3 +1,6 @@
+#!/usr/bin/env python3
+
+import sys
 import time
 import requests.exceptions
 import icontrol.exceptions
@@ -5,7 +8,7 @@ import icontrol.exceptions
 from f5.bigip import ManagementRoot
 from f5.bigip.resource import Stats
 
-from outlyer_agent.collection import Status, Plugin, PluginTarget, DEFAULT_PLUGIN_EXEC, Metric
+from outlyer_plugin import Plugin, Status
 
 # TODO: get F5 system stats (memory, cpu, etc.)
 
@@ -37,17 +40,14 @@ STATE_MAP = {
 
 
 class F5Plugin(Plugin):
-    def __init__(self, name, deployments, host, logger, executor=DEFAULT_PLUGIN_EXEC):
-        super().__init__(name, deployments, host, logger, executor)
-        self.last_collect = None
 
-    def collect(self, target: PluginTarget) -> Status:
+    def collect(self, _) -> Status:
 
         time_now = time.monotonic()
 
-        hostname = target.get('host')
-        username = target.get('username')
-        password = target.get('password')
+        hostname = self.get('host')
+        username = self.get('username')
+        password = self.get('password')
         if not hostname or not username or not password:
             self.logger.error('Incomplete configuration for F5 LTM plugin')
             return Status.UNKNOWN
@@ -62,18 +62,14 @@ class F5Plugin(Plugin):
                 for k, v in POOL_GAUGES.items():
                     try:
                         value = stats[k]['value']
-                        target.gauge(prefix + v, labels=labels).set(value)
+                        self.gauge(prefix + v, labels=labels).set(value)
                     except KeyError:
                         pass
 
                 for k, v in POOL_RATES.items():
                     try:
                         new_value = stats[k]['value']
-                        if self.last_collect:
-                            elapsed = time_now - self.last_collect
-                            old_value = target.counter(prefix + v, labels=labels).get()
-                            target.gauge(prefix + v + '_per_sec', labels=labels).set((new_value - old_value) / elapsed)
-                        target.counter(prefix + v, labels=labels).set(new_value)
+                        self.counter(prefix + v, labels=labels).set(new_value)
                     except KeyError:
                         pass
 
@@ -82,7 +78,7 @@ class F5Plugin(Plugin):
                 stats = list(stats.entries.values())[0]['nestedStats']['entries']  # type: dict
                 state = stats['status.availabilityState']['description']
                 state_val = STATE_MAP[state]
-                target.gauge(prefix + 'available', labels=labels).set(state_val)
+                self.gauge(prefix + 'available', labels=labels).set(state_val)
 
             nodes = big_ip.tm.ltm.nodes.get_collection()
             for node in nodes:
@@ -104,7 +100,6 @@ class F5Plugin(Plugin):
                     record_availability('f5_ltm_pool_member_', member_stats, {'pool_name': pool.name,
                                                                               'member_name': member.name})
 
-            self.last_collect = time_now
             return Status.OK
 
         except requests.exceptions.ConnectionError as ex:
@@ -116,3 +111,7 @@ class F5Plugin(Plugin):
             self.logger.error('Unexpected iControl error talking to %s: %s', hostname, ex)
             self.last_collect = None
             return Status.CRITICAL
+
+
+if __name__ == '__main__':
+    sys.exit(F5Plugin().run())

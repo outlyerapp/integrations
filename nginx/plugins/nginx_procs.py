@@ -1,10 +1,15 @@
-from outlyer_agent.collection import Status, Plugin, PluginTarget
+#!/usr/bin/env python3
+
+import sys
+
 import psutil
+
+from outlyer_plugin import Plugin, Status
 
 
 class NginxProcessesPlugin(Plugin):
 
-    def collect(self, target: PluginTarget):
+    def collect(self, _):
 
         master_count = 0
         worker_count = 0
@@ -25,12 +30,16 @@ class NginxProcessesPlugin(Plugin):
             except IndexError:
                 pass
 
-        target.gauge('nginx.master_proc_count').set(master_count)
-        target.gauge('nginx.worker_proc_count').set(worker_count)
+        self.gauge('nginx.master_proc_count').set(master_count)
+        self.gauge('nginx.worker_proc_count').set(worker_count)
 
         if master_count != 1:
             return Status.CRITICAL
-        elif worker_count < target.get('min_workers', 1) or worker_count > target.get('max_workers', 5):
+        elif worker_count < self.get('min_workers', 1) or worker_count > target.get('max_workers', 5):
             return Status.CRITICAL
         else:
             return Status.OK
+
+
+if __name__ == '__main__':
+    sys.exit(NginxProcessesPlugin().run())
