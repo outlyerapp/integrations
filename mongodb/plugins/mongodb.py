@@ -109,7 +109,7 @@ class MongoPlugin(Plugin):
     def collect(self, _):
 
         host = self.get('host', 'localhost')
-        port = self.get('port', 27017)
+        port = int(self.get('port', 27017))
         username = self.get('username', None)
         password = self.get('password', None)
         auth_db = self.get('auth_source', None)
