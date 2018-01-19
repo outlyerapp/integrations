@@ -31,6 +31,6 @@ deployments:
     host: 13.58.1.108
     port: 3306
     username: root
-    password: just4u
-    database: broadleaf
+    password: password
+    database: default
     
