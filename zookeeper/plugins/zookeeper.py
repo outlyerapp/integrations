@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 
-import time
 from outlyer_plugin import Status, Plugin
 import sys
 import socket
-import re
-import subprocess
 
 class ZookeeperPlugin(Plugin):
     def get_stats(self):

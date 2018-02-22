@@ -1,101 +1,104 @@
 #!/usr/bin/env python3
 
-import time
 import sys
+from jmxquery import JMXConnection, JMXQuery
 
 from outlyer_plugin import Status, Plugin
-from outlyer_agent.java import MetricType
-from outlyer_agent.java.request import JmxQuery, JmxAttribute
-from outlyer_agent.java.thread import JvmTask
 
 
 class KafkaPlugin(Plugin):
     def collect(self, _):
-        time_now = time.monotonic()
 
         host = self.get('host', 'localhost')
         port = self.get('port', 9999)
         jmx_url = f'service:jmx:rmi:///jndi/rmi://{host}:{port}/jmxrmi'
 
-        response = JvmTask().get_metrics(
-            jmx_url,
+        jmxConnection = JMXConnection(jmx_url)
 
-            # Controller metrics
-            JmxQuery('kafka.controller.{name}.{attr}',
-                     MetricType.GAUGE,
-                     'kafka.controller:type=KafkaController,*',
-                     JmxAttribute('Value')),
-            JmxQuery('kafka.controller.stats.{name}',
-                     MetricType.COUNTER,
-                     'kafka.controller:type=ControllerStats,*',
-                     JmxAttribute('Count')),
+        jmxQuery = [
+                    # UnderReplicatedPartitions
+                    JMXQuery("kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions/Value",
+                              metric_name="kafka_server_ReplicaManager_UnderReplicatedPartitions"),
 
-            # Network metrics
-            JmxQuery('kafka.network.processor.idle.percent.{networkProcessor}',
-                     MetricType.GAUGE,
-                     'kafka.network:type=Processor,name=IdlePercent,*',
-                     JmxAttribute('Value')),
-            JmxQuery('kafka.network.processor.avg.idle.percent',
-                     MetricType.GAUGE,
-                     'kafka.network:type=SocketServer,name=NetworkProcessorAvgIdlePercent',
-                     JmxAttribute('Value')),
-            JmxQuery('kafka.network.request.metrics.{name}.{request}',
-                     MetricType.COUNTER,
-                     'kafka.network:type=RequestMetrics,*',
-                     JmxAttribute('Count')),
-            JmxQuery('kafka.network.request.channel.{name}',
-                     MetricType.GAUGE,
-                     'kafka.network:type=RequestChannel,name=RequestQueueSize,*',
-                     JmxAttribute('Value')),
-            JmxQuery('kafka.network.request.channel.{name}.{processor}',
-                     MetricType.GAUGE,
-                     'kafka.network:type=RequestChannel,name=ResponseQueueSize,*',
-                     JmxAttribute('Value')),
+                    # OfflinePartitionsCount
+                    JMXQuery("kafka.controller:type=KafkaController,name=OfflinePartitionsCount/Value",
+                             metric_name="kafka_controller_KafkaController_OfflinePartitionsCount"),
 
-            # Server metrics
-            JmxQuery('kafka.server.broker.state',
-                     MetricType.GAUGE,
-                     'kafka.server:type=KafkaServer,name=BrokerState',
-                     JmxAttribute('Value')),
-            JmxQuery('kafka.server.purgatory.num.delayed.{delayedOperation}',
-                     MetricType.COUNTER,
-                     'kafka.server:type=DelayedOperationPurgatory,name=NumDelayedOperations,*',
-                     JmxAttribute('Value')),
-            JmxQuery('kafka.server.purgatory.size.{delayedOperation}',
-                     MetricType.GAUGE,
-                     'kafka.server:type=DelayedOperationPurgatory,name=PurgatorySize,*',
-                     JmxAttribute('Value')),
-            JmxQuery('kafka.server.broker.topic.metrics.{name}',
-                     MetricType.COUNTER,
-                     'kafka.server:type=BrokerTopicMetrics,*',
-                     JmxAttribute('Count')),
-            JmxQuery('kafka.server.delayed.fetch.{fetcherType}.{name}',
-                     MetricType.COUNTER,
-                     'kafka.server:type=DelayedFetchMetrics,*',
-                     JmxAttribute('Count')),
-            JmxQuery('kafka.server.replica.fetcher.manager.{name}.{clientId}',
-                     MetricType.GAUGE,
-                     'kafka.server:type=ReplicaFetcherManager,*',
-                     JmxAttribute('Value')),
-            JmxQuery('kafka.server.replica.manager.{name}',
-                     MetricType.COUNTER,
-                     'kafka.server:type=ReplicaManager,name=*PerSec',
-                     JmxAttribute('Count')),
-            JmxQuery('kafka.server.replica.manager.{name}',
-                     MetricType.GAUGE,
-                     'kafka.server:type=ReplicaManager,name=*Count',
-                     JmxAttribute('Value')),
-            JmxQuery('kafka.server.replica.manager.{name}',
-                     MetricType.GAUGE,
-                     'kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions',
-                     JmxAttribute('Value')),
-            JmxQuery('kafka.server.request.handler.pool.avg.idle.percent',
-                     MetricType.COUNTER,
-                     'kafka.server:type=KafkaRequestHandlerPool,name=RequestHandlerAvgIdlePercent',
-                     JmxAttribute('Count')),
-        )
+                    # ActiveControllerCount
+                    JMXQuery("kafka.controller:type=KafkaController,name=ActiveControllerCount/Value",
+                             metric_name="kafka_controller_KafkaController_ActiveControllerCount"),
 
-        response.upload_target(self)
+                    # MessagesInPerSec
+                    JMXQuery("kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec/Count",
+                             metric_name="kafka_server_BrokerTopicMetrics_MessagesInPerSec_Count"),
+
+                    # BytesInPerSec
+                    JMXQuery("kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec/Count",
+                             metric_name="kafka_server_BrokerTopicMetrics_BytesInPerSec_Count"),
+
+                    # BytesOutPerSec
+                    JMXQuery("kafka.server:type=BrokerTopicMetrics,name=BytesOutPerSec/Count",
+                             metric_name="kafka_server_BrokerTopicMetrics_BytesOutPerSec_Count"),
+
+                    # RequestsPerSec
+                    JMXQuery("kafka.network:type=RequestMetrics,name=RequestsPerSec,request=*/Count",
+                             metric_name="kafka_network_RequestMetrics_RequestsPerSec_Count",
+                             metric_labels={"request": "{request}"}),
+
+                    # TotalTimeMs
+                    JMXQuery("kafka.network:type=RequestMetrics,name=TotalTimeMs,request=*",
+                             metric_name="kafka_network_RequestMetrics_TotalTimeMs_{attribute}",
+                             metric_labels={"request": "{request}"}),
+
+                    # LeaderElectionsPerSec
+                    JMXQuery("kafka.controller:type=ControllerStats,name=LeaderElectionRateAndTimeMs/Count",
+                              metric_name="kafka_cluster_ControllerStats_LeaderElectionRateAndTimeMs_Count"),
+
+                    # UncleanLeaderElectionsPerSec
+                    JMXQuery("kafka.controller:type=ControllerStats,name=UncleanLeaderElectionsPerSec/Count",
+                              metric_name="kafka_cluster_ControllerStats_UncleanLeaderElectionsPerSec_Count"),
+
+                    # PartitionCount
+                    JMXQuery("kafka.server:type=ReplicaManager,name=PartitionCount/Value",
+                             metric_name="kafka_server_ReplicaManager_PartitionCount"),
+
+                    # ISRShrinkRate
+                    JMXQuery("kafka.server:type=ReplicaManager,name=IsrShrinksPerSec",
+                             metric_name="kafka_server_ReplicaManager_IsrShrinksPerSec_{attribute}"),
+
+                    # ISRExpandRate
+                    JMXQuery("kafka.server:type=ReplicaManager,name=IsrExpandsPerSec",
+                             metric_name="kafka_server_ReplicaManager_IsrExpandsPerSec_{attribute}"),
+
+                    # NetworkProcessorAvgIdlePercent
+                    JMXQuery("kafka.network:type=SocketServer,name=NetworkProcessorAvgIdlePercent/Value",
+                             metric_name="kafka_network_SocketServer_NetworkProcessorAvgIdlePercent"),
+
+                    # RequestHandlerAvgIdlePercent
+                    JMXQuery("kafka.server:type=KafkaRequestHandlerPool,name=RequestHandlerAvgIdlePercent",
+                             metric_name="kafka_server_KafkaRequestHandlerPool_RequestHandlerAvgIdlePercent_{attribute}"),
+
+                    # ZooKeeperDisconnectsPerSec
+                    JMXQuery("kafka.server:type=SessionExpireListener,name=ZooKeeperDisconnectsPerSec",
+                             metric_name="kafka_server_SessionExpireListener_ZooKeeperDisconnectsPerSec_{attribute}"),
+
+                    # ZooKeeperExpiresPerSec
+                    JMXQuery("kafka.server:type=SessionExpireListener,name=ZooKeeperExpiresPerSec",
+                             metric_name="kafka_server_SessionExpireListener_ZooKeeperExpiresPerSec_{attribute}"),
+
+                   ]
+
+        metrics = jmxConnection.query(jmxQuery)
+
+        for metric in metrics:
+            try:
+                if (metric.value_type != "String") or (metric.value_type != ""):
+                    self.gauge(metric.metric_name, metric.metric_labels).set(metric.value)
+            except:
+                # Ignore if a new type is returned from JMX that isn't a number
+                pass
+
+
         return Status.OK
 
 
