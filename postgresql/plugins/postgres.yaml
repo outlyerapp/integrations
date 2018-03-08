@@ -35,8 +35,8 @@ deployments:
   - selector:
       - outlyer.com/type: 'host'
     interval: 10
-    host: 18.216.173.20
+    host: 127.0.0.1
     port: 5432
     username: postgres
-    password: luggage
-    dbname: bench
+    password: postgres
+    dbname: test

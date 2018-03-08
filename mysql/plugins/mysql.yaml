@@ -28,7 +28,7 @@ settings:
 deployments:
   - selector:
       - outlyer.com/type: 'host'
-    host: 13.58.1.108
+    host: 127.0.0.1
     port: 3306
     username: root
     password: password
