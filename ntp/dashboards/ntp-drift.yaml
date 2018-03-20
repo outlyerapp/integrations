@@ -1,0 +1,79 @@
+description: Network Time Protocol (NTP) Drift for Servers
+icon:
+  color: '#bc54f2'
+  name: access_time
+labels:
+- key: ntp
+  value: ""
+- key: servers
+  value: ""
+name: ntp-drift
+scopes: []
+theme: light
+title: NTP Drift
+widgets:
+  chartwidgets:
+  - col: 2
+    height: 4
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: Drift from NTP
+          unit: s
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,ntp_drift,:eq,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: NTP Drift
+    row: 0
+    width: 8
+  imagewidgets: []
+  markdownwidgets:
+  - col: 0
+    height: 2
+    options:
+      content: |
+        <p>The Network Time Protocol (NTP) integration reports the time offset from an NTP server. If the offset it too large this can cause issues with viewing your metrics and alerts in Outlyer.</p>
+      markdown: The Network Time Protocol (NTP) integration reports the time offset
+        from an NTP server. If the offset it too large this can cause issues with
+        viewing your metrics and alerts in Outlyer.
+    row: 2
+    width: 2
+  numberwidgets: []
+  statuswidgets:
+  - col: 0
+    height: 2
+    id: 68bffb70-8708-4dbc-95e5-24d8114cf08f
+    options:
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - labelselectors: []
+        scoped: false
+        service: ntp
+      showicon: true
+      title: NTP Drift
+    row: 0
+    width: 2

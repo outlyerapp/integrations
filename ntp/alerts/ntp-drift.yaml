@@ -1,0 +1,32 @@
+actions:
+  emailactions: []
+  slackactions: []
+  webhookactions: []
+criteria:
+  hostcriteria: []
+  metriccriteria: []
+  servicecriteria:
+  - currentstate: []
+    description: Your servers clock time has drifted too far from the NTP server's
+      clock time. Please set the clock on your server to the correct time to ensure
+      your metrics and alerts function properly in Outlyer.
+    disabled: false
+    labelselectors: []
+    lasttriggered: ""
+    service: ntp
+    status: null
+    statusthreshold:
+      critical: 2
+      ok: 1
+      warning: 2
+    title: NTP Drift
+description: Sends an alert if a servers clock time drifts too far from an NTP server's
+  time.
+labels:
+- key: ntp
+  value: ""
+- key: server
+  value: ""
+muted: false
+name: ntp-drift
+title: NTP Drift
