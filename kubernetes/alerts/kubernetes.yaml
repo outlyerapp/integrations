@@ -1,0 +1,40 @@
+actions:
+  emailactions: []
+  slackactions: []
+  webhookactions: []
+criteria:
+  hostcriteria: []
+  metriccriteria: []
+  servicecriteria:
+  - currentstate: []
+    description: The etcd service for the Kubernetes Master Node is down
+    disabled: false
+    labelselectors: []
+    lasttriggered: ""
+    service: kubernetes-etcd-health
+    status: null
+    statusthreshold:
+      critical: 2
+      ok: 2
+      warning: 2
+    title: Kubernetes etcd Master Node is Down
+  - currentstate: []
+    description: The Kubernetes API Server /healthz endpoint is returning a non-OK
+      Status
+    disabled: false
+    labelselectors: []
+    lasttriggered: ""
+    service: kubernetes-api-server-health
+    status: null
+    statusthreshold:
+      critical: 2
+      ok: 2
+      warning: 2
+    title: The Kubernetes API Server is Down
+description: Kubernetes Cluster Alerts
+labels:
+- key: kubernetes
+  value: ""
+muted: false
+name: kubernetes
+title: Kubernetes

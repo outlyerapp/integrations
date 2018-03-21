@@ -1,0 +1,190 @@
+description: ""
+icon:
+  color: '#3a6db2'
+  name: integration--docker
+labels: []
+name: kubernetes-deployments
+scopes:
+- defaultvalue: ""
+  labelkey: namespace
+- defaultvalue: ""
+  labelkey: deployment
+theme: light
+title: Kubernetes Deployments
+widgets:
+  chartwidgets:
+  - col: 0
+    height: 3
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,kube_deployment_status_replicas_available,:eq,:and,:min
+        visible: true
+      - query: ${@SCOPE},name,kube_deployment_spec_replicas,:eq,:and,:min
+        visible: true
+      - query: ${@SCOPE},name,kube_deployment_status_replicas_unavailable,:eq,:and,:min
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Replicas
+    row: 3
+    width: 10
+  imagewidgets: []
+  markdownwidgets:
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Replicas</h1>
+      markdown: '# Replicas'
+    row: 0
+    width: 10
+  numberwidgets:
+  - col: 0
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: integration--docker
+      query:
+        query: ${@SCOPE},name,kube_deployment_spec_replicas,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Desired
+      unit: ""
+      unitposition: After
+    row: 1
+    width: 2
+  - col: 6
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: ${@SCOPE},name,kube_deployment_status_replicas_available,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Available
+      unit: ""
+      unitposition: After
+    row: 1
+    width: 2
+  - col: 8
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: ${@SCOPE},name,kube_deployment_status_replicas_unavailable,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Unavailable
+      unit: ""
+      unitposition: After
+    row: 1
+    width: 2
+  - col: 4
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: ${@SCOPE},name,kube_deployment_status_replicas,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Current
+      unit: ""
+      unitposition: After
+    row: 1
+    width: 2
+  - col: 2
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: ${@SCOPE},name,kube_deployment_status_replicas_updated,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Updated
+      unit: ""
+      unitposition: After
+    row: 1
+    width: 2
+  statuswidgets: []
