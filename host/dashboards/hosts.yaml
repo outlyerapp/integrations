@@ -1,0 +1,443 @@
+description: Key health metrics for your Hosts
+icon:
+  color: '#ffa538'
+  name: cloud
+labels:
+- key: servers
+  value: ""
+name: hosts
+scopes:
+- defaultvalue: ""
+  labelkey: host
+theme: light
+title: Hosts
+widgets:
+  chartwidgets:
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: '%'
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,sys.mem.pct,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#298360'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Virtual Memory
+    row: 1
+    width: 4
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: '%'
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,sys.swap.pct,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#e1891f'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Swap Memory
+    row: 1
+    width: 4
+  - col: 7
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: '%'
+          unitposition: After
+      charttype: StackedArea
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,sys.cpu.guest.pct,:eq,:and,:max
+        visible: true
+      - query: ${@SCOPE},name,sys.cpu.steal.pct,:eq,:and,:max
+        visible: true
+      - query: ${@SCOPE},name,sys.cpu.nice.pct,:eq,:and,:max
+        visible: true
+      - query: ${@SCOPE},name,sys.cpu.irq.pct,:eq,:and,:max
+        visible: true
+      - query: ${@SCOPE},name,sys.cpu.iowait.pct,:eq,:and,:max
+        visible: true
+      - query: ${@SCOPE},name,sys.cpu.system.pct,:eq,:and,:max
+        visible: true
+      - query: ${@SCOPE},name,sys.cpu.user.pct,:eq,:and,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: CPU States
+    row: 4
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,sys.net.tx.packets,:eq,:and,:max
+        visible: true
+      - query: ${@SCOPE},name,sys.net.tx.errs,:eq,:and,:max
+        visible: true
+      - query: ${@SCOPE},name,sys.net.tx.drop,:eq,:and,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: TX - packets/errors/dropped
+    row: 10
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,sys.net.rx.packets,:eq,:and,:max
+        visible: true
+      - query: ${@SCOPE},name,sys.net.rx.errs,:eq,:and,:max
+        visible: true
+      - query: ${@SCOPE},name,sys.net.rx.drop,:eq,:and,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: RX - packets/errors/dropped
+    row: 10
+    width: 6
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,sys.io.read.bytes,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Disk Read
+    row: 7
+    width: 5
+  - col: 7
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,sys.io.write.bytes,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Disk Write (bytes)
+    row: 7
+    width: 5
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,sys.cpu.pct,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Max CPU
+    row: 4
+    width: 5
+  imagewidgets: []
+  markdownwidgets:
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Memory Usage</h1>
+      markdown: '# Memory Usage'
+    row: 0
+    width: 12
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>CPU Usage</h1>
+      markdown: '# CPU Usage'
+    row: 3
+    width: 12
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Network Usage</h1>
+      markdown: '# Network Usage'
+    row: 9
+    width: 12
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Disk Usage</h1>
+      markdown: '# Disk Usage'
+    row: 6
+    width: 12
+  numberwidgets:
+  - col: 0
+    height: 2
+    options:
+      color: '#298360'
+      description: ""
+      displaymax: 100
+      displaymin: 0
+      displaytrend: Gauge
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: memory
+      query:
+        query: ${@SCOPE},name,sys.mem.pct,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: Max
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Max Memory
+      unit: '%'
+      unitposition: After
+    row: 1
+    width: 2
+  - col: 6
+    height: 2
+    options:
+      color: '#e1891f'
+      description: ""
+      displaymax: 100
+      displaymin: 0
+      displaytrend: Gauge
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: disc_full
+      query:
+        query: ${@SCOPE},name,sys.swap.pct,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: Average
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Swap
+      unit: '%'
+      unitposition: After
+    row: 1
+    width: 2
+  - col: 0
+    height: 2
+    options:
+      color: '#7babeb'
+      description: ""
+      displaymax: 100
+      displaymin: 0
+      displaytrend: Gauge
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: memory
+      query:
+        query: ${@SCOPE},name,sys.cpu.pct,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: Average
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Max CPU
+      unit: '%'
+      unitposition: After
+    row: 4
+    width: 2
+  - col: 0
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 100
+      displaymin: 0
+      displaytrend: Gauge
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: disc_full
+      query:
+        query: ${@SCOPE},name,sys.disk.used_pct,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: Max
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Max Disk Used
+      unit: '%'
+      unitposition: After
+    row: 7
+    width: 2
+  statuswidgets: []

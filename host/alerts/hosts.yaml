@@ -1,0 +1,56 @@
+actions:
+  emailactions: []
+  slackactions: []
+  webhookactions: []
+criteria:
+  hostcriteria:
+  - currentstate: []
+    description: The host agent has gone down and will need to be restarted.
+    disabled: false
+    labelselectors: []
+    lasttriggered: ""
+    status: null
+    statusthreshold:
+      critical: 2
+      ok: 2
+      warning: 2
+    title: Host Agent Down
+  metriccriteria:
+  - currentstate: []
+    description: CPU Utalisation is too high
+    disabled: false
+    lasttriggered: ""
+    levelthresholds:
+    - level: warning
+      operator: '>='
+      threshold: 80
+    - level: critical
+      operator: '>='
+      threshold: 95
+    query: name,sys.cpu.pct,:eq,:max,(,host,),:by
+    status: null
+    timeout: 120
+    title: CPU Usage (%)
+  - currentstate: []
+    description: The memory usage on the host is too high.
+    disabled: false
+    lasttriggered: ""
+    levelthresholds:
+    - level: warning
+      operator: '>='
+      threshold: 80
+    - level: critical
+      operator: '>='
+      threshold: 90
+    query: name,sys.mem.pct,:eq,:max,(,host,),:by
+    status: null
+    timeout: 120
+    title: Memory Usage (%)
+  servicecriteria: []
+description: Standard Host Alerts
+labels:
+- key: server
+  value: ""
+muted: false
+name: hosts
+title: Hosts
