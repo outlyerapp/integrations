@@ -1,0 +1,450 @@
+description: ""
+icon:
+  color: '#ca557b'
+  name: data_usage
+labels: []
+name: consul
+scopes: []
+theme: light
+title: Consul
+widgets:
+  chartwidgets:
+  - col: 10
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,service.status,:eq,service,consul,:eq,:and,:avg,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: Line
+        linestyle: Solid
+        status: Error
+        threshold: 1
+      title: Unhealthy Consul Servers
+    row: 0
+    width: 3
+  - col: 10
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,consul_members,:eq,role,consul,:eq,:and,:avg,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Consul Members
+    row: 4
+    width: 3
+  - col: 10
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,consul_services,:eq,role,consul,:eq,:and,:avg,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Consul Services
+    row: 2
+    width: 3
+  imagewidgets: []
+  markdownwidgets:
+  - col: 0
+    height: 2
+    options:
+      content: |
+        <h1>Service Checks</h1>
+      markdown: '# Service Checks'
+    row: 2
+    width: 2
+  - col: 0
+    height: 2
+    options:
+      content: |
+        <h1>Node Checks</h1>
+      markdown: '# Node Checks'
+    row: 4
+    width: 2
+  numberwidgets:
+  - col: 2
+    height: 2
+    options:
+      color: '#ca557b'
+      description: Shows minimum no. of leaders across all Consul nodes, should be
+        1 but if less means at least one node is disconnected from the leader
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: data_usage
+      query:
+        query: name,consul_raft_leader,:eq,:min
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Total Leaders
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 2
+  - col: 4
+    height: 2
+    options:
+      color: '#ca557b'
+      description: Shows number of Consul peer agents in Raft Cluster
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: data_usage
+      query:
+        query: name,consul_raft_peers,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Total Peers
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 2
+  - col: 8
+    height: 2
+    options:
+      color: '#ca557b'
+      description: Shows number of Consul Nodes
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: data_usage
+      query:
+        query: name,consul_services,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Total Services
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 2
+  - col: 6
+    height: 2
+    options:
+      color: '#ca557b'
+      description: Shows number of Consul Nodes
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: data_usage
+      query:
+        query: name,consul_serf_lan_members,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Total Members
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 2
+  - col: 2
+    height: 2
+    options:
+      color: '#ca557b'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: data_usage
+      query:
+        query: name,consul_health_service_status,:eq,status,passing,:eq,:and,:sum,:cf-max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: SC - Passing
+      unit: ""
+      unitposition: After
+    row: 2
+    width: 2
+  - col: 4
+    height: 2
+    options:
+      color: '#ca557b'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: data_usage
+      query:
+        query: name,consul_health_service_status,:eq,status,warning,:eq,:and,:sum,:cf-max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: SC - Warning
+      unit: ""
+      unitposition: After
+    row: 2
+    width: 2
+  - col: 6
+    height: 2
+    options:
+      color: '#ca557b'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: data_usage
+      query:
+        query: name,consul_health_service_status,:eq,status,critical,:eq,:and,:sum,:cf-max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: SC - Critical
+      unit: ""
+      unitposition: After
+    row: 2
+    width: 2
+  - col: 8
+    height: 2
+    options:
+      color: '#ca557b'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: data_usage
+      query:
+        query: name,consul_health_service_status,:eq,status,maintenance,:eq,:and,:sum,:cf-max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: SC - Maintenance
+      unit: ""
+      unitposition: After
+    row: 2
+    width: 2
+  - col: 2
+    height: 2
+    options:
+      color: '#ca557b'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: data_usage
+      query:
+        query: name,consul_health_node_status,:eq,status,passing,:eq,:and,:sum,:cf-max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: NC - Passing
+      unit: ""
+      unitposition: After
+    row: 4
+    width: 2
+  - col: 4
+    height: 2
+    options:
+      color: '#ca557b'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: data_usage
+      query:
+        query: name,consul_health_node_status,:eq,status,warning,:eq,:and,:sum,:cf-max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: NC - Warning
+      unit: ""
+      unitposition: After
+    row: 4
+    width: 2
+  - col: 6
+    height: 2
+    options:
+      color: '#ca557b'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: data_usage
+      query:
+        query: name,consul_health_node_status,:eq,status,critical,:eq,:and,:sum,:cf-max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: NC - Critical
+      unit: ""
+      unitposition: After
+    row: 4
+    width: 2
+  - col: 8
+    height: 2
+    options:
+      color: '#ca557b'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: data_usage
+      query:
+        query: name,consul_health_node_status,:eq,status,maintenance,:eq,:and,:sum,:cf-max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: NC - Maintenance
+      unit: ""
+      unitposition: After
+    row: 4
+    width: 2
+  statuswidgets:
+  - col: 0
+    height: 2
+    id: 853188fd-52d3-4c2e-9159-9118f15162fc
+    options:
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - labelselectors: []
+        scoped: false
+        service: consul
+      showicon: true
+      title: Consul
+    row: 0
+    width: 2
