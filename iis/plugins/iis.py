@@ -15,36 +15,65 @@ unless you override the 'sites' variable with semi-colon (;) seperated list of s
 class IISPlugin(Plugin):
 
     def collect(self, _):
-
+        listsites = []
         sites = self.get_sites()
         if not sites:
             return Status.UNKNOWN
 
         for site in sites:
             counters = []
-            counters.append(f"\Web Service({site})\Current Connections")
-            counters.append(f"\Web Service({site})\Current Anonymous Users")
-            counters.append(f"\Web Service({site})\Current NonAnonymous Users")
-            counters.append(f"\Web Service({site})\Get Requests/sec")
-            counters.append(f"\Web Service({site})\Put Requests/sec")
-            counters.append(f"\Web Service({site})\Post Requests/sec")
             counters.append(f"\Web Service({site})\Service Uptime")
+
+            # Network
+            counters.append(f"\Web Service({site})\Bytes Sent/sec")
+            counters.append(f"\Web Service({site})\Bytes Received/sec")
+            counters.append(f"\Web Service({site})\Bytes Total/sec")
+            counters.append(f"\Web Service({site})\Current Connections")
+            counters.append(f"\Web Service({site})\Files Sent/sec")
+            counters.append(f"\Web Service({site})\Files Received/sec")
+            counters.append(f"\Web Service({site})\Total Connection Attempts (all instances)")
             counters.append(f"\Web Service({site})\Maximum Connections")
 
-            try:
-                command = [r'c:\windows\system32\typeperf.exe', '-sc', '1']
-                output = subprocess.check_output(command + counters)
-            except:
-                return Status.UNKNOWN
+            # HTTP Methods
+            counters.append(f"\Web Service({site})\Get Requests/sec")
+            counters.append(f"\Web Service({site})\Post Requests/sec")
+            counters.append(f"\Web Service({site})\Head Requests/sec")
+            counters.append(f"\Web Service({site})\Put Requests/sec")
+            counters.append(f"\Web Service({site})\Delete Requests/sec")
+            counters.append(f"\Web Service({site})\Options Requests/sec")
+            counters.append(f"\Web Service({site})\Trace Requests/sec")
 
-            i = 1
-            for counter in counters:
-                metric = counter.lower()
-                metric = re.sub('[^0-9a-zA-Z]+', '_', metric)
-                metric = re.sub('web_service_', 'iis.', metric)
-                value = output.decode('utf-8').splitlines()[2].split(',')[i].replace('"', '').strip()
-                self.gauge(metric, {'site': site}).set(float(value))
+            # Errors
+            counters.append(f"\Web Service({site})\\Not Found Errors/sec")
+            counters.append(f"\Web Service({site})\Locked Errors/sec")
 
+            # Users
+            counters.append(f"\Web Service({site})\Current Anonymous Users")
+            counters.append(f"\Web Service({site})\Current NonAnonymous Users")
+
+            # Requests
+            counters.append(f"\Web Service({site})\CGI Requests/sec")
+            counters.append(f"\Web Service({site})\ISAPI Extension Requests/sec")
+
+            listsites += (counters)
+
+        try:
+            command = [r'c:\windows\system32\typeperf.exe', '-sc', '1']
+            output = subprocess.check_output(command + listsites)
+
+        except:
+            return Status.UNKNOWN
+
+        i = 1
+        for listsite in listsites:
+            metric = listsite.lower()
+            siteval = re.search(r'\((.*?)\)', metric).group(1)
+            metric = re.sub(r'\([^)]*\)', '', metric)
+            metric = re.sub('[^0-9a-zA-Z]+', '_', metric)
+            metric = re.sub('web_service_', 'iis.', metric)
+            value = output.decode('utf-8').splitlines()[2].split(',')[i].replace('"', '').strip()
+            self.gauge(metric, {'site': siteval}).set(float(value))
+            i += 1
         return Status.OK
 
     def get_sites(self):
@@ -66,7 +95,6 @@ class IISPlugin(Plugin):
                 sites.append('_Total')
                 return sites
             except:
-                print ("Plugin Failed! NOOOOOO")
                 return None
 
 
