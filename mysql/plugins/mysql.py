@@ -1,161 +1,142 @@
 #!/usr/bin/env python3
 
 import sys
+import pymysql.cursors
 
-import MySQLdb
-import _mysql_exceptions
-from MySQLdb.constants import CR
-
-from outlyer_plugin import Status, Plugin
-
-# TODO: add bool parameter showCommandCounts
-
+from outlyer_plugin import Plugin, Status
 
 GAUGE_METRICS = [
-    "innodb_buffer_pool_pages_dirty",
-    "innodb_data_pending_fsyncs",
-    "innodb_data_pending_reads",
-    "innodb_data_pending_writes",
-    "innodb_os_log_pending_fsyncs",
-    "innodb_os_log_pending_writes",
-    "innodb_page_size",
-    "innodb_num_open_files",
-    "ongoing_anonymous_transaction_count",
-    "open_files",
-    "open_streams",
-    "open_table_definitions",
-    "open_tables",
-    "threads_connected",
-    "threads_running",
+    "Innodb_buffer_pool_pages_dirty",
+    "Innodb_data_pending_fsyncs",
+    "Innodb_data_pending_reads",
+    "Innodb_data_pending_writes",
+    "Innodb_os_log_pending_fsyncs",
+    "Innodb_os_log_pending_writes",
+    "Innodb_page_size",
+    "Innodb_num_open_files",
+    "Open_files",
+    "Open_streams",
+    "Open_table_definitions",
+    "Open_tables",
+    "Threads_connected",
+    "Threads_running",
 ]
 
 COUNTER_METRICS = [
-    "opened_files",
-    "opened_table_definitions",
-    "opened_tables",
-    "table_locks_waited",
-    "table_open_cache_hits",
-    "table_open_cache_misses",
-    "bytes_received",
-    "bytes_sent",
-    "connection_errors_accept",
-    "connection_errors_internal",
-    "connection_errors_max_connections",
-    "connection_errors_peer_address",
-    "connection_errors_select",
-    "connection_errors_tcpwrap",
-    "connections",
-    "created_tmp_disk_tables",
-    "created_tmp_files",
-    "created_tmp_tables",
-    "table_locks_immediate",
-    "table_open_cache_hits",
-    "table_open_cache_misses",
-    "table_open_cache_overflows",
-    "threads_created",
-    "com_commit",
-    "com_insert",
-    "com_rollback",
-    "com_select",
-    "com_update",
-    "com_delete",
-    "created_tmp_disk_tables",
-    "created_tmp_files",
-    "created_tmp_tables",
-    "innodb_buffer_pool_read_requests",
-    "innodb_buffer_pool_reads",
-    "innodb_buffer_pool_write_requests",
-    "innodb_data_fsyncs",
-    "innodb_data_read",
-    "innodb_data_reads",
-    "innodb_data_writes",
-    "innodb_data_written",
-    "innodb_os_log_written",
-    "innodb_pages_created",
-    "innodb_pages_read",
-    "innodb_pages_written",
-    "innodb_row_lock_time",
-    "innodb_row_lock_waits",
-    "innodb_rows_deleted",
-    "innodb_rows_inserted",
-    "innodb_rows_read",
-    "innodb_rows_updated",
-    "opened_tables",
-    "opened_files",
-    "select_full_join",
-    "select_full_range_join",
-    "select_range",
-    "select_range_check",
-    "select_scan",
-    "slow_launch_threads",
-    "slow_queries",
-    "sort_merge_passes",
-    "sort_range",
-    "sort_rows",
-    "sort_scan",
-    "table_locks_waited",
-    "table_open_cache_hits",
-    "table_open_cache_misses",
-    "table_open_cache_overflows",
+    "Opened_files",
+    "Opened_table_definitions",
+    "Opened_tables",
+    "Table_locks_waited",
+    "Table_open_cache_hits",
+    "Table_open_cache_misses",
+    "Bytes_received",
+    "Bytes_sent",
+    "Connection_errors_accept",
+    "Connection_errors_internal",
+    "Connection_errors_max_connections",
+    "Connection_errors_peer_address",
+    "Connection_errors_select",
+    "Connection_errors_tcpwrap",
+    "Connections",
+    "Created_tmp_disk_tables",
+    "Created_tmp_files",
+    "Created_tmp_tables",
+    "Table_locks_immediate",
+    "Table_open_cache_hits",
+    "Table_open_cache_misses",
+    "Table_open_cache_overflows",
+    "Threads_created",
+    "Com_commit",
+    "Com_insert",
+    "Com_rollback",
+    "Com_select",
+    "Com_update",
+    "Com_delete",
+    "Created_tmp_disk_tables",
+    "Created_tmp_files",
+    "Created_tmp_tables",
+    "Innodb_buffer_pool_read_requests",
+    "Innodb_buffer_pool_reads",
+    "Innodb_buffer_pool_write_requests",
+    "Innodb_data_fsyncs",
+    "Innodb_data_read",
+    "Innodb_data_reads",
+    "Innodb_data_writes",
+    "Innodb_data_written",
+    "Innodb_os_log_written",
+    "Innodb_pages_created",
+    "Innodb_pages_read",
+    "Innodb_pages_written",
+    "Innodb_row_lock_time",
+    "Innodb_row_lock_waits",
+    "Innodb_rows_deleted",
+    "Innodb_rows_inserted",
+    "Innodb_rows_read",
+    "Innodb_rows_updated",
+    "Opened_tables",
+    "Opened_files",
+    "Select_full_join",
+    "Select_full_range_join",
+    "Select_range",
+    "Select_range_check",
+    "Select_scan",
+    "Slow_launch_threads",
+    "Slow_queries",
+    "Sort_merge_passes",
+    "Sort_range",
+    "Sort_rows",
+    "Sort_scan",
+    "Table_locks_waited",
+    "Table_open_cache_hits",
+    "Table_open_cache_misses",
+    "Table_open_cache_overflows",
 ]
 
 
-class MysqlPlugin(Plugin):
+class MySQLPlugin(Plugin):
 
     def collect(self, _):
 
-        host = self.get('host', '127.0.0.1')
-        port = self.get('port', 3306)
+        ip = self.get('ip', '127.0.0.1')
+        port = int(self.get('port', 3306))
         user = self.get('username', 'root')
         password = self.get('password', 'mysql')
-        db = self.get('database', 'mysql')
+
+        db = pymysql.connect(
+            host=ip,
+            port=port,
+            user=user,
+            passwd=password,
+            connect_timeout=10)
 
         try:
-            conn = MySQLdb.connect(host=host, port=port, user=user, password=password, db=db)
+            with db.cursor() as cursor:
+                cursor.execute("SHOW GLOBAL STATUS")
+                stats = dict(cursor.fetchall())
+                labels = {}
 
-            cursor = conn.cursor()
-            stats = dict()
-            cursor.execute('SHOW GLOBAL STATUS')
-            for row in cursor:
-                stats[row[0].lower()] = row[1]
-            cursor.close()
+                for k in GAUGE_METRICS:
+                    if k in stats:
+                        val = float(stats[k])
+                        self.gauge(f'mysql.{k}', labels).set(val)
 
-            labels = {
-                'host': host,
-                'port': str(port),
-                'username': user,
-                'db': db
-            }
+                for k in COUNTER_METRICS:
+                    if k in stats:
+                        val = float(stats[k])
+                        self.counter(f'mysql.{k}', labels).set(val)
 
-            for k in GAUGE_METRICS:
-                try:
-                    val = float(stats[k])
-                    self.gauge(f'mysql.{k}', labels).set(val)
-                except ValueError:
-                    pass
+                return Status.OK
 
-            for k in COUNTER_METRICS:
-                try:
-                    val = float(stats[k])
-                    self.counter(f'mysql.{k}', labels).set(val)
-                except ValueError:
-                    pass
-
-            return Status.OK
-
-        except _mysql_exceptions.MySQLError as ex:
-
-            if ex.args[0] >= CR.ERROR_FIRST:
-                self.logger.error('Unable to connect to MySQL: ' + ex.args[1])
-                return Status.CRITICAL
-            else:
-                self.logger.error('Unable to collect from MySQL: ' + ex.args[1])
-                return Status.UNKNOWN
-
-        except Exception as ex:
-            self.logger.exception('Error in plugin', exc_info=ex)
+        except (pymysql.err.InternalError, pymysql.err.OperationalError, pymysql.err.NotSupportedError) as e:
+            print(f"Privilege error or engine unavailable accessing the INNODB status tables (must grant PROCESS): {e}")
             return Status.UNKNOWN
+        except Exception as err:
+            print(f"Excpetion while reading database: {err}")
+            return Status.UNKNOWN
+        finally:
+            db.close()
 
 
 if __name__ == '__main__':
-    sys.exit(MysqlPlugin().run())
+    # To run the collection
+    sys.exit(MySQLPlugin().run())
