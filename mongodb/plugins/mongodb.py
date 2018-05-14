@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from outlyer_plugin import Status, Plugin
+from outlyer_plugin import Status, Plugin  # , PluginTarget, DEFAULT_PLUGIN_EXEC
 from typing import Dict, Any
 import pymongo
 import pymongo.errors
@@ -87,6 +87,8 @@ def is_number(val: str):
         return False
 
 
+q = dict()
+
 def _recursive_flatten(src: Dict[str, Any], dest: Dict[str, Any], prefix: str):
     prefix = prefix + '.' if prefix != '' else ''
     for k, v in src.items():
@@ -108,8 +110,8 @@ class MongoPlugin(Plugin):
 
     def collect(self, _):
 
-        host = self.get('host', 'localhost')
-        port = int(self.get('port', 27017))
+        ip = self.get('ip', '127.0.0.1')
+        port = self.get('port', 27017)
         username = self.get('username', None)
         password = self.get('password', None)
         auth_db = self.get('auth_source', None)
@@ -118,7 +120,7 @@ class MongoPlugin(Plugin):
 
         try:
             if username:
-                uri = f'mongodb://{username}:{password}@{host}:{port}/'
+                uri = f'mongodb://{username}:{password}@{ip}:{port}/'
                 if auth_db:
                     uri += f'?authSource={auth_db}'
 
@@ -127,8 +129,8 @@ class MongoPlugin(Plugin):
                                         connectTimeoutMS=connect_timeout,
                                         socketTimeoutMS=socket_timeout)
             else:
-                self.logger.info('Connecting to MongoDB on %s:%d', host, port)
-                c = pymongo.MongoClient(host=host, port=port,
+                self.logger.info('Connecting to MongoDB on %s:%d', ip, port)
+                c = pymongo.MongoClient(host=ip, port=port,
                                         connectTimeoutMS=connect_timeout,
                                         socketTimeoutMS=socket_timeout)
 
@@ -183,4 +185,5 @@ class MongoPlugin(Plugin):
 
 
 if __name__ == '__main__':
+    # To run the collection
     sys.exit(MongoPlugin().run())

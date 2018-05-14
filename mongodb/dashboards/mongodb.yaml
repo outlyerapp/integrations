@@ -1,15 +1,21 @@
-description: ""
+description: Overview of MongoDB Clusters
 icon:
-  color: '#000000'
-  name: dashboard
-labels: []
+  color: '#3cc663'
+  name: integration--mongodb
+labels:
+- key: mongodb
+  value: ""
+- key: databases
+  value: ""
+- key: nosql
+  value: ""
 name: mongodb
 scopes: []
 theme: light
 title: MongoDB
 widgets:
   chartwidgets:
-  - col: 6
+  - col: 0
     height: 2
     options:
       axes:
@@ -41,8 +47,8 @@ widgets:
         status: Error
         threshold: 0
       title: Network Traffic
-    row: 0
-    width: 4
+    row: 6
+    width: 6
   - col: 0
     height: 2
     options:
@@ -75,9 +81,9 @@ widgets:
         status: Error
         threshold: 0
       title: Queries
-    row: 2
+    row: 4
     width: 3
-  - col: 3
+  - col: 6
     height: 2
     options:
       axes:
@@ -109,9 +115,9 @@ widgets:
         status: Error
         threshold: 0
       title: Updates
-    row: 2
+    row: 4
     width: 3
-  - col: 0
+  - col: 3
     height: 2
     options:
       axes:
@@ -145,7 +151,7 @@ widgets:
       title: Inserts
     row: 4
     width: 3
-  - col: 3
+  - col: 9
     height: 2
     options:
       axes:
@@ -211,9 +217,9 @@ widgets:
         status: Error
         threshold: 0
       title: WiredTiger Work Queue Len
-    row: 2
-    width: 4
-  - col: 6
+    row: 6
+    width: 6
+  - col: 3
     height: 2
     options:
       axes:
@@ -221,36 +227,44 @@ widgets:
           mode: Time
           showgridlines: false
         yaxis:
-          max: 100
+          max: null
           min: 0
           showgridlines: true
-          title: MB/sec
+          title: ""
           unit: ""
           unitposition: After
-      charttype: Line
+      charttype: StackedBar
       description: ""
       externallink:
         linktype: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,wired_tiger.block_manager.bytes_(read|written)$,:re,:and,(,name,),:by,1000000,:div
+      - query: name,mongodb.connections.current,:eq,:max,(,container,),:by
         visible: true
       seriesstyle:
         color: '#588fd8'
         palette: MultiColor
-      summarization: Avg
+      summarization: Max
       thresholds:
       - display: None
         linestyle: Solid
         status: Error
         threshold: 0
-      title: Block Manager I/O
-    row: 4
-    width: 4
-  imagewidgets: []
+      title: Connections Per Node
+    row: 2
+    width: 6
+  imagewidgets:
+  - col: 0
+    height: 2
+    options:
+      color: '#3cc663'
+      icon: integration--mongodb
+      sizing: stretched
+    row: 0
+    width: 2
   markdownwidgets: []
   numberwidgets:
-  - col: 2
+  - col: 0
     height: 2
     options:
       color: '#588fd8'
@@ -261,24 +275,24 @@ widgets:
       externallink:
         linktype: dashboard
         path: ""
-      icon: material--image
+      icon: integration--mongodb
       query:
-        query: ${@SCOPE},name,mongodb.connections.current,:eq,:and,:max
+        query: ${@SCOPE},name,mongodb.connections.current,:eq,:and,:sum
         visible: true
       rounding: None
       statistic: LastValue
       thresholds:
       - status: Error
         threshold: 0
-      title: Connections
+      title: Total Connections
       unit: ""
       unitposition: After
-    row: 0
-    width: 2
-  - col: 4
+    row: 2
+    width: 3
+  - col: 9
     height: 2
     options:
-      color: '#588fd8'
+      color: '#3cc663'
       description: ""
       displaymax: 100
       displaymin: 0
@@ -286,7 +300,7 @@ widgets:
       externallink:
         linktype: dashboard
         path: ""
-      icon: material--image
+      icon: integration--mongodb
       query:
         query: |-
           ${@SCOPE},name,mongodb.connections.current,:eq,:and,:sum,:dup,
@@ -301,30 +315,47 @@ widgets:
       title: Connections Used %
       unit: '%'
       unitposition: After
-    row: 0
-    width: 2
-  - col: 0
+    row: 2
+    width: 3
+  - col: 7
     height: 2
     options:
-      color: '#588fd8'
+      color: '#3cc663'
       description: ""
       displaymax: null
       displaymin: null
-      displaytrend: None
+      displaytrend: BarChart
       externallink:
         linktype: dashboard
         path: ""
-      icon: material--image
+      icon: integration--mongodb
       query:
-        query: name,status,:eq,plugin,mongodb,:eq,:and,:avg,(,ol.instance,),:by,:count
+        query: name,service.status,:eq,service,mongo,:eq,:and,:count,:cf-max
         visible: true
       rounding: None
       statistic: LastValue
       thresholds:
       - status: Error
         threshold: 0
-      title: Server Count
+      title: MongoDB Nodes
       unit: ""
       unitposition: After
     row: 0
-    width: 2
+    width: 5
+  statuswidgets:
+  - col: 2
+    height: 2
+    id: c22a8645-28e8-4b67-8488-53cb279bc19f
+    options:
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - labelselectors: []
+        scoped: false
+        service: mongo
+      showicon: true
+      title: Status
+    row: 0
+    width: 5
