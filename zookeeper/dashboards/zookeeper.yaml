@@ -1,0 +1,388 @@
+description: ""
+icon:
+  color: '#e1891f'
+  name: integration--java
+labels:
+- key: java
+  value: ""
+- key: zookeeper
+  value: ""
+name: zookeeper
+scopes: []
+theme: light
+title: Zookeeper
+widgets:
+  chartwidgets:
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ms
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,zk_max_latency,:eq,service,zookeeper,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Max Latency By Host
+    row: 4
+    width: 6
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,zk_outstanding_requests,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Outstanding Requests
+    row: 4
+    width: 6
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,zk_open_file_descriptor_count,:eq,:max
+        visible: true
+      - query: name,zk_max_file_descriptor_count,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: File Descripter Count (Max vs. Open)
+    row: 6
+    width: 6
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: StackedArea
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,zk_num_alive_connections,:eq,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Alive Connection Count
+    row: 2
+    width: 6
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: '%'
+          unitposition: After
+      charttype: Line
+      description: Monitoring disk space to ensure Zookeeper has enough file space
+        to keep zNodes
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,sys.disk.used_pct,:eq,role,zookeeper,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Disk Space Used
+    row: 6
+    width: 6
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Bar
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,zk_packets_received,:eq,:max
+        visible: true
+      - query: name,zk_packets_sent,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Requests Sent vs. Received
+    row: 2
+    width: 6
+  - col: 11
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Bar
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,zk_followers,:eq,:max
+        visible: true
+      - query: name,zk_synced_followers,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Followers vs. Synced Followers
+    row: 0
+    width: 3
+  imagewidgets:
+  - col: 0
+    height: 4
+    options:
+      color: '#588fd8'
+      icon: settings_ethernet
+      sizing: stretched
+    row: 2
+    width: 2
+  - col: 0
+    height: 2
+    options:
+      color: '#3cc663'
+      icon: disc_full
+      sizing: stretched
+    row: 6
+    width: 2
+  markdownwidgets:
+  - col: 0
+    height: 2
+    options:
+      content: |
+        <p><img src="http://educareit.com/images/zookeeper.png" alt="Zookeeper Logo"/></p>
+      markdown: '![Zookeeper Logo](http://educareit.com/images/zookeeper.png)'
+    row: 0
+    width: 3
+  numberwidgets:
+  - col: 7
+    height: 2
+    options:
+      color: '#3cc663'
+      description: ""
+      displaymax: null
+      displaymin: null
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: integration--java
+      query:
+        query: name,zk_znode_count,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: zNode Count
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 2
+  - col: 5
+    height: 2
+    options:
+      color: '#3cc663'
+      description: ""
+      displaymax: null
+      displaymin: null
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: integration--java
+      query:
+        query: name,zk_watch_count,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Watch Count
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 2
+  - col: 3
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: insert_emoticon
+      query:
+        query: name,host.status,:eq,role,zookeeper,:eq,:and,:count,:cf-max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Nodes
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 2
+  - col: 9
+    height: 2
+    options:
+      color: '#3cc663'
+      description: ""
+      displaymax: null
+      displaymin: null
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: integration--java
+      query:
+        query: name,zk_pending_syncs,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Pending Syncs
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 2
+  statuswidgets: []
