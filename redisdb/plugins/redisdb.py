@@ -91,13 +91,15 @@ class RedisPlugin(Plugin):
                                   password=self.get('password', None))
 
             output = r.info()  # type: Dict[str, Any]
-
+            
             for key in COUNTER_METRICS:
+              if key in output:
                 val, labels = split_uom(output[key])
                 labels.update(uom(key))
                 self.counter('redis_' + key, labels).set(val)
 
             for key in GAUGE_METRICS:
+              if key in output:  
                 val, labels = split_uom(output[key])
                 labels.update(uom(key))
                 self.counter('redis_' + key, labels).set(val)
