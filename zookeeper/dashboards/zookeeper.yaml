@@ -114,7 +114,7 @@ widgets:
         linestyle: Solid
         status: Error
         threshold: 0
-      title: File Descripter Count (Max vs. Open)
+      title: File Descriptor Count (Max vs. Open)
     row: 6
     width: 6
   - col: 2
