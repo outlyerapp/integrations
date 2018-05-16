@@ -12,7 +12,7 @@ GAUGE_METRICS = [
     'tomcat.global_request_processor_maxTime',
 ]
 
-class TomcatPlugin():
+class TomcatPlugin(Plugin):
 
     def collect(self, _):
 
@@ -88,4 +88,4 @@ class TomcatPlugin():
         return Status.OK
 
 if __name__ == '__main__':
-    sys.exit(TomcatPlugin().collect(None))
+    sys.exit(TomcatPlugin().run())
