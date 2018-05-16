@@ -1,0 +1,464 @@
+description: Kafka Consumer Dashboard
+icon:
+  color: '#dd3e26'
+  name: integration--java
+labels:
+- key: kafka
+  value: ""
+name: kafka-consumer
+scopes: []
+theme: light
+title: Kafka Consumer
+widgets:
+  chartwidgets:
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-fetch-manager-metrics_records-lag-max,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Consumer MaxLag
+    row: 2
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-fetch-manager-metrics_bytes-consumed-rate,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Bytes Consumed Per Sec
+    row: 2
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-fetch-manager-metrics_records-consumed-rate,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Records Consumed Per Sec
+    row: 0
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-fetch-manager-metrics_fetch-rate,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Fetch Requests Per Sec
+    row: 4
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-fetch-manager-metrics_fetch-latency-avg,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Fetch Request Latency Avg
+    row: 4
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-coordinator-metrics_commit-rate,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Commit Rate
+    row: 9
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-coordinator-metrics_commit-latency-avg,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Commit Calls Latency (ms)
+    row: 9
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-coordinator-metrics_join-rate,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Join Rate
+    row: 11
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-coordinator-metrics_sync-rate,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Sync Rate
+    row: 11
+    width: 6
+  imagewidgets: []
+  markdownwidgets:
+  - col: 0
+    height: 2
+    options:
+      content: |
+        <p><img src="https://pbs.twimg.com/profile_images/781633389577195521/kazUJooF_reasonably_small.jpg" alt="Kafka Logo"/></p>
+      markdown: '![Kafka Logo](https://pbs.twimg.com/profile_images/781633389577195521/kazUJooF_reasonably_small.jpg)'
+    row: 0
+    width: 3
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Consumer Group Metrics</h1>
+      markdown: '# Consumer Group Metrics'
+    row: 6
+    width: 12
+  numberwidgets:
+  - col: 3
+    height: 2
+    options:
+      color: '#6fe7e0'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,kafka_consumer_consumer-fetch-manager-metrics_records-consumed-total,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Records Consumed
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      color: '#6fe7e0'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,kafka_consumer_consumer-coordinator-metrics_assigned-partitions,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Partitions Assigned
+      unit: ""
+      unitposition: After
+    row: 7
+    width: 3
+  - col: 3
+    height: 2
+    options:
+      color: '#56da7b'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: integration--java
+      query:
+        query: name,kafka_consumer_consumer-coordinator-metrics_commit-total,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Commit Total
+      unit: ""
+      unitposition: After
+    row: 7
+    width: 3
+  - col: 9
+    height: 2
+    options:
+      color: '#acdaf1'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: integration--java
+      query:
+        query: name,kafka_consumer_consumer-coordinator-metrics_sync-total,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Sync Total
+      unit: ""
+      unitposition: After
+    row: 7
+    width: 3
+  - col: 6
+    height: 2
+    options:
+      color: '#7babeb'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: integration--java
+      query:
+        query: name,kafka_consumer_consumer-coordinator-metrics_join-total,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Join Total
+      unit: ""
+      unitposition: After
+    row: 7
+    width: 3
+  statuswidgets: []
