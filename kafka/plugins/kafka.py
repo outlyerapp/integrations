@@ -199,7 +199,7 @@ class KafkaPlugin(Plugin):
 
         for metric in metrics:
             try:
-                if (metric.value_type != "String") or (metric.value_type != ""):
+                if (metric.value_type != "String") and (metric.value_type != ""):
                     self.gauge(metric.metric_name, metric.metric_labels).set(metric.value)
             except:
                 # Ignore if a new type is returned from JMX that isn't a number
