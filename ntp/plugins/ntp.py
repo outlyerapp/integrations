@@ -34,7 +34,7 @@ class NTPCheckPlugin(Plugin):
             ntp_clock = datetime.strptime(time.ctime(t).replace("  ", " "), '%a %b %d %H:%M:%S %Y').date()
 
             time_delta = datetime.now().date() - ntp_clock
-            self.gauge('ntp_drift', {"uom": "s"}).set(time_delta.seconds)
+            self.gauge('ntp_drift', {}).set(time_delta.seconds)
             if int(time_delta.seconds) < drift:
                 return Status.OK
             else:
