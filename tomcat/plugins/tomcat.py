@@ -1,93 +1,91 @@
 #!/usr/bin/env python3
 
 import sys
-import time
+from jmxquery import JMXConnection, JMXQuery
 
-from outlyer_plugin import Plugin, Status
-from outlyer_agent.java import MetricType
-from outlyer_agent.java.request import JmxQuery, JmxAttribute
-from outlyer_agent.java.response import JmxMetric, JmxQueryResponse
-from outlyer_agent.java.thread import JvmTask
+from outlyer_plugin import Status, Plugin
 
-# TODO: add metrics for each Servlet (controlled by flag)
-# TODO: add metrics for each Manager
-# TODO: add metrics for each WebModule
+GAUGE_METRICS = [
+    'tomcat.threadpool_maxthreads',
+    'tomcat.threadpool_current_thread_count',
+    'tomcat.threadpool_current_threads_busy',
+    'tomcat.global_request_processor_maxTime',
+]
 
-
-class TomcatPlugin(Plugin):
+class TomcatPlugin():
 
     def collect(self, _):
 
-        host = self.get('host', 'localhost')
-        port = self.get('port', 8080)
-        jmx_url = f'service:jmx:rmi:///jndi/rmi://{host}:{port}/jmxrmi'
+        jmx_ip = self.get('ip', '127.0.0.1')
+        jmx_port = self.get('port', '9012')
+        jmx_url = f'service:jmx:rmi:///jndi/rmi://{jmx_ip}:{jmx_port}/jmxrmi'
+        jmxConnection = JMXConnection(jmx_url)
 
-        # These are the metrics we want:
-        response = JvmTask().get_metrics(
-            jmx_url,
-            JmxQuery('tomcat.thread_pool.{attr}',
-                     MetricType.GAUGE, 'Catalina:type=ThreadPool,*',
-                     JmxAttribute('currentThreadCount'),
-                     JmxAttribute('currentThreadsBusy'),
-                     JmxAttribute('connectionCount'),
-                     JmxAttribute('maxThreads'),
-                     JmxAttribute('minSpareThreads'),
-                     JmxAttribute('acceptorThreadCount')),
-            JmxQuery('tomcat.cache.{attr}',
-                     MetricType.GAUGE, 'Catalina:type=Cache,*',
-                     JmxAttribute('accessCount'),
-                     JmxAttribute('hitsCount')),
-            JmxQuery('tomcat.grp.{attr}',
-                     MetricType.COUNTER, 'Catalina:type=GlobalRequestProcessor,*',
-                     JmxAttribute('bytesReceived'),
-                     JmxAttribute('bytesSent'),
-                     JmxAttribute('errorCount'),
-                     JmxAttribute('processingTime'),
-                     JmxAttribute('requestCount'))
-        )
+        jmxQuery = [
 
-        # Calculate derived metrics (rates, percentages, etc.)
-        self.do_contexts(response)
-        self.do_global_req_procs(response)
+            # Threadpool Metrics
+            JMXQuery("Catalina:type=ThreadPool,name=*/maxThreads",
+                     metric_name="tomcat.threadpool_maxthreads",
+                     metric_labels={"processor": "{name}"}),
+            JMXQuery("Catalina:type=ThreadPool,name=*/currentThreadCount",
+                     metric_name="tomcat.threadpool_current_thread_count",
+                     metric_labels={"processor": "{name}"}),
+            JMXQuery("Catalina:type=ThreadPool,name=*/currentThreadsBusy",
+                     metric_name="tomcat.threadpool_current_threads_busy",
+                     metric_labels={"processor": "{name}"}),
 
-        response.upload_target(self)
+            # Global Request Processor Metrics
+            JMXQuery("Catalina:type=GlobalRequestProcessor,name=*",
+                     metric_name="tomcat.global_request_processor_{attribute}",
+                     metric_labels = {"processor": "{name}"}),
+
+            # Cache Metrics
+            JMXQuery("Catalina:type=Cache,host=*,context=*/accessCount",
+                     metric_name="tomcat.cache_access_count",
+                     metric_labels={"tomcat_host": "{host}",
+                                    "context": "{context}"}),
+            JMXQuery("Catalina:type=Cache,host=*,context=*/hitsCount",
+                     metric_name="tomcat.cache_hits_count",
+                     metric_labels={"tomcat_host": "{host}",
+                                    "context": "{context}"}),
+
+            # Servlet Metrics
+            JMXQuery("Catalina:j2eeType=Servlet,name=*,WebModule=*,*/processingTime",
+                     metric_name="tomcat.servlet_processingTime",
+                     metric_labels={"webmodule": "{WebModule}",
+                                    "servlet": "{name}"}),
+            JMXQuery("Catalina:j2eeType=Servlet,name=*,WebModule=*,*/errorCount",
+                     metric_name="tomcat.servlet_errorCount",
+                     metric_labels={"webmodule": "{WebModule}",
+                                    "servlet": "{name}"}),
+            JMXQuery("Catalina:j2eeType=Servlet,name=*,WebModule=*,*/requestCount",
+                     metric_name="tomcat.servlet_requestCount",
+                     metric_labels={"webmodule": "{WebModule}",
+                                    "servlet": "{name}"}),
+
+            # JspMonitor Metrics
+            JMXQuery("Catalina:type=JspMonitor,name=jsp,WebModule=*,*/jspCount",
+                     metric_name="tomcat.jspmonitor_jsp_count",
+                     metric_labels={"webmodule": "{WebModule}"}),
+            JMXQuery("Catalina:type=JspMonitor,name=jsp,WebModule=*,*/jspReloadCount",
+                     metric_name="tomcat.jspmonitor_jsp_reload_count",
+                     metric_labels={"webmodule": "{WebModule}"}),
+        ]
+
+        metrics = jmxConnection.query(jmxQuery)
+
+        for metric in metrics:
+            try:
+                if (metric.value_type != "String") and (metric.value_type != ""):
+                    if metric.metric_name in GAUGE_METRICS:
+                        self.gauge(metric.metric_name, metric.metric_labels).set(metric.value)
+                    else:
+                        self.counter(metric.metric_name, metric.metric_labels).set(metric.value)
+            except:
+                # Ignore if a new type is returned from JMX that isn't a number
+                pass
+
         return Status.OK
 
-    def do_counter(self, m: JmxMetric) -> None:
-        self.counter(m.name, m.labels).set(m.value)
-
-    def do_contexts(self, response: JmxQueryResponse) -> None:
-
-        for context in [x.labels['context'] for x in response.metrics \
-                        if x.name.endswith('.access_count')]:
-
-            hits = response.find_one('tomcat.cache.hits_count', context=context)
-            access = response.find_one('tomcat.cache.access_count', context=context)
-            hit_pct = round((hits.value / access.value) * 100.0, 2)
-            labels = hits.labels.copy().update({'uom': '%'})
-            self.do_counter(hits)
-            self.do_counter(access)
-            self.gauge('tomcat.cache.hit_percentage', labels).set(hit_pct)
-
-    def do_global_req_procs(self, response: JmxQueryResponse) -> None:
-
-        for grp in [x.labels['name'] for x in response.metrics \
-                    if x.name.startswith('tomcat.grp.')]:
-
-            total_time = response.find_one('tomcat.grp.processing_time', name=grp)
-            count = response.find_one('tomcat.grp.request_count', name=grp)
-
-            if count.value > 0:
-                avg_time = round(total_time.value / count.value, 3)
-                self.gauge('tomcat.grp.average_time').set(avg_time)
-            else:
-                self.gauge('tomcat.grp.average_time').set(0.0)
-
-            self.do_counter(response.find_one('tomcat.grp.bytes_received', name=grp))
-            self.do_counter(response.find_one('tomcat.grp.bytes_sent', name=grp))
-            self.do_counter(response.find_one('tomcat.grp.error_count', name=grp))
-
-
 if __name__ == '__main__':
-    sys.exit(TomcatPlugin().run())
-
+    sys.exit(TomcatPlugin().collect(None))
