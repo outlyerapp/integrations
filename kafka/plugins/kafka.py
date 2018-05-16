@@ -86,13 +86,120 @@ class KafkaPlugin(Plugin):
                     JMXQuery("kafka.server:type=SessionExpireListener,name=ZooKeeperExpiresPerSec",
                              metric_name="kafka_server_SessionExpireListener_ZooKeeperExpiresPerSec_{attribute}"),
 
+                    # LeaderCount
+                    JMXQuery("kafka.server:type=ReplicaManager,name=LeaderCount/Value",
+                             metric_name="kafka_server_ReplicaManager_LeaderCount"),
+
+                    # MaxLag
+                    JMXQuery("kafka.server:type=ReplicaFetcherManager,name=MaxLag,clientId=Replica",
+                             metric_name="kafka_server_ReplicaFetcherManager_MaxLag"),
+                    
+                    # OpenFileDescriptorCount
+                    JMXQuery("java.lang:type=OperatingSystem/OpenFileDescriptorCount",
+                             metric_name="java_lang_OperatingSystem_OpenFileDescriptorCount"),
+                    
+                    # MaxFileDescriptorCount
+                    JMXQuery("java.lang:type=OperatingSystem/MaxFileDescriptorCount",
+                             metric_name="java_lang_OperatingSystem_MaxFileDescriptorCount"),
+          
+                    # Producer: connection-count
+                    JMXQuery("kafka.producer:type=producer-metrics,client-id=*/connection-count",
+                             metric_name="kafka_producer_producer-metrics_connection-count"),
+                    
+                    # Producer: waiting-threads
+                    JMXQuery("kafka.producer:type=producer-metrics,client-id=*/waiting-threads",
+                             metric_name="kafka_producer_producer-metrics_waiting-threads"),
+          
+                    # Producer: record-send-total
+                    JMXQuery("kafka.producer:type=producer-metrics,client-id=*/record-send-total",
+                             metric_name="kafka_producer_producer-metrics_record-send-total"),
+          
+                    # Producer: request-rate
+                    JMXQuery("kafka.producer:type=producer-metrics,client-id=*/request-rate",
+                             metric_name="kafka_producer_producer-metrics_request-rate"),
+          
+                    # Producer: response-rate
+                    JMXQuery("kafka.producer:type=producer-metrics,client-id=*/response-rate",
+                             metric_name="kafka_producer_producer-metrics_response-rate"),
+          
+                    # Producer: outgoing-byte-rate
+                    JMXQuery("kafka.producer:type=producer-metrics,client-id=*/outgoing-byte-rate",
+                             metric_name="kafka_producer_producer-metrics_outgoing-byte-rate"),
+          
+                    # Producer: incoming-byte-rate
+                    JMXQuery("kafka.producer:type=producer-metrics,client-id=*/incoming-byte-rate",
+                             metric_name="kafka_producer_producer-metrics_incoming-byte-rate"),
+          
+                    # Producer: request-latency-avg
+                    JMXQuery("kafka.producer:type=producer-metrics,client-id=*/request-latency-avg",
+                             metric_name="kafka_producer_producer-metrics_request-latency-avg"),
+
+                    # Producer: io-wait-time-ns-avg
+                    JMXQuery("kafka.producer:type=producer-metrics,client-id=*/io-wait-time-ns-avg",
+                             metric_name="kafka_producer_producer-metrics_io-wait-time-ns-avg"),
+          
+                    # Consumer: records-consumed-total
+                    JMXQuery("kafka.consumer:type=consumer-fetch-manager-metrics,client-id=*/records-consumed-total",
+                             metric_name="kafka_consumer_consumer-fetch-manager-metrics_records-consumed-total"),
+
+                    # Consumer: records-consumed-rate
+                    JMXQuery("kafka.consumer:type=consumer-fetch-manager-metrics,client-id=*/records-consumed-rate",
+                             metric_name="kafka_consumer_consumer-fetch-manager-metrics_records-consumed-rate"),
+
+                    # Consumer: records-lag-max
+                    JMXQuery("kafka.consumer:type=consumer-fetch-manager-metrics,client-id=*/records-lag-max",
+                             metric_name="kafka_consumer_consumer-fetch-manager-metrics_records-lag-max"),
+
+                    # Consumer: bytes-consumed-rate
+                    JMXQuery("kafka.consumer:type=consumer-fetch-manager-metrics,client-id=*/bytes-consumed-rate",
+                             metric_name="kafka_consumer_consumer-fetch-manager-metrics_bytes-consumed-rate"),
+
+                    # Consumer: fetch-rate
+                    JMXQuery("kafka.consumer:type=consumer-fetch-manager-metrics,client-id=*/fetch-rate",
+                             metric_name="kafka_consumer_consumer-fetch-manager-metrics_fetch-rate"),
+
+                    # Consumer: fetch-latency-avg
+                    JMXQuery("kafka.consumer:type=consumer-fetch-manager-metrics,client-id=*/fetch-latency-avg",
+                             metric_name="kafka_consumer_consumer-fetch-manager-metrics_fetch-latency-avg"),
+
+                    # Consumer: assigned-partitions
+                    JMXQuery("kafka.consumer:type=consumer-coordinator-metrics,client-id=*/assigned-partitions",
+                             metric_name="kafka_consumer_consumer-coordinator-metrics_assigned-partitions"),
+
+                    # Consumer: commit-total
+                    JMXQuery("kafka.consumer:type=consumer-coordinator-metrics,client-id=*/commit-total",
+                             metric_name="kafka_consumer_consumer-coordinator-metrics_commit-total"),
+
+                    # Consumer: join-total
+                    JMXQuery("kafka.consumer:type=consumer-coordinator-metrics,client-id=*/join-total",
+                             metric_name="kafka_consumer_consumer-coordinator-metrics_join-total"),
+
+                    # Consumer: sync-total
+                    JMXQuery("kafka.consumer:type=consumer-coordinator-metrics,client-id=*/sync-total",
+                             metric_name="kafka_consumer_consumer-coordinator-metrics_sync-total"),
+
+                    # Consumer: commit-rate
+                    JMXQuery("kafka.consumer:type=consumer-coordinator-metrics,client-id=*/commit-rate",
+                             metric_name="kafka_consumer_consumer-coordinator-metrics_commit-rate"),
+
+                    # Consumer: commit-latency-avg
+                    JMXQuery("kafka.consumer:type=consumer-coordinator-metrics,client-id=*/commit-latency-avg",
+                             metric_name="kafka_consumer_consumer-coordinator-metrics_commit-latency-avg"),
+
+                    # Consumer: join-rate
+                    JMXQuery("kafka.consumer:type=consumer-coordinator-metrics,client-id=*/join-rate",
+                             metric_name="kafka_consumer_consumer-coordinator-metrics_join-rate"),
+
+                    # Consumer: sync-rate
+                    JMXQuery("kafka.consumer:type=consumer-coordinator-metrics,client-id=*/sync-rate",
+                             metric_name="kafka_consumer_consumer-coordinator-metrics_sync-rate"),
                    ]
 
         metrics = jmxConnection.query(jmxQuery)
 
         for metric in metrics:
             try:
-                if (metric.value_type != "String") and (metric.value_type != ""):
+                if (metric.value_type != "String") or (metric.value_type != ""):
                     self.gauge(metric.metric_name, metric.metric_labels).set(metric.value)
             except:
                 # Ignore if a new type is returned from JMX that isn't a number
