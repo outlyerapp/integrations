@@ -1,0 +1,240 @@
+description: Kafka Producer Dashboard
+icon:
+  color: '#dd3e26'
+  name: integration--java
+labels:
+- key: kafka
+  value: ""
+name: kafka-producer
+scopes: []
+theme: light
+title: Kafka Producer
+widgets:
+  chartwidgets:
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_producer_producer-metrics_request-rate,:eq,:max
+        visible: true
+      - query: name,kafka_producer_producer-metrics_response-rate,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Request/Response Rate
+    row: 2
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_producer_producer-metrics_outgoing-byte-rate,:eq,:max
+        visible: true
+      - query: name,kafka_producer_producer-metrics_incoming-byte-rate,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Ingoing/Outgoing Bytes Rate
+    row: 2
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_producer_producer-metrics_request-latency-avg,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Request Latency Average (ms)
+    row: 4
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_producer_producer-metrics_io-wait-time-ns-avg,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: I/O Wait Average (ns)
+    row: 4
+    width: 6
+  imagewidgets: []
+  markdownwidgets:
+  - col: 0
+    height: 2
+    options:
+      content: |
+        <p><img src="https://pbs.twimg.com/profile_images/781633389577195521/kazUJooF_reasonably_small.jpg" alt="Kafka Logo"/></p>
+      markdown: '![Kafka Logo](https://pbs.twimg.com/profile_images/781633389577195521/kazUJooF_reasonably_small.jpg)'
+    row: 0
+    width: 3
+  numberwidgets:
+  - col: 6
+    height: 2
+    options:
+      color: '#6fe7e0'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: integration--java
+      query:
+        query: name,kafka_producer_producer-metrics_connection-count,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Connection Count
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 3
+  - col: 9
+    height: 2
+    options:
+      color: '#3cc663'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: integration--java
+      query:
+        query: name,kafka_producer_producer-metrics_waiting-threads,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Waiting Threads
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 3
+  - col: 3
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,kafka_producer_producer-metrics_record-send-total,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Records Sent Total
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 3
+  statuswidgets: []

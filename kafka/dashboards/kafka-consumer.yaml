@@ -1,19 +1,17 @@
-description: ""
+description: Kafka Consumer Dashboard
 icon:
-  color: '#e1891f'
+  color: '#dd3e26'
   name: integration--java
 labels:
-- key: java
+- key: kafka
   value: ""
-- key: zookeeper
-  value: ""
-name: zookeeper
+name: kafka-consumer
 scopes: []
 theme: light
-title: Zookeeper
+title: Kafka Consumer
 widgets:
   chartwidgets:
-  - col: 8
+  - col: 0
     height: 2
     options:
       axes:
@@ -25,7 +23,7 @@ widgets:
           min: 0
           showgridlines: false
           title: ""
-          unit: ms
+          unit: ""
           unitposition: After
       charttype: Line
       description: ""
@@ -33,7 +31,7 @@ widgets:
         linktype: dashboard
         path: ""
       queries:
-      - query: name,zk_max_latency,:eq,service,zookeeper,:eq,:and,:max,(,host,),:by
+      - query: name,kafka_consumer_consumer-fetch-manager-metrics_records-lag-max,:eq,:max
         visible: true
       seriesstyle:
         color: '#588fd8'
@@ -44,135 +42,30 @@ widgets:
         linestyle: Solid
         status: Error
         threshold: 0
-      title: Max Latency By Host
-    row: 4
-    width: 6
-  - col: 2
-    height: 2
-    options:
-      axes:
-        xaxis:
-          mode: Time
-          showgridlines: false
-        yaxis:
-          max: null
-          min: 0
-          showgridlines: false
-          title: ""
-          unit: ""
-          unitposition: After
-      charttype: Line
-      description: ""
-      externallink:
-        linktype: dashboard
-        path: ""
-      queries:
-      - query: name,zk_outstanding_requests,:eq,:max
-        visible: true
-      seriesstyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Max
-      thresholds:
-      - display: None
-        linestyle: Solid
-        status: Error
-        threshold: 0
-      title: Outstanding Requests
-    row: 4
-    width: 6
-  - col: 8
-    height: 2
-    options:
-      axes:
-        xaxis:
-          mode: Time
-          showgridlines: false
-        yaxis:
-          max: null
-          min: 0
-          showgridlines: false
-          title: ""
-          unit: ""
-          unitposition: After
-      charttype: Line
-      description: ""
-      externallink:
-        linktype: dashboard
-        path: ""
-      queries:
-      - query: name,zk_open_file_descriptor_count,:eq,:max
-        visible: true
-      - query: name,zk_max_file_descriptor_count,:eq,:max
-        visible: true
-      seriesstyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Max
-      thresholds:
-      - display: None
-        linestyle: Solid
-        status: Error
-        threshold: 0
-      title: File Descriptor Count (Max vs. Open)
-    row: 6
-    width: 6
-  - col: 2
-    height: 2
-    options:
-      axes:
-        xaxis:
-          mode: Time
-          showgridlines: false
-        yaxis:
-          max: null
-          min: 0
-          showgridlines: false
-          title: ""
-          unit: ""
-          unitposition: After
-      charttype: StackedArea
-      description: ""
-      externallink:
-        linktype: dashboard
-        path: ""
-      queries:
-      - query: name,zk_num_alive_connections,:eq,:max,(,host,),:by
-        visible: true
-      seriesstyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Max
-      thresholds:
-      - display: None
-        linestyle: Solid
-        status: Error
-        threshold: 0
-      title: Alive Connection Count
+      title: Consumer MaxLag
     row: 2
     width: 6
-  - col: 2
+  - col: 6
     height: 2
     options:
       axes:
         xaxis:
           mode: Time
-          showgridlines: true
+          showgridlines: false
         yaxis:
           max: null
           min: 0
           showgridlines: false
           title: ""
-          unit: '%'
+          unit: ""
           unitposition: After
       charttype: Line
-      description: Monitoring disk space to ensure Zookeeper has enough file space
-        to keep zNodes
+      description: ""
       externallink:
         linktype: dashboard
         path: ""
       queries:
-      - query: name,sys.disk.used_pct,:eq,role,zookeeper,:eq,:and,:max,(,host,),:by
+      - query: name,kafka_consumer_consumer-fetch-manager-metrics_bytes-consumed-rate,:eq,:max
         visible: true
       seriesstyle:
         color: '#588fd8'
@@ -183,46 +76,10 @@ widgets:
         linestyle: Solid
         status: Error
         threshold: 0
-      title: Disk Space Used
-    row: 6
-    width: 6
-  - col: 8
-    height: 2
-    options:
-      axes:
-        xaxis:
-          mode: Time
-          showgridlines: false
-        yaxis:
-          max: null
-          min: 0
-          showgridlines: false
-          title: ""
-          unit: ""
-          unitposition: After
-      charttype: Bar
-      description: ""
-      externallink:
-        linktype: dashboard
-        path: ""
-      queries:
-      - query: name,zk_packets_received,:eq,:max
-        visible: true
-      - query: name,zk_packets_sent,:eq,:max
-        visible: true
-      seriesstyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Max
-      thresholds:
-      - display: None
-        linestyle: Solid
-        status: Error
-        threshold: 0
-      title: Requests Sent vs. Received
+      title: Bytes Consumed Per Sec
     row: 2
     width: 6
-  - col: 11
+  - col: 6
     height: 2
     options:
       axes:
@@ -236,153 +93,372 @@ widgets:
           title: ""
           unit: ""
           unitposition: After
-      charttype: Bar
+      charttype: Line
       description: ""
       externallink:
         linktype: dashboard
         path: ""
       queries:
-      - query: name,zk_followers,:eq,:max
-        visible: true
-      - query: name,zk_synced_followers,:eq,:max
+      - query: name,kafka_consumer_consumer-fetch-manager-metrics_records-consumed-rate,:eq,:max
         visible: true
       seriesstyle:
         color: '#588fd8'
         palette: MultiColor
-      summarization: Max
+      summarization: Avg
       thresholds:
       - display: None
         linestyle: Solid
         status: Error
         threshold: 0
-      title: Followers vs. Synced Followers
+      title: Records Consumed Per Sec
     row: 0
-    width: 3
-  imagewidgets:
-  - col: 0
-    height: 4
-    options:
-      color: '#588fd8'
-      icon: settings_ethernet
-      sizing: stretched
-    row: 2
-    width: 2
+    width: 6
   - col: 0
     height: 2
     options:
-      color: '#3cc663'
-      icon: disc_full
-      sizing: stretched
-    row: 6
-    width: 2
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-fetch-manager-metrics_fetch-rate,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Fetch Requests Per Sec
+    row: 4
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-fetch-manager-metrics_fetch-latency-avg,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Fetch Request Latency Avg
+    row: 4
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-coordinator-metrics_commit-rate,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Commit Rate
+    row: 9
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-coordinator-metrics_commit-latency-avg,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Commit Calls Latency (ms)
+    row: 9
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-coordinator-metrics_join-rate,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Join Rate
+    row: 11
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_consumer-coordinator-metrics_sync-rate,:eq,:max
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Sync Rate
+    row: 11
+    width: 6
+  imagewidgets: []
   markdownwidgets:
   - col: 0
     height: 2
     options:
       content: |
-        <p><img src="http://educareit.com/images/zookeeper.png" alt="Zookeeper Logo"/></p>
-      markdown: '![Zookeeper Logo](http://educareit.com/images/zookeeper.png)'
+        <p><img src="https://pbs.twimg.com/profile_images/781633389577195521/kazUJooF_reasonably_small.jpg" alt="Kafka Logo"/></p>
+      markdown: '![Kafka Logo](https://pbs.twimg.com/profile_images/781633389577195521/kazUJooF_reasonably_small.jpg)'
     row: 0
     width: 3
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Consumer Group Metrics</h1>
+      markdown: '# Consumer Group Metrics'
+    row: 6
+    width: 12
   numberwidgets:
-  - col: 7
-    height: 2
-    options:
-      color: '#3cc663'
-      description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
-        path: ""
-      icon: integration--java
-      query:
-        query: name,zk_znode_count,:eq,:max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: zNode Count
-      unit: ""
-      unitposition: After
-    row: 0
-    width: 2
-  - col: 5
-    height: 2
-    options:
-      color: '#3cc663'
-      description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
-        path: ""
-      icon: integration--java
-      query:
-        query: name,zk_watch_count,:eq,:max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Watch Count
-      unit: ""
-      unitposition: After
-    row: 0
-    width: 2
   - col: 3
     height: 2
     options:
-      color: '#588fd8'
+      color: '#6fe7e0'
       description: ""
       displaymax: 0
       displaymin: 0
-      displaytrend: None
+      displaytrend: SparkLine
       externallink:
         linktype: dashboard
         path: ""
-      icon: insert_emoticon
+      icon: check
       query:
-        query: name,host.status,:eq,role,zookeeper,:eq,:and,:count,:cf-max
+        query: name,kafka_consumer_consumer-fetch-manager-metrics_records-consumed-total,:eq,:max
         visible: true
       rounding: None
       statistic: LastValue
       thresholds:
       - status: Error
         threshold: 0
-      title: Nodes
+      title: Records Consumed
       unit: ""
       unitposition: After
     row: 0
-    width: 2
-  - col: 9
+    width: 3
+  - col: 0
     height: 2
     options:
-      color: '#3cc663'
+      color: '#6fe7e0'
       description: ""
-      displaymax: null
-      displaymin: null
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,kafka_consumer_consumer-coordinator-metrics_assigned-partitions,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Partitions Assigned
+      unit: ""
+      unitposition: After
+    row: 7
+    width: 3
+  - col: 3
+    height: 2
+    options:
+      color: '#56da7b'
+      description: ""
+      displaymax: 0
+      displaymin: 0
       displaytrend: SparkLine
       externallink:
         linktype: dashboard
         path: ""
       icon: integration--java
       query:
-        query: name,zk_pending_syncs,:eq,:max
+        query: name,kafka_consumer_consumer-coordinator-metrics_commit-total,:eq,:max
         visible: true
       rounding: None
       statistic: LastValue
       thresholds:
       - status: Error
         threshold: 0
-      title: Pending Syncs
+      title: Commit Total
       unit: ""
       unitposition: After
-    row: 0
-    width: 2
+    row: 7
+    width: 3
+  - col: 9
+    height: 2
+    options:
+      color: '#acdaf1'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: integration--java
+      query:
+        query: name,kafka_consumer_consumer-coordinator-metrics_sync-total,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Sync Total
+      unit: ""
+      unitposition: After
+    row: 7
+    width: 3
+  - col: 6
+    height: 2
+    options:
+      color: '#7babeb'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: integration--java
+      query:
+        query: name,kafka_consumer_consumer-coordinator-metrics_join-total,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Join Total
+      unit: ""
+      unitposition: After
+    row: 7
+    width: 3
   statuswidgets: []
