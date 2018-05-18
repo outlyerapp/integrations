@@ -12,7 +12,7 @@ reported back to Outlyer accurately for dashboards and alerts.
 
 == Metrics Collected ==
 
-| Metric Name              |Type   | Labels            |Description                                                                                                            |
+| Metric Name              |Type   | Labels            |Description                                 |
 |--------------------------|-------|-------------------|--------------------------------------------|
 |ntp_drift                 |Gauge  |                   |The time offset of the server in seconds.   |
 
