@@ -20,7 +20,6 @@ GAUGE_METRICS = [
     'etcd_debugging_mvcc_db_total_size_in_bytes',
     'process_open_fds',
     'process_max_fds',
-    ''
 ]
 
 COUNTER_METRICS = [
