@@ -16,12 +16,45 @@ The integration collects key JVM metrics as well as index and request metrics fo
 
 == Metrics Collected ==
 
-TODO
-
-| Metric Name              |Type   | Labels            |Description                                 |
-|--------------------------|-------|-------------------|--------------------------------------------|
-|solr.jvm_classes_loaded   |Gauge  |                   |                                            |
-|solr.jvm_classes_unloaded |Gauge  |                   |                                            |
+| Metric Name                         |Type   | Labels            |Unit |Description                                      |
+|-------------------------------------|-------|-------------------|-----|-------------------------------------------------|
+|solr.jvm_classes_loaded              |Gauge  |                   |     |Total number of classes loaded in JVM            |
+|solr.jvm_classes_unloaded            |Gauge  |                   |     |Total number of classes unloaded from JVM        |
+|solr.jvm_gc_concurrentmarksweep_count|Counter|                   |     |Total number of major garbage collection runs    |
+|solr.jvm_gc_concurrentmarksweep_time |Counter|                   |ms   |Total time spent doing major garbage collection  |
+|solr.jvm_gc_parnew_count             |Counter|                   |     |Total number of minor garbage collection runs    |
+|solr.jvm_gc_parnew_time              |Counter|                   |ms   |Total time spent doing minor garbage collection  |
+|solr.jvm_memory_heap_committed       |Gauge  |                   |bytes|Total JVM heap memory committed                  |
+|solr.jvm_memory_heap_init            |Gauge  |                   |bytes|Total JVM heap memory initialised                |
+|solr.jvm_memory_heap_max             |Gauge  |                   |bytes|Max JVM heap memory available                    |
+|solr.jvm_memory_heap_used            |Gauge  |                   |bytes|Total JVM heap memory used                       |
+|solr.jvm_memory_nonheap_committed    |Gauge  |                   |bytes|Total JVM non-heap memory committed              |
+|solr.jvm_memory_nonheap_init         |Gauge  |                   |bytes|Total JVM non-heap memory initialised            |
+|solr.jvm_memory_nonheap_max          |Gauge  |                   |bytes|Max JVM non-heap memory available                |
+|solr.jvm_memory_nonheap_used         |Gauge  |                   |bytes|Total JVM non-heap memory used                   | 
+|solr.jvm_threads_blocked_count       |Gauge  |                   |     |Total number of threads currently blocked        |
+|solr.jvm_threads_count               |Gauge  |                   |     |Total number of threads running                  |
+|solr.jvm_threads_daemon_count        |Gauge  |                   |     |Total number of daemon threads running           |
+|solr.jvm_threads_deadlock_count      |Gauge  |                   |     |Total number of threads currently in deadlock    |
+|solr.jvm_threads_new_count           |Gauge  |                   |     |Total number of new threads created              |
+|solr.jvm_threads_runnable_count      |Gauge  |                   |     |Total number of runnable threads created         |
+|solr.jvm_threads_terminated_count    |Gauge  |                   |     |Total number of threads terminated               |
+|solr.jvm_threads_timed_waiting_count |Gauge  |                   |     |Total number of threads currently timed waiting  |
+|solr.core_numdocs                    |Gauge  |core               |     |Total number of docs indexed in core             |
+|solr.core_maxdocs                    |Gauge  |core               |     |Max number of docs indexed in core               |
+|solr.core_deleteddocs                |Gauge  |core               |     |Total number of docs waiting for deletion in core|
+|solr.core_size_in_bytes              |Gauge  |core               |bytes|Total core index size in bytes                   |
+|solr.core_segmentcount               |Gauge  |core               |     |Total number of segments per index core          |
+|solr.core_index_heap_usage_bytes     |Gauge  |core               |bytes|Total index heap memory usage per core           |
+|solr.core_select_errors              |Counter|core               |     |Total number of select errors per core           |
+|solr.core_select_requests            |Counter|core               |     |Total number of select requests per core         |
+|solr.core_select_timeouts            |Counter|core               |     |Total number of select timeouts per core         |
+|solr.core_update_errors              |Counter|core               |     |Total number of update errors per core           |
+|solr.core_update_requests            |Counter|core               |     |Total number of update requests per core         |
+|solr.core_update_timeouts            |Counter|core               |     |Total number of update timeouts per core         |
+|solr.core_count                      |Gauge  |                   |     |Total number of cores                            |
+|solr.last_commit_complete_age        |Gauge  |                   |sec  |Number of seconds since last commit complete     |
+|solr.last_soft_commit_complete_age   |Gauge  |                   |sec  |Number of seconds since last soft commit complete|
 
 == Installation ==
 
