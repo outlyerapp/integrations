@@ -1,0 +1,40 @@
+actions:
+  emailactions: []
+  slackactions: []
+  webhookactions: []
+criteria:
+  hostcriteria: []
+  metriccriteria:
+  - currentstate: []
+    description: etcd cluster has no leader.
+    disabled: false
+    lasttriggered: ""
+    levelthresholds:
+    - level: warning
+      operator: <
+      threshold: 1
+    - level: critical
+      operator: <
+      threshold: 1
+    query: name,etcd_server_has_leader,:eq,:max,(,host,),:by
+    status: null
+    timeout: 60
+    title: No Leader
+  servicecriteria:
+  - currentstate: []
+    description: etcd members are unavailable.
+    disabled: false
+    labelselectors: []
+    lasttriggered: ""
+    service: etcd
+    status: null
+    statusthreshold:
+      critical: 2
+      ok: 2
+      warning: 2
+    title: Cluster Unavailable
+description: ""
+labels: []
+muted: true
+name: etcd
+title: etcd
