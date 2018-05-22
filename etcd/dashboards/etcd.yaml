@@ -1,0 +1,509 @@
+description: etcd Cluster Overview
+icon:
+  color: '#3a6db2'
+  name: dashboard
+labels: []
+name: etcd
+scopes:
+- defaultvalue: ""
+  labelkey: host
+theme: light
+title: etcd
+widgets:
+  chartwidgets:
+  - col: 13
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,etcd_debugging_mvcc_db_total_size_in_bytes,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Database Size (bytes)
+    row: 4
+    width: 6
+  - col: 7
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,process_resident_memory_bytes,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Process Resident Memory
+    row: 4
+    width: 6
+  - col: 7
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,etcd_network_client_grpc_received_bytes_total,:eq,:and,:max,(,host,),:by
+        visible: true
+      - query: ${@SCOPE},name,etcd_network_client_grpc_sent_bytes_total,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Network In vs Sent (Client)
+    row: 6
+    width: 6
+  - col: 13
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,etcd_network_peer_received_bytes_total,:eq,:and,:max,(,host,),:by
+        visible: true
+      - query: ${@SCOPE},name,etcd_network_peer_sent_bytes_total,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Network In vs Sent (Peers)
+    row: 6
+    width: 6
+  - col: 13
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,etcd_server_proposals_failed_total,:eq,:sum
+        visible: true
+      - query: name,etcd_server_proposals_pending,:eq,:sum
+        visible: true
+      - query: name,etcd_server_proposals_committed_total,:eq,:sum
+        visible: true
+      - query: name,etcd_server_proposals_applied_total,:eq,:sum
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Raft Proposals
+    row: 0
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: StackedArea
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,etcd_debugging_mvcc_keys_total,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Number of Keys
+    row: 4
+    width: 7
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,process_open_fds,:eq,:and,:max,(,host,),:by
+        visible: true
+      - query: ${@SCOPE},name,process_max_fds,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Opened vs Max File Descriptors
+    row: 6
+    width: 7
+  - col: 15
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,etcd_debugging_mvcc_slow_watcher_total,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Unsynced Slow Watchers
+    row: 2
+    width: 4
+  imagewidgets: []
+  markdownwidgets:
+  - col: 0
+    height: 2
+    options:
+      content: |
+        <p><img src="https://raw.githubusercontent.com/coreos/etcd/master/logos/etcd-horizontal-color.png" alt="etcd logo"/></p>
+      markdown: '![etcd logo](https://raw.githubusercontent.com/coreos/etcd/master/logos/etcd-horizontal-color.png)'
+    row: 0
+    width: 4
+  numberwidgets:
+  - col: 4
+    height: 2
+    options:
+      color: '#3a6db2'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,etcd_server_has_leader,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: OK
+        threshold: 1
+      title: Leader Count
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 3
+  - col: 10
+    height: 2
+    options:
+      color: '#ff5e44'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: sms_failed
+      query:
+        query: name,etcd_server_proposals_failed_total,:eq,:sum
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Failed Proposals
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 3
+  - col: 7
+    height: 2
+    options:
+      color: '#e85ab0'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: SparkLine
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: compare_arrows
+      query:
+        query: name,etcd_server_leader_changes_seen_total,:eq,:sum
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Leader Changes
+      unit: ""
+      unitposition: After
+    row: 0
+    width: 3
+  - col: 3
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: delete
+      query:
+        query: ${@SCOPE},name,etcd_debugging_mvcc_delete_total,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: Max
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Delete Count
+      unit: ""
+      unitposition: After
+    row: 2
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: add
+      query:
+        query: ${@SCOPE},name,etcd_debugging_mvcc_put_total,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: Max
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Put Count
+      unit: ""
+      unitposition: After
+    row: 2
+    width: 3
+  - col: 9
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: ${@SCOPE},name,etcd_debugging_mvcc_range_total,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: Max
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Range Count
+      unit: ""
+      unitposition: After
+    row: 2
+    width: 3
+  - col: 6
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: material--image
+      query:
+        query: ${@SCOPE},name,etcd_debugging_mvcc_txn_total,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: Max
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Txns Count
+      unit: ""
+      unitposition: After
+    row: 2
+    width: 3
+  - col: 12
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displaymax: 0
+      displaymin: 0
+      displaytrend: None
+      externallink:
+        linktype: dashboard
+        path: ""
+      icon: remove_red_eye
+      query:
+        query: ${@SCOPE},name,etcd_debugging_mvcc_watcher_total,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: Max
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Watcher Count
+      unit: ""
+      unitposition: After
+    row: 2
+    width: 3
+  statuswidgets: []
