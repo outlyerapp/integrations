@@ -1,0 +1,161 @@
+description: Key metrics from your AWS Lambda Functions
+icon:
+  color: '#e1891f'
+  name: integration--lambda
+labels:
+- key: aws
+  value: ""
+name: aws-lambda
+scopes: []
+theme: light
+title: AWS Lambda
+widgets:
+  chartwidgets:
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: StackedBar
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,aws.lambda_invocations_count,:eq,:max,(,function,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Function Calls
+    row: 0
+    width: 8
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ms
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,aws.lambda_duration_max,:eq,:max,(,function,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Function Max Duration (ms)
+    row: 2
+    width: 10
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,aws.lambda_errors,:eq,:max,(,function,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Function Error Count
+    row: 4
+    width: 5
+  - col: 5
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: true
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: true
+          title: ""
+          unit: ""
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,aws.lambda_throttles,:eq,:max,(,function,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Function Throttle Count
+    row: 4
+    width: 5
+  imagewidgets:
+  - col: 0
+    height: 2
+    options:
+      color: '#e1891f'
+      icon: integration--lambda
+      sizing: stretched
+    row: 0
+    width: 2
+  markdownwidgets: []
+  numberwidgets: []
+  statuswidgets: []
