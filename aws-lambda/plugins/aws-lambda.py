@@ -83,11 +83,13 @@ class AWSLambda(Plugin):
 
                 # Get last value for each metric, if no values set metric to 0
                 for metric in response['MetricDataResults']:
-                    value = 0
+                    metric_name = "aws." + metric['Id']
                     if len(metric['Values']) > 0:
                         value = metric['Values'][-1]
-                    metric_name = "aws." + metric['Id']
-                    self.gauge(metric_name, metric_labels).set(value)
+                        ts = int(metric['Timestamps'][-1].utcnow().timestamp() * 1000)
+                        self.gauge(metric_name, metric_labels).set(value,ts=ts)
+                    else:
+                      	self.gauge(metric_name, metric_labels).set(0)
 
             return Status.OK
         except Exception as err:
