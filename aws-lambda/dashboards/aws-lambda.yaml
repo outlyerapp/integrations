@@ -1,6 +1,6 @@
 description: Key metrics from your AWS Lambda Functions
 icon:
-  color: '#e1891f'
+  color: '#ffa538'
   name: integration--lambda
 labels:
 - key: aws
@@ -151,7 +151,7 @@ widgets:
   - col: 0
     height: 2
     options:
-      color: '#e1891f'
+      color: '#ffa538'
       icon: integration--lambda
       sizing: stretched
     row: 0
