@@ -40,7 +40,7 @@ The plugin must set the following variables to run:
 In addition the following variables can be set to override the default values:
 
 * `time_range`: The time range in hours to query your metrics over. By default this is set to the last
-1 hour but if you run your functions rarely this can be set to longer for testing purposes.
+24 hours as estimated costs are posted once every day.
 
 == Changelog ==
 
