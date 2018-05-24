@@ -27,6 +27,9 @@ class AWSBilling(Plugin):
                     id = 'a_' + uuid.uuid4().hex
                     metrics[id] = metric
 
+            if len(metrics) < 1:
+                raise Exception('No metrics found. Did you enable Billing Alerts under your AWS billing preferences?')
+
             # Build metric query to get metric values
             query = []
             for key, value in metrics.items():
