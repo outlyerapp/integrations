@@ -34,11 +34,9 @@ COUNTER_METRICS = [
 class KubeStateMetricsPlugin(Plugin):
   
   def collect(self, _):
-    HOST = os.environ['ip'] if 'ip' in os.environ else 'localhost'
-    if 'KSM_HOST' in os.environ:
-      HOST = os.environ['KSM_HOST']
+    HOST = os.environ['KSM_HOST'] if 'KSM_HOST' in os.environ else 'kube-state-metrics.kube-system'
     PORT = os.environ['KSM_PORT'] if 'KSM_PORT' in os.environ else '8080'
-    PATH = 'metrics'
+    PATH = os.environ['KSM_PATH'] if 'KSM_PATH' in os.environ else 'metrics'
     
     try:
       res = requests.get(f'http://{HOST}:{PORT}/{PATH}', timeout=20).text
