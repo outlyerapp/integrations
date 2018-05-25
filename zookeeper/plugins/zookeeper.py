@@ -31,7 +31,6 @@ class ZookeeperPlugin(Plugin):
     def collect(self, _) -> Status:
         HOST = self.get('host', 'localhost')
         PORT = self.get('port', 2181)
-        self.zk_version = self.get('version', '0')
         self._address = (HOST, int(PORT))
         self._timeout = 10
         # Test the server is running in a non-error state
@@ -40,8 +39,6 @@ class ZookeeperPlugin(Plugin):
         else:
             status = Status.CRITICAL
         output = self.get_stats()
-        if output['zk_version'] != (self.zk_version + ','):
-            status = Status.CRITICAL
         del output['zk_version']
         del output['zk_server_state']
         for key, value in output.items():
