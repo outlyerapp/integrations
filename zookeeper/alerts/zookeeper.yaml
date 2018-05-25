@@ -1,0 +1,25 @@
+actions:
+  emailactions: []
+  slackactions: []
+  webhookactions: []
+criteria:
+  hostcriteria: []
+  metriccriteria: []
+  servicecriteria:
+  - currentstate: []
+    description: Zookeeper nodes are unavailable.
+    disabled: false
+    labelselectors: []
+    lasttriggered: ""
+    service: zookeeper
+    status: null
+    statusthreshold:
+      critical: 2
+      ok: 2
+      warning: 2
+    title: Zookeeper Unavailable
+description: ""
+labels: []
+muted: false
+name: zookeeper
+title: Zookeeper
