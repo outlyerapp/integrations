@@ -33,7 +33,7 @@ widgets:
         linktype: dashboard
         path: ""
       queries:
-      - query: name,zk_max_latency,:eq,service,zookeeper,:eq,:and,:max,(,host,),:by
+      - query: name,zk_max_latency,:eq,:max,(,host,),:by
         visible: true
       seriesstyle:
         color: '#588fd8'
@@ -67,7 +67,7 @@ widgets:
         linktype: dashboard
         path: ""
       queries:
-      - query: name,zk_outstanding_requests,:eq,:max
+      - query: name,zk_outstanding_requests,:eq,:max,(,host,),:by
         visible: true
       seriesstyle:
         color: '#588fd8'
@@ -101,9 +101,9 @@ widgets:
         linktype: dashboard
         path: ""
       queries:
-      - query: name,zk_open_file_descriptor_count,:eq,:max
+      - query: name,zk_open_file_descriptor_count,:eq,:max,(,host,),:by
         visible: true
-      - query: name,zk_max_file_descriptor_count,:eq,:max
+      - query: name,zk_max_file_descriptor_count,:eq,:max,(,host,),:by
         visible: true
       seriesstyle:
         color: '#588fd8'
@@ -115,7 +115,7 @@ widgets:
         status: Error
         threshold: 0
       title: File Descriptor Count (Max vs. Open)
-    row: 6
+    row: 8
     width: 6
   - col: 2
     height: 2
@@ -184,7 +184,7 @@ widgets:
         status: Error
         threshold: 0
       title: Disk Space Used
-    row: 6
+    row: 8
     width: 6
   - col: 8
     height: 2
@@ -258,9 +258,77 @@ widgets:
       title: Followers vs. Synced Followers
     row: 0
     width: 3
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ms
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,zk_min_latency,:eq,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Min Latency By Host
+    row: 6
+    width: 6
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xaxis:
+          mode: Time
+          showgridlines: false
+        yaxis:
+          max: null
+          min: 0
+          showgridlines: false
+          title: ""
+          unit: ms
+          unitposition: After
+      charttype: Line
+      description: ""
+      externallink:
+        linktype: dashboard
+        path: ""
+      queries:
+      - query: name,zk_avg_latency,:eq,:max,(,host,),:by
+        visible: true
+      seriesstyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        linestyle: Solid
+        status: Error
+        threshold: 0
+      title: Avg Latency By Host
+    row: 6
+    width: 6
   imagewidgets:
   - col: 0
-    height: 4
+    height: 6
     options:
       color: '#588fd8'
       icon: settings_ethernet
@@ -273,7 +341,7 @@ widgets:
       color: '#3cc663'
       icon: disc_full
       sizing: stretched
-    row: 6
+    row: 8
     width: 2
   markdownwidgets:
   - col: 0
