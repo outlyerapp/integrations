@@ -13,22 +13,22 @@ Once enabled you will get a default Zookeeper dashboard and alert rules to help 
 
 | Metric Name                 |Type |Labels|Unit       |Description                                                             |
 |-----------------------------|-----|------|-----------|-------------------------------------------------------------------------------------------------------------------------|
-|zk_avg_latency               |Gauge|      |millisecond|The average time it takes for the server to respond to a client request.                                                 |
-|zk_max_latency               |Gauge|      |millisecond|The maximum time it takes for the server to respond to a client request.                                                 |
-|zk_min_latency               |Gauge|      |millisecond|The minimum time it takes for the server to respond to a client request.                                                 |
-|zk_packets_received          |Gauge|      |           |The number of packets received.                                                                                          |
-|zk_packets_sent              |Gauge|      |           |The number of packets sent.                                                                                              |
-|zk_num_alive_connections     |Gauge|      |           |The total count of client connections.                                                                                   |
-|zk_outstanding_requests      |Gauge|      |           |The number of queued requests when the server is under load and is receiving more sustained requests than it can process.|
-|zk_znode_count               |Gauge|      |           |The number of znodes in the ZooKeeper namespace (the data).                                                              |
-|zk_watch_count               |Gauge|      |           |Watch count.                                                                                                             |
-|zk_ephemerals_count          |Gauge|      |           |Ephemerals Count.                                                                                                        |
-|zk_approximate_data_size     |Gauge|      |byte       |Approximate data size.                                                                                                   |
-|zk_open_file_descriptor_count|Gauge|      |           |Number of currently open file descriptors.                                                                               |
-|zk_max_file_descriptor_count |Gauge|      |           |Maximum number of open file descriptors.                                                                                 |
-|zk_followers                 |Gauge|      |           |Number of followers.                                                                                                     |
-|zk_synced_followers          |Gauge|      |           |Current number of synced followers.                                                                                      |
-|zk_pending_syncs             |Gauge|      |           |Current number of pending syncs.                                                                                         |
+|zk_avg_latency               |Gauge  |      |millisecond|The average time it takes for the server to respond to a client request.                                                 |
+|zk_max_latency               |Gauge  |      |millisecond|The maximum time it takes for the server to respond to a client request.                                                 |
+|zk_min_latency               |Gauge  |      |millisecond|The minimum time it takes for the server to respond to a client request.                                                 |
+|zk_packets_received          |Counter|      |           |The number of packets received.                                                                                          |
+|zk_packets_sent              |Counter|      |           |The number of packets sent.                                                                                              |
+|zk_num_alive_connections     |Gauge  |      |           |The total count of client connections.                                                                                   |
+|zk_outstanding_requests      |Gauge  |      |           |The number of queued requests when the server is under load and is receiving more sustained requests than it can process.|
+|zk_znode_count               |Gauge  |      |           |The number of znodes in the ZooKeeper namespace (the data).                                                              |
+|zk_watch_count               |Gauge  |      |           |Watch count.                                                                                                             |
+|zk_ephemerals_count          |Gauge  |      |           |Ephemerals Count.                                                                                                        |
+|zk_approximate_data_size     |Gauge  |      |byte       |Approximate data size.                                                                                                   |
+|zk_open_file_descriptor_count|Gauge  |      |           |Number of currently open file descriptors.                                                                               |
+|zk_max_file_descriptor_count |Gauge  |      |           |Maximum number of open file descriptors.                                                                                 |
+|zk_followers                 |Gauge  |      |           |Number of followers.                                                                                                     |
+|zk_synced_followers          |Gauge  |      |           |Current number of synced followers.                                                                                      |
+|zk_pending_syncs             |Gauge  |      |           |Current number of pending syncs.                                                                                         |
 
 
 == Installation ==
