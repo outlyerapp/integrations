@@ -19,10 +19,18 @@ reported back to Outlyer accurately for dashboards and alerts.
 == Installation ==
 
 Just deploy the NTP plugin using a check with selector 'instance.type:host' to ensure this plugin is running
-on all of your hosts.
+on all of your hosts. You can override the following settings:
+
+|Variable|Default     |Description                                                            |
+|--------|------------|-----------------------------------------------------------------------|
+|drift   |300         |The drift period in seconds that is acceptable before the plugin alerts|
+|ntp-host|pool.ntp.org|The NTP host to connect to                                             |
+|port    |123         |The NTP host port to connect to                                        |
+|timeout |5           |The timeout period in seconds to connect to the NTP host               |
 
 == Changelog ==
 
 |Version|Release Date|Description                                         |
 |-------|------------|----------------------------------------------------|
 |1.0    |20-Mar-2018 |Initial version                                     |
+|1.1    |30-May-2018 |Added timeout variable to plugin                    |

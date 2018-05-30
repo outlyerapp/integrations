@@ -20,6 +20,7 @@ class NTPCheckPlugin(Plugin):
         host = self.get("ntp-host", "pool.ntp.org")
         port = int(self.get("port", "123"))
         address = (host, port)
+        timeout = int(self.get("timeout", "5"))
 
         # Make request to NTP Host
         try:
@@ -27,6 +28,7 @@ class NTPCheckPlugin(Plugin):
             msg = bytes('\x1b' + 47 * '\0', "utf-8")
             time_1970 = 2208988800
             client = socket.socket(AF_INET, SOCK_DGRAM)
+            client.settimeout(timeout)
             client.sendto(msg, address)
             msg, address = client.recvfrom(buf)
             t = struct.unpack("!12I", msg)[10]
@@ -40,6 +42,7 @@ class NTPCheckPlugin(Plugin):
             else:
                 return Status.CRITICAL
         except Exception as e:
+            raise e
             return Status.CRITICAL
 
 
