@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
- Consul check aligned with Prometheus exporter metrics: https://github.com/prometheus/consul_exporter
+ Consul check aligned with Promtheus exporter metrics: https://github.com/prometheus/consul_exporter
 """
 
 import sys, requests
@@ -103,7 +103,7 @@ class ConsulPlugin(Plugin):
                     labels['status'] = 'maintenance'
                     self.gauge("consul_health_node_status", labels).set(maintenance)
 
-
+            # Runtime metrics
             metrics = self.__consul_request('/v1/agent/metrics')
             for metric in metrics['Gauges']:
                 if metric['Name'] in GAUGE_METRICS:
@@ -114,10 +114,10 @@ class ConsulPlugin(Plugin):
             if autopilot['Healthy']:
                 return Status.OK
             else:
-                return Status.CRITICAL
-        except:
+                return Status.CRITICAL 
+        except Exception as ex:
+            self.logger.error('Unable to scrape metrics from Consul: %s', str(ex))
             return Status.CRITICAL
-
 
     def __consul_request(self, endpoint):
         """
@@ -141,7 +141,7 @@ class ConsulPlugin(Plugin):
             privatekeyfile = self.get('private_key_file', None)
             cabundlefile = self.get('ca_bundle_file', None)
             acl_token = self.get('acl_token', None)
-
+            requests.packages.urllib3.disable_warnings()
             headers = {}
             if acl_token:
                 headers['X-Consul-Token'] = acl_token
@@ -161,9 +161,7 @@ class ConsulPlugin(Plugin):
         resp.raise_for_status()
         return resp.json()
 
-
     def __get_agent_config(self):
-
         local_agent = {}
         local_agent['local_config'] = self.__consul_request('/v1/agent/self')
 
