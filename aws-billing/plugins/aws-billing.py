@@ -5,7 +5,7 @@ import sys
 import uuid
 from datetime import datetime, timedelta
 
-from outlyer_plugin import Plugin, Target, Status
+from outlyer_plugin import Plugin, Status
 
 
 class AWSBilling(Plugin):

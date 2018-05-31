@@ -4,7 +4,7 @@ import boto3
 import sys
 from datetime import datetime, timedelta
 
-from outlyer_plugin import Plugin, Target, Status
+from outlyer_plugin import Plugin, Status
 
 INSTANCE_METRICS = [
     {
