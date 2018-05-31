@@ -36,7 +36,9 @@ The Consul plugin can be customized via environment variables.
 
 |Variable        |Default              |Description                                                                  |
 |----------------|---------------------|-----------------------------------------------------------------------------|
-|url             |http://localhost:8500|The base URL and port for Consul HTTP API.                                   |
+|protocol        |http                 |Consul REST API protocol. Use `https` when TLS is enabled.                   |
+|host            |localhost            |Consul host.                                                                 |
+|port            |8500                 |Consul REST API port.                                                        |
 |client_cert_file|                     |Path to a client cert file to use for TLS when `verify_incoming` is enabled. |
 |private_key_file|                     |Path to a client key file to use for TLS when `verify_incoming` is enabled.  |
 |ca_bundle_file  |                     |Path to the CA file to use for TLS when communicating with Consul.           |

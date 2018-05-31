@@ -134,7 +134,10 @@ class ConsulPlugin(Plugin):
         :param endpoint:    The endpoint to query, with leading /. i.e. '/v1/agent/self'
         :return:            Returns the JSON response as json if successful
         """
-        url = self.get('url', 'http://localhost:8500') + endpoint
+        protocol = self.get('protocol', 'http')
+        host = self.get('host', 'localhost')
+        port = self.get('port', 8500)
+        url = "%s://%s:%s%s" % (protocol, host, port, endpoint)
 
         try:
             clientcertfile = self.get('client_cert_file', None)
