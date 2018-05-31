@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
- Consul check aligned with Promtheus exporter metrics: https://github.com/prometheus/consul_exporter
+ Consul check aligned with Prometheus exporter metrics: https://github.com/prometheus/consul_exporter
 """
 
 import sys, requests
