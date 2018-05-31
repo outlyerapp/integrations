@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
 """
- Consul check aligned with Promtheus exporter metrics: https://github.com/prometheus/consul_exporter
+ Consul check aligned with Prometheus exporter metrics: https://github.com/prometheus/consul_exporter
 """
 
 import sys, requests
@@ -9,13 +9,24 @@ import sys, requests
 from outlyer_plugin import Plugin, Status
 
 
+GAUGE_METRICS = [
+    'consul.runtime.num_goroutines',
+    'consul.runtime.alloc_bytes',
+    'consul.runtime.heap_objects',
+]
+
+COUNTER_METRICS = []
+
+
 class ConsulPlugin(Plugin):
 
     def collect(self, _):
-
         try:
-
             local_agent = self.__get_agent_config()
+
+            # How many members are in the cluster.
+            members = self.__consul_request('/v1/catalog/nodes')
+            self.gauge("consul_serf_lan_members", {}).set(len(members))
 
             # How many peers (servers) are in the Raft cluster.
             peers = self.__consul_request('/v1/status/peers')
@@ -24,25 +35,31 @@ class ConsulPlugin(Plugin):
             else:
                 self.gauge("consul_raft_peers", {}).set(0)
 
+            clients = len(members)-len(peers)
+            self.gauge("consul_client_agents", {}).set(clients)
+
             # Does Raft cluster have a leader (according to this node).
             if not local_agent['leader_url']:
                 self.gauge("consul_raft_leader", {}).set(0)
             else:
                 self.gauge("consul_raft_leader", {}).set(1)
 
-            # How many members are in the cluster.
-            nodes = self.__consul_request('/v1/catalog/nodes')
-            self.gauge("consul_serf_lan_members", {}).set(len(nodes))
+            # Number of datacenters
+            datacenters = self.__consul_request('/v1/catalog/datacenters')
+            self.gauge("consul_datacenters", {}).set(len(datacenters))
 
             # How many services are in the cluster.
             services = self.__consul_request('/v1/catalog/services')
             self.gauge("consul_catalog_services", {}).set(len(services))
 
+            # Failure Tolerance
+            autopilot = self.__consul_request('/v1/operator/autopilot/health')
+            self.gauge("consul_health_failure_tolerance", {}).set(autopilot['FailureTolerance'])
+
             # Make service checks from health checks for all services in catalog
             health_state = self.__consul_request('/v1/health/state/any')
             # health checks return Status: passing, warning, critical, maintenance
             for check in health_state:
-
                 passing = 0
                 warning = 0
                 critical = 0
@@ -86,9 +103,20 @@ class ConsulPlugin(Plugin):
                     labels['status'] = 'maintenance'
                     self.gauge("consul_health_node_status", labels).set(maintenance)
 
-            return Status.OK
+            # Runtime metrics
+            metrics = self.__consul_request('/v1/agent/metrics')
+            for metric in metrics['Gauges']:
+                if metric['Name'] in GAUGE_METRICS:
+                    self.gauge(metric['Name'].replace('.', '_'), metric['Labels']).set(metric['Value'])
+                elif metric['Name'] in COUNTER_METRICS:
+                    self.counter(metric['Name'].replace('.', '_'), metric['Labels']).set(metric['Count'])
 
-        except:
+            if autopilot['Healthy']:
+                return Status.OK
+            else:
+                return Status.CRITICAL 
+        except Exception as ex:
+            self.logger.error('Unable to scrape metrics from Consul: %s', str(ex))
             return Status.CRITICAL
 
     def __consul_request(self, endpoint):
@@ -96,24 +124,27 @@ class ConsulPlugin(Plugin):
         Make a request to an endpoint on Consul. Looks up the following check variables
         to override connection settings:
 
-            url: 				The URL to connect to Consul, change to https if using SSL.
+            url:                The URL to connect to Consul, change to https if using SSL.
                                 Defaults to 'http://localhost:8500'
-            client_cert_file: 	If using SSL, the public client certificate file
-            private_key_file: 	If using SSL, the private key file
-            ca_bundle_file: 	If using SSL, a CA bundle file with certificates
-            acl_token: 			Access control token to call Consul API if enabled
+            client_cert_file:   If using SSL, the public client certificate file
+            private_key_file:   If using SSL, the private key file
+            ca_bundle_file:     If using SSL, a CA bundle file with certificates
+            acl_token:          Access control token to call Consul API if enabled
 
-        :param endpoint:	The endpoint to query, with leading /. i.e. '/v1/agent/self'
-        :return: 			Returns the JSON response as json if sucessful
+        :param endpoint:    The endpoint to query, with leading /. i.e. '/v1/agent/self'
+        :return:            Returns the JSON response as json if successful
         """
-        url = self.get('url', 'http://localhost:8500') + endpoint
+        protocol = self.get('protocol', 'http')
+        host = self.get('host', 'localhost')
+        port = self.get('port', 8500)
+        url = "%s://%s:%s%s" % (protocol, host, port, endpoint)
 
         try:
             clientcertfile = self.get('client_cert_file', None)
             privatekeyfile = self.get('private_key_file', None)
             cabundlefile = self.get('ca_bundle_file', None)
             acl_token = self.get('acl_token', None)
-
+            requests.packages.urllib3.disable_warnings()
             headers = {}
             if acl_token:
                 headers['X-Consul-Token'] = acl_token
@@ -134,7 +165,6 @@ class ConsulPlugin(Plugin):
         return resp.json()
 
     def __get_agent_config(self):
-
         local_agent = {}
         local_agent['local_config'] = self.__consul_request('/v1/agent/self')
 
