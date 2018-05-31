@@ -107,9 +107,9 @@ class ConsulPlugin(Plugin):
             metrics = self.__consul_request('/v1/agent/metrics')
             for metric in metrics['Gauges']:
                 if metric['Name'] in GAUGE_METRICS:
-                    self.gauge(metric['Name'], metric['Labels']).set(metric['Value'])
+                    self.gauge(metric['Name'].replace('.', '_'), metric['Labels']).set(metric['Value'])
                 elif metric['Name'] in COUNTER_METRICS:
-                    self.counter(metric['Name'], metric['Labels']).set(metric['Count'])
+                    self.counter(metric['Name'].replace('.', '_'), metric['Labels']).set(metric['Count'])
 
             if autopilot['Healthy']:
                 return Status.OK
