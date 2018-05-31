@@ -1,0 +1,31 @@
+actions: {}
+criteria:
+  metricCriteria:
+  - description: Consul Raft cluster has no leader.
+    disabled: false
+    lastTriggered: ""
+    levelThresholds:
+    - level: warning
+      operator: <
+      threshold: 1
+    - level: critical
+      operator: <
+      threshold: 1
+    query: name,consul_raft_leader,:eq,:min,(,host,),:by
+    timeout: 60
+    title: Raft Leader Down
+  serviceCriteria:
+  - description: Consul nodes are unavailable.
+    disabled: false
+    lastTriggered: ""
+    service: consul
+    statusThreshold:
+      critical: 2
+      ok: 2
+      warning: 2
+    title: Consul Unavailable
+description: Standard Consul Alerts
+labels: []
+muted: false
+name: consul
+title: Consul
