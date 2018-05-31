@@ -1,9 +1,9 @@
-description: ""
+description: Consul cluster overview
 icon:
-  color: '#000000'
+  color: '#c3348b'
   name: dashboard
 labels: []
-name: Consul
+name: consul
 scopes: []
 theme: light
 title: Consul
@@ -127,7 +127,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,consul.runtime.num_goroutines,:eq,:max,(,host,),:by
+      - query: name,consul_runtime_num_goroutines,:eq,:max,(,host,),:by
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -160,7 +160,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,consul.runtime.alloc_bytes,:eq,:max,(,host,),:by
+      - query: name,consul_runtime_alloc_bytes,:eq,:max,(,host,),:by
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -193,7 +193,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,consul.runtime.heap_objects,:eq,:max,(,host,),:by
+      - query: name,consul_runtime_heap_objects,:eq,:max,(,host,),:by
         visible: true
       seriesStyle:
         color: '#588fd8'
