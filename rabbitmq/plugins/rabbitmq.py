@@ -21,6 +21,8 @@ OVERVIEW_METRICS = [
     ('object_totals/connections', 'rabbitmq.cluster_connections', 'gauge'),
     ('object_totals/consumers', 'rabbitmq.cluster_consumers', 'gauge'),
     ('object_totals/exchanges', 'rabbitmq.cluster_exchanges', 'gauge'),
+    ('object_totals/queues', 'rabbitmq.cluster_queues', 'gauge'),
+    ('queue_totals/messages_ready', 'rabbitmq.cluster_messages_queued', 'gauge'),
 ]
 
 NODE_METRICS = [
