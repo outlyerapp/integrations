@@ -1,277 +1,495 @@
-description: ""
+description: Overview of RabbitMQ Cluster
 icon:
-  color: '#000000'
-  name: dashboard
-labels: []
+  color: '#ffa538'
+  name: integration--rabbitmq
+labels:
+- key: rabbitmq
+  value: ""
 name: rabbitmq
 scopes: []
 theme: light
 title: RabbitMQ
 widgets:
-  chartwidgets:
-  - col: 0
+  chartWidgets:
+  - col: 8
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
-          max: null
+          showGridLines: true
+        yAxis:
           min: 0
-          showgridlines: false
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,rabbitmq.queue_messages,:eq,:and,:sum,(,queue_name,),:by
+      - query: name,rabbitmq.queue_messages_count,:eq,:sum,(,queue,),:by
         visible: true
-      seriesstyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Sum
-      thresholds:
-      - display: None
-        linestyle: Solid
-        status: Error
-        threshold: 0
-      title: Messages Waiting
-    row: 2
-    width: 3
-  - col: 0
-    height: 2
-    options:
-      axes:
-        xaxis:
-          mode: Time
-          showgridlines: false
-        yaxis:
-          max: null
-          min: 0
-          showgridlines: true
-          title: ""
-          unit: ""
-          unitposition: After
-      charttype: Line
-      description: ""
-      externallink:
-        linktype: dashboard
-        path: ""
-      queries:
-      - query: ${@SCOPE},name,rabbitmq.queue_deliver,:eq,:and,:sum,(,queue_name,),:by
-        visible: true
-      seriesstyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Sum
-      thresholds:
-      - display: None
-        linestyle: Solid
-        status: Error
-        threshold: 0
-      title: Messages Delivered
-    row: 4
-    width: 3
-  - col: 3
-    height: 4
-    options:
-      axes:
-        xaxis:
-          mode: Time
-          showgridlines: false
-        yaxis:
-          max: null
-          min: 0
-          showgridlines: true
-          title: ""
-          unit: ""
-          unitposition: After
-      charttype: Line
-      description: ""
-      externallink:
-        linktype: dashboard
-        path: ""
-      queries:
-      - query: ${@SCOPE},name,rabbitmq.node_io_(read|write)_bytes,:re,:and,:sum,(,name,),:by
-        visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
-      title: Disk I/O
-    row: 2
-    width: 5
-  - col: 3
+      title: Total Message Rates
+    row: 5
+    width: 6
+  - col: 8
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
-          max: null
+          showGridLines: true
+        yAxis:
           min: 0
-          showgridlines: false
-          title: MB/sec
+          showGridLines: true
+          title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,rabbitmq.vhost_(recv|send)_oct,:re,:and,:sum,1048576,:div,(,name,),:by
+      - query: name,rabbitmq.queue_messages_publish_count,:eq,:sum,(,queue,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
-      title: Network I/O
-    row: 6
-    width: 5
-  - col: 0
+      title: Published Rates
+    row: 7
+    width: 6
+  - col: 8
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
-          max: null
+          showGridLines: true
+        yAxis:
           min: 0
-          showgridlines: true
-          title: MB
+          showGridLines: true
+          title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,rabbitmq.node_mem_used,:eq,:and,:sum,1048576,:div
+      - query: name,rabbitmq.queue_messages_deliver_count,:eq,:sum,(,queue,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
-      title: Memory Used
-    row: 6
-    width: 3
-  imagewidgets: []
-  markdownwidgets: []
-  numberwidgets:
-  - col: 6
+      title: Delivered Rates
+    row: 9
+    width: 6
+  - col: 8
     height: 2
     options:
-      color: '#588fd8'
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
       description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
-      icon: material--image
-      query:
-        query: ${@SCOPE},name,rabbitmq.partition_count,:eq,:and,:max
+      queries:
+      - query: name,rabbitmq.queue_messages_unacknowledged_count,:eq,:sum,(,queue,),:by
         visible: true
-      rounding: None
-      statistic: LastValue
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
       thresholds:
-      - status: Error
-        threshold: 1
-      title: Partition Count
-      unit: ""
-      unitposition: After
-    row: 0
-    width: 2
-  - col: 0
-    height: 2
-    options:
-      color: '#588fd8'
-      description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
-        path: ""
-      icon: material--image
-      query:
-        query: ${@SCOPE},name,rabbitmq.object_totals_connections,:eq,:and,:max
-        visible: false
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
+      - display: None
+        lineStyle: Solid
+        status: Error
         threshold: 0
-      title: Connections
-      unit: ""
-      unitposition: After
-    row: 0
-    width: 2
+      title: Acknowledged Rates
+    row: 11
+    width: 6
   - col: 2
     height: 2
     options:
-      color: '#588fd8'
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
       description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
-      icon: material--image
-      query:
-        query: ${@SCOPE},name,rabbitmq.object_totals_queues,:eq,:and,:max
-        visible: false
-      rounding: None
-      statistic: LastValue
+      queries:
+      - query: name,rabbitmq.exchange_publish_in_count,:eq,:sum,(,exchange,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
       thresholds:
-      - status: Error
+      - display: None
+        lineStyle: Solid
+        status: Error
         threshold: 0
-      title: Queues
-      unit: ""
-      unitposition: After
-    row: 0
-    width: 2
-  - col: 4
+      title: Messages Published Rate
+    row: 5
+    width: 6
+  - col: 2
     height: 2
     options:
-      color: '#588fd8'
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
       description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
-      icon: material--image
+      queries:
+      - query: name,rabbitmq.exchange_publish_out_count,:eq,:sum,(,exchange,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Messages Published Out Rate
+    row: 7
+    width: 6
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,rabbitmq.exchange_messages_return_unroutable_count,:eq,:sum,(,exchange,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Messages Unroutable Rate
+    row: 9
+    width: 6
+  - col: 14
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,rabbitmq.node_fd_used,:eq,:max,(,node,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: File Descriptors Used
+    row: 1
+    width: 6
+  - col: 14
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,rabbitmq.node_sockets_used,:eq,:max,(,node,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: File Descriptors Used As Sockets
+    row: 3
+    width: 6
+  - col: 14
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,rabbitmq.node_partitions,:eq,:max,(,node,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Partitions Per Node
+    row: 5
+    width: 6
+  - col: 14
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,rabbitmq.node_mem_used,:eq,:max,(,node,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Memory Used Per Node
+    row: 7
+    width: 6
+  - col: 14
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,rabbitmq.node_disk_free,:eq,:max,(,node,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Disk Free Per Node
+    row: 9
+    width: 6
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Bar
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,rabbitmq.cluster_messages_queued,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Messages Queued
+    row: 2
+    width: 12
+  imageWidgets:
+  - col: 0
+    height: 2
+    options:
+      color: '#ffa538'
+      icon: integration--rabbitmq
+      sizing: stretched
+    row: 0
+    width: 2
+  markdownWidgets:
+  - col: 8
+    height: 1
+    options:
+      content: |
+        <h1>Queues</h1>
+      markdown: '# Queues'
+    row: 4
+    width: 6
+  - col: 2
+    height: 1
+    options:
+      content: |
+        <h1>Exchanges</h1>
+      markdown: '# Exchanges'
+    row: 4
+    width: 6
+  - col: 14
+    height: 1
+    options:
+      content: |
+        <h1>Nodes</h1>
+      markdown: '# Nodes'
+    row: 0
+    width: 6
+  numberWidgets:
+  - col: 8
+    height: 2
+    options:
+      color: '#ffa538'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--rabbitmq
       query:
-        query: ${@SCOPE},name,rabbitmq.object_totals_exchanges,:eq,:and,:max
-        visible: false
+        query: name,rabbitmq.cluster_exchanges,:eq,:max
+        visible: true
       rounding: None
       statistic: LastValue
       thresholds:
@@ -279,6 +497,181 @@ widgets:
         threshold: 0
       title: Exchanges
       unit: ""
-      unitposition: After
+      unitPosition: After
+    row: 0
+    width: 2
+  - col: 10
+    height: 2
+    options:
+      color: '#ffa538'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--rabbitmq
+      query:
+        query: name,rabbitmq.cluster_queues,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Queues
+      unit: ""
+      unitPosition: After
+    row: 0
+    width: 2
+  - col: 4
+    height: 2
+    options:
+      color: '#ffa538'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--rabbitmq
+      query:
+        query: name,rabbitmq.cluster_connections,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Connections
+      unit: ""
+      unitPosition: After
+    row: 0
+    width: 2
+  - col: 6
+    height: 2
+    options:
+      color: '#ffa538'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--rabbitmq
+      query:
+        query: name,rabbitmq.cluster_channels,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Channels
+      unit: ""
+      unitPosition: After
+    row: 0
+    width: 2
+  - col: 12
+    height: 2
+    options:
+      color: '#ffa538'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--rabbitmq
+      query:
+        query: name,rabbitmq.cluster_consumers,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Consumers
+      unit: ""
+      unitPosition: After
+    row: 0
+    width: 2
+  - col: 0
+    height: 2
+    options:
+      color: '#ffa538'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--rabbitmq
+      query:
+        query: name,rabbitmq.node_disk_free_alarm,:eq,:sum
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 1
+      title: Disk Alarms
+      unit: ""
+      unitPosition: After
+    row: 2
+    width: 2
+  - col: 0
+    height: 2
+    options:
+      color: '#ffa538'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--rabbitmq
+      query:
+        query: name,rabbitmq.node_mem_alarm,:eq,:sum
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 1
+      title: Memory Alarms
+      unit: ""
+      unitPosition: After
+    row: 4
+    width: 2
+  - col: 2
+    height: 2
+    options:
+      color: '#ffa538'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--rabbitmq
+      query:
+        query: name,rabbitmq.cluster_queues,:eq,:count
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Nodes
+      unit: ""
+      unitPosition: After
     row: 0
     width: 2
