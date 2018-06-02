@@ -10,53 +10,42 @@ This integration will pull out key metrics from your RabbitMQ cluster using the 
 
 == Metrics Collected ==
 
-**Queue Metrics:**
-
-'active_consumers'
-'consumers'
-'consumer_utilisation'
-'memory'
-'messages'
-'messages_details/rate'
-'messages_ready'
-'messages_ready_details/rate'
-'messages_unacknowledged'
-'messages_unacknowledged_details/rate'
-
-**Exchange Metrics:**
-
-| Metric Name                                 |Type   | Labels            |Unit |Description                                                                          |
-|---------------------------------------------|-------|-------------------|-----|-------------------------------------------------------------------------------------|
-|ack                                          |       |                   |     |                                                                                     |
-|ack_details/rate                             |       |                   |     |                                                                                     |
-|confirm                                      |       |                   |     |Count of messages confirmed.                                                         |
-|confirm_details/rate                         |       |                   |     |                                                                                     |
-|deliver_get                                  |       |                   |     |Count of messages delivered in acknowledgement mode in response to basic.get.        |
-|deliver_get_details/rate                     |       |                   |     |                                                                                     |
-|publish                                      |       |                   |     |Count of messages published.                                                         |
-|publish_details/rate                         |       |                   |     |                                                                                     |
-|publish_in                                   |       |                   |     |Count of messages published "in" to an exchange, i.e. not taking account of routing. |
-|publish_in_details/rate                      |       |                   |     |                                                                                     |
-|publish_out                                  |       |                   |     |Count of messages published "out" of an exchange, i.e. taking account of routing.    |
-|publish_out_details/rate                     |       |                   |     |                                                                                     |
-|return_unroutable                            |       |                   |     |Count of messages returned to publisher as unroutable.                               |
-|return_unroutable_details/rate               |       |                   |     |                                                                                     |
-|redeliver                                    |       |                   |     |Count of subset of messages in deliver_get which had the redelivered flag set.       |
-|redeliver_details/rate                       |       |                   |     |
-
-**Node Metrics:**
-
-| Metric Name                                 |Type   | Labels            |Unit |Description                                                                          |
-|---------------------------------------------|-------|-------------------|-----|-------------------------------------------------------------------------------------|
-|disk_free_alarm			                  |       |                   |     |Whether the disk alarm has gone off.                                                               |
-|disk_free				                      |       |                   |     |Disk free space in bytes.                                                                          |
-|fd_used				    	              |       |                   |     |used file descriptors.                                                                             |
-|mem_alarm		                              |       |                   |     |Whether the memory alarm has gone off.                                                             |
-|mem_used		    		                  |       |                   |     |Memory used in bytes.                                                                              |
-|partitions		   		                      |       |                   |     |List of network partitions this node is seeing.                                                    |
-|run_queue				                      |       |                   |     |Average number of Erlang processes waiting to run.                                                 |
-|running					                  |       |                   |     |Boolean for whether this node is up. Obviously if this is false, most other stats will be missing. |
-|sockets_used			                      |       |                   |     |File descriptors used as sockets.                                                                  |
+|Metric Name                                 |Type   |Labels                                 |Unit |Description                                       |
+|--------------------------------------------|-------|---------------------------------------|-----|--------------------------------------------------|
+|rabbitmq.cluster_confirm_count              |counter|cluster                                |     |                                                  |
+|rabbitmq.cluster_disk_read_count            |counter|cluster                                |     |                                                  |
+|rabbitmq.cluster_disk_write_count           |counter|cluster                                |     |                                                  |
+|rabbitmq.cluster_publish_count              |counter|cluster                                |     |                                                  |
+|rabbitmq.cluster_return_unroutable_count    |counter|cluster                                |     |                                                  |
+|rabbitmq.cluster_channels                   |gauge  |cluster                                |     |                                                  |
+|rabbitmq.cluster_connections                |gauge  |cluster                                |     |                                                  |
+|rabbitmq.cluster_consumers                  |gauge  |cluster                                |     |                                                  |
+|rabbitmq.cluster_exchanges                  |gauge  |cluster                                |     |                                                  |
+|rabbitmq.node_context_switches_count        |counter|node, cluster                          |     |                                                  |
+|rabbitmq.node_disk_free                     |gauge  |node, cluster                          |     |                                                  |
+|rabbitmq.node_fd_used                       |gauge  |node, cluster                          |     |                                                  |
+|rabbitmq.node_mem_used                      |gauge  |node, cluster                          |     |                                                  |
+|rabbitmq.node_run_queue                     |gauge  |node, cluster                          |     |                                                  |
+|rabbitmq.node_sockets_used                  |gauge  |node, cluster                          |     |                                                  |
+|rabbitmq.node_running                       |gauge  |node, cluster                          |     |                                                  |
+|rabbitmq.node_mem_alarm                     |gauge  |node, cluster                          |     |                                                  |
+|rabbitmq.node_disk_free_alarm               |gauge  |node, cluster                          |     |                                                  |
+|rabbitmq.node_partitions                    |gauge  |node, cluster                          |     |                                                  |
+|rabbitmq.connections                        |gauge  |vhost, cluster                         |     |                                                  |
+|rabbitmq.connection_states                  |gauge  |state, cluster                         |     |                                                  |
+|rabbitmq.exchange_publish_in_count          |counter|exchange, exchange_type, cluster, vhost|     |                                                  |
+|rabbitmq.exchange_publish_out_count         |counter|exchange, exchange_type, cluster, vhost|     |                                                  |
+|rabbitmq.queue_consumers                    |gauge  |queue, node, cluster, vhost            |     |                                                  |
+|rabbitmq.queue_consumer_utilisation         |gauge  |queue, node, cluster, vhost            |     |                                                  |
+|rabbitmq.queue_memory                       |gauge  |queue, node, cluster, vhost            |     |                                                  |
+|rabbitmq.queue_messages_count               |counter|queue, node, cluster, vhost            |     |                                                  |
+|rabbitmq.queue_messages_ready_count         |counter|queue, node, cluster, vhost            |     |                                                  |
+|rabbitmq.queue_messages_unacknowledged_count|counter|queue, node, cluster, vhost            |     |                                                  |
+|rabbitmq.queue_messages_ack_count           |counter|queue, node, cluster, vhost            |     |                                                  |
+|rabbitmq.queue_messages_deliver_count       |counter|queue, node, cluster, vhost            |     |                                                  |
+|rabbitmq.queue_messages_deliver_get_count   |counter|queue, node, cluster, vhost            |     |                                                  |
+|rabbitmq.queue_messages_publish_count       |counter|queue, node, cluster, vhost            |     |                                                  |
+|rabbitmq.queue_messages_redeliver_count     |counter|queue, node, cluster, vhost            |     |                                                  |
 
 == Installation ==
 

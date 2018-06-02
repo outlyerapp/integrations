@@ -3,70 +3,157 @@
 import sys
 import requests
 import requests.exceptions
-import urllib.parse
 import urllib3
+import operator
 
-from typing import Iterable
+from functools import reduce
 
 from outlyer_plugin import Plugin, Status
 
-NODE_COUNTERS = ['context_switches']
+OVERVIEW_METRICS = [
+    # Path, metric name, metric type
+    ('message_stats/confirm', 'rabbitmq.cluster_confirm_count', 'counter'),
+    ('message_stats/disk_reads', 'rabbitmq.cluster_disk_read_count', 'counter'),
+    ('message_stats/disk_writes', 'rabbitmq.cluster_disk_write_count', 'counter'),
+    ('message_stats/publish', 'rabbitmq.cluster_publish_count', 'counter'),
+    ('message_stats/return_unroutable', 'rabbitmq.cluster_return_unroutable_count', 'counter'),
+    ('object_totals/channels', 'rabbitmq.cluster_channels', 'gauge'),
+    ('object_totals/connections', 'rabbitmq.cluster_connections', 'gauge'),
+    ('object_totals/consumers', 'rabbitmq.cluster_consumers', 'gauge'),
+    ('object_totals/exchanges', 'rabbitmq.cluster_exchanges', 'gauge'),
+]
 
-NODE_GAUGES = ['disk_free', 'fd_used', 'mem_used', 'run_queue', 'sockets_used', 'running', 'mem_alarm',
-               'disk_free_alarm']
+NODE_METRICS = [
+    # Path, metric name, metric type
+    ('context_switches', 'rabbitmq.node_context_switches_count', 'counter'),
+    ('paritions', 'rabbitmq.node_partitions', 'gauge'),
+    ('disk_free', 'rabbitmq.node_disk_free', 'gauge'),
+    ('fd_used', 'rabbitmq.node_fd_used', 'gauge'),
+    ('mem_used', 'rabbitmq.node_mem_used', 'gauge'),
+    ('run_queue', 'rabbitmq.node_run_queue', 'gauge'),
+    ('sockets_used', 'rabbitmq.node_sockets_used', 'gauge'),
+    ('running', 'rabbitmq.node_running', 'gauge'),
+    ('mem_alarm', 'rabbitmq.node_mem_alarm', 'gauage'),
+    ('disk_free_alarm', 'rabbitmq.node_disk_free_alarm', 'gauage'),
+]
 
-QUEUE_GAUGES = ['active_consumers', 'bindings_count', 'consumers', 'consumer_utilisation', 'memory', 'messages',
-                'messages_details/rate',
-                'messages_ready', 'messages_ready_details/rate', 'messages_unacknowledged',
-                'messages_unacknowledged_details/rate',
-                'message_stats/ack', 'message_stats/ack_details/rate', 'message_stats/deliver',
-                'message_stats/deliver_details/rate',
-                'message_stats/deliver_get', 'message_stats/deliver_get_details/rate', 'message_stats/publish',
-                'message_stats/publish_details/rate',
-                'message_stats/redeliver', 'message_stats/redeliver_details/rate']
+EXCHANGE_METRICS = [
+    # Path, metric name, metric type
+    ('message_stats/ack', 'rabbitmq.exchange_messages_ack_count', 'counter'),
+    ('message_stats/confirm', 'rabbitmq.exchange_messages_confirm_count', 'counter'),
+    ('message_stats/deliver_get', 'rabbitmq.exchange_messages_deliver_get.count', 'counter'),
+    ('message_stats/publish', 'rabbitmq.exchange_messages_publish_count', 'counter'),
+    ('message_stats/publish_in', 'rabbitmq.exchange_publish_in_count', 'counter'),
+    ('message_stats/publish_out', 'rabbitmq.exchange_publish_out_count', 'counter'),
+    ('message_stats/return_unroutable', 'rabbitmq.exchange_messages_return_unroutable_count', 'counter'),
+    ('message_stats/redeliver', 'rabbitmq.exchange_messages_redeliver_count', float),
+]
 
-EXCHANGE_GAUGES = ['ack', 'ack_details/rate', 'confirm', 'confirm_details/rate', 'deliver_get',
-                   'deliver_get_details/rate', 'publish', 'publish_details/rate', 'publish_in',
-                   'publish_in_details/rate', 'publish_out', 'publish_out_details/rate', 'return_unroutable',
-                   'return_unroutable_details/rate', 'redeliver', 'redeliver_details/rate']
+QUEUE_METRICS = [
+    # Path, metric name, metric type
+    ('active_consumers', 'rabbitmq.queue_active_consumers', 'gauge'),
+    ('consumers', 'rabbitmq.queue_consumers', 'gaugue'),
+    ('consumer_utilisation', 'rabbitmq.queue_consumer_utilisation', 'gauge'),
+    ('memory', 'rabbitmq.queue_memory', 'gauge'),
+    ('messages', 'rabbitmq.queue_messages_count', 'counter'),
+    ('messages_ready', 'rabbitmq.queue_messages_ready_count', 'counter'),
+    ('messages_unacknowledged', 'rabbitmq.queue_messages_unacknowledged_count', 'counter'),
+    ('message_stats/ack', 'rabbitmq.queue_messages_ack_count', 'counter'),
+    ('message_stats/deliver', 'rabbitmq.queue_messages_deliver_count', 'counter'),
+    ('message_stats/deliver_get', 'rabbitmq.queue_messages_deliver_get_count', 'counter'),
+    ('message_stats/publish', 'rabbitmq.queue_messages_publish_count', 'counter'),
+    ('message_stats/redeliver', 'rabbitmq.queue_messages_redeliver_count', 'counter'),
+]
 
 
 class RabbitMQ(Plugin):
 
+    def __init__(self):
+        super().__init__()
+        self.host = self.get('ip', '127.0.0.1')
+        self.port = self.get('port', '15672')
+        self.protocol = self.get('protocol', 'http')
+        self.verify_ssl = False
+        if self.get('verify_ssl', None):
+            self.verify_ssl = True
+        self.username = self.get('username', 'guest')
+        self.password = self.get('password', 'guest')
+
+        self.url = f'{self.protocol}://{self.host}:{self.port}'
+
+        # For performance reasons we limit number of items we query
+        self.max_exchanges = self.get('max_exchanges', '50')
+
+        # suppress requests/urllib3 ssl warnings when ignoring
+        if not self.verify_ssl:
+            urllib3.disable_warnings()
+
     def collect(self, _) -> Status:
 
         try:
-            self.host = self.get('ip', '127.0.0.1')
-            self.port = self.get('port', '15672')
-            self.protocol = self.get('protocol', 'http')
-            self.verify_ssl = False
-            if self.get('verify_ssl', None):
-                self.verify_ssl = True
-            self.username = self.get('username', 'guest')
-            self.password = self.get('password', 'guest')
 
-            self.url = f'{self.protocol}://{self.host}:{self.port}'
-
-            # suppress requests/urllib3 ssl warnings when ignoring
-            if not self.verify_ssl:
-                urllib3.disable_warnings()
-
-            # Overview stats
-
+            # Overview Stats
             overview = self.get_data('/api/overview')
+            # Current node being queried - all metrics should be filtered to this node
             node_name = overview['node']
+            # Current cluster being queried
+            cluster_name = overview['cluster_name']
+            self.get_metrics(OVERVIEW_METRICS, overview, {'cluster': cluster_name})
 
-            self.overview_stats(overview)
-            self.node_stats(node_name)
+            # Node Stats for current node only
+            node = self.get_data(f"/api/nodes/{node_name}")
+            node_labels = {
+                'node': node_name,
+                'cluster': cluster_name
+            }
+            self.get_metrics(NODE_METRICS, node, node_labels)
+            # Get parition length seperately as its an array
+            self.gauge('rabbitmq.node_partitions', node_labels).set(len(node['partitions']))
 
-            vhost_names = []
-            for vhost in self.get_data('/api/vhosts'):
-                vhost_name = vhost['name']
-                vhost_names.append(vhost_name)
-                self.vhost_stats(vhost)
+            # Connection Stats
+            connections = self.get_data(f"/api/connections")
+            vhost_connections = {}
+            connection_states = {}
+            for conn in connections:
+                if (conn['node'] == node_name):
+                    if conn.get('state', 'direct') in connection_states:
+                        # 'state' does not exist for direct type connections.
+                        connection_states[conn.get('state', 'direct')] += 1
+                    else:
+                        connection_states[conn.get('state', 'direct')] = 1
+                    if conn['vhost'] in vhost_connections:
+                        vhost_connections[conn['vhost']] += 1
+                    else:
+                        vhost_connections[conn['vhost']] = 1
 
-            self.queue_stats(vhost_names)
-            self.exchange_stats(vhost_names)
+            for key, value in vhost_connections.items():
+                label = 'root' if key == '/' else key
+                self.gauge("rabbitmq.connections", {'vhost': label, 'cluster': cluster_name}).set(value)
+            for key, value in connection_states.items():
+                self.gauge("rabbitmq.connection_states", {'state': key, 'cluster': cluster_name}).set(value)
+
+            # Exchange Stats for all nodes in cluster
+            exchanges = self.get_data("/api/exchanges?page=1&page_size=" + self.max_exchanges)
+            for exchange in exchanges['items']:
+                exchange_labels = {
+                    'exchange': 'amqp_default' if exchange['name'] == '' else exchange['name'],
+                    'exchange_type': exchange['type'],
+                    'cluster': cluster_name,
+                    'vhost': 'root' if exchange['vhost'] == '/' else exchange['vhost']
+                }
+                self.get_metrics(EXCHANGE_METRICS, exchange, exchange_labels)
+
+            # Queue Stats - only for queues on the node being currently queried
+            queues = self.get_data("/api/queues")
+            for queue in queues:
+                if queue['node'] == node_name:
+                    queue_labels = {
+                        'queue': queue['name'],
+                        'node': queue['node'],
+                        'cluster': cluster_name,
+                        'vhost': 'root' if queue['vhost'] == '/' else queue['vhost']
+                    }
+                    self.get_metrics(QUEUE_METRICS, queue, queue_labels)
 
             return Status.OK
 
@@ -80,72 +167,42 @@ class RabbitMQ(Plugin):
         r.raise_for_status()
         return r.json()
 
-    def queue_stats(self, vhost_names: Iterable[str]) -> None:
-        for vhost_name in vhost_names:
-            n = urllib.parse.quote(vhost_name, safe='')
-            for queue in self.get_data(f'/api/queues/{n}'):
-                queue_name = queue['name']
-                labels = {'queue_name': queue_name,
-                          'vhost_name': 'root' if vhost_name == '/' else vhost_name}
-                if 'message_stats' in queue:
-                    for k, v in queue['message_stats'].items():
-                        if isinstance(v, int) and not '_details' in k:
-                            self.counter(f'rabbitmq.queue_{k}', labels).set(float(v))
-                for k in QUEUE_GAUGES:
-                    if k in queue:
-                        if isinstance(queue[k], int) and not '_details' in k:
-                            self.counter(f'rabbitmq.queue_{k}', labels).set(float(queue[k]))
+    def get_value(self, path, values):
+        """
+        Get the value from a nested dictionary using a path, i.e. 'key1/key2/key3'
 
-    def exchange_stats(self, vhost_names: Iterable[str]) -> None:
-        for vhost_name in vhost_names:
-            n = urllib.parse.quote(vhost_name, safe='')
-            exchanges
-            for exchange in self.get_data(f'/api/exchanges/{n}'):
-                exch_name = exchange['name']
-                labels = {'exchange_name': exch_name,
-                          'vhost_name': 'root' if vhost_name == '/' else vhost_name,
-                          'type': exchange['type']}
-                if 'message_stats' in exchange:
-                    for k, v in exchange['message_stats'].items():
-                        if isinstance(v, int):
-                            self.counter(f'rabbitmq.exchange_{k}', labels).set(float(v))
-                for k in EXCHANGE_GAUGES:
-                    if k in exchange:
-                        if isinstance(exchange[k], int) and not '_details' in k:
-                            self.counter(f'rabbitmq.exchange_{k}', labels).set(float(exchange[k]))
+        :param path:        The path to the value using forward slash, i.e. 'key1/key2/key3'
+        :param values:      The dictionary to search
+        :return:            Value if path found, None if not
+        """
+        try:
+            return reduce(operator.getitem, path.split('/'), values)
+        except KeyError:
+            return None
 
-    def vhost_stats(self, vhost: dict) -> None:
-        vhost_name = vhost['name']
-        labels = {'vhost_name': 'root' if vhost_name == '/' else vhost_name}
-        if 'message_stats' in vhost:
-            for k, v in vhost['message_stats'].items():
-                if isinstance(v, int):
-                    self.counter(f'rabbitmq.vhost_{k}', labels).set(float(v))
-            for k in ['messages', 'messages_unacknowledged', 'messages_ready',
-                      'recv_oct', 'send_oct']:
-                self.counter(f'rabbitmq.vhost_{k}', labels).set(float(vhost[k]))
+    def get_metrics(self, metrics, values: dict, labels: dict = {}):
+        """
+        Takes an array of metrics in the format below and adds metrics
+        to the plugin registry if it finds them in the values dictionary:
 
-    def node_stats(self, node_name: str) -> None:
-        node = self.get_data(f'/api/nodes/{node_name}')
-        labels = {'node_name': node_name}
-        self.gauge('rabbitmq.partition_count', labels).set(len(node['partitions']))
+            [
+                ('metric/path', 'metric_name', 'counter'),
+                ('metric/path', 'metric_name', 'gauge'),
+            ]
 
-        for k in NODE_COUNTERS:
-            if k in node:
-                self.counter(f'rabbitmq.node_{k}', labels).set(float(node[k]))
-
-        for k in NODE_GAUGES:
-            if k in node:
-                self.gauge(f'rabbitmq.node_{k}', labels).set(float(node[k]))
-
-    def overview_stats(self, overview: dict) -> None:
-        for section in ['message_stats', 'queue_totals', 'object_totals']:
-            for k, v in overview[section].items():
-                if isinstance(v, int):
-                    self.gauge(f'rabbitmq.{section}_{k}').set(float(v))
-                elif isinstance(v, dict):
-                    for l, w in v.items():
-                        self.gauge(f'rabbitmq.{section}_{k}_{l}').set(float(w))
+        :param metrics:     Array of metrics in format above
+        :param values:      Nested Dictionary of values from a JSON response
+        :param labels:      (Optional) Labels to be applied to all the metrics
+        """
+        for metric in metrics:
+            value = self.get_value(metric[0], values)
+            if isinstance(value, bool):
+                value = 1 if value else 0
+            if value is not None:
+                if metric[2] == 'counter':
+                    self.counter(metric[1], labels).set(value)
+                else:
+                    self.gauge(metric[1], labels).set(value)
 
 
 if __name__ == '__main__':
