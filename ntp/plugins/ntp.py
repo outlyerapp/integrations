@@ -20,7 +20,7 @@ class NTPCheckPlugin(Plugin):
         host = self.get("ntp-host", "pool.ntp.org")
         port = int(self.get("port", "123"))
         address = (host, port)
-        timeout = int(self.get("timeout", "5"))
+        timeout = int(self.get("timeout", "20"))
 
         # Make request to NTP Host
         try:
