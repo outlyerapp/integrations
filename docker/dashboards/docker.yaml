@@ -11,7 +11,7 @@ theme: light
 title: Docker
 widgets:
   chartWidgets:
-  - col: 5
+  - col: 8
     height: 2
     options:
       axes:
@@ -43,8 +43,8 @@ widgets:
         threshold: 0
       title: CPU Total
     row: 1
-    width: 5
-  - col: 10
+    width: 4
+  - col: 12
     height: 2
     options:
       axes:
@@ -78,8 +78,8 @@ widgets:
         threshold: 0
       title: CPU System vs User
     row: 1
-    width: 5
-  - col: 3
+    width: 4
+  - col: 6
     height: 2
     options:
       axes:
@@ -111,8 +111,8 @@ widgets:
         threshold: 0
       title: Memory Used
     row: 4
-    width: 6
-  - col: 3
+    width: 5
+  - col: 6
     height: 2
     options:
       axes:
@@ -144,8 +144,8 @@ widgets:
         threshold: 0
       title: Swap
     row: 6
-    width: 6
-  - col: 9
+    width: 5
+  - col: 11
     height: 2
     options:
       axes:
@@ -179,8 +179,8 @@ widgets:
         threshold: 0
       title: Memory Active vs Inactive
     row: 4
-    width: 6
-  - col: 9
+    width: 5
+  - col: 11
     height: 2
     options:
       axes:
@@ -212,8 +212,8 @@ widgets:
         threshold: 0
       title: Memory Cached
     row: 6
-    width: 6
-  - col: 2
+    width: 5
+  - col: 0
     height: 2
     options:
       axes:
@@ -245,8 +245,8 @@ widgets:
         threshold: 0
       title: Disk Write
     row: 9
-    width: 5
-  - col: 9
+    width: 6
+  - col: 0
     height: 2
     options:
       axes:
@@ -277,9 +277,9 @@ widgets:
         status: Error
         threshold: 0
       title: Disk Read
-    row: 9
+    row: 11
     width: 6
-  - col: 0
+  - col: 6
     height: 2
     options:
       axes:
@@ -312,9 +312,9 @@ widgets:
         status: Error
         threshold: 0
       title: Network I/O
-    row: 12
-    width: 5
-  - col: 10
+    row: 9
+    width: 10
+  - col: 11
     height: 2
     options:
       axes:
@@ -349,9 +349,9 @@ widgets:
         status: Error
         threshold: 0
       title: TX - packets/errors/dropped
-    row: 12
+    row: 11
     width: 5
-  - col: 5
+  - col: 6
     height: 2
     options:
       axes:
@@ -386,8 +386,76 @@ widgets:
         status: Error
         threshold: 0
       title: RX - packets/errors/dropped
-    row: 12
+    row: 11
     width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedBar
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container_count,:eq,:max,(,status,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Container Status
+    row: 4
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: StackedArea
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,container.io.write.bytes,:eq,:and,:max,(,container,),:by
+        visible: true
+      - query: ${@SCOPE},name,container.io.read.bytes,:eq,:and,:max,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Write vs Read Rate
+    row: 7
+    width: 6
   markdownWidgets:
   - col: 0
     height: 4
@@ -397,40 +465,40 @@ widgets:
       markdown: '![Docker logo](https://d1q6f0aelx0por.cloudfront.net/product-logos/75765bad-5683-40e7-b4cb-cdd4f7cc9b9e-docker.png)'
     row: 0
     width: 3
-  - col: 3
+  - col: 6
     height: 1
     options:
       content: |
         <h1>CPU</h1>
       markdown: '# CPU'
     row: 0
-    width: 12
-  - col: 3
+    width: 10
+  - col: 6
     height: 1
     options:
       content: |
         <h1>Memory</h1>
       markdown: '# Memory'
     row: 3
-    width: 12
+    width: 10
   - col: 0
     height: 1
     options:
       content: |
         <h1>Disk I/O</h1>
       markdown: '# Disk I/O'
-    row: 8
-    width: 15
-  - col: 0
+    row: 6
+    width: 6
+  - col: 6
     height: 1
     options:
       content: |
         <h1>Network</h1>
       markdown: '# Network'
-    row: 11
-    width: 15
+    row: 8
+    width: 10
   numberWidgets:
-  - col: 3
+  - col: 6
     height: 2
     options:
       color: '#3a6db2'
@@ -455,7 +523,7 @@ widgets:
       unitPosition: After
     row: 1
     width: 2
-  - col: 0
+  - col: 3
     height: 4
     options:
       color: '#4dccc5'
@@ -468,7 +536,7 @@ widgets:
         path: ""
       icon: integration--docker
       query:
-        query: name,container.cpu.cores,:eq,:count,:cf-max
+        query: name,container_count,:eq,status,running,:eq,:and,:max
         visible: true
       rounding: None
       statistic: LastValue
@@ -478,55 +546,5 @@ widgets:
       title: Running Containers
       unit: ""
       unitPosition: After
-    row: 4
+    row: 0
     width: 3
-  - col: 0
-    height: 2
-    options:
-      color: '#e85ab0'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: BarChart
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: integration--docker
-      query:
-        query: ${@SCOPE},name,container.io.write.count,:eq,:and,:max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Write Count
-      unit: ""
-      unitPosition: After
-    row: 9
-    width: 2
-  - col: 7
-    height: 2
-    options:
-      color: '#e85ab0'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: BarChart
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: integration--docker
-      query:
-        query: ${@SCOPE},name,container.io.read.count,:eq,:and,:max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Read Count
-      unit: ""
-      unitPosition: After
-    row: 9
-    width: 2
