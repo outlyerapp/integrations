@@ -407,7 +407,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container_count,:eq,:max,(,status,),:by
+      - query: name,container.count,:eq,:max,(,status,),:by
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -536,7 +536,7 @@ widgets:
         path: ""
       icon: integration--docker
       query:
-        query: name,container_count,:eq,status,running,:eq,:and,:max
+        query: name,container.count,:eq,status,running,:eq,:and,:max
         visible: true
       rounding: None
       statistic: LastValue
