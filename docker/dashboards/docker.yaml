@@ -418,7 +418,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Container Status
+      title: Container Count by Status
     row: 4
     width: 6
   - col: 0
