@@ -325,7 +325,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: bytes
+          unit: none
           unitPosition: After
       chartType: Line
       description: ""
@@ -362,7 +362,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: bytes
+          unit: none
           unitPosition: After
       chartType: Line
       description: ""
