@@ -1,0 +1,550 @@
+description: ""
+icon:
+  color: '#588fd8'
+  name: integration--docker
+labels: []
+name: docker
+scopes:
+- defaultValue: ""
+  labelKey: container
+theme: light
+title: Docker
+widgets:
+  chartWidgets:
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,container.cpu.total,:eq,:and,:max,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: CPU Total
+    row: 1
+    width: 4
+  - col: 12
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedArea
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,container.cpu.system,:eq,:and,:max,(,container,),:by
+        visible: true
+      - query: ${@SCOPE},name,container.cpu.user,:eq,:and,:max,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: CPU System vs User
+    row: 1
+    width: 4
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,container.mem.used,:eq,:and,:max,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Memory Used
+    row: 4
+    width: 5
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,container.mem.swap,:eq,:and,:max,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Swap
+    row: 6
+    width: 5
+  - col: 11
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Area
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,container.mem.active,:eq,:and,:max,(,container,),:by
+        visible: true
+      - query: ${@SCOPE},name,container.mem.inactive,:eq,:and,:max,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Memory Active vs Inactive
+    row: 4
+    width: 5
+  - col: 11
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,container.mem.cached,:eq,:and,:max,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Memory Cached
+    row: 6
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,container.io.write.bytes,:eq,:and,:max,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Disk Write
+    row: 9
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,container.io.read.bytes,:eq,:and,:max,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Disk Read
+    row: 11
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,container.net.rx.bytes,:eq,:and,:max,(,container,),:by
+        visible: true
+      - query: ${@SCOPE},name,container.net.tx.bytes,:eq,:and,:max,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Network I/O
+    row: 9
+    width: 10
+  - col: 11
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,container.net.tx.errs,:eq,:and,:max,(,container,),:by
+        visible: true
+      - query: ${@SCOPE},name,container.net.tx.packets,:eq,:and,:max,(,container,),:by
+        visible: true
+      - query: ${@SCOPE},name,container.net.tx.drop,:eq,:and,:max,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: TX - packets/errors/dropped
+    row: 11
+    width: 5
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,container.net.rx.errs,:eq,:and,:max,(,container,),:by
+        visible: true
+      - query: ${@SCOPE},name,container.net.rx.packets,:eq,:and,:max,(,container,),:by
+        visible: true
+      - query: ${@SCOPE},name,container.net.rx.drop,:eq,:and,:max,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: RX - packets/errors/dropped
+    row: 11
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedBar
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container.count,:eq,:max,(,status,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Container Count by Status
+    row: 4
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: StackedArea
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,container.io.write.bytes,:eq,:and,:max,(,container,),:by
+        visible: true
+      - query: ${@SCOPE},name,container.io.read.bytes,:eq,:and,:max,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Write vs Read Rate
+    row: 7
+    width: 6
+  markdownWidgets:
+  - col: 0
+    height: 4
+    options:
+      content: |
+        <p><img src="https://d1q6f0aelx0por.cloudfront.net/product-logos/75765bad-5683-40e7-b4cb-cdd4f7cc9b9e-docker.png" alt="Docker logo"/></p>
+      markdown: '![Docker logo](https://d1q6f0aelx0por.cloudfront.net/product-logos/75765bad-5683-40e7-b4cb-cdd4f7cc9b9e-docker.png)'
+    row: 0
+    width: 3
+  - col: 6
+    height: 1
+    options:
+      content: |
+        <h1>CPU</h1>
+      markdown: '# CPU'
+    row: 0
+    width: 10
+  - col: 6
+    height: 1
+    options:
+      content: |
+        <h1>Memory</h1>
+      markdown: '# Memory'
+    row: 3
+    width: 10
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Disk I/O</h1>
+      markdown: '# Disk I/O'
+    row: 6
+    width: 6
+  - col: 6
+    height: 1
+    options:
+      content: |
+        <h1>Network</h1>
+      markdown: '# Network'
+    row: 8
+    width: 10
+  numberWidgets:
+  - col: 6
+    height: 2
+    options:
+      color: '#3a6db2'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--docker
+      query:
+        query: ${@SCOPE},name,container.cpu.cores,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: CPU Cores
+      unit: ""
+      unitPosition: After
+    row: 1
+    width: 2
+  - col: 3
+    height: 4
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--docker
+      query:
+        query: name,container.count,:eq,status,running,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Running Containers
+      unit: ""
+      unitPosition: After
+    row: 0
+    width: 3
