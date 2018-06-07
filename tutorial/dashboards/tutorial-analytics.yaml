@@ -1,0 +1,493 @@
+description: Examples of the Outlyer Analytics Engine & Query Language
+icon:
+  color: '#5fcfa2'
+  name: integration--statsd
+labels:
+- key: tutorials
+  value: ""
+name: analytics-examples
+scopes: []
+theme: light
+title: Analytics Tutorial
+widgets:
+  chartWidgets:
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: '%'
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: CPU (User) Utalization Per Container
+    row: 0
+    width: 10
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: '%'
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:des-fast
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Double Exponential Smoothing - Fast
+    row: 2
+    width: 10
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: '%'
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:des-slow
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Double Exponential Smoothing - Slow
+    row: 4
+    width: 10
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:stddev
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: CPU Utalization Per Container - Standard Deviation
+    row: 8
+    width: 10
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: GB
+          unitPosition: After
+      chartType: Area
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,sys.disk.used,:eq,host,aks-agentpool-13236091-1,:eq,:and,:max,1073741824,:div
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Disk Used (GB)
+    row: 6
+    width: 10
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,sys.net.rx.packets,:eq,:min,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: 'Input: sys.net.tx.packets'
+    row: 10
+    width: 5
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,sys.net.rx.packets,:eq,:min,(,host,),:by,:derivative
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: 'Output: sys.net.tx.packets (Rate)'
+    row: 10
+    width: 5
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,sys.net.rx.packets,:eq,:min,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: 'Input: sys.net.tx.packets'
+    row: 12
+    width: 5
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,sys.net.rx.packets,:eq,:min,(,host,),:by,10m,:trend
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: 'Output: sys.net.tx.packets (Trend)'
+    row: 12
+    width: 5
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,sys.net.rx.packets,:eq,:min,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: 'Input: sys.net.tx.packets'
+    row: 14
+    width: 5
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,sys.net.rx.packets,:eq,:min,(,host,),:by,:stat-max,80,:gt,:filter
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: 'Output: sys.net.tx.packets (Filtered)'
+    row: 14
+    width: 5
+  markdownWidgets:
+  - col: 0
+    height: 2
+    options:
+      content: |
+        <h1>Basic Queries</h1>
+
+        <p>You can select specific metrics using the metric name, labels and a summarisation (min, max, avg, sum, count) for any metric in Outlyer:</p>
+
+        <p><strong>name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by</strong></p>
+
+        <p>The :by function will split your query into a separate time-series for label(s) specified if you want to return a value.</p>
+      markdown: |-
+        # Basic Queries
+
+        You can select specific metrics using the metric name, labels and a summarisation (min, max, avg, sum, count) for any metric in Outlyer:
+
+        **name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by**
+
+        The :by function will split your query into a separate time-series for label(s) specified if you want to return a value.
+    row: 0
+    width: 3
+  - col: 0
+    height: 4
+    options:
+      content: |
+        <h1>Applying DES</h1>
+
+        <p>Sometimes you want to be able to filter noisy queries to return smoother lines which make it easier to see trends in your charts. This can be done using Double Exponential Smoothing functions to your series as below using the :des-fast operator:</p>
+
+        <p><strong>name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:des-fast</strong></p>
+
+        <p>There are also :des-slower and :des-slow operators which take longer to render but will perform DES over longer time periods.</p>
+      markdown: |-
+        # Applying DES
+
+        Sometimes you want to be able to filter noisy queries to return smoother lines which make it easier to see trends in your charts. This can be done using Double Exponential Smoothing functions to your series as below using the :des-fast operator:
+
+        **name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:des-fast**
+
+        There are also :des-slower and :des-slow operators which take longer to render but will perform DES over longer time periods.
+    row: 2
+    width: 3
+  - col: 0
+    height: 4
+    options:
+      content: |
+        <h1>Maths Functions</h1>
+
+        <p>Outlyer provides a full set of Math functions that allow you to perform advanced maths on your timeseries.</p>
+
+        <p>The first example converts a metric for disk space in Bytes into GB by dividing the values by 1073741824:</p>
+
+        <p><strong>name,sys.disk.used,:eq,host,aks-agentpool-13236091-1,:eq,:and,:max,1073741824,:div</strong></p>
+
+        <p>The second example shows an real-time calculation of the standard deviation between all the container CPU usage shown in the graph at the top:</p>
+
+        <p><strong>name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:stddev</strong></p>
+      markdown: "# Maths Functions\n\nOutlyer provides a full set of Math functions
+        that allow you to perform advanced maths on your timeseries. \n\nThe first
+        example converts a metric for disk space in Bytes into GB by dividing the
+        values by 1073741824:\n\n**name,sys.disk.used,:eq,host,aks-agentpool-13236091-1,:eq,:and,:max,1073741824,:div**\n\n\n\nThe
+        second example shows an real-time calculation of the standard deviation between
+        all the container CPU usage shown in the graph at the top:\n\n**name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:stddev**"
+    row: 6
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      content: |
+        <h1>Counters</h1>
+
+        <p>Counters are metrics that increase over time and do not go up and down like a Gauge metric can. With Counters you can apply rate functions to see the rate of change of your counters over time:</p>
+
+        <p><strong>name,sys.net.rx.packets,:eq,:min,(,host,),:by,:derivative</strong></p>
+      markdown: |-
+        # Counters
+
+        Counters are metrics that increase over time and do not go up and down like a Gauge metric can. With Counters you can apply rate functions to see the rate of change of your counters over time:
+
+        **name,sys.net.rx.packets,:eq,:min,(,host,),:by,:derivative**
+    row: 10
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      content: |
+        <h1>Trending</h1>
+
+        <p>When dealing with a lot of timeseries, you sometimes want to see the trend of the line over a specified period of time. The following query shows the trend lines for each series over a 10 minute interval:</p>
+
+        <p><strong>name,sys.net.rx.packets,:eq,:min,(,host,),:by,10m,:trend</strong></p>
+      markdown: |
+        # Trending
+
+        When dealing with a lot of timeseries, you sometimes want to see the trend of the line over a specified period of time. The following query shows the trend lines for each series over a 10 minute interval:
+
+        **name,sys.net.rx.packets,:eq,:min,(,host,),:by,10m,:trend**
+    row: 12
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      content: |
+        <h1>Filters</h1>
+
+        <p>Sometimes you want to filter series based on their value. For this the :filter function can be used. In this example the series are being filtered to only show hosts who’s sys.net.tex.packets count went above 400:</p>
+
+        <p><strong>name,sys.net.rx.packets,:eq,:min,(,host,),:by,:stat-max,400,:gt,:filter</strong></p>
+      markdown: |
+        # Filters
+
+        Sometimes you want to filter series based on their value. For this the :filter function can be used. In this example the series are being filtered to only show hosts who's sys.net.tex.packets count went above 400:
+
+        **name,sys.net.rx.packets,:eq,:min,(,host,),:by,:stat-max,400,:gt,:filter**
+    row: 14
+    width: 3

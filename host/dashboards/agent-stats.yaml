@@ -1,0 +1,424 @@
+description: Dashboard for Hosts running the Agent Proxies pushing in metrics from
+  Kafka requests
+icon:
+  color: '#ffb863'
+  name: integration--ec2
+labels:
+- key: outlyer
+  value: ""
+name: agent-stats
+scopes: []
+theme: light
+title: Agent Hosts
+widgets:
+  chartWidgets:
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 100
+          min: 0
+          showGridLines: true
+          title: Utalization
+          unit: '%'
+          unitPosition: After
+      chartType: Line
+      description: CPU Utalization
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,sys.load.1,:eq,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#bc54f2'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: CPU Usage
+    row: 0
+    width: 7
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 100
+          min: 0
+          showGridLines: true
+          title: Utalization
+          unit: '%'
+          unitPosition: After
+      chartType: Line
+      description: Memory Utilization
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,sys.mem.pct,:eq,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#3cc663'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Memory Usage
+    row: 2
+    width: 7
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: Total number of metrics collected per agent in the Agent Registry
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,agent.publish_metrics,:eq,:sum,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Total Metrics By Agent
+    row: 6
+    width: 7
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 100
+          min: 0
+          showGridLines: true
+          title: Utalization
+          unit: '%'
+          unitPosition: After
+      chartType: Line
+      description: Agent CPU Utilization
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,agent.cpu_pct,:eq,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#bc54f2'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Agent CPU Usage
+    row: 8
+    width: 7
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 100
+          min: 0
+          showGridLines: true
+          title: Utalization
+          unit: '%'
+          unitPosition: After
+      chartType: Line
+      description: Agent Memory Utilization
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,agent.mem_pct,:eq,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#3cc663'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Agent Memory Usage
+    row: 10
+    width: 7
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ms
+          unitPosition: After
+      chartType: Scatter
+      description: How long the metrics publishing job takes in ms
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,agent.publish_latency,:eq,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#ffa538'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Publish Metrics Request Time (ms)
+    row: 12
+    width: 9
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,sys.load.1,:eq,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Host Load
+    row: 4
+    width: 9
+  markdownWidgets:
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>HOSTS</h1>
+      markdown: '# HOSTS'
+    row: 0
+    width: 2
+  - col: 0
+    height: 8
+    options:
+      content: |
+        <h1>AGENT PROCESS</h1>
+      markdown: '# AGENT PROCESS'
+    row: 6
+    width: 2
+  - col: 0
+    height: 3
+    options:
+      content: ""
+      markdown: ' '
+    row: 3
+    width: 2
+  numberWidgets:
+  - col: 9
+    height: 2
+    options:
+      color: '#bc54f2'
+      description: ""
+      displayMax: 100
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: memory
+      query:
+        query: name,sys.cpu.pct,:eq,:max,:cf-max
+        visible: false
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: CPU Usage
+      unit: '%'
+      unitPosition: After
+    row: 0
+    width: 2
+  - col: 9
+    height: 2
+    options:
+      color: '#3cc663'
+      description: ""
+      displayMax: 100
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: memory
+      query:
+        query: name,sys.mem.pct,:eq,:max,:cf-max
+        visible: false
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Memory Usage
+      unit: '%'
+      unitPosition: After
+    row: 2
+    width: 2
+  - col: 9
+    height: 2
+    options:
+      color: '#bc54f2'
+      description: ""
+      displayMax: 100
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: memory
+      query:
+        query: name,agent.cpu_pct,:eq,:max,:cf-max
+        visible: false
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Agent CPU Usage
+      unit: '%'
+      unitPosition: After
+    row: 8
+    width: 2
+  - col: 9
+    height: 2
+    options:
+      color: '#3cc663'
+      description: ""
+      displayMax: 100
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: memory
+      query:
+        query: name,agent.mem_pct,:eq,:max,:cf-max
+        visible: false
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Agent Mem Usage
+      unit: '%'
+      unitPosition: After
+    row: 10
+    width: 2
+  - col: 0
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: storage
+      query:
+        query: name,sys.cpu.pct,:eq,service,system,:eq,:and,:count,:cf-max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Agents Running
+      unit: ""
+      unitPosition: After
+    row: 1
+    width: 2
+  - col: 9
+    height: 2
+    options:
+      color: '#ffa538'
+      description: Total Number of Metrics being generated across the account
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--statsd
+      query:
+        query: name,agent.publish_metrics,:eq,:sum,:cf-max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Total Metrics
+      unit: ""
+      unitPosition: After
+    row: 6
+    width: 2
