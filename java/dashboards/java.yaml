@@ -1,0 +1,250 @@
+description: Java JVM Metrics
+icon:
+  color: '#dd3e26'
+  name: integration--java
+labels:
+- key: java
+  value: ""
+name: java-jvm
+scopes: []
+theme: light
+title: Java JVM
+widgets:
+  chartWidgets:
+  - col: 3
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: Count
+          unit: ""
+          unitPosition: After
+      chartType: StackedArea
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,java_lang_threading_threadcount,:eq,:max
+        visible: true
+      - query: name,java_lang_threading_daemonthreadcount,:eq,:max
+        visible: true
+      - query: name,java_lang_threading_peakthreadcount,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: JVM Thread Counts
+    row: 5
+    width: 3
+  - col: 3
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,java_lang_memory_heapmemoryusage_used,:eq,:max
+        visible: true
+      - query: name,java_lang_memory_heapmemoryusage_committed,:eq,:max
+        visible: true
+      - query: name,java_lang_memory_heapmemoryusage_max,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Heap Used vs Commited vs Max
+    row: 1
+    width: 7
+  - col: 10
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,java_lang_memory_nonheapmemoryusage_used,:eq,:max
+        visible: true
+      - query: name,java_lang_memory_nonheapmemoryusage_committed,:eq,:max
+        visible: true
+      - query: name,java_lang_memory_nonheapmemoryusage_max,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Non-Heap Used vs Commited vs Max
+    row: 1
+    width: 6
+  - col: 11
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,java_lang_garbagecollector_collectiontime,:eq,:max,(,name,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Collection Time
+    row: 5
+    width: 5
+  - col: 6
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,java_lang_garbagecollector_collectioncount,:eq,:max,(,name,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Collection Count
+    row: 5
+    width: 5
+  imageWidgets:
+  - col: 0
+    height: 4
+    options:
+      color: '#dd3e26'
+      icon: integration--java
+      sizing: stretched
+    row: 0
+    width: 3
+  markdownWidgets:
+  - col: 3
+    height: 1
+    options:
+      content: |
+        <h1>JVM Memory</h1>
+      markdown: '# JVM Memory'
+    row: 0
+    width: 13
+  - col: 6
+    height: 1
+    options:
+      content: |
+        <h1>Garbage Collection</h1>
+      markdown: '# Garbage Collection'
+    row: 4
+    width: 10
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Classes and Threads</h1>
+      markdown: '# Classes and Threads'
+    row: 4
+    width: 6
+  numberWidgets:
+  - col: 0
+    height: 3
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--java
+      query:
+        query: name,java_lang_classloading_loadedclasscount,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Loaded Classes
+      unit: ""
+      unitPosition: After
+    row: 5
+    width: 3
