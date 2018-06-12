@@ -45,7 +45,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: JVM Thread Counts
+      title: JVM Thread Count
     row: 5
     width: 3
   - col: 3
@@ -133,7 +133,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: ms
           unitPosition: After
       chartType: Line
       description: ""
