@@ -253,7 +253,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: s
           unitPosition: After
       chartType: StackedArea
       description: ""
@@ -274,7 +274,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: CPU Usage
+      title: Total CPU Time
     row: 6
     width: 12
   - col: 0

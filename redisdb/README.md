@@ -23,8 +23,8 @@ Once enabled you will get a default Redis dashboard to help you get started moni
 |redis_keyspace_hits             |counter|          |       |Number of successful lookup of keys in the main dictionary.                                                                                 |
 |redis_keyspace_misses           |counter|          |       |Number of failed lookup of keys in the main dictionary.                                                                                     |
 |redis_pubsub_channels           |gauge  |          |       |Global number of pub/sub channels with client subscriptions.                                                                                |
-|redis_used_cpu_sys              |gauge  |          |       |System CPU consumed by the Redis server.                                                                                                    |
-|redis_used_cpu_user             |gauge  |          |       |User CPU consumed by the Redis server.                                                                                                      |
+|redis_used_cpu_sys              |counter|          |       |System CPU time consumed by the Redis server.                                                                                               |
+|redis_used_cpu_user             |counter|          |second |User CPU time consumed by the Redis server.                                                                                                 |
 |redis_connected_clients         |gauge  |          |       |Number of client connections (excluding connections from slaves).                                                                           |
 |redis_blocked_clients           |gauge  |          |       |Number of clients pending on a blocking call (BLPOP, BRPOP, BRPOPLPUSH).                                                                    |
 |redis_used_memory               |gauge  |          |byte   |Total number of bytes allocated by Redis using its allocator (either standard libc, jemalloc, or an alternative allocator such as tcmalloc).|
