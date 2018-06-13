@@ -58,7 +58,7 @@ class RedisPlugin(Plugin):
                 return {}
 
         try:
-            r = redis.StrictRedis(host=self.get('host', '127.0.0.1'),
+            r = redis.StrictRedis(host=self.get('ip', '127.0.0.1'),
                                   port=self.get('port', 6379),
                                   password=self.get('password', None))
 
