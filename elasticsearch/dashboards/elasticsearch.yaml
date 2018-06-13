@@ -1,0 +1,926 @@
+description: ""
+icon:
+  color: '#000000'
+  name: dashboard
+labels: []
+name: elasticsearch
+scopes:
+- defaultValue: ""
+  labelKey: cluster_name
+- defaultValue: ""
+  labelKey: host
+theme: light
+title: Elasticsearch
+widgets:
+  chartWidgets:
+  - col: 10
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,elasticsearch_cluster_number_of_shards,:eq,:max
+        visible: true
+      - query: name,elasticsearch_cluster_active_primary_shards,:eq,:max
+        visible: true
+      - query: name,elasticsearch_cluster_relocating_shards,:eq,:max
+        visible: true
+      - query: name,elasticsearch_cluster_initializing_shards,:eq,:max
+        visible: true
+      - query: name,elasticsearch_cluster_unassigned_shards,:eq,:max
+        visible: true
+      - query: name,elasticsearch_cluster_delayed_unassigned_shards,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Shards
+    row: 3
+    width: 8
+  - col: 4
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedBar
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,elasticsearch_cluster_number_of_data_nodes,:eq,:max
+        visible: true
+      - query: name,elasticsearch_cluster_number_of_coordinating_only_nodes,:eq,:max
+        visible: true
+      - query: name,elasticsearch_cluster_number_of_master_elegible_nodes,:eq,:max
+        visible: true
+      - query: name,elasticsearch_cluster_number_of_ingest_nodes,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: 'Node Types '
+    row: 3
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,elasticsearch_node_process_open_file_descriptors,:eq,:and,:max,(,host,),:by
+        visible: true
+      - query: ${@SCOPE},name,elasticsearch_node_process_max_file_descriptors,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: File Descriptors (Open vs Max)
+    row: 10
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_heap_used_in_bytes,:eq,:and,:max,(,host,),:by
+        visible: true
+      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_heap_committed_in_bytes,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Heap Used vs Heap Commited
+    row: 13
+    width: 5
+  - col: 5
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_non_heap_used_in_bytes,:eq,:and,:max,(,host,),:by
+        visible: true
+      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_non_heap_committed_in_bytes,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Non Heap Used vs Non Heap Commited
+    row: 13
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_pools_young_used_in_bytes,:eq,:and,:max,(,host,),:by
+        visible: true
+      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_pools_young_max_in_bytes,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Young Used vs Young Max
+    row: 15
+    width: 5
+  - col: 5
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_pools_old_used_in_bytes,:eq,:and,:max,(,host,),:by
+        visible: true
+      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_pools_old_max_in_bytes,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Old Used vs Old Max
+    row: 15
+    width: 5
+  - col: 13
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ms
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,elasticsearch_node_jvm_gc_collectors_young_collection_time_in_millis,:eq,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Young Collection Time
+    row: 13
+    width: 5
+  - col: 13
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ms
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,elasticsearch_node_jvm_gc_collectors_old_collection_time_in_millis,:eq,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Old Collection Time
+    row: 15
+    width: 5
+  - col: 9
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ms
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,elasticsearch_node_indices_search_query_time_in_millis,:eq,:and,:max,(,host,),:by
+        visible: true
+      - query: ${@SCOPE},name,elasticsearch_node_indices_search_fetch_time_in_millis,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Query and Fetch Latency
+    row: 7
+    width: 5
+  - col: 14
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ms
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,elasticsearch_node_indices_search_query_current,:eq,:and,:max,(,host,),:by
+        visible: true
+      - query: ${@SCOPE},name,elasticsearch_node_indices_search_fetch_current,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Query and Fetch Current
+    row: 7
+    width: 4
+  - col: 14
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ms
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,elasticsearch_node_indices_refresh_total_time_in_millis,:eq,:and,:max,(,host,),:by
+        visible: true
+      - query: ${@SCOPE},name,elasticsearch_node_indices_flush_total_time_in_millis,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Refresh and Flush Latency
+    row: 10
+    width: 4
+  - col: 10
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ms
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: ${@SCOPE},name,elasticsearch_node_indices_indexing_index_time_in_millis,:eq,:and,:max,(,host,),:by
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Indexing Latency
+    row: 10
+    width: 4
+  markdownWidgets:
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>JVM Memory</h1>
+      markdown: '# JVM Memory'
+    row: 12
+    width: 10
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Indices and Documents</h1>
+      markdown: '# Indices and Documents'
+    row: 6
+    width: 6
+  - col: 0
+    height: 4
+    options:
+      content: |
+        <p><img src="https://www.unixmen.com/wp-content/uploads/2017/06/elasticsearch.jpg" alt="Elasticsearch logo"/></p>
+      markdown: '![Elasticsearch logo](https://www.unixmen.com/wp-content/uploads/2017/06/elasticsearch.jpg)'
+    row: 0
+    width: 4
+  - col: 4
+    height: 1
+    options:
+      content: |
+        <h1>Nodes</h1>
+      markdown: '# Nodes'
+    row: 0
+    width: 6
+  - col: 10
+    height: 1
+    options:
+      content: |
+        <h1>Shards</h1>
+      markdown: '# Shards'
+    row: 0
+    width: 8
+  - col: 6
+    height: 1
+    options:
+      content: |
+        <h1>Search Performance</h1>
+      markdown: '# Search Performance'
+    row: 6
+    width: 12
+  - col: 6
+    height: 1
+    options:
+      content: |
+        <h1>Indexing Performance</h1>
+      markdown: '# Indexing Performance'
+    row: 9
+    width: 12
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Elasticsearch Process</h1>
+      markdown: '# Elasticsearch Process'
+    row: 9
+    width: 6
+  - col: 10
+    height: 1
+    options:
+      content: |
+        <h1>Garbage Collection</h1>
+      markdown: '# Garbage Collection'
+    row: 12
+    width: 8
+  numberWidgets:
+  - col: 10
+    height: 2
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,elasticsearch_cluster_number_of_shards,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Total Shards
+      unit: ""
+      unitPosition: After
+    row: 1
+    width: 2
+  - col: 12
+    height: 2
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,elasticsearch_cluster_active_primary_shards,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Active Primary Shards
+      unit: ""
+      unitPosition: After
+    row: 1
+    width: 2
+  - col: 16
+    height: 2
+    options:
+      color: '#ff5e44'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: trending_down
+      query:
+        query: name,elasticsearch_cluster_unassigned_shards,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 1
+      title: Unassigned Shards
+      unit: ""
+      unitPosition: After
+    row: 1
+    width: 2
+  - col: 4
+    height: 2
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: thumb_up
+      query:
+        query: name,elasticsearch_cluster_number_of_nodes,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Nodes
+      unit: ""
+      unitPosition: After
+    row: 1
+    width: 2
+  - col: 6
+    height: 2
+    options:
+      color: '#ff5e44'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: thumb_down
+      query:
+        query: name,elasticsearch_cluster_number_of_failed_nodes,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 1
+      title: Failed Nodes
+      unit: ""
+      unitPosition: After
+    row: 1
+    width: 2
+  - col: 14
+    height: 2
+    options:
+      color: '#ff5e44'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: trending_down
+      query:
+        query: name,elasticsearch_cluster_initializing_shards,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Initializing Shards
+      unit: ""
+      unitPosition: After
+    row: 1
+    width: 2
+  - col: 8
+    height: 2
+    options:
+      color: '#ff5e44'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: trending_down
+      query:
+        query: name,elasticsearch_cluster_number_of_pending_tasks,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Pending Tasks
+      unit: ""
+      unitPosition: After
+    row: 1
+    width: 2
+  - col: 0
+    height: 2
+    options:
+      color: '#e85ab0'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,elasticsearch_cluster_number_of_indices,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Indices Count
+      unit: ""
+      unitPosition: After
+    row: 7
+    width: 3
+  - col: 3
+    height: 2
+    options:
+      color: '#e85ab0'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,elasticsearch_cluster_number_of_docs,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Document Count
+      unit: ""
+      unitPosition: After
+    row: 7
+    width: 3
+  - col: 10
+    height: 2
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: ${@SCOPE},name,elasticsearch_node_jvm_gc_collectors_young_collection_count,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Young Collection Count
+      unit: ""
+      unitPosition: After
+    row: 13
+    width: 3
+  - col: 10
+    height: 2
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: ${@SCOPE},name,elasticsearch_node_jvm_gc_collectors_old_collection_count,:eq,:and,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Old Collection Count
+      unit: ""
+      unitPosition: After
+    row: 15
+    width: 3
+  - col: 6
+    height: 2
+    options:
+      color: '#3cc663'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,elasticsearch_node_indices_search_query_total,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Query Total
+      unit: ""
+      unitPosition: After
+    row: 7
+    width: 3
+  - col: 6
+    height: 2
+    options:
+      color: '#3cc663'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,elasticsearch_node_indices_indexing_index_total,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Indexing Total
+      unit: ""
+      unitPosition: After
+    row: 10
+    width: 2
+  - col: 8
+    height: 2
+    options:
+      color: '#ff5e44'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: thumb_down
+      query:
+        query: name,elasticsearch_node_indices_indexing_index_failed,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Indexing Failed
+      unit: ""
+      unitPosition: After
+    row: 10
+    width: 2
+  statusWidgets:
+  - col: 0
+    height: 2
+    id: 24b71d2f-6b9c-4180-9083-0e9aa5450f25
+    options:
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - scoped: false
+        service: elasticsearch
+      showIcon: true
+      title: Cluster Status
+    row: 4
+    width: 4
