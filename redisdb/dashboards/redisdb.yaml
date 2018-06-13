@@ -30,7 +30,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,redis_keys,:eq,:max,(,host,),:by
+      - query: name,redis_keys,:eq,:max,(,database,),:by
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -96,7 +96,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,redis_blocked_clients,:eq,:max,(,host,),:by
+      - query: name,redis_blocked_clients,:eq,:max
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -129,7 +129,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,redis_connected_clients,:eq,:max,(,host,),:by
+      - query: name,redis_connected_clients,:eq,:max
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -162,7 +162,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,redis_evicted_keys,:eq,:max,(,host,),:by
+      - query: name,redis_evicted_keys,:eq,:max
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -296,7 +296,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,redis_keyspace_hits,:eq,:max,(,host,),:by
+      - query: name,redis_keyspace_hits,:eq,:max
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -329,7 +329,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,redis_keyspace_misses,:eq,:max,(,host,),:by
+      - query: name,redis_keyspace_misses,:eq,:max
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -362,7 +362,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,redis_expired_keys,:eq,:max,(,host,),:by
+      - query: name,redis_expired_keys,:eq,:max
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -395,7 +395,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,redis_pubsub_channels,:eq,:max,(,host,),:by
+      - query: name,redis_pubsub_channels,:eq,:max
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -428,7 +428,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,redis_instantaneous_ops_per_sec,:eq,:max,(,host,),:by
+      - query: name,redis_instantaneous_ops_per_sec,:eq,:max
         visible: true
       seriesStyle:
         color: '#588fd8'
