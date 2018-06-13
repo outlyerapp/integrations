@@ -25,7 +25,6 @@ GAUGE_METRICS = [
     'blocked_clients',
     'used_memory',
     'mem_fragmentation_ratio',
-    'active_defrag_running',
     'instantaneous_ops_per_sec',
     'instantaneous_input_kbps',
     'instantaneous_output_kbps',
@@ -65,10 +64,10 @@ class RedisPlugin(Plugin):
             output = r.info()  # type: Dict[str, Any]
 
             for key in GAUGE_METRICS:
-              if key in output:  
-                val, labels = split_uom(output[key])
-                labels.update(uom(key))
-                self.gauge('redis_' + key, labels).set(val)
+                if key in output:
+                    val, labels = split_uom(output[key])
+                    labels.update(uom(key))
+                    self.gauge('redis_' + key, labels).set(val)
 
             for key in output.keys():
                 if key.startswith('db'):
