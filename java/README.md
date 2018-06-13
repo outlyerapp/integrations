@@ -31,7 +31,18 @@ Once enabled you will get a default JVM dashboard to help you get started monito
 
 == Installation ==
 
-Just run the Java plugin against your JVM instance and it will start collecting JVM metrics.
+This integration requires that JMX be enabled on the JVM. To enable JMX on a the JVM you can add the additional options to your
+Java command when starting the JVM:
+
+```
+-Dcom.sun.management.jmxremote
+-Dcom.sun.management.jmxremote.port=9999
+-Dcom.sun.management.jmxremote.rmi.port=9999
+-Dcom.sun.management.jmxremote.ssl=false
+-Dcom.sun.management.jmxremote.authenticate=false
+-Dcom.sun.management.jmxremote.local.only=false
+```
+
 
 ### Plugin Environment Variables
 

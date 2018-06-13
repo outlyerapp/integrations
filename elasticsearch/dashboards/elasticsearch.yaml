@@ -1,7 +1,7 @@
 description: ""
 icon:
-  color: '#000000'
-  name: dashboard
+  color: '#f5fb31'
+  name: integration--elasticsearch
 labels: []
 name: elasticsearch
 scopes:
