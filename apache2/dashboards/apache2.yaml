@@ -1,0 +1,640 @@
+description: ""
+icon:
+  color: '#ff5e44'
+  name: integration--apache
+labels: []
+name: apache2
+scopes: []
+theme: light
+title: Apache2
+widgets:
+  chartWidgets:
+  - col: 4
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.req_per_sec,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Requests per second
+    row: 1
+    width: 4
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bs
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.bytes_per_sec,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Bytes per second
+    row: 1
+    width: 4
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.bytes_per_req,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Bytes per request
+    row: 3
+    width: 4
+  - col: 4
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedArea
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.busy_workers,:eq,:max
+        visible: true
+      - query: name,apache2.idle_workers,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Busy vs Idle Workers
+    row: 3
+    width: 4
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedArea
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.busy_workers,:eq,:max
+        visible: true
+      - query: name,apache2.idle_workers,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Total async connections
+    row: 6
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedBar
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.conns_async_writing,:eq,:max
+        visible: true
+      - query: name,apache2.conns_async_keepalive,:eq,:max
+        visible: true
+      - query: name,apache2.conns_async_closing,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: 'Async connections: writing, keep-alive, closing'
+    row: 6
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.stats.open,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Open slot with no current process
+    row: 9
+    width: 4
+  - col: 4
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.stats.waiting,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Waiting Connections
+    row: 9
+    width: 4
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.stats.starting,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Starting up
+    row: 9
+    width: 4
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.stats.reading,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Reading Request
+    row: 11
+    width: 4
+  - col: 4
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.stats.sending,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Sending Reply
+    row: 11
+    width: 4
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.stats.keepalive,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Keep-alive
+    row: 11
+    width: 4
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.stats.dnslookup,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: DNS Lookup
+    row: 13
+    width: 4
+  - col: 4
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.stats.closing,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Closing Connection
+    row: 13
+    width: 4
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.stats.logging,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Logging
+    row: 13
+    width: 4
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.stats.finishing,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Gracefully Finishing
+    row: 15
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,apache2.stats.idle_cleanup,:eq,:max
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Idle Cleanup of Worker
+    row: 15
+    width: 6
+  imageWidgets:
+  - col: 0
+    height: 3
+    options:
+      color: '#ff5e44'
+      icon: integration--apache
+      sizing: stretched
+    row: 0
+    width: 4
+  markdownWidgets:
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Async Connections</h1>
+      markdown: '# Async Connections'
+    row: 5
+    width: 12
+  - col: 4
+    height: 1
+    options:
+      content: |
+        <h1>Requests and Workers</h1>
+      markdown: '# Requests and Workers'
+    row: 0
+    width: 8
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Scoreboard Stats</h1>
+      markdown: '# Scoreboard Stats'
+    row: 8
+    width: 12
+  numberWidgets:
+  - col: 0
+    height: 2
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--apache
+      query:
+        query: name,apache2.uptime,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Uptime
+      unit: seconds
+      unitPosition: After
+    row: 3
+    width: 4
