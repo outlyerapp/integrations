@@ -10,36 +10,36 @@ scopes: []
 theme: light
 title: AWS Billing
 widgets:
-  chartwidgets:
+  chartWidgets:
   - col: 3
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: Cost
           unit: ""
-          unitposition: After
-      charttype: StackedArea
+          unitPosition: After
+      chartType: StackedArea
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,aws.billing_estimated_charges,:eq,:max,(,servicename,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#e1891f'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: AWS Estimated Costs By Service
@@ -49,49 +49,49 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: Cost
           unit: ""
-          unitposition: After
-      charttype: StackedArea
+          unitPosition: After
+      chartType: StackedArea
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,aws.billing_estimated_charges,:eq,:max,(,linkedaccount,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#e1891f'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: AWS Estimated Costs By Linked Account
     row: 2
     width: 11
-  imagewidgets: []
-  markdownwidgets: []
-  numberwidgets:
+  imageWidgets: []
+  markdownWidgets: []
+  numberWidgets:
   - col: 0
     height: 4
     options:
       color: '#ffa538'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: integration--aws
       query:
@@ -104,7 +104,7 @@ widgets:
         threshold: 0
       title: Total Estimated Costs
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 3
-  statuswidgets: []
+  statusWidgets: []
