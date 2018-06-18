@@ -10,36 +10,36 @@ scopes: []
 theme: light
 title: Solr
 widgets:
-  chartwidgets:
+  chartWidgets:
   - col: 0
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,solr.core_size_in_bytes,:eq,:max,(,core,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Core Index Size (Bytes)
@@ -49,20 +49,20 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,solr.core_select_requests,:eq,:max
@@ -71,13 +71,13 @@ widgets:
         visible: true
       - query: name,solr.core_select_timeouts,:eq,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Select Requests Vs. Errors Vs. Timeouts
@@ -87,33 +87,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,solr.core_numdocs,:eq,:max,(,core,),:by
         visible: true
       - query: name,solr.core_deleteddocs,:eq,:max,(,core,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Total Docs Vs. Deleted Docs
@@ -123,20 +123,20 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,solr.core_update_requests,:eq,:max
@@ -145,13 +145,13 @@ widgets:
         visible: true
       - query: name,solr.core_update_timeouts,:eq,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Update Requests Vs. Errors Vs. Timeouts
@@ -161,31 +161,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: sec
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,solr.last_soft_commit_complete_age,:eq,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Last Soft Commit (sec)
@@ -195,31 +195,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: sec
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,solr.last_commit_complete_age,:eq,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Last Commit (sec)
@@ -229,31 +229,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Bar
+          unitPosition: After
+      chartType: Bar
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,solr.jvm_threads_count,:eq,:min
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: JVM Threads
@@ -263,31 +263,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Bar
+          unitPosition: After
+      chartType: Bar
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,solr.jvm_memory_heap_used,:eq,:min
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: JVM Heap Usage (Bytes)
@@ -297,33 +297,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,solr.jvm_classes_loaded,:eq,:max
         visible: true
       - query: name,solr.jvm_classes_unloaded,:eq,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Classes Loaded Vs. Unloaded
@@ -333,39 +333,39 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,solr.jvm_gc_concurrentmarksweep_time,:eq,:max
         visible: true
       - query: name,solr.jvm_gc_parnew_time,:eq,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: 'Garbage Collection Time: Conncurrent Vs. ParNew'
     row: 11
     width: 5
-  imagewidgets:
+  imageWidgets:
   - col: 0
     height: 2
     options:
@@ -374,7 +374,7 @@ widgets:
       sizing: stretched
     row: 0
     width: 2
-  markdownwidgets:
+  markdownWidgets:
   - col: 0
     height: 1
     options:
@@ -383,17 +383,17 @@ widgets:
       markdown: '# Solr JVM'
     row: 8
     width: 10
-  numberwidgets:
+  numberWidgets:
   - col: 4
     height: 2
     options:
       color: '#dd3e26'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: integration--solr
       query:
@@ -406,7 +406,7 @@ widgets:
         threshold: 0
       title: Cores
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 2
   - col: 6
@@ -414,11 +414,11 @@ widgets:
     options:
       color: '#dd3e26'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: BarChart
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: integration--solr
       query:
@@ -431,7 +431,7 @@ widgets:
         threshold: 0
       title: Segments
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 2
   - col: 8
@@ -439,11 +439,11 @@ widgets:
     options:
       color: '#dd3e26'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: BarChart
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: integration--solr
       query:
@@ -456,23 +456,23 @@ widgets:
         threshold: 0
       title: Max Docs
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 2
-  statuswidgets:
+  statusWidgets:
   - col: 2
     height: 2
     id: a2139be5-c0d3-4474-b077-8404e82af4b5
     options:
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
-      - labelselectors: []
+      - labelSelectors: []
         scoped: false
         service: solr
-      showicon: true
+      showIcon: true
       title: Solr Status
     row: 0
     width: 2
