@@ -6,31 +6,31 @@ labels: []
 name: kubernetes-deployments
 scopes:
 - defaultvalue: ""
-  labelkey: namespace
+  labelKey: namespace
 - defaultvalue: ""
-  labelkey: deployment
+  labelKey: deployment
 theme: light
 title: Kubernetes Deployments
 widgets:
-  chartwidgets:
+  chartWidgets:
   - col: 0
     height: 3
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,kube_deployment_status_replicas_available,:eq,:and,:min
@@ -39,20 +39,20 @@ widgets:
         visible: true
       - query: ${@SCOPE},name,kube_deployment_status_replicas_unavailable,:eq,:and,:min
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Replicas
     row: 3
     width: 10
-  imagewidgets: []
-  markdownwidgets:
+  imageWidgets: []
+  markdownWidgets:
   - col: 0
     height: 1
     options:
@@ -61,17 +61,17 @@ widgets:
       markdown: '# Replicas'
     row: 0
     width: 10
-  numberwidgets:
+  numberWidgets:
   - col: 0
     height: 2
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: integration--docker
       query:
@@ -84,7 +84,7 @@ widgets:
         threshold: 0
       title: Desired
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 1
     width: 2
   - col: 6
@@ -92,11 +92,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: material--image
       query:
@@ -109,7 +109,7 @@ widgets:
         threshold: 0
       title: Available
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 1
     width: 2
   - col: 8
@@ -117,11 +117,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: material--image
       query:
@@ -134,7 +134,7 @@ widgets:
         threshold: 0
       title: Unavailable
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 1
     width: 2
   - col: 4
@@ -142,11 +142,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: material--image
       query:
@@ -159,7 +159,7 @@ widgets:
         threshold: 0
       title: Current
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 1
     width: 2
   - col: 2
@@ -167,11 +167,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: material--image
       query:
@@ -184,7 +184,7 @@ widgets:
         threshold: 0
       title: Updated
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 1
     width: 2
-  statuswidgets: []
+  statusWidgets: []
