@@ -35,8 +35,8 @@ NODE_METRICS = [
     ('run_queue', 'rabbitmq.node_run_queue', 'gauge'),
     ('sockets_used', 'rabbitmq.node_sockets_used', 'gauge'),
     ('running', 'rabbitmq.node_running', 'gauge'),
-    ('mem_alarm', 'rabbitmq.node_mem_alarm', 'gauage'),
-    ('disk_free_alarm', 'rabbitmq.node_disk_free_alarm', 'gauage'),
+    ('mem_alarm', 'rabbitmq.node_mem_alarm', 'gauge'),
+    ('disk_free_alarm', 'rabbitmq.node_disk_free_alarm', 'gauge'),
 ]
 
 EXCHANGE_METRICS = [
@@ -54,7 +54,7 @@ EXCHANGE_METRICS = [
 QUEUE_METRICS = [
     # Path, metric name, metric type
     ('active_consumers', 'rabbitmq.queue_active_consumers', 'gauge'),
-    ('consumers', 'rabbitmq.queue_consumers', 'gaugue'),
+    ('consumers', 'rabbitmq.queue_consumers', 'gauge'),
     ('consumer_utilisation', 'rabbitmq.queue_consumer_utilisation', 'gauge'),
     ('memory', 'rabbitmq.queue_memory', 'gauge'),
     ('messages', 'rabbitmq.queue_messages_count', 'counter'),
