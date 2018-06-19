@@ -12,36 +12,36 @@ scopes: []
 theme: light
 title: Zookeeper
 widgets:
-  chartwidgets:
+  chartWidgets:
   - col: 8
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ms
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,zk_max_latency,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Max Latency By Host
@@ -51,31 +51,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,zk_outstanding_requests,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Max
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Outstanding Requests
@@ -85,33 +85,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,zk_open_file_descriptor_count,:eq,:max,(,host,),:by
         visible: true
       - query: name,zk_max_file_descriptor_count,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Max
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: File Descriptor Count (Max vs. Open)
@@ -121,31 +121,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: StackedArea
+          unitPosition: After
+      chartType: StackedArea
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,zk_num_alive_connections,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Max
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Alive Connection Count
@@ -155,32 +155,32 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: '%'
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: Monitoring disk space to ensure Zookeeper has enough file space
         to keep zNodes
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,sys.disk.used_pct,:eq,role,zookeeper,:eq,:and,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Disk Space Used
@@ -190,33 +190,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Bar
+          unitPosition: After
+      chartType: Bar
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,zk_packets_received,:eq,:max
         visible: true
       - query: name,zk_packets_sent,:eq,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Max
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Requests Sent vs. Received
@@ -226,33 +226,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Bar
+          unitPosition: After
+      chartType: Bar
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,zk_followers,:eq,:max
         visible: true
       - query: name,zk_synced_followers,:eq,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Max
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Followers vs. Synced Followers
@@ -262,31 +262,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ms
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,zk_min_latency,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Min Latency By Host
@@ -296,37 +296,37 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ms
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,zk_avg_latency,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Avg Latency By Host
     row: 6
     width: 6
-  imagewidgets:
+  imageWidgets:
   - col: 0
     height: 6
     options:
@@ -343,7 +343,7 @@ widgets:
       sizing: stretched
     row: 8
     width: 2
-  markdownwidgets:
+  markdownWidgets:
   - col: 0
     height: 2
     options:
@@ -352,17 +352,17 @@ widgets:
       markdown: '![Zookeeper Logo](http://educareit.com/images/zookeeper.png)'
     row: 0
     width: 3
-  numberwidgets:
+  numberWidgets:
   - col: 7
     height: 2
     options:
       color: '#3cc663'
       description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: null
+      displayMin: null
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: integration--java
       query:
@@ -375,7 +375,7 @@ widgets:
         threshold: 0
       title: zNode Count
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 2
   - col: 5
@@ -383,11 +383,11 @@ widgets:
     options:
       color: '#3cc663'
       description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: null
+      displayMin: null
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: integration--java
       query:
@@ -400,7 +400,7 @@ widgets:
         threshold: 0
       title: Watch Count
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 2
   - col: 3
@@ -408,11 +408,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: insert_emoticon
       query:
@@ -425,7 +425,7 @@ widgets:
         threshold: 0
       title: Nodes
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 2
   - col: 9
@@ -433,11 +433,11 @@ widgets:
     options:
       color: '#3cc663'
       description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: null
+      displayMin: null
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: integration--java
       query:
@@ -450,7 +450,7 @@ widgets:
         threshold: 0
       title: Pending Syncs
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 2
-  statuswidgets: []
+  statusWidgets: []

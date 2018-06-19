@@ -10,38 +10,38 @@ scopes: []
 theme: light
 title: Kafka Producer
 widgets:
-  chartwidgets:
+  chartWidgets:
   - col: 0
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,kafka_producer_producer-metrics_request-rate,:eq,:max
         visible: true
       - query: name,kafka_producer_producer-metrics_response-rate,:eq,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Request/Response Rate
@@ -51,33 +51,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,kafka_producer_producer-metrics_outgoing-byte-rate,:eq,:max
         visible: true
       - query: name,kafka_producer_producer-metrics_incoming-byte-rate,:eq,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Ingoing/Outgoing Bytes Rate
@@ -87,31 +87,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,kafka_producer_producer-metrics_request-latency-avg,:eq,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Request Latency Average (ms)
@@ -121,38 +121,38 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,kafka_producer_producer-metrics_io-wait-time-ns-avg,:eq,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: I/O Wait Average (ns)
     row: 4
     width: 6
-  imagewidgets: []
-  markdownwidgets:
+  imageWidgets: []
+  markdownWidgets:
   - col: 0
     height: 2
     options:
@@ -161,17 +161,17 @@ widgets:
       markdown: '![Kafka Logo](https://pbs.twimg.com/profile_images/781633389577195521/kazUJooF_reasonably_small.jpg)'
     row: 0
     width: 3
-  numberwidgets:
+  numberWidgets:
   - col: 6
     height: 2
     options:
       color: '#6fe7e0'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: integration--java
       query:
@@ -184,7 +184,7 @@ widgets:
         threshold: 0
       title: Connection Count
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 3
   - col: 9
@@ -192,11 +192,11 @@ widgets:
     options:
       color: '#3cc663'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: integration--java
       query:
@@ -209,7 +209,7 @@ widgets:
         threshold: 0
       title: Waiting Threads
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 3
   - col: 3
@@ -217,11 +217,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: check
       query:
@@ -234,7 +234,7 @@ widgets:
         threshold: 0
       title: Records Sent Total
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 3
-  statuswidgets: []
+  statusWidgets: []

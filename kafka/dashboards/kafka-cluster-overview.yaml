@@ -10,38 +10,38 @@ scopes: []
 theme: light
 title: Kafka Cluster Overview
 widgets:
-  chartwidgets:
+  chartWidgets:
   - col: 12
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,kafka_cluster_controllerstats_leaderelectionrateandtimems_count,:eq,:sum
         visible: true
       - query: name,kafka_cluster_controllerstats_uncleanleaderelectionspersec_count,:eq,:sum
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Max
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Clean Vs. Unclean Leader Election Rate
@@ -51,31 +51,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,kafka_network_requestmetrics_requestspersec_count,:eq,:avg,(,request,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Network Requests Per Sec
@@ -85,31 +85,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: StackedBar
+          unitPosition: After
+      chartType: StackedBar
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,kafka_server_brokertopicmetrics_messagesinpersec_count,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Max
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Messages In Per Broker
@@ -119,33 +119,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: StackedArea
+          unitPosition: After
+      chartType: StackedArea
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: |-
           name,kafka_server_brokertopicmetrics_bytesinpersec_count,:eq,:sum,
           name,kafka_server_brokertopicmetrics_bytesoutpersec_count,:eq,:sum
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Max
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Bytes In / Bytes Out Per Sec
@@ -155,31 +155,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ms
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,kafka_network_requestmetrics_totaltimems_count,:eq,:avg,(,request,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Total Request Time
@@ -189,31 +189,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Area
+          unitPosition: After
+      chartType: Area
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,kafka_server_replicamanager_isrexpandspersec_count,:eq,:max,name,kafka_server_replicamanager_isrshrinkspersec_count,:eq,:max,:sub,:derivative
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Max
       thresholds:
       - display: Fill
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 1
       title: ISR Delta Rate of Change
@@ -223,31 +223,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,java_lang_garbagecollector_collectiontime,:eq,:avg,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Garbage Collection Time
@@ -257,33 +257,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,java_lang_memory_heapmemoryusage_used,:eq,:max,(,host,),:by
         visible: true
       - query: name,java_lang_memory_heapmemoryusage_committed,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Heap Memory Committed Vs. Used
@@ -293,31 +293,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,kafka_server_replicamanager_isrshrinkspersec_count,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: ISR Shrinks Per Sec
@@ -327,31 +327,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,kafka_server_replicamanager_isrexpandspersec_count,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: ISR Expands Per Sec
@@ -361,31 +361,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Bar
+          unitPosition: After
+      chartType: Bar
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,kafka_server_replicamanager_leadercount,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Partition Leader Per Broker
@@ -395,31 +395,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,kafka_server_replicafetchermanager_maxlag,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: MaxLag Per Broker
@@ -429,33 +429,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,java_lang_classloading_loadedclasscount,:eq,:max,(,host,),:by
         visible: true
       - query: name,java_lang_classloading_unloadedclasscount,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Classes Loaded vs Unloaded
@@ -465,33 +465,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,java_lang_operatingsystem_maxfiledescriptorcount,:eq,:max,(,host,),:by
         visible: true
       - query: name,java_lang_operatingsystem_openfiledescriptorcount,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Opened vs Total File Descriptors
@@ -501,37 +501,37 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,java_lang_garbagecollector_collectioncount,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Garbage Collection Count
     row: 13
     width: 6
-  imagewidgets:
+  imageWidgets:
   - col: 0
     height: 2
     options:
@@ -540,7 +540,7 @@ widgets:
       sizing: stretched
     row: 11
     width: 3
-  markdownwidgets:
+  markdownWidgets:
   - col: 0
     height: 2
     options:
@@ -557,17 +557,17 @@ widgets:
       markdown: '# **Java Virtual Machine**'
     row: 10
     width: 18
-  numberwidgets:
+  numberWidgets:
   - col: 3
     height: 2
     options:
       color: '#424242'
       description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: null
+      displayMin: null
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: announcement
       query:
@@ -580,7 +580,7 @@ widgets:
         threshold: 1
       title: Under Replicated Partitions
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 2
     width: 3
   - col: 6
@@ -588,11 +588,11 @@ widgets:
     options:
       color: '#424242'
       description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: null
+      displayMin: null
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: announcement
       query:
@@ -605,7 +605,7 @@ widgets:
         threshold: 1
       title: Offline Partition Count
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 2
     width: 3
   - col: 6
@@ -613,11 +613,11 @@ widgets:
     options:
       color: '#3cc663'
       description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: null
+      displayMin: null
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: check
       query:
@@ -630,7 +630,7 @@ widgets:
         threshold: 0
       title: Active Controller Count
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 3
   - col: 0
@@ -638,11 +638,11 @@ widgets:
     options:
       color: '#3a6db2'
       description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: null
+      displayMin: null
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: collections
       query:
@@ -655,7 +655,7 @@ widgets:
         threshold: 0
       title: Partition Count
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 2
     width: 3
   - col: 15
@@ -663,11 +663,11 @@ widgets:
     options:
       color: '#3cc663'
       description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: null
+      displayMin: null
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: compare_arrows
       query:
@@ -680,7 +680,7 @@ widgets:
         threshold: 1
       title: Network Processor Idle Pct
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 2
     width: 3
   - col: 12
@@ -688,11 +688,11 @@ widgets:
     options:
       color: '#3cc663'
       description: ""
-      displaymax: null
-      displaymin: null
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: null
+      displayMin: null
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: swap_horiz
       query:
@@ -705,7 +705,7 @@ widgets:
         threshold: 1
       title: Request Handler Idle Pct
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 2
     width: 3
   - col: 3
@@ -713,11 +713,11 @@ widgets:
     options:
       color: '#6fe7e0'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: check
       query:
@@ -730,7 +730,7 @@ widgets:
         threshold: 0
       title: Online Brokers
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 3
   - col: 0
@@ -738,11 +738,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: check
       query:
@@ -755,7 +755,7 @@ widgets:
         threshold: 0
       title: Total Messages In
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 4
     width: 3
   - col: 9
@@ -763,11 +763,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: announcement
       query:
@@ -780,7 +780,7 @@ widgets:
         threshold: 0
       title: Unclean Leader Elections
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 3
   - col: 3
@@ -788,11 +788,11 @@ widgets:
     options:
       color: '#3cc663'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: integration--java
       query:
@@ -805,7 +805,7 @@ widgets:
         threshold: 0
       title: Live Threads
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 11
     width: 3
   - col: 6
@@ -813,11 +813,11 @@ widgets:
     options:
       color: '#84efc4'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: integration--java
       query:
@@ -830,7 +830,7 @@ widgets:
         threshold: 0
       title: Peak Threads
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 11
     width: 3
   - col: 9
@@ -838,11 +838,11 @@ widgets:
     options:
       color: '#88c1de'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: integration--java
       query:
@@ -855,7 +855,7 @@ widgets:
         threshold: 0
       title: Daemon Threads
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 11
     width: 3
-  statuswidgets: []
+  statusWidgets: []

@@ -12,43 +12,43 @@ scopes: []
 theme: light
 title: NTP Drift
 widgets:
-  chartwidgets:
+  chartWidgets:
   - col: 2
     height: 4
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: Drift from NTP
           unit: s
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,ntp_drift,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: NTP Drift
     row: 0
     width: 8
-  imagewidgets: []
-  markdownwidgets:
+  imageWidgets: []
+  markdownWidgets:
   - col: 0
     height: 2
     options:
@@ -59,21 +59,21 @@ widgets:
         viewing your metrics and alerts in Outlyer.
     row: 2
     width: 2
-  numberwidgets: []
-  statuswidgets:
+  numberWidgets: []
+  statusWidgets:
   - col: 0
     height: 2
     id: 68bffb70-8708-4dbc-95e5-24d8114cf08f
     options:
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
-      - labelselectors: []
+      - labelSelectors: []
         scoped: false
         service: ntp
-      showicon: true
+      showIcon: true
       title: NTP Drift
     row: 0
     width: 2

@@ -8,40 +8,40 @@ labels:
 name: hosts
 scopes:
 - defaultvalue: ""
-  labelkey: host
+  labelKey: host
 theme: light
 title: Hosts
 widgets:
-  chartwidgets:
+  chartWidgets:
   - col: 2
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: '%'
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,sys.mem.pct,:eq,:and,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#298360'
         palette: Gradient
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Virtual Memory
@@ -51,31 +51,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: '%'
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,sys.swap.pct,:eq,:and,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#e1891f'
         palette: Gradient
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Swap Memory
@@ -85,20 +85,20 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: '%'
-          unitposition: After
-      charttype: StackedArea
+          unitPosition: After
+      chartType: StackedArea
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,sys.cpu.guest.pct,:eq,:and,:max
@@ -115,13 +115,13 @@ widgets:
         visible: true
       - query: ${@SCOPE},name,sys.cpu.user.pct,:eq,:and,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: CPU States
@@ -131,20 +131,20 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,sys.net.tx.packets,:eq,:and,:max
@@ -153,13 +153,13 @@ widgets:
         visible: true
       - query: ${@SCOPE},name,sys.net.tx.drop,:eq,:and,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: TX - packets/errors/dropped
@@ -169,20 +169,20 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,sys.net.rx.packets,:eq,:and,:max
@@ -191,13 +191,13 @@ widgets:
         visible: true
       - query: ${@SCOPE},name,sys.net.rx.drop,:eq,:and,:max
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: RX - packets/errors/dropped
@@ -207,31 +207,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,sys.io.read.bytes,:eq,:and,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Disk Read
@@ -241,31 +241,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,sys.io.write.bytes,:eq,:and,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Disk Write (bytes)
@@ -275,38 +275,38 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,sys.cpu.pct,:eq,:and,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Max CPU
     row: 4
     width: 5
-  imagewidgets: []
-  markdownwidgets:
+  imageWidgets: []
+  markdownWidgets:
   - col: 0
     height: 1
     options:
@@ -339,17 +339,17 @@ widgets:
       markdown: '# Disk Usage'
     row: 6
     width: 12
-  numberwidgets:
+  numberWidgets:
   - col: 0
     height: 2
     options:
       color: '#298360'
       description: ""
-      displaymax: 100
-      displaymin: 0
-      displaytrend: Gauge
-      externallink:
-        linktype: dashboard
+      displayMax: 100
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: memory
       query:
@@ -362,7 +362,7 @@ widgets:
         threshold: 0
       title: Max Memory
       unit: '%'
-      unitposition: After
+      unitPosition: After
     row: 1
     width: 2
   - col: 6
@@ -370,11 +370,11 @@ widgets:
     options:
       color: '#e1891f'
       description: ""
-      displaymax: 100
-      displaymin: 0
-      displaytrend: Gauge
-      externallink:
-        linktype: dashboard
+      displayMax: 100
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: disc_full
       query:
@@ -387,7 +387,7 @@ widgets:
         threshold: 0
       title: Swap
       unit: '%'
-      unitposition: After
+      unitPosition: After
     row: 1
     width: 2
   - col: 0
@@ -395,11 +395,11 @@ widgets:
     options:
       color: '#7babeb'
       description: ""
-      displaymax: 100
-      displaymin: 0
-      displaytrend: Gauge
-      externallink:
-        linktype: dashboard
+      displayMax: 100
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: memory
       query:
@@ -412,7 +412,7 @@ widgets:
         threshold: 0
       title: Max CPU
       unit: '%'
-      unitposition: After
+      unitPosition: After
     row: 4
     width: 2
   - col: 0
@@ -420,11 +420,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 100
-      displaymin: 0
-      displaytrend: Gauge
-      externallink:
-        linktype: dashboard
+      displayMax: 100
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: disc_full
       query:
@@ -437,7 +437,7 @@ widgets:
         threshold: 0
       title: Max Disk Used
       unit: '%'
-      unitposition: After
+      unitPosition: After
     row: 7
     width: 2
-  statuswidgets: []
+  statusWidgets: []

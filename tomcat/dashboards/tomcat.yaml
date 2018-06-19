@@ -14,36 +14,36 @@ scopes: []
 theme: light
 title: Tomcat
 widgets:
-  chartwidgets:
+  chartWidgets:
   - col: 4
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: Requests
           unit: ""
-          unitposition: After
-      charttype: Area
+          unitPosition: After
+      chartType: Area
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,tomcat.global_request_processor_requestcount,:eq,:sum,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#ffa538'
         palette: Gradient
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Tomcat Request Rate
@@ -53,33 +53,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,tomcat.threadpool_current_thread_count,:eq,:sum,(,host,),:by
         visible: true
       - query: name,tomcat.threadpool_maxthreads,:eq,:sum,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Tomcat Threads (Current Vs. Max)
@@ -89,31 +89,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ms
           unit: ""
-          unitposition: After
-      charttype: Area
+          unitPosition: After
+      chartType: Area
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,tomcat.global_request_processor_processingtime,:eq,:avg,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#ffa538'
         palette: Gradient
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Tomcat Average Processing Time
@@ -123,33 +123,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Area
+          unitPosition: After
+      chartType: Area
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,tomcat.global_request_processor_bytessent,:eq,:max,(,host,),:by
         visible: true
       - query: name,tomcat.global_request_processor_bytesreceived,:eq,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#ffa538'
         palette: Gradient
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Tomcat Bytes Sent & Received Rate
@@ -159,31 +159,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Area
+          unitPosition: After
+      chartType: Area
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,tomcat.global_request_processor_errorcount,:eq,:sum,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#ff5e44'
         palette: Gradient
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Tomcat Error Rate
@@ -193,31 +193,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: StackedArea
+          unitPosition: After
+      chartType: StackedArea
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,tomcat.servlet_requestcount,:eq,:max,(,servlet,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#ffa538'
         palette: Gradient
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Servlet Request Rate
@@ -227,31 +227,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: StackedArea
+          unitPosition: After
+      chartType: StackedArea
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,tomcat.jspmonitor_jsp_count,:eq,:max,(,webmodule,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#ffa538'
         palette: Gradient
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: JSP Request Rate
@@ -261,37 +261,37 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: StackedArea
+          unitPosition: After
+      chartType: StackedArea
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,tomcat.cache_hits_count,:eq,:max,(,context,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#ffa538'
         palette: Gradient
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Cache Hit Rate
     row: 8
     width: 12
-  imagewidgets:
+  imageWidgets:
   - col: 0
     height: 2
     options:
@@ -300,22 +300,22 @@ widgets:
       sizing: stretched
     row: 0
     width: 2
-  markdownwidgets: []
-  numberwidgets: []
-  statuswidgets:
+  markdownWidgets: []
+  numberWidgets: []
+  statusWidgets:
   - col: 2
     height: 2
     id: b5720443-a405-4ebf-9a2b-706186ccab9a
     options:
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
-      - labelselectors: []
+      - labelSelectors: []
         scoped: false
         service: tomcat
-      showicon: true
+      showIcon: true
       title: Tomcat Status
     row: 0
     width: 2

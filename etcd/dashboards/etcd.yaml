@@ -6,40 +6,40 @@ labels: []
 name: etcd
 scopes:
 - defaultvalue: ""
-  labelkey: host
+  labelKey: host
 theme: light
 title: etcd
 widgets:
-  chartwidgets:
+  chartWidgets:
   - col: 13
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,etcd_debugging_mvcc_db_total_size_in_bytes,:eq,:and,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Database Size (bytes)
@@ -49,31 +49,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,process_resident_memory_bytes,:eq,:and,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Process Resident Memory
@@ -83,33 +83,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,etcd_network_client_grpc_received_bytes_total,:eq,:and,:max,(,host,),:by
         visible: true
       - query: ${@SCOPE},name,etcd_network_client_grpc_sent_bytes_total,:eq,:and,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Network In vs Sent (Client)
@@ -119,33 +119,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,etcd_network_peer_received_bytes_total,:eq,:and,:max,(,host,),:by
         visible: true
       - query: ${@SCOPE},name,etcd_network_peer_sent_bytes_total,:eq,:and,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Network In vs Sent (Peers)
@@ -155,20 +155,20 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: name,etcd_server_proposals_failed_total,:eq,:sum
@@ -179,13 +179,13 @@ widgets:
         visible: true
       - query: name,etcd_server_proposals_applied_total,:eq,:sum
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Raft Proposals
@@ -195,31 +195,31 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: StackedArea
+          unitPosition: After
+      chartType: StackedArea
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,etcd_debugging_mvcc_keys_total,:eq,:and,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Number of Keys
@@ -229,33 +229,33 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: false
-        yaxis:
+          showGridLines: false
+        yAxis:
           max: null
           min: 0
-          showgridlines: false
+          showGridLines: false
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,process_open_fds,:eq,:and,:max,(,host,),:by
         visible: true
       - query: ${@SCOPE},name,process_max_fds,:eq,:and,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Opened vs Max File Descriptors
@@ -265,38 +265,38 @@ widgets:
     height: 2
     options:
       axes:
-        xaxis:
+        xAxis:
           mode: Time
-          showgridlines: true
-        yaxis:
+          showGridLines: true
+        yAxis:
           max: null
           min: 0
-          showgridlines: true
+          showGridLines: true
           title: ""
           unit: ""
-          unitposition: After
-      charttype: Line
+          unitPosition: After
+      chartType: Line
       description: ""
-      externallink:
-        linktype: dashboard
+      externalLink:
+        linkType: dashboard
         path: ""
       queries:
       - query: ${@SCOPE},name,etcd_debugging_mvcc_slow_watcher_total,:eq,:and,:max,(,host,),:by
         visible: true
-      seriesstyle:
+      seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
       - display: None
-        linestyle: Solid
+        lineStyle: Solid
         status: Error
         threshold: 0
       title: Unsynced Slow Watchers
     row: 2
     width: 4
-  imagewidgets: []
-  markdownwidgets:
+  imageWidgets: []
+  markdownWidgets:
   - col: 0
     height: 2
     options:
@@ -305,17 +305,17 @@ widgets:
       markdown: '![etcd logo](https://raw.githubusercontent.com/coreos/etcd/master/logos/etcd-horizontal-color.png)'
     row: 0
     width: 4
-  numberwidgets:
+  numberWidgets:
   - col: 4
     height: 2
     options:
       color: '#3a6db2'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: check
       query:
@@ -328,7 +328,7 @@ widgets:
         threshold: 1
       title: Leader Count
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 3
   - col: 10
@@ -336,11 +336,11 @@ widgets:
     options:
       color: '#ff5e44'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: sms_failed
       query:
@@ -353,7 +353,7 @@ widgets:
         threshold: 0
       title: Failed Proposals
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 3
   - col: 7
@@ -361,11 +361,11 @@ widgets:
     options:
       color: '#e85ab0'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: SparkLine
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: compare_arrows
       query:
@@ -378,7 +378,7 @@ widgets:
         threshold: 0
       title: Leader Changes
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 0
     width: 3
   - col: 3
@@ -386,11 +386,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: delete
       query:
@@ -403,7 +403,7 @@ widgets:
         threshold: 0
       title: Delete Count
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 2
     width: 3
   - col: 0
@@ -411,11 +411,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: add
       query:
@@ -428,7 +428,7 @@ widgets:
         threshold: 0
       title: Put Count
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 2
     width: 3
   - col: 9
@@ -436,11 +436,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: material--image
       query:
@@ -453,7 +453,7 @@ widgets:
         threshold: 0
       title: Range Count
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 2
     width: 3
   - col: 6
@@ -461,11 +461,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: material--image
       query:
@@ -478,7 +478,7 @@ widgets:
         threshold: 0
       title: Txns Count
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 2
     width: 3
   - col: 12
@@ -486,11 +486,11 @@ widgets:
     options:
       color: '#588fd8'
       description: ""
-      displaymax: 0
-      displaymin: 0
-      displaytrend: None
-      externallink:
-        linktype: dashboard
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
         path: ""
       icon: remove_red_eye
       query:
@@ -503,7 +503,7 @@ widgets:
         threshold: 0
       title: Watcher Count
       unit: ""
-      unitposition: After
+      unitPosition: After
     row: 2
     width: 3
-  statuswidgets: []
+  statusWidgets: []
