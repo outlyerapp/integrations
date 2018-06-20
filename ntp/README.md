@@ -12,21 +12,21 @@ reported back to Outlyer accurately for dashboards and alerts.
 
 == Metrics Collected ==
 
-| Metric Name              |Type   | Labels            |Unit |Description                                 |
-|--------------------------|-------|-------------------|-----|--------------------------------------------|
-|ntp_drift                 |Gauge  |                   |sec  |The time offset of the server in seconds.   |
+| Metric Name |Type | Labels |Unit  |Description                              |
+|-------------|-----|--------|------|-----------------------------------------|
+|ntp_drift    |Gauge|        |second|The time offset of the server in seconds.|
 
 == Installation ==
 
 Just deploy the NTP plugin using a check with selector 'instance.type:host' to ensure this plugin is running
 on all of your hosts. You can override the following settings:
 
-|Variable|Default     |Description                                                            |
-|--------|------------|-----------------------------------------------------------------------|
-|drift   |300         |The drift period in seconds that is acceptable before the plugin alerts|
-|ntp-host|pool.ntp.org|The NTP host to connect to                                             |
-|port    |123         |The NTP host port to connect to                                        |
-|timeout |5           |The timeout period in seconds to connect to the NTP host               |
+|Variable|Default     |Description                                                             |
+|--------|------------|------------------------------------------------------------------------|
+|drift   |300         |The drift period in seconds that is acceptable before the plugin alerts.|
+|ntp-host|pool.ntp.org|The NTP host to connect to.                                             |
+|port    |123         |The NTP host port to connect to.                                        |
+|timeout |5           |The timeout period in seconds to connect to the NTP host.               |
 
 == Changelog ==
 
