@@ -30,7 +30,7 @@ on all of your hosts. You can override the following settings:
 
 == Changelog ==
 
-|Version|Release Date|Description                                         |
-|-------|------------|----------------------------------------------------|
-|1.1    |30-May-2018 |Added timeout variable to plugin                    |
-|1.0    |20-Mar-2018 |Initial version                                     |
+|Version|Release Date|Description                      |
+|-------|------------|---------------------------------|
+|1.1    |30-May-2018 |Added timeout variable to plugin.|
+|1.0    |20-Mar-2018 |Initial version.                 |

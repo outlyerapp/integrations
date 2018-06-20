@@ -1,5 +1,5 @@
 Kubernetes Integration
-=========================
+======================
 
 == Description ==
 
@@ -63,6 +63,6 @@ This plugin is used to scrape metrics from `kube-state-metrics`. If you have dep
 
 == Changelog ==
 
-|Version|Release Date|Description                                             |
-|-------|------------|--------------------------------------------------------|
-|1.0    |24-May-2018 |Initial version of our Kubernetes monitoring integration|
+|Version|Release Date|Description                                              |
+|-------|------------|---------------------------------------------------------|
+|1.0    |24-May-2018 |Initial version of our Kubernetes monitoring integration.|

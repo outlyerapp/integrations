@@ -52,7 +52,7 @@ Once enabled you will get a default Elasticsearch dashboard to help you get star
 |elasticsearch_node_indices_indexing_index_time_in_millis            |Gauge|cluster_name|millisecond|The total time spent indexing documents to an index.                           |
 |elasticsearch_node_indices_indexing_index_failed                    |Gauge|cluster_name|           |The number of failed indexing operations.                                      |
 |elasticsearch_node_indices_refresh_total_time_in_millis             |Gauge|cluster_name|millisecond|The total time spent on index refreshes on the primary shards.                 |
-|elasticsearch_node_indices_flush_total_time_in_millis               |Gauge|cluster_name|millisecond|The total time spent flushing the index to disk.	                              |
+|elasticsearch_node_indices_flush_total_time_in_millis               |Gauge|cluster_name|millisecond|The total time spent flushing the index to disk.	                            |
 
 == Installation ==
 
@@ -75,6 +75,6 @@ The Elasticsearch plugin can be customized via environment variables.
 
 == Changelog ==
 
-|Version|Release Date|Description                                                |
-|-------|------------|-----------------------------------------------------------|
-|1.0    |05-Jun-2018 |Initial version of our Elasticsearch monitoring integration|
+|Version|Release Date|Description                                                 |
+|-------|------------|------------------------------------------------------------|
+|1.0    |05-Jun-2018 |Initial version of our Elasticsearch monitoring integration.|

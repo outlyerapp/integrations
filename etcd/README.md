@@ -1,5 +1,5 @@
 etcd Integration
-=========================
+================
 
 == Description ==
 
@@ -51,6 +51,6 @@ The etcd plugin can be customized via environment variables.
 
 == Changelog ==
 
-|Version|Release Date|Description                                       |
-|-------|------------|--------------------------------------------------|
-|1.0    |22-May-2018 |Initial version of our etcd monitoring integration|
+|Version|Release Date|Description                                        |
+|-------|------------|---------------------------------------------------|
+|1.0    |22-May-2018 |Initial version of our etcd monitoring integration.|

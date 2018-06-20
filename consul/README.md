@@ -46,6 +46,6 @@ The Consul plugin can be customized via environment variables.
 
 == Changelog ==
 
-|Version|Release Date|Description                                         |
-|-------|------------|----------------------------------------------------|
-|1.0    |31-May-2018 |Initial version of our Consul monitoring integration|
+|Version|Release Date|Description                                          |
+|-------|------------|-----------------------------------------------------|
+|1.0    |31-May-2018 |Initial version of our Consul monitoring integration.|

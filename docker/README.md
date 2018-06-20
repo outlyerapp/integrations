@@ -42,6 +42,6 @@ Run the Docker plugin against your instances to start collecting the number of c
 
 == Changelog ==
 
-|Version|Release Date|Description                                         |
-|-------|------------|----------------------------------------------------|
-|1.0    |06-Jun-2018 |Initial version of our Docker monitoring integration|
+|Version|Release Date|Description                                          |
+|-------|------------|-----------------------------------------------------|
+|1.0    |06-Jun-2018 |Initial version of our Docker monitoring integration.|
