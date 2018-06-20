@@ -11,8 +11,8 @@ Once enabled you will get a default Zookeeper dashboard and alert rules to help 
 
 == Metrics Collected ==
 
-| Metric Name                 |Type |Labels|Unit       |Description                                                             |
-|-----------------------------|-----|------|-----------|-------------------------------------------------------------------------------------------------------------------------|
+| Metric Name                 |Type   |Labels|Unit       |Description                                                                                                              |
+|-----------------------------|-------|------|-----------|-------------------------------------------------------------------------------------------------------------------------|
 |zk_avg_latency               |Gauge  |      |millisecond|The average time it takes for the server to respond to a client request.                                                 |
 |zk_max_latency               |Gauge  |      |millisecond|The maximum time it takes for the server to respond to a client request.                                                 |
 |zk_min_latency               |Gauge  |      |millisecond|The minimum time it takes for the server to respond to a client request.                                                 |
