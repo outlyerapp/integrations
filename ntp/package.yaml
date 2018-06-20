@@ -2,3 +2,8 @@
 title: NTP
 description: Checks server clock time offset (drift) to an NTP server
 logo: ntp.svg
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - os & system

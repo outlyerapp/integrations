@@ -1,4 +1,9 @@
 ---
 title: Zookeeper
 description: Zookeeper
-logo: logo.png
+logo: zookeeper.png
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - configuration

@@ -2,3 +2,8 @@
 title: Prometheus
 description: Open source monitoring solution popular in the Docker community
 logo: prometheus.svg
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - monitoring

@@ -2,3 +2,8 @@
 title: RabbitMQ
 description: The most widely deployed open source message broker
 logo: rabbitmq.svg
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - messaging

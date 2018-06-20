@@ -2,3 +2,8 @@
 title: Solr
 description: Solr is the popular, blazing-fast, open source enterprise search platform built on Apache Lucene
 logo: solr.svg
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - search

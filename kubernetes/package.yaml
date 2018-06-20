@@ -2,3 +2,8 @@
 title: Kubernetes
 description: Kubernetes Monitoring Checks, Dashboards and Alerts
 logo: kubernetes.svg
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - containers

@@ -2,3 +2,8 @@
 title: Elasticsearch
 description: Distributed document store and search engine
 logo: elasticsearch.svg
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - data-store

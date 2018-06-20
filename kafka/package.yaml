@@ -2,3 +2,9 @@
 title: Kafka
 description: Distributed streaming platform
 logo: kafka.svg
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - messaging
+  - java

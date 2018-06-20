@@ -2,3 +2,9 @@
 title: AWS Billing
 description: Collect metrics from your AWS Billing to monitor your AWS Costs
 logo: aws-billing.svg
+version: 1.0.0
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - aws
