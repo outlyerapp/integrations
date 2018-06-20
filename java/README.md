@@ -12,22 +12,22 @@ Once enabled you will get a default JVM dashboard to help you get started monito
 == Metrics Collected ==
 
 |Metric Name                                  |Type   |Labels|Unit       |Description                                         |
-|---------------------------------------------|-----  |------|-----------|----------------------------------------------------|
-|java_lang_classloading_loadedclasscount      |gauge  |      |           |The number of loaded classes.                       |
-|java_lang_garbagecollector_collectiontime    |gauge  |name  |millisecond|The total time spent on garbage collection.         |
-|java_lang_garbagecollector_collectioncount   |counter|name  |byte       |The number of garbage collections.                  |
-|java_lang_memory_heapmemoryusage_committed   |gauge  |      |byte       |The total Java heap memory committed to be used.    |
-|java_lang_memory_heapmemoryusage_init        |gauge  |      |byte       |The initial Java heap memory allocated.             |
-|java_lang_memory_heapmemoryusage_max         |gauge  |      |byte       |The maximum Java heap memory available.             |
-|java_lang_memory_heapmemoryusage_used        |gauge  |      |byte       |The total Java heap memory used.                    |
-|java_lang_memory_nonheapmemoryusage_committed|gauge  |      |byte       |The total Java non-heap memory committed to be used.|
-|java_lang_memory_nonheapmemoryusage_init     |gauge  |      |byte       |The initial Java non-heap memory allocated.         |
-|java_lang_memory_nonheapmemoryusage_max      |gauge  |      |byte       |The maximum Java non-heap memory available.         |
-|java_lang_memory_nonheapmemoryusage_used     |gauge  |      |byte       |The total Java non-heap memory used.                |
-|java_lang_runtime_uptime                     |counter|      |second     |The total time the JVM is running.                  |
-|java_lang_threading_threadcount              |gauge  |      |           |The number of live threads.                         |
-|java_lang_threading_peakthreadcount          |gauge  |      |           |The number of peak threads.                         |
-|java_lang_threading_daemonthreadcount        |gauge  |      |           |The number daemon threads.                          |
+|---------------------------------------------|-------|------|-----------|----------------------------------------------------|
+|java_lang_classloading_loadedclasscount      |Gauge  |      |           |The number of loaded classes.                       |
+|java_lang_garbagecollector_collectiontime    |Gauge  |name  |millisecond|The total time spent on garbage collection.         |
+|java_lang_garbagecollector_collectioncount   |Counter|name  |byte       |The number of garbage collections.                  |
+|java_lang_memory_heapmemoryusage_committed   |Gauge  |      |byte       |The total Java heap memory committed to be used.    |
+|java_lang_memory_heapmemoryusage_init        |Gauge  |      |byte       |The initial Java heap memory allocated.             |
+|java_lang_memory_heapmemoryusage_max         |Gauge  |      |byte       |The maximum Java heap memory available.             |
+|java_lang_memory_heapmemoryusage_used        |Gauge  |      |byte       |The total Java heap memory used.                    |
+|java_lang_memory_nonheapmemoryusage_committed|Gauge  |      |byte       |The total Java non-heap memory committed to be used.|
+|java_lang_memory_nonheapmemoryusage_init     |Gauge  |      |byte       |The initial Java non-heap memory allocated.         |
+|java_lang_memory_nonheapmemoryusage_max      |Gauge  |      |byte       |The maximum Java non-heap memory available.         |
+|java_lang_memory_nonheapmemoryusage_used     |Gauge  |      |byte       |The total Java non-heap memory used.                |
+|java_lang_runtime_uptime                     |Counter|      |second     |The total time the JVM is running.                  |
+|java_lang_threading_threadcount              |Gauge  |      |           |The number of live threads.                         |
+|java_lang_threading_peakthreadcount          |Gauge  |      |           |The number of peak threads.                         |
+|java_lang_threading_daemonthreadcount        |Gauge  |      |           |The number daemon threads.                          |
 
 == Installation ==
 
