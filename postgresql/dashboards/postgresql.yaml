@@ -638,7 +638,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: bytes
           unitPosition: After
       chartType: Line
       description: ""
@@ -671,7 +671,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: "ms"
+          unit: ms
           unitPosition: After
       chartType: StackedArea
       description: ""
