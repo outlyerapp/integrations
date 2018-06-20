@@ -6,6 +6,8 @@ AWS Billing Integration
 This integration pulls your estimated billing costs from AWS Cloudwatch so you can easily keep an eye on your
 AWS costs for each service and linked account from within Outlyer.
 
+![dashbard](resources/dashboard.png)
+
 == Metrics Collected ==
 
 | Metric Name                 |Type |Labels                              |Unit |Description                                                           |
