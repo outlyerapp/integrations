@@ -11,13 +11,13 @@ region in your AWS account.
 
 == Metrics Collected ==
 
-| Metric Name                |Type |Labels          |Unit |Description                                     |
-|----------------------------|-----|----------------|-----|------------------------------------------------|
-|aws.lambda_invocations_count|Gauge|function, region|Count|Number of times function was run in period      |
-|aws.lambda_duration_max     |Gauge|function, region|Count|Max run duration of function in period          |
-|aws.lambda_duration_avg     |Gauge|function, region|Count|Average run duration of function in period      |
-|aws.lambda_errors           |Gauge|function, region|Count|Number of times function errored in period      |
-|aws.lambda_throttles        |Gauge|function, region|Count|Number of times function was throttled in period|
+| Metric Name                |Type |Labels          |Unit |Description                                      |
+|----------------------------|-----|----------------|-----|-------------------------------------------------|
+|aws.lambda_invocations_count|Gauge|function, region|Count|Number of times function was run in period.      |
+|aws.lambda_duration_max     |Gauge|function, region|Count|Max run duration of function in period.          |
+|aws.lambda_duration_avg     |Gauge|function, region|Count|Average run duration of function in period.      |
+|aws.lambda_errors           |Gauge|function, region|Count|Number of times function errored in period.      |
+|aws.lambda_throttles        |Gauge|function, region|Count|Number of times function was throttled in period.|
 
 == Installation ==
 
@@ -45,9 +45,8 @@ In addition the following variables can be set to override the default values:
 * `time_range`: The time range in minutes to query your metrics over. By default this is set to the last 
 10 minutes but if you run your functions rarely this can be set to longer for testing purposes.
 
-
 == Changelog ==
 
-|Version|Release Date|Description                                         |
-|-------|------------|----------------------------------------------------|
-|1.0    |22-May-2018 |Initial version of our lambda monitoring integration|
+|Version|Release Date|Description                                          |
+|-------|------------|-----------------------------------------------------|
+|1.0    |22-May-2018 |Initial version of our lambda monitoring integration.|
