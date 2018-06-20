@@ -2,3 +2,8 @@
 title: MySQL
 description: World's most popular open source database
 logo: mysql.svg
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - data-store
