@@ -13,10 +13,10 @@ Once enabled you will get default dashboards and alert rules to help you get sta
 
 ### Kubernetes API Server: kubernetes-api-server.py
 
-| Metric Name                      |Type |Labels                               |Unit        |Description                        |
-|----------------------------------|-----|-------------------------------------|------------|-----------------------------------|
-|apiserver_request_count           |Count|verb,resource,client,contentType,code|            |Total number of API Server requests|
-|apiserver_request_latencies_bucket|Gauge|verb,resource,subresource            |microseconds|API Server request latency         |
+| Metric Name                      |Type   |Labels                                   |Unit       |Description                         |
+|----------------------------------|-------|-----------------------------------------|-----------|------------------------------------|
+|apiserver_request_count           |Counter|verb, resource, client, contentType, code|           |Total number of API Server requests.|
+|apiserver_request_latencies_bucket|Gauge  |verb, resource, subresource              |microsecond|API Server request latency.         |
 
 ### Kube State Metrics: kube-state-metrics.py
 
