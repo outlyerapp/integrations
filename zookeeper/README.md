@@ -46,6 +46,6 @@ The Zookeeper plugin can be customized via environment variables.
 
 == Changelog ==
 
-|Version|Release Date|Description                                            |
-|-------|------------|-------------------------------------------------------|
-|1.0    |25-May-2018 |Initial version of our Zookeeper monitoring integration|
+|Version|Release Date|Description                                             |
+|-------|------------|--------------------------------------------------------|
+|1.0    |25-May-2018 |Initial version of our Zookeeper monitoring integration.|

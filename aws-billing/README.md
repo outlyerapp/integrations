@@ -10,9 +10,9 @@ AWS costs for each service and linked account from within Outlyer.
 
 == Metrics Collected ==
 
-| Metric Name                 |Type |Labels                              |Unit |Description                                                           |
-|-----------------------------|-----|------------------------------------|-----|----------------------------------------------------------------------|
-|aws.billing_estimated_charges|Gauge|servicename, currency, linkedaccount|Count|Total estimated charges per service/account for current billing period|
+| Metric Name                 |Type |Labels                              |Unit |Description                                                            |
+|-----------------------------|-----|------------------------------------|-----|-----------------------------------------------------------------------|
+|aws.billing_estimated_charges|Gauge|servicename, currency, linkedaccount|Count|Total estimated charges per service/account for current billing period.|
 
 == Installation ==
 
@@ -46,6 +46,6 @@ In addition the following variables can be set to override the default values:
 
 == Changelog ==
 
-|Version|Release Date|Description                                         |
-|-------|------------|----------------------------------------------------|
-|1.0    |24-May-2018 |Initial version of our AWS billing integration      |
+|Version|Release Date|Description                                    |
+|-------|------------|-----------------------------------------------|
+|1.0    |24-May-2018 |Initial version of our AWS billing integration.|

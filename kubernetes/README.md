@@ -1,5 +1,5 @@
 Kubernetes Integration
-=========================
+======================
 
 == Description ==
 
@@ -13,10 +13,10 @@ Once enabled you will get default dashboards and alert rules to help you get sta
 
 ### Kubernetes API Server: kubernetes-api-server.py
 
-| Metric Name                      |Type |Labels                               |Unit        |Description                        |
-|----------------------------------|-----|-------------------------------------|------------|-----------------------------------|
-|apiserver_request_count           |Count|verb,resource,client,contentType,code|            |Total number of API Server requests|
-|apiserver_request_latencies_bucket|Gauge|verb,resource,subresource            |microseconds|API Server request latency         |
+| Metric Name                      |Type   |Labels                                   |Unit       |Description                         |
+|----------------------------------|-------|-----------------------------------------|-----------|------------------------------------|
+|apiserver_request_count           |Counter|verb, resource, client, contentType, code|           |Total number of API Server requests.|
+|apiserver_request_latencies_bucket|Gauge  |verb, resource, subresource              |microsecond|API Server request latency.         |
 
 ### Kube State Metrics: kube-state-metrics.py
 
@@ -63,6 +63,6 @@ This plugin is used to scrape metrics from `kube-state-metrics`. If you have dep
 
 == Changelog ==
 
-|Version|Release Date|Description                                             |
-|-------|------------|--------------------------------------------------------|
-|1.0    |24-May-2018 |Initial version of our Kubernetes monitoring integration|
+|Version|Release Date|Description                                              |
+|-------|------------|---------------------------------------------------------|
+|1.0    |24-May-2018 |Initial version of our Kubernetes monitoring integration.|
