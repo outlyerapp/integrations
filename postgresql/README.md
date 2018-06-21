@@ -18,8 +18,8 @@ Once enabled you will get a default PostgreSQL dashboard to help you get started
 |postgres.sessions.idle                 |Gauge|        |session    |Number of idle sessions.                                                                                              |
 |postgres.sessions.idle_in_transaction  |Gauge|        |session    |Number of idle sessions in transaction.                                                                               |
 |postgres.sessions.waiting              |Gauge|        |session    |Number of waiting sessions.                                                                                           |
-|postgres.sessions.longest_transaction  |Gauge|uom     |second     |Nongest transaction in seconds.                                                                                       |
-|postgres.sessions.longest_query        |Gauge|uom     |second     |Nongest query in seconds.                                                                                             |
+|postgres.sessions.longest_transaction  |Gauge|uom     |second     |Longest transaction in seconds.                                                                                       |
+|postgres.sessions.longest_query        |Gauge|uom     |second     |Longest query in seconds.                                                                                             |
 |postgres.locks.accessexclusive         |Gauge|        |lock       |Number of locks in `AccessExclusiveLock` mode.                                                                        |
 |postgres.locks.otherexclusive          |Gauge|        |lock       |Number of exclusive locks different than `AccessExclusiveLock`.                                                       |
 |postgres.locks.shared                  |Gauge|        |lock       |Number of locks in `Share` mode.                                                                                      |
