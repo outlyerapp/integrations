@@ -1,0 +1,9 @@
+---
+title: Redis
+description: Open source in-memory data store
+logo: redisdb.svg
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - data-store
