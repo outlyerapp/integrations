@@ -1,0 +1,516 @@
+description: Overview of MongoDB Clusters
+icon:
+  color: '#3cc663'
+  name: integration--mongodb
+labels:
+- key: mongodb
+  value: ""
+- key: databases
+  value: ""
+- key: nosql
+  value: ""
+name: mongodb
+scopes:
+- defaultValue: ""
+  labelKey: database
+theme: light
+title: MongoDB
+widgets:
+  chartWidgets:
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: StackedArea
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,mongodb.network.bytes_in,:eq,:max,:cf-max
+        scoped: false
+        visible: true
+      - query: name,mongodb.network.bytes_out,:eq,:max,:cf-max
+        scoped: false
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: 'Network: Traffic In vs Traffic Out'
+    row: 9
+    width: 12
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedArea
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,mongodb.opcounters.query,:eq,:max
+        scoped: false
+        visible: true
+      - query: name,mongodb.opcounters.getmore,:eq,:max
+        scoped: false
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Reads per second
+    row: 5
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedArea
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,mongodb.opcounters.insert,:eq,:max
+        scoped: false
+        visible: true
+      - query: name,mongodb.opcounters.update,:eq,:max
+        scoped: false
+        visible: true
+      - query: name,mongodb.opcounters.delete,:eq,:max
+        scoped: false
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Writes per second
+    row: 5
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,mongodb.network.num_requests,:eq,:max
+        scoped: false
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Requests per sec
+    row: 7
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: StackedBar
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,mongodb.fs_used_size,:eq,:max
+        scoped: true
+        visible: true
+      - query: name,mongodb.fs_total_size,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: 'Filesystem: used vs total'
+    row: 12
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,mongodb.connections.current,:eq,:max,:cf-max
+        scoped: false
+        visible: true
+      - query: name,mongodb.connections.available,:eq,:max,:cf-max
+        scoped: false
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: 'Connections: Current vs Available'
+    row: 7
+    width: 6
+  imageWidgets:
+  - col: 0
+    height: 4
+    options:
+      color: '#3cc663'
+      icon: integration--mongodb
+      sizing: stretched
+    row: 0
+    width: 3
+  markdownWidgets:
+  - col: 3
+    height: 1
+    options:
+      content: |
+        <h1>Overview</h1>
+      markdown: '# Overview'
+    row: 0
+    width: 9
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Per Database</h1>
+      markdown: '# Per Database'
+    row: 11
+    width: 12
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Performance</h1>
+      markdown: '# Performance'
+    row: 4
+    width: 12
+  numberWidgets:
+  - col: 6
+    height: 3
+    options:
+      color: '#e85ab0'
+      description: ""
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--mongodb
+      query:
+        query: name,service.status,:eq,service,mongodb,:eq,:and,:count,:cf-max
+        scoped: false
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: MongoDB Nodes
+      unit: ""
+      unitPosition: After
+    row: 1
+    width: 3
+  - col: 9
+    height: 3
+    options:
+      color: '#588fd8'
+      description: ""
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--mongodb
+      query:
+        query: name,mongodb.avg_obj_size,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Average object size
+      unit: bytes
+      unitPosition: After
+    row: 14
+    width: 3
+  - col: 6
+    height: 3
+    options:
+      color: '#3cc663'
+      description: ""
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--mongodb
+      query:
+        query: name,mongodb.objects,:eq,:max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Objects
+      unit: ""
+      unitPosition: After
+    row: 14
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      color: '#e85ab0'
+      description: ""
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--mongodb
+      query:
+        query: name,mongodb.data_size,:eq,:max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Data size
+      unit: bytes
+      unitPosition: After
+    row: 12
+    width: 2
+  - col: 2
+    height: 2
+    options:
+      color: '#e85ab0'
+      description: ""
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--mongodb
+      query:
+        query: name,mongodb.storage_size,:eq,:max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Storage size
+      unit: bytes
+      unitPosition: After
+    row: 12
+    width: 2
+  - col: 4
+    height: 2
+    options:
+      color: '#e85ab0'
+      description: ""
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--mongodb
+      query:
+        query: name,mongodb.index_size,:eq,:max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Index size
+      unit: bytes
+      unitPosition: After
+    row: 12
+    width: 2
+  - col: 0
+    height: 3
+    options:
+      color: '#3cc663'
+      description: ""
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--mongodb
+      query:
+        query: name,mongodb.indexes,:eq,:max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Indexes
+      unit: ""
+      unitPosition: After
+    row: 14
+    width: 3
+  - col: 3
+    height: 3
+    options:
+      color: '#3cc663'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--mongodb
+      query:
+        query: name,mongodb.collections,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Collections
+      unit: ""
+      unitPosition: After
+    row: 14
+    width: 3
+  - col: 9
+    height: 3
+    options:
+      color: '#3cc663'
+      description: ""
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--mongodb
+      query:
+        query: name,mongodb.uptime,:eq,:max,:cf-max
+        scoped: false
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Uptime
+      unit: seconds
+      unitPosition: After
+    row: 1
+    width: 3
+  statusWidgets:
+  - col: 3
+    height: 3
+    id: c22a8645-28e8-4b67-8488-53cb279bc19f
+    options:
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - scoped: false
+        service: mongodb
+      showIcon: true
+      title: Status
+    row: 1
+    width: 3
