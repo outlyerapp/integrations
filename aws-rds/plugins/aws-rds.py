@@ -185,8 +185,12 @@ class AWSRDS(Plugin):
                     value = metric['Values'][-1]
                     ts = int(metric['Timestamps'][-1].utcnow().timestamp() * 1000)
                     self.gauge(metric_name, metric_labels).set(value, ts=ts)
+                    if metric['Id'] == 'rds_cpuutalization_max':
+                    	self.gauge('sys.cpu.pct', metric_labels).set(value, ts=ts)
                 else:
                     self.gauge(metric_name, metric_labels).set(0)
+                    if metric['Id'] == 'rds_cpuutalization_max':
+                    	self.gauge('sys.cpu.pct', metric_labels).set(value, ts=ts)
 
             return Status.OK
         except Exception as err:
