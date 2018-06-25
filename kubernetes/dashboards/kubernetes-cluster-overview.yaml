@@ -28,7 +28,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,apiserver_request_count,:eq,code,500,:eq,:and,:max
+      - query: name,apiserver_request_count,:eq,:max,(,code,),:by
         scoped: false
         visible: true
       seriesStyle:
@@ -40,7 +40,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: API Server Request Errors (500s)
+      title: API Server Requests per Second
     row: 5
     width: 5
   - col: 7
