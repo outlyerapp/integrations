@@ -9,7 +9,7 @@ theme: light
 title: Kubernetes Cluster Overview
 widgets:
   chartWidgets:
-  - col: 6
+  - col: 9
     height: 2
     options:
       axes:
@@ -17,7 +17,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -29,7 +28,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,apiserver_request_count,:eq,code,500,:eq,:and,:max
+      - query: name,apiserver_request_count,:eq,:max,(,code,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -40,213 +40,9 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: API Server Request Errors (500s)
-    row: 1
-    width: 4
-  - col: 3
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          max: null
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,kube_node_status_condition,:eq,condition,outofdisk,:eq,:and,status,true,:eq,:and,:max,(,node,),:by
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Nodes Out of Disk
-    row: 6
-    width: 4
-  - col: 10
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          max: null
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,kube_node_status_condition,:eq,condition,ready,:eq,:and,status,false,:eq,:and,:max,(,node,),:by
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Nodes Not Ready
-    row: 4
-    width: 4
-  - col: 10
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          max: null
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,kube_node_status_condition,:eq,status,true,:eq,:and,condition,diskpressure,:eq,:and,:max,(,node,),:by
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Nodes Disk Pressure
-    row: 6
-    width: 4
-  - col: 10
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          max: null
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,kube_node_status_condition,:eq,status,true,:eq,:and,condition,memorypressure,:eq,:and,:max,(,node,),:by
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Nodes Memory Pressure
-    row: 8
-    width: 4
-  - col: 3
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          max: null
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,kube_node_status_condition,:eq,status,true,:eq,:and,condition,networkunavailable,:eq,:and,:max,(,node,),:by
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Nodes Network Unavailable
-    row: 8
-    width: 4
-  - col: 3
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          max: null
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,kube_node_status_condition,:eq,condition,ready,:eq,:and,status,true,:eq,:and,:max,(,node,),:by
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Nodes Ready
-    row: 4
-    width: 4
+      title: API Server Requests per Second
+    row: 5
+    width: 5
   - col: 7
     height: 2
     options:
@@ -255,7 +51,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -268,6 +63,7 @@ widgets:
         path: ""
       queries:
       - query: name,kube_pod_container_status_restarts_total,:eq,:max,(,pod,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -279,7 +75,7 @@ widgets:
         status: Error
         threshold: 0
       title: Container Restarts per Pod
-    row: 13
+    row: 10
     width: 7
   - col: 0
     height: 2
@@ -289,7 +85,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -302,6 +97,7 @@ widgets:
         path: ""
       queries:
       - query: name,kube_pod_info,:eq,:sum,(,node,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -313,7 +109,7 @@ widgets:
         status: Error
         threshold: 0
       title: Current Number of Pods per Node
-    row: 13
+    row: 10
     width: 7
   - col: 10
     height: 2
@@ -323,7 +119,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -336,6 +131,7 @@ widgets:
         path: ""
       queries:
       - query: name,kube_pod_container_status_waiting_reason,:eq,reason,errimagepull,:eq,:and,:max,(,pod,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -347,7 +143,7 @@ widgets:
         status: Error
         threshold: 0
       title: Pod Error Image Pull
-    row: 11
+    row: 8
     width: 4
   - col: 6
     height: 2
@@ -357,7 +153,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -370,6 +165,7 @@ widgets:
         path: ""
       queries:
       - query: name,kube_pod_status_phase,:eq,phase,failed,:eq,:and,:max,(,pod,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -381,9 +177,9 @@ widgets:
         status: Error
         threshold: 0
       title: Pods Failed
-    row: 11
+    row: 8
     width: 4
-  - col: 10
+  - col: 3
     height: 2
     options:
       axes:
@@ -391,11 +187,10 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: μs
           unitPosition: After
       chartType: Line
       description: ""
@@ -403,7 +198,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,apiserver_request_latencies_bucket,:eq,le,inf,:eq,:and,:max,(,verb,),:by
+      - query: name,apiserver_request_latencies_summary,:eq,quantile,0.99,:eq,:and,:max,:cf-max,(,verb,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -415,185 +211,77 @@ widgets:
         status: Error
         threshold: 0
       title: API Server Request Latency
+    row: 5
+    width: 6
+  - col: 9
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedBar
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kube_node_status_condition,:eq,status,true,:eq,:and,:sum,:cf-max,(,condition,),:by
+        scoped: false
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Nodes by Condition
     row: 1
-    width: 4
-  imageWidgets: []
+    width: 5
   markdownWidgets:
-  - col: 0
+  - col: 3
     height: 1
     options:
       content: |
         <h1>Cluster Overview</h1>
       markdown: '# Cluster Overview'
     row: 0
-    width: 14
-  - col: 0
-    height: 1
-    options:
-      content: |
-        <h1>Nodes</h1>
-      markdown: '# Nodes'
-    row: 3
-    width: 14
+    width: 11
   - col: 0
     height: 1
     options:
       content: |
         <h1>Pods</h1>
       markdown: '# Pods'
-    row: 10
+    row: 7
     width: 14
+  - col: 0
+    height: 4
+    options:
+      content: |
+        <p><img src="https://avatars1.githubusercontent.com/u/13629408?s=250&amp;v=4" alt="Kubernetes Logo"/></p>
+      markdown: '![Kubernetes Logo](https://avatars1.githubusercontent.com/u/13629408?s=250&v=4)'
+    row: 0
+    width: 3
+  - col: 3
+    height: 1
+    options:
+      content: |
+        <h1>API Server</h1>
+      markdown: '# API Server'
+    row: 4
+    width: 11
   numberWidgets:
-  - col: 7
-    height: 2
-    options:
-      color: '#588fd8'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: SparkLine
-      externalLink:
-        linkType: dashboard
-        path: kubernetes-nodes
-      icon: storage
-      query:
-        query: name,kube_node_status_condition,:eq,condition,ready,:eq,:and,status,false,:eq,:and,:sum
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Nodes Not Ready
-      unit: ""
-      unitPosition: After
-    row: 4
-    width: 3
-  - col: 7
-    height: 2
-    options:
-      color: '#588fd8'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: SparkLine
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: disc_full
-      query:
-        query: name,kube_node_status_condition,:eq,condition,diskpressure,:eq,:and,status,true,:eq,:and,:sum
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Nodes Disk Pressure
-      unit: ""
-      unitPosition: After
-    row: 6
-    width: 3
-  - col: 7
-    height: 2
-    options:
-      color: '#588fd8'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: SparkLine
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: memory
-      query:
-        query: name,kube_node_status_condition,:eq,status,true,:eq,:and,condition,memorypressure,:eq,:and,:sum
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Nodes Memory Pressure
-      unit: ""
-      unitPosition: After
-    row: 8
-    width: 3
-  - col: 0
-    height: 2
-    options:
-      color: '#588fd8'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: SparkLine
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: settings_ethernet
-      query:
-        query: name,kube_node_status_condition,:eq,status,true,:eq,:and,condition,networkunavailable,:eq,:and,:sum
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Nodes Network Unavailable
-      unit: ""
-      unitPosition: After
-    row: 8
-    width: 3
-  - col: 0
-    height: 2
-    options:
-      color: '#588fd8'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: SparkLine
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: disc_full
-      query:
-        query: name,kube_node_status_condition,:eq,status,true,:eq,:and,condition,outofdisk,:eq,:and,:sum
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Nodes Out of Disk
-      unit: ""
-      unitPosition: After
-    row: 6
-    width: 3
-  - col: 0
-    height: 2
-    options:
-      color: '#588fd8'
-      description: ""
-      displayMax: null
-      displayMin: 0
-      displayTrend: SparkLine
-      externalLink:
-        linkType: dashboard
-        path: kubernetes-nodes
-      icon: storage
-      query:
-        query: name,kube_node_status_condition,:eq,condition,ready,:eq,:and,status,true,:eq,:and,:sum
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Nodes Ready
-      unit: ""
-      unitPosition: After
-    row: 4
-    width: 3
   - col: 0
     height: 2
     options:
@@ -608,6 +296,7 @@ widgets:
       icon: content_copy
       query:
         query: name,kube_pod_info,:eq,:count
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -617,7 +306,7 @@ widgets:
       title: Current Number of Pods
       unit: ""
       unitPosition: After
-    row: 11
+    row: 8
     width: 3
   - col: 3
     height: 2
@@ -633,6 +322,7 @@ widgets:
       icon: content_copy
       query:
         query: name,kube_node_status_capacity_pods,:eq,:sum
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -642,11 +332,37 @@ widgets:
       title: Cluster Capacity of Pods
       unit: ""
       unitPosition: After
-    row: 11
+    row: 8
+    width: 3
+  - col: 0
+    height: 3
+    options:
+      color: '#e85ab0'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,kube_node_status_condition,:eq,condition,ready,:eq,:and,status,true,:eq,:and,:count
+        scoped: false
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Nodes
+      unit: ""
+      unitPosition: After
+    row: 4
     width: 3
   statusWidgets:
-  - col: 0
-    height: 2
+  - col: 3
+    height: 3
     id: 1808627f-53a0-40ce-a0e2-020040150ff1
     options:
       description: ""
@@ -654,15 +370,14 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - labelSelectors: []
-        scoped: false
+      - scoped: false
         service: kubernetes-api-server-health
       showIcon: true
       title: API Server Status
     row: 1
     width: 3
-  - col: 3
-    height: 2
+  - col: 6
+    height: 3
     id: 4cb91c58-bb5e-4acf-9f78-3810d09c3a70
     options:
       description: ""
@@ -670,8 +385,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - labelSelectors: []
-        scoped: false
+      - scoped: false
         service: kubernetes-etcd-health
       showIcon: true
       title: ETCD Status

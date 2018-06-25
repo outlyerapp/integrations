@@ -7,18 +7,18 @@ client to enable Authentication with the server
 
 import sys
 import os
+import math
 from outlyer_plugin import Plugin, Status
 from prometheus_client.parser import text_string_to_metric_families
 from kubernetes import client, config
 
 GAUGE_METRICS = [
-    'apiserver_request_latencies_bucket',
+    'apiserver_request_latencies_summary',
 ]
 
 COUNTER_METRICS = [
     'apiserver_request_count',
 ]
-
 
 class KubeApiServerPlugin(Plugin):
 
@@ -31,6 +31,13 @@ class KubeApiServerPlugin(Plugin):
 
         # Get endpoint, defaults to healthz
         endpoint = '/' + os.environ['endpoint'] if 'endpoint' in os.environ else '/healthz'
+
+        # Get cluster name to apply as label to all metrics
+        cluster_name_key = self.get('cluster_name_key', 'k8s.node.cluster')
+        cluster_name = self.get(cluster_name_key, None)
+        metric_labels = {'k8s.cluster': 'unknown'}
+        if cluster_name:
+            metric_labels['k8s.cluster'] = cluster_name
 
         if 'healthz' in endpoint:
             try:
@@ -48,7 +55,7 @@ class KubeApiServerPlugin(Plugin):
                 return Status.CRITICAL
         else:
             try:
-                # Scrape a Promtheus endpoint
+                # Scrape a Prometheus endpoint
                 res = v1.api_client.call_api(endpoint, 'GET',
                                              auth_settings=auth_settings,
                                              _request_timeout=20,
@@ -59,16 +66,20 @@ class KubeApiServerPlugin(Plugin):
                 for family in text_string_to_metric_families(res):
                     for sample in family.samples:
                         labels = {k: v for k, v in sample[1].items() if v != ''}
+                        labels = {**metric_labels, **labels}
                         if sample[0] in COUNTER_METRICS:
-                            self.counter(sample[0], labels).set(sample[2])
+                            value = sample[2]
+                            if not math.isnan(value):
+                                self.counter(sample[0], labels).set(value)
                         elif sample[0] in GAUGE_METRICS:
-                            self.gauge(sample[0], labels).set(sample[2])
+                            value = sample[2]
+                            if not math.isnan(value):
+                                self.gauge(sample[0], labels).set(value)
 
                 return Status.OK
             except Exception as ex:
                 self.logger.error('API Server is unavailable: %s', str(ex))
                 return Status.CRITICAL
-
 
 if __name__ == '__main__':
     sys.exit(KubeApiServerPlugin().run())

@@ -13,10 +13,10 @@ Once enabled you will get default dashboards and alert rules to help you get sta
 
 ### Kubernetes API Server: kubernetes-api-server.py
 
-| Metric Name                      |Type   |Labels                                   |Unit       |Description                         |
-|----------------------------------|-------|-----------------------------------------|-----------|------------------------------------|
-|apiserver_request_count           |Counter|verb, resource, client, contentType, code|           |Total number of API Server requests.|
-|apiserver_request_latencies_bucket|Gauge  |verb, resource, subresource              |microsecond|API Server request latency.         |
+| Metric Name                       |Type   |Labels                                                   |Unit       |Description                                    |
+|-----------------------------------|-------|---------------------------------------------------------|-----------|-----------------------------------------------|
+|apiserver_request_count            |Counter|k8s.cluster, verb, resource, client, contentType, code   |           |Total number of API Server requests per second.|
+|apiserver_request_latencies_summary|Gauge  |k8s.cluster, resource, scope, subresource, verb, quantile|microsecond|API Server request latency.                    |
 
 ### Kube State Metrics: kube-state-metrics.py
 
@@ -34,7 +34,7 @@ Once enabled you will get default dashboards and alert rules to help you get sta
 |kube_node_spec_unschedulable               |Gauge  |node                                                                   |    |Whether a node can schedule new pods.                                                                                  |
 |kube_node_status_capacity_pods             |Gauge  |node                                                                   |    |The total pod resources of the node.                                                                                   |
 |kube_node_status_condition                 |Gauge  |node, condition, status                                                |    |The condition of a cluster node.                                                                                       |
-|kube_pod_container_status_restarts_total   |Counter|container, namespace, pod                                              |    |The number of container restarts per container.                                                                        |
+|kube_pod_container_status_restarts_total   |Counter|container, namespace, pod                                              |    |The number of container restarts per second.                                                                           |
 |kube_pod_container_status_waiting_reason   |Gauge  |container, namespace, pod, reason                                      |    |Describes the reason the container is currently in waiting state.                                                      |
 |kube_pod_info                              |Gauge  |pod, namespace, host_ip, pod_ip, node, created_by_kind, created_by_name|    |Information about pod.                                                                                                 |
 |kube_pod_status_phase                      |Gauge  |pod, namespace, phase                                                  |    |The pods current phase.                                                                                                |
@@ -53,16 +53,17 @@ This plugin can be used not only to check API Server and etcd health, but also t
 |endpoint|healthz|Specifies the API Server endpoint.|
 
 ### Kubernetes API Server: kube-state-metrics.py
-This plugin is used to scrape metrics from `kube-state-metrics`. If you have deployed kube-state-metrics on your Kubernetes cluster as shown in our [documentation](https://docs2.outlyer.com/agent/kubernetes/), just run it against any Kubernetes Node. Otherwise, provide the environment variable `KSM_HOST` with the FQDN (Fully Qualified Domain Name) of your kube-state-metrics Kubernetes Service.
+This plugin is used to scrape metrics from `kube-state-metrics`. If you have deployed kube-state-metrics on your Kubernetes cluster as shown in our [documentation](https://docs2.outlyer.com/agent/kubernetes/), just run it against any Kubernetes Node. Otherwise, provide the environment variable `host` with the FQDN (Fully Qualified Domain Name) of your kube-state-metrics Kubernetes Service.
 
-|Variable |Default                       |Description                                       |
-|---------|------------------------------|--------------------------------------------------|
-|KSM_HOST |kube-state-metrics.kube-system|Specifies the FQDN for kube-state-metrics Service.|
-|KSM_PORT |8080                          |kube-state-metrics metrics port.                  |
-|KSM_PATH |metrics                       |kube-state-metrics metrics endpoint.              |
+|Variable |Default                       |Description                                           |
+|---------|------------------------------|------------------------------------------------------|
+|host     |kube-state-metrics.kube-system|Specifies the FQDN for kube-state-metrics K8s Service.|
+|port     |8080                          |kube-state-metrics metrics port.                      |
+|endpoint |metrics                       |kube-state-metrics metrics endpoint.                  |
 
 == Changelog ==
 
-|Version|Release Date|Description                                              |
-|-------|------------|---------------------------------------------------------|
-|1.0    |24-May-2018 |Initial version of our Kubernetes monitoring integration.|
+|Version|Release Date|Description                                                       |
+|-------|------------|------------------------------------------------------------------|
+|1.0    |24-May-2018 |Initial version of our Kubernetes monitoring integration.         |
+|1.1    |25-Jun-2018 |Adds k8s.cluster label and collects new API Server latency metric.|

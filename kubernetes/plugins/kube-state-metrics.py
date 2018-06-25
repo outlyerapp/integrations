@@ -32,7 +32,7 @@ COUNTER_METRICS = [
 class KubeStateMetricsPlugin(Plugin):
 
     def collect(self, _):
-        HOST = self.get('ip', 'kube-state-metrics.kube-system')
+        HOST = self.get('host', 'kube-state-metrics.kube-system')
         PORT = self.get('port', '8080')
         PATH = self.get('endpoint', 'metrics')
 
