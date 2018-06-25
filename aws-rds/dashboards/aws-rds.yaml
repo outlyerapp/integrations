@@ -1,0 +1,595 @@
+description: Amazon RDS
+icon:
+  color: '#ffa538'
+  name: integration--aws-rds
+labels:
+- key: aws
+  value: ""
+- key: rds
+  value: ""
+name: amazon-rds
+scopes: []
+theme: light
+title: Amazon RDS
+widgets:
+  chartWidgets:
+  - col: 2
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: Connections
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: Number of clients currently connected to RDS
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_databaseconnections_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: RDS Database Connections
+    row: 0
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          max: 100
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: '%'
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_cpuutalization_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: CPU Utalization
+    row: 3
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_freestoragespace_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Free Storage Space
+    row: 6
+    width: 5
+  - col: 5
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_freeablememory_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Freeable Memory
+    row: 3
+    width: 5
+  - col: 5
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_diskqueuedepth_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Disk Queue Depth
+    row: 6
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: bs
+          unitPosition: After
+      chartType: Area
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_networkreceivethroughput_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#ffa538'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Network Receive Throughput
+    row: 12
+    width: 5
+  - col: 5
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: bs
+          unitPosition: After
+      chartType: Area
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_networktransmitthroughput_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#ffa538'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Network Transmit Throughput
+    row: 12
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_binlogdiskusage_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#ffa538'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Bin Log Usage
+    row: 8
+    width: 5
+  - col: 5
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_binlogdiskusage_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#ffa538'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Bin Log Usage
+    row: 8
+    width: 5
+  - col: 10
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: /s
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_readiops_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Read IOPS
+    row: 3
+    width: 5
+  - col: 10
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_readlatency_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Read Latency (Seconds)
+    row: 1
+    width: 5
+  - col: 10
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: bs
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_readthroughput_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Read Throughput
+    row: 5
+    width: 5
+  - col: 10
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_writelatency_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Write Latency (Seconds)
+    row: 8
+    width: 5
+  - col: 10
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: /s
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_writeops_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Write IOPs
+    row: 10
+    width: 5
+  - col: 10
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: bs
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.rds_writethroughput_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Write Throughput
+    row: 12
+    width: 5
+  imageWidgets:
+  - col: 0
+    height: 3
+    options:
+      color: '#ffa538'
+      icon: integration--amazon-rds
+      sizing: stretched
+    row: 0
+    width: 2
+  markdownWidgets:
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Disk</h1>
+      markdown: '# Disk'
+    row: 5
+    width: 10
+  - col: 0
+    height: 2
+    options:
+      content: |
+        <h1>Network</h1>
+      markdown: '# Network'
+    row: 10
+    width: 10
+  - col: 10
+    height: 1
+    options:
+      content: |
+        <h1>Read IO</h1>
+      markdown: '# Read IO'
+    row: 0
+    width: 5
+  - col: 10
+    height: 1
+    options:
+      content: |
+        <h1>Write IO</h1>
+      markdown: '# Write IO'
+    row: 7
+    width: 5
+  numberWidgets:
+  - col: 7
+    height: 3
+    options:
+      color: '#ffa538'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--amazon-rds
+      query:
+        query: name,aws.rds_databaseconnections_max,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Total Connections
+      unit: ""
+      unitPosition: After
+    row: 0
+    width: 3
