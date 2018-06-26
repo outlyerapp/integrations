@@ -1,0 +1,559 @@
+description: Amazon Elastic Load Balancers
+icon:
+  color: '#ffa538'
+  name: share
+labels:
+- key: aws
+  value: ""
+- key: elb
+  value: ""
+name: aws-elb
+scopes: []
+theme: light
+title: Amazon ELB
+widgets:
+  chartWidgets:
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_unhealthyhostcount_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Unhealthy Host Count
+    row: 0
+    width: 3
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_healthyhostcount_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Healthy Host Count
+    row: 0
+    width: 3
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_requestcount_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Request Count
+    row: 0
+    width: 3
+  - col: 9
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_latency_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Max Latency
+    row: 0
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_http5xx_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: HTTP 5XX Count
+    row: 2
+    width: 3
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_http4xx_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: HTTP 4XX Count
+    row: 2
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_http2xx_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: HTTP 2XX Count
+    row: 4
+    width: 3
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_backendconnectionerrors_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Backend Connection Errors
+    row: 4
+    width: 3
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_spillovercount_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Spillover Count
+    row: 4
+    width: 3
+  - col: 9
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_surgequeuelength_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Surge Queue Length
+    row: 4
+    width: 3
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_estimatedalbconsumedlcus_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Estimated ALB Consumed LCUs
+    row: 6
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_estimatedalbactiveconnectioncount_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Estimated ALB Active Connection Count
+    row: 6
+    width: 3
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_estimatedalbnewconnectioncount_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Estimated ALB New Connection Count
+    row: 6
+    width: 3
+  - col: 9
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_estimatedprocessedbytes_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Estimated Processed Bytes
+    row: 6
+    width: 3
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_elb5xx_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: ELB 5XX Count
+    row: 2
+    width: 3
+  - col: 9
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.elb_elb4xx_max,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: ELB 4XX Count
+    row: 2
+    width: 3
