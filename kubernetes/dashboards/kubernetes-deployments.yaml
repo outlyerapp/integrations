@@ -5,9 +5,9 @@ icon:
 labels: []
 name: kubernetes-deployments
 scopes:
-- defaultvalue: ""
+- defaultValue: ""
   labelKey: namespace
-- defaultvalue: ""
+- defaultValue: ""
   labelKey: deployment
 theme: light
 title: Kubernetes Deployments
@@ -21,9 +21,9 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
+          max: 0
           min: 0
-          showGridLines: true
+          showGridLines: false
           title: ""
           unit: ""
           unitPosition: After
@@ -33,11 +33,14 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,kube_deployment_status_replicas_available,:eq,:and,:min
+      - query: name,kube_deployment_status_replicas_available,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,kube_deployment_spec_replicas,:eq,:and,:min
+      - query: name,kube_deployment_spec_replicas,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,kube_deployment_status_replicas_unavailable,:eq,:and,:min
+      - query: name,kube_deployment_status_replicas_unavailable,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -51,7 +54,6 @@ widgets:
       title: Replicas
     row: 3
     width: 10
-  imageWidgets: []
   markdownWidgets:
   - col: 0
     height: 1
@@ -75,7 +77,8 @@ widgets:
         path: ""
       icon: integration--docker
       query:
-        query: ${@SCOPE},name,kube_deployment_spec_replicas,:eq,:and,:max
+        query: name,kube_deployment_spec_replicas,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -98,9 +101,10 @@ widgets:
       externalLink:
         linkType: dashboard
         path: ""
-      icon: material--image
+      icon: integration--docker
       query:
-        query: ${@SCOPE},name,kube_deployment_status_replicas_available,:eq,:and,:max
+        query: name,kube_deployment_status_replicas_available,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -123,9 +127,10 @@ widgets:
       externalLink:
         linkType: dashboard
         path: ""
-      icon: material--image
+      icon: integration--docker
       query:
-        query: ${@SCOPE},name,kube_deployment_status_replicas_unavailable,:eq,:and,:max
+        query: name,kube_deployment_status_replicas_unavailable,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -148,9 +153,10 @@ widgets:
       externalLink:
         linkType: dashboard
         path: ""
-      icon: material--image
+      icon: integration--docker
       query:
-        query: ${@SCOPE},name,kube_deployment_status_replicas,:eq,:and,:max
+        query: name,kube_deployment_status_replicas,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -173,9 +179,10 @@ widgets:
       externalLink:
         linkType: dashboard
         path: ""
-      icon: material--image
+      icon: integration--docker
       query:
-        query: ${@SCOPE},name,kube_deployment_status_replicas_updated,:eq,:and,:max
+        query: name,kube_deployment_status_replicas_updated,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -187,4 +194,3 @@ widgets:
       unitPosition: After
     row: 1
     width: 2
-  statusWidgets: []
