@@ -16,13 +16,16 @@ class HttpRequestPlugin(Plugin):
             return Status.UNKNOWN
 
         method = self.get('method', 'GET')
-        params = self.get('params', None)
-        headers = self.get('headers', None)
+        params_str = self.get('params', None)
+        headers_str = self.get('headers', None)
         data = self.get('data', None)
         pattern = self.get('pattern', None)
         error_on_redirect = self.get('error_on_redirect', False)
-        warning_time = self.get('warning_time', 2.5)
-        critical_time = self.get('critical_time', 5.0)
+        warning_time = float(self.get('warning_time', 2.5))
+        critical_time = float(self.get('critical_time', 5.0))
+
+        params = self._from_key_value_string_to_dict(params_str) if params_str else None
+        headers = self._from_key_value_string_to_dict(headers_str) if headers_str else None
 
         status = Status.OK  # type: Status
 
@@ -31,7 +34,8 @@ class HttpRequestPlugin(Plugin):
         content = ''
 
         self.gauge('http.status_code', {'site': name}).set(float(response.status_code))
-        error_min = 300 if error_on_redirect else 400
+        error_min = 400 if not error_on_redirect else 300
+
         if response.status_code >= error_min:
             status = Status.CRITICAL
         else:
@@ -57,6 +61,9 @@ class HttpRequestPlugin(Plugin):
         self.logger.info('Result = %s', str(status))
 
         return status
+
+    def _from_key_value_string_to_dict(self, xuxa):
+        return dict(token.split(':') for token in xuxa.strip().split(","))
 
 
 if __name__ == '__main__':
