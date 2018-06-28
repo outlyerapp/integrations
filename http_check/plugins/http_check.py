@@ -15,7 +15,7 @@ class HttpRequestPlugin(Plugin):
             self.logger.error('HTTP plugin is not configured')
             return Status.UNKNOWN
 
-        type = self.get('type', 'GET')
+        method = self.get('method', 'GET')
         params = self.get('params', None)
         headers = self.get('headers', None)
         data = self.get('data', None)
@@ -26,8 +26,8 @@ class HttpRequestPlugin(Plugin):
 
         status = Status.OK  # type: Status
 
-        self.logger.info('Sending %s request to %s', type, url)
-        response = requests.request(type, url, params=params, headers=headers, data=data)
+        self.logger.info('Sending %s request to %s', method, url)
+        response = requests.request(method, url, params=params, headers=headers, data=data)
         content = ''
 
         self.gauge('http.status_code', {'site': name}).set(float(response.status_code))
