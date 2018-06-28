@@ -21,8 +21,8 @@ class HttpRequestPlugin(Plugin):
         data = self.get('data', None)
         pattern = self.get('pattern', None)
         error_on_redirect = self.get('error_on_redirect', False)
-        warning_time = self.get('warning_time', 5.0)
-        critical_time = self.get('critical_time', 10.0)
+        warning_time = self.get('warning_time', 2.5)
+        critical_time = self.get('critical_time', 5.0)
 
         status = Status.OK  # type: Status
 
