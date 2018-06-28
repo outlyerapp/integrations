@@ -1,0 +1,194 @@
+description: ""
+icon:
+  color: '#000000'
+  name: http
+labels: []
+name: http
+scopes:
+- defaultValue: ""
+  labelKey: site
+theme: light
+title: HTTP
+widgets:
+  chartWidgets:
+  - col: 3
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,http.status_code,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: HTTP Response code
+    row: 0
+    width: 5
+  - col: 3
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,http.response_size,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: HTTP response size
+    row: 6
+    width: 5
+  - col: 3
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ms
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,http.response_time,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: HTTP Response time
+    row: 3
+    width: 5
+  numberWidgets:
+  - col: 0
+    height: 3
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: http
+      query:
+        query: name,http.status_code,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Last HTTP response code
+      unit: ""
+      unitPosition: After
+    row: 0
+    width: 3
+  - col: 0
+    height: 3
+    options:
+      color: '#e6b6ff'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: http
+      query:
+        query: name,http.response_size,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Last HTTP response size
+      unit: bytes
+      unitPosition: After
+    row: 6
+    width: 3
+  - col: 0
+    height: 3
+    options:
+      color: '#588fd8'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: http
+      query:
+        query: name,http.response_time,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Last HTTP response time
+      unit: ms
+      unitPosition: After
+    row: 3
+    width: 3
