@@ -9,11 +9,11 @@ Once enabled you will get a default HTTP dashboard to help you get started monit
 
 == Metrics Collected ==
 
-|Metric Name       |Type   |Labels    |Unit       |Description                    |
-|------------------|-------|----------|-----------|-------------------------------|
-|http.status_code  |Gauge  |site      |code       |The HTTP response code.        |
-|http.response_size|Gauge  |site, uom |byte       |The HTTP response size.        |
-|http.response_time|Gauge  |site, uom |millisecond|The HTTP response elapsed time.|
+|Metric Name       |Type   |Labels|Unit       |Description                    |
+|------------------|-------|------|-----------|-------------------------------|
+|http.status_code  |Gauge  |site  |code       |The HTTP response code.        |
+|http.response_size|Gauge  |site  |byte       |The HTTP response size.        |
+|http.response_time|Gauge  |site  |millisecond|The HTTP response elapsed time.|
 
 == Installation ==
 
@@ -35,6 +35,7 @@ The HTTP plugin can be customized via environment variables.
 |error_on_redirect|false       |If true, redirect responses (3xx) will result in CRITICAL status.                                                         |
 |warning_time     |            |Response time threshold to trigger WARNING status.                                                                        |
 |critical_time    |            |Response time threshold to trigger CRITICAL status.                                                                       |
+|timeout          |10          |Maximum timeout in seconds before the request times out and fails                                                         |
 
 == Changelog ==
 
