@@ -33,16 +33,22 @@ widgets:
         path: ""
       queries:
       - query: name,elasticsearch_cluster_number_of_shards,:eq,:max
+        scoped: false
         visible: true
       - query: name,elasticsearch_cluster_active_primary_shards,:eq,:max
+        scoped: false
         visible: true
       - query: name,elasticsearch_cluster_relocating_shards,:eq,:max
+        scoped: false
         visible: true
       - query: name,elasticsearch_cluster_initializing_shards,:eq,:max
+        scoped: false
         visible: true
       - query: name,elasticsearch_cluster_unassigned_shards,:eq,:max
+        scoped: false
         visible: true
       - query: name,elasticsearch_cluster_delayed_unassigned_shards,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -76,12 +82,16 @@ widgets:
         path: ""
       queries:
       - query: name,elasticsearch_cluster_number_of_data_nodes,:eq,:max
+        scoped: false
         visible: true
       - query: name,elasticsearch_cluster_number_of_coordinating_only_nodes,:eq,:max
+        scoped: false
         visible: true
       - query: name,elasticsearch_cluster_number_of_master_elegible_nodes,:eq,:max
+        scoped: false
         visible: true
       - query: name,elasticsearch_cluster_number_of_ingest_nodes,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -114,9 +124,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,elasticsearch_node_process_open_file_descriptors,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_process_open_file_descriptors,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,elasticsearch_node_process_max_file_descriptors,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_process_max_file_descriptors,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -150,9 +162,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_heap_used_in_bytes,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_jvm_mem_heap_used_in_bytes,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_heap_committed_in_bytes,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_jvm_mem_heap_committed_in_bytes,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -186,9 +200,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_non_heap_used_in_bytes,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_jvm_mem_non_heap_used_in_bytes,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_non_heap_committed_in_bytes,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_jvm_mem_non_heap_committed_in_bytes,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -222,9 +238,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_pools_young_used_in_bytes,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_jvm_mem_pools_young_used_in_bytes,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_pools_young_max_in_bytes,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_jvm_mem_pools_young_max_in_bytes,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -258,9 +276,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_pools_old_used_in_bytes,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_jvm_mem_pools_old_used_in_bytes,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,elasticsearch_node_jvm_mem_pools_old_max_in_bytes,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_jvm_mem_pools_old_max_in_bytes,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -295,6 +315,7 @@ widgets:
         path: ""
       queries:
       - query: name,elasticsearch_node_jvm_gc_collectors_young_collection_time_in_millis,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -329,6 +350,7 @@ widgets:
         path: ""
       queries:
       - query: name,elasticsearch_node_jvm_gc_collectors_old_collection_time_in_millis,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -362,9 +384,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,elasticsearch_node_indices_search_query_time_in_millis,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_indices_search_query_time_in_millis,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,elasticsearch_node_indices_search_fetch_time_in_millis,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_indices_search_fetch_time_in_millis,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -398,9 +422,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,elasticsearch_node_indices_search_query_current,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_indices_search_query_current,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,elasticsearch_node_indices_search_fetch_current,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_indices_search_fetch_current,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -434,9 +460,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,elasticsearch_node_indices_refresh_total_time_in_millis,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_indices_refresh_total_time_in_millis,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,elasticsearch_node_indices_flush_total_time_in_millis,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_indices_flush_total_time_in_millis,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -470,7 +498,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,elasticsearch_node_indices_indexing_index_time_in_millis,:eq,:and,:max,(,host,),:by
+      - query: name,elasticsearch_node_indices_indexing_index_time_in_millis,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -572,6 +601,7 @@ widgets:
       icon: check
       query:
         query: name,elasticsearch_cluster_number_of_shards,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -597,6 +627,7 @@ widgets:
       icon: check
       query:
         query: name,elasticsearch_cluster_active_primary_shards,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -622,6 +653,7 @@ widgets:
       icon: trending_down
       query:
         query: name,elasticsearch_cluster_unassigned_shards,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -647,6 +679,7 @@ widgets:
       icon: thumb_up
       query:
         query: name,elasticsearch_cluster_number_of_nodes,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -672,6 +705,7 @@ widgets:
       icon: thumb_down
       query:
         query: name,elasticsearch_cluster_number_of_failed_nodes,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -697,6 +731,7 @@ widgets:
       icon: trending_down
       query:
         query: name,elasticsearch_cluster_initializing_shards,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -722,6 +757,7 @@ widgets:
       icon: trending_down
       query:
         query: name,elasticsearch_cluster_number_of_pending_tasks,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -747,6 +783,7 @@ widgets:
       icon: check
       query:
         query: name,elasticsearch_cluster_number_of_indices,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -772,6 +809,7 @@ widgets:
       icon: check
       query:
         query: name,elasticsearch_cluster_number_of_docs,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -796,7 +834,8 @@ widgets:
         path: ""
       icon: check
       query:
-        query: ${@SCOPE},name,elasticsearch_node_jvm_gc_collectors_young_collection_count,:eq,:and,:max
+        query: name,elasticsearch_node_jvm_gc_collectors_young_collection_count,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -821,7 +860,8 @@ widgets:
         path: ""
       icon: check
       query:
-        query: ${@SCOPE},name,elasticsearch_node_jvm_gc_collectors_old_collection_count,:eq,:and,:max
+        query: name,elasticsearch_node_jvm_gc_collectors_old_collection_count,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -847,6 +887,7 @@ widgets:
       icon: check
       query:
         query: name,elasticsearch_node_indices_search_query_total,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -872,6 +913,7 @@ widgets:
       icon: check
       query:
         query: name,elasticsearch_node_indices_indexing_index_total,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -897,6 +939,7 @@ widgets:
       icon: thumb_down
       query:
         query: name,elasticsearch_node_indices_indexing_index_failed,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
