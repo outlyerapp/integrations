@@ -29,6 +29,7 @@ widgets:
         path: ""
       queries:
       - query: name,mysql.select_scan,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -62,6 +63,7 @@ widgets:
         path: ""
       queries:
       - query: name,mysql.innodb_row_lock_waits,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -95,6 +97,7 @@ widgets:
         path: ""
       queries:
       - query: name,mysql.table_locks_waited,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -127,7 +130,23 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,mysql.connection_errors_,:re,:and,:avg,(,name,),:by
+      - query: name,mysql.connection_errors_accept,:eq,:max,:cf-max
+        scoped: false
+        visible: true
+      - query: name,mysql.connection_errors_internal,:eq,:max,:cf-max
+        scoped: false
+        visible: true
+      - query: name,mysql.connection_errors_max_connections,:eq,:max,:cf-max
+        scoped: false
+        visible: true
+      - query: name,mysql.connection_errors_peer_address,:eq,:max,:cf-max
+        scoped: false
+        visible: true
+      - query: name,mysql.connection_errors_select,:eq,:max,:cf-max
+        scoped: false
+        visible: true
+      - query: name,mysql.connection_errors_tcpwrap,:eq,:max,:cf-max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -161,6 +180,7 @@ widgets:
         path: ""
       queries:
       - query: name,mysql.created_tmp_disk_tables,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#ff5e44'
@@ -194,6 +214,7 @@ widgets:
         path: ""
       queries:
       - query: name,mysql.created_tmp_files,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#ff5e44'
@@ -226,7 +247,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,mysql.slow_queries,:eq,:and,:avg
+      - query: name,mysql.slow_queries,:eq,:max,:cf-max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -260,6 +282,7 @@ widgets:
         path: ""
       queries:
       - query: name,mysql.innodb_row_lock_time,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -273,39 +296,6 @@ widgets:
       title: Max Row Lock Time
     row: 12
     width: 5
-  - col: 7
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
-          unitPosition: After
-      chartType: StackedBar
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: ${@SCOPE},name,mysql.com_(commit|rollback),:re,:and,:sum,(,name,),:by
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Transactions Commit vs Rollback
-    row: 3
-    width: 4
   - col: 10
     height: 2
     options:
@@ -326,8 +316,10 @@ widgets:
         path: ""
       queries:
       - query: name,mysql.innodb_pages_read,:eq,:max
+        scoped: false
         visible: true
       - query: name,mysql.innodb_pages_written,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -361,6 +353,7 @@ widgets:
         path: ""
       queries:
       - query: name,mysql.questions,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -394,10 +387,13 @@ widgets:
         path: ""
       queries:
       - query: name,mysql.com_insert,:eq,:max
+        scoped: false
         visible: true
       - query: name,mysql.com_update,:eq,:max
+        scoped: false
         visible: true
       - query: name,mysql.com_delete,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -431,6 +427,7 @@ widgets:
         path: ""
       queries:
       - query: name,mysql.com_select,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -463,7 +460,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,mysql.bytes_sent,:eq,:and,:avg
+      - query: name,mysql.bytes_sent,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -496,7 +494,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,mysql.bytes_received,:eq,:and,:avg
+      - query: name,mysql.bytes_received,:eq,:max,:cf-max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -530,8 +529,10 @@ widgets:
         path: ""
       queries:
       - query: name,mysql.innodb_buffer_pool_read_requests,:eq,:max
+        scoped: false
         visible: true
       - query: name,Innodb_buffer_pool_read,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -565,8 +566,10 @@ widgets:
         path: ""
       queries:
       - query: name,mysql.innodb_buffer_pool_pages_total,:eq,:max
+        scoped: false
         visible: true
       - query: name,mysql.innodb_buffer_pool_pages_free,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -580,6 +583,43 @@ widgets:
       title: Buffer Pool Pages Free vs Total
     row: 14
     width: 5
+  - col: 7
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedBar
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,mysql.com_commit,:eq,:max,:cf-max
+        scoped: false
+        visible: true
+      - query: name,mysql.com_rollback,:eq,:max,:cf-max
+        scoped: false
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Transactions Commit vs Rollback
+    row: 3
+    width: 4
   imageWidgets:
   - col: 0
     height: 5
@@ -634,7 +674,8 @@ widgets:
         path: ""
       icon: check
       query:
-        query: ${@SCOPE},name,mysql.threads_connected,:eq,:and,:max
+        query: name,mysql.threads_connected,:eq,:max,:cf-max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -657,7 +698,8 @@ widgets:
         path: ""
       icon: check
       query:
-        query: ${@SCOPE},name,mysql.threads_running,:eq,:and,:max
+        query: name,mysql.threads_running,:eq,:max,:cf-max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
