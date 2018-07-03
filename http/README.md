@@ -33,8 +33,8 @@ The HTTP plugin can be customized via environment variables.
 |data             |            |Optional string data to send in the request.                                                                              |
 |pattern          |            |Optional text pattern to search for in the response HTML.                                                                 |
 |error_on_redirect|false       |If true, redirect responses (3xx) will result in CRITICAL status.                                                         |
-|warning_time     |            |Response time threshold to trigger WARNING status.                                                                        |
-|critical_time    |            |Response time threshold to trigger CRITICAL status.                                                                       |
+|warning_time     |2.5         |Response time threshold in seconds to trigger WARNING status.                                                                        |
+|critical_time    |5.0         |Response time threshold in seconds to trigger CRITICAL status.                                                                       |
 |timeout          |10          |Maximum timeout in seconds before the request times out and fails                                                         |
 
 == Changelog ==
