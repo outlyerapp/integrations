@@ -4,9 +4,7 @@ icon:
   name: integration--docker
 labels: []
 name: docker
-scopes:
-- defaultValue: ""
-  labelKey: container
+scopes: []
 theme: light
 title: Docker
 widgets:
@@ -30,7 +28,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,container.cpu.total,:eq,:and,:max,(,container,),:by
+      - query: name,container.cpu.total,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -63,9 +62,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,container.cpu.system,:eq,:and,:max,(,container,),:by
+      - query: name,container.cpu.system,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
-      - query: ${@SCOPE},name,container.cpu.user,:eq,:and,:max,(,container,),:by
+      - query: name,container.cpu.user,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -98,7 +99,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,container.mem.used,:eq,:and,:max,(,container,),:by
+      - query: name,container.mem.used,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -131,7 +133,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,container.mem.swap,:eq,:and,:max,(,container,),:by
+      - query: name,container.mem.swap,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -164,9 +167,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,container.mem.active,:eq,:and,:max,(,container,),:by
+      - query: name,container.mem.active,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
-      - query: ${@SCOPE},name,container.mem.inactive,:eq,:and,:max,(,container,),:by
+      - query: name,container.mem.inactive,:eq,:max,(,container,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -199,7 +204,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,container.mem.cached,:eq,:and,:max,(,container,),:by
+      - query: name,container.mem.cached,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -232,7 +238,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,container.io.write.bytes,:eq,:and,:max,(,container,),:by
+      - query: name,container.io.write.bytes,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -265,7 +272,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,container.io.read.bytes,:eq,:and,:max,(,container,),:by
+      - query: name,container.io.read.bytes,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -298,9 +306,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,container.net.rx.bytes,:eq,:and,:max,(,container,),:by
+      - query: name,container.net.rx.bytes,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
-      - query: ${@SCOPE},name,container.net.tx.bytes,:eq,:and,:max,(,container,),:by
+      - query: name,container.net.tx.bytes,:eq,:max,(,container,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -333,11 +343,14 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,container.net.tx.errs,:eq,:and,:max,(,container,),:by
+      - query: name,container.net.tx.errs,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
-      - query: ${@SCOPE},name,container.net.tx.packets,:eq,:and,:max,(,container,),:by
+      - query: name,container.net.tx.packets,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
-      - query: ${@SCOPE},name,container.net.tx.drop,:eq,:and,:max,(,container,),:by
+      - query: name,container.net.tx.drop,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -362,7 +375,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: none
+          unit: auto
           unitPosition: After
       chartType: Line
       description: ""
@@ -370,11 +383,14 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,container.net.rx.errs,:eq,:and,:max,(,container,),:by
+      - query: name,container.net.rx.errs,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
-      - query: ${@SCOPE},name,container.net.rx.packets,:eq,:and,:max,(,container,),:by
+      - query: name,container.net.rx.packets,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
-      - query: ${@SCOPE},name,container.net.rx.drop,:eq,:and,:max,(,container,),:by
+      - query: name,container.net.rx.drop,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -408,6 +424,7 @@ widgets:
         path: ""
       queries:
       - query: name,container.count,:eq,:max,(,status,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -432,7 +449,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: none
+          unit: auto
           unitPosition: After
       chartType: StackedArea
       description: ""
@@ -440,9 +457,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,container.io.write.bytes,:eq,:and,:max,(,container,),:by
+      - query: name,container.io.write.bytes,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
-      - query: ${@SCOPE},name,container.io.read.bytes,:eq,:and,:max,(,container,),:by
+      - query: name,container.io.read.bytes,:eq,:max,(,container,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -511,7 +530,8 @@ widgets:
         path: ""
       icon: integration--docker
       query:
-        query: ${@SCOPE},name,container.cpu.cores,:eq,:and,:max
+        query: name,container.cpu.cores,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -537,6 +557,7 @@ widgets:
       icon: integration--docker
       query:
         query: name,container.count,:eq,status,running,:eq,:and,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
