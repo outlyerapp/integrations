@@ -1,0 +1,206 @@
+description: ""
+icon:
+  color: '#000000'
+  name: dashboard
+labels: []
+name: ping
+scopes:
+- defaultValue: ""
+  labelKey: ping_host
+theme: light
+title: Ping
+widgets:
+  chartWidgets:
+  - col: 3
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,ping.sent,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      - query: name,ping.received,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Packets transmitted vs received
+    row: 8
+    width: 6
+  - col: 0
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ms
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,ping.avg,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Ping average time
+    row: 4
+    width: 9
+  markdownWidgets:
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Ping time</h1>
+      markdown: '# Ping time'
+    row: 0
+    width: 9
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Packets</h1>
+      markdown: '# Packets'
+    row: 7
+    width: 9
+  numberWidgets:
+  - col: 0
+    height: 3
+    options:
+      color: '#ff5e44'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: thumb_down
+      query:
+        query: name,ping.loss_pct,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: Average
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Packet loss
+      unit: '%'
+      unitPosition: After
+    row: 8
+    width: 3
+  - col: 0
+    height: 3
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: timeline
+      query:
+        query: name,ping.max,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Ping max time (last request)
+      unit: ms
+      unitPosition: After
+    row: 1
+    width: 3
+  - col: 3
+    height: 3
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: timeline
+      query:
+        query: name,ping.min,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Ping min time (last request)
+      unit: ms
+      unitPosition: After
+    row: 1
+    width: 3
+  - col: 6
+    height: 3
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: timeline
+      query:
+        query: name,ping.std_dev,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Ping std dev time (last request)
+      unit: ms
+      unitPosition: After
+    row: 1
+    width: 3
