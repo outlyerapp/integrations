@@ -5,7 +5,7 @@ icon:
 labels: []
 name: etcd
 scopes:
-- defaultvalue: ""
+- defaultValue: ""
   labelKey: host
 theme: light
 title: etcd
@@ -19,7 +19,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -31,7 +30,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,etcd_debugging_mvcc_db_total_size_in_bytes,:eq,:and,:max,(,host,),:by
+      - query: name,etcd_debugging_mvcc_db_total_size_in_bytes,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -53,7 +53,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -65,7 +64,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,process_resident_memory_bytes,:eq,:and,:max,(,host,),:by
+      - query: name,process_resident_memory_bytes,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -87,7 +87,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -99,9 +98,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,etcd_network_client_grpc_received_bytes_total,:eq,:and,:max,(,host,),:by
+      - query: name,etcd_network_client_grpc_received_bytes_total,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,etcd_network_client_grpc_sent_bytes_total,:eq,:and,:max,(,host,),:by
+      - query: name,etcd_network_client_grpc_sent_bytes_total,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -123,7 +124,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -135,9 +135,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,etcd_network_peer_received_bytes_total,:eq,:and,:max,(,host,),:by
+      - query: name,etcd_network_peer_received_bytes_total,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,etcd_network_peer_sent_bytes_total,:eq,:and,:max,(,host,),:by
+      - query: name,etcd_network_peer_sent_bytes_total,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -159,7 +161,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -172,12 +173,16 @@ widgets:
         path: ""
       queries:
       - query: name,etcd_server_proposals_failed_total,:eq,:sum
+        scoped: false
         visible: true
       - query: name,etcd_server_proposals_pending,:eq,:sum
+        scoped: false
         visible: true
       - query: name,etcd_server_proposals_committed_total,:eq,:sum
+        scoped: false
         visible: true
       - query: name,etcd_server_proposals_applied_total,:eq,:sum
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -199,7 +204,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -211,7 +215,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,etcd_debugging_mvcc_keys_total,:eq,:and,:max,(,host,),:by
+      - query: name,etcd_debugging_mvcc_keys_total,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -233,7 +238,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -245,9 +249,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,process_open_fds,:eq,:and,:max,(,host,),:by
+      - query: name,process_open_fds,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,process_max_fds,:eq,:and,:max,(,host,),:by
+      - query: name,process_max_fds,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -267,11 +273,10 @@ widgets:
       axes:
         xAxis:
           mode: Time
-          showGridLines: true
+          showGridLines: false
         yAxis:
-          max: null
           min: 0
-          showGridLines: true
+          showGridLines: false
           title: ""
           unit: ""
           unitPosition: After
@@ -281,7 +286,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,etcd_debugging_mvcc_slow_watcher_total,:eq,:and,:max,(,host,),:by
+      - query: name,etcd_debugging_mvcc_slow_watcher_total,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -295,7 +301,6 @@ widgets:
       title: Unsynced Slow Watchers
     row: 2
     width: 4
-  imageWidgets: []
   markdownWidgets:
   - col: 0
     height: 2
@@ -320,6 +325,7 @@ widgets:
       icon: check
       query:
         query: name,etcd_server_has_leader,:eq,:max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -345,6 +351,7 @@ widgets:
       icon: sms_failed
       query:
         query: name,etcd_server_proposals_failed_total,:eq,:sum
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -370,6 +377,7 @@ widgets:
       icon: compare_arrows
       query:
         query: name,etcd_server_leader_changes_seen_total,:eq,:sum
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -394,7 +402,8 @@ widgets:
         path: ""
       icon: delete
       query:
-        query: ${@SCOPE},name,etcd_debugging_mvcc_delete_total,:eq,:and,:max
+        query: name,etcd_debugging_mvcc_delete_total,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: Max
@@ -419,7 +428,8 @@ widgets:
         path: ""
       icon: add
       query:
-        query: ${@SCOPE},name,etcd_debugging_mvcc_put_total,:eq,:and,:max
+        query: name,etcd_debugging_mvcc_put_total,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: Max
@@ -444,7 +454,8 @@ widgets:
         path: ""
       icon: material--image
       query:
-        query: ${@SCOPE},name,etcd_debugging_mvcc_range_total,:eq,:and,:max
+        query: name,etcd_debugging_mvcc_range_total,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: Max
@@ -469,7 +480,8 @@ widgets:
         path: ""
       icon: material--image
       query:
-        query: ${@SCOPE},name,etcd_debugging_mvcc_txn_total,:eq,:and,:max
+        query: name,etcd_debugging_mvcc_txn_total,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: Max
@@ -494,7 +506,8 @@ widgets:
         path: ""
       icon: remove_red_eye
       query:
-        query: ${@SCOPE},name,etcd_debugging_mvcc_watcher_total,:eq,:and,:max
+        query: name,etcd_debugging_mvcc_watcher_total,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: Max
@@ -506,4 +519,3 @@ widgets:
       unitPosition: After
     row: 2
     width: 3
-  statusWidgets: []
