@@ -31,6 +31,7 @@ widgets:
         path: ""
       queries:
       - query: name,postgres.connections,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -64,12 +65,16 @@ widgets:
         path: ""
       queries:
       - query: name,postgres.sessions.active,:eq,:max
+        scoped: false
         visible: true
       - query: name,postgres.sessions.idle,:eq,:max
+        scoped: false
         visible: true
       - query: name,postgres.sessions.idle_in_transaction,:eq,:max
+        scoped: false
         visible: true
       - query: name,postgres.sessions.waiting,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -103,6 +108,7 @@ widgets:
         path: ""
       queries:
       - query: name,postgres.sessions.longest_transaction,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -136,6 +142,7 @@ widgets:
         path: ""
       queries:
       - query: name,postgres.sessions.longest_query,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -169,10 +176,13 @@ widgets:
         path: ""
       queries:
       - query: name,postgres.locks.accessexclusive,:eq,:max
+        scoped: false
         visible: true
       - query: name,postgres.locks.otherexclusive,:eq,:max
+        scoped: false
         visible: true
       - query: name,postgres.locks.shared,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -206,8 +216,10 @@ widgets:
         path: ""
       queries:
       - query: name,postgres.bgwriter.checkpoints_req,:eq,:max
+        scoped: false
         visible: true
       - query: name,postgres.bgwriter.checkpoints_timed,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -241,8 +253,10 @@ widgets:
         path: ""
       queries:
       - query: name,postgres.bgwriter.checkpoint_sync_time,:eq,:max
+        scoped: false
         visible: true
       - query: name,postgres.bgwriter.checkpoint_write_time,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -276,6 +290,7 @@ widgets:
         path: ""
       queries:
       - query: name,postgres.bgwriter.buffers_checkpoint,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -308,7 +323,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,postgres.database.deadlocks,:eq,:and,:max,(,database,),:by
+      - query: name,postgres.database.deadlocks,:eq,:max,:cf-max,(,database,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -342,6 +358,7 @@ widgets:
         path: ""
       queries:
       - query: name,postgres.bgwriter.buffers_clean,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -375,6 +392,7 @@ widgets:
         path: ""
       queries:
       - query: name,postgres.bgwriter.buffers_backend,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -408,6 +426,7 @@ widgets:
         path: ""
       queries:
       - query: name,postgres.bgwriter.buffers_alloc,:eq,:max
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -440,7 +459,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,postgres.database.commits,:eq,:and,:max
+      - query: name,postgres.database.commits,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -473,7 +493,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,postgres.database.rollbacks,:eq,:and,:max
+      - query: name,postgres.database.rollbacks,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -506,11 +527,14 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,postgres.database.rows_inserted,:eq,:and,:max
+      - query: name,postgres.database.rows_inserted,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,postgres.database.rows_updated,:eq,:and,:max
+      - query: name,postgres.database.rows_updated,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,postgres.database.rows_deleted,:eq,:and,:max
+      - query: name,postgres.database.rows_deleted,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -543,9 +567,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,postgres.database.rows_returned,:eq,:and,:max
+      - query: name,postgres.database.rows_returned,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,postgres.database.rows_fetched,:eq,:and,:max
+      - query: name,postgres.database.rows_fetched,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -578,9 +604,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,postgres.database.blocks_read,:eq,:and,:max
+      - query: name,postgres.database.blocks_read,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,postgres.database.blocks_hit,:eq,:and,:max
+      - query: name,postgres.database.blocks_hit,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -613,7 +641,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,postgres.database.temp_files,:eq,:and,:max
+      - query: name,postgres.database.temp_files,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -646,7 +675,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,postgres.database.temp_bytes,:eq,:and,:max
+      - query: name,postgres.database.temp_bytes,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -679,9 +709,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,postgres.database.block_read_time,:eq,:and,:max
+      - query: name,postgres.database.block_read_time,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,postgres.database.block_write_time,:eq,:and,:max
+      - query: name,postgres.database.block_write_time,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
