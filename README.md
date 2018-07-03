@@ -15,58 +15,10 @@ contributions from users for other services we don't support currently,
 as well as improvements to our existing Integrations (See Contributing 
 section below). 
 
-## Viewing the Showcase
+## Building Integration Packs
 
-To see a live showcase of all the available integrations, start the
-`./_showcase/showcase.py` script and open a browser to http://localhost:5000.
-
-## Installing integrations manually
-
-Until [this PR](#) is merged with the agent, you will need to remove the
-"settings" tag under "deployments", and move all the settings up a 
-level.
-
-Repo style:
-```
-deployments:
-  - selector:
-      - outlyer.com/type: 'host'
-    settings:
-      host: localhost
-      port: 8080
-```
-
-Local installation:
-```
-deployments:
-  - selector:
-      - outlyer.com/type: 'host'
-    host: localhost
-    port: 8080
-```
-
-
-## Integration Pack structure
-
-Each folder in the repository contains an Integration. Under each 
-folder, the following structure is expected:
-
-```
-example
-├── README.md
-├── logo.png
-├── package.yaml
-├── dashboards
-│   └── example.yaml
-├── plugins
-│   ├── example.py
-│   └── example.yaml
-└── alerts
-    └── example.yaml
-```
-
-Logo should be 256x256 pixels, in PNG format, with transparent 
-background. Text should be cropped out of the logo.
+You can find full instructions on how to build your own Integration Packs
+[here](https://docs2.outlyer.com/development/integration-packs/)
 
 ## Contributing
 
