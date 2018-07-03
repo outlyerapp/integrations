@@ -1,0 +1,329 @@
+description: Microsoft Internet Information Services
+icon:
+  color: '#588fd8'
+  name: integration--iis
+labels:
+- key: web
+  value: ""
+- key: microsoft
+  value: ""
+- key: iis
+  value: ""
+name: iis
+scopes:
+- defaultValue: ""
+  labelKey: site
+- defaultValue: ""
+  labelKey: host
+theme: light
+title: IIS
+widgets:
+  chartWidgets:
+  - col: 2
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,iis.current_anonymous_users,:eq,:max,:cf-max,(,name,site,),:by
+        scoped: true
+        visible: true
+      - query: name,iis.current_nonanonymous_users,:eq,:max,:cf-max,(,name,site,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Site Users
+    row: 0
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,iis.bytes_received_sec,:eq,:max,:cf-max,(,name,site,),:by
+        scoped: true
+        visible: true
+      - query: name,iis.bytes_sent_sec,:eq,:max,:cf-max,(,name,site,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Bytes Sent/Received
+    row: 2
+    width: 6
+  - col: 7
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: Requests/Second
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: Requests per HTTP method per second
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,iis.get_requests_sec,:eq,:max,:cf-max,(,name,site,),:by
+        scoped: true
+        visible: true
+      - query: name,iis.post_requests_sec,:eq,:max,:cf-max,(,name,site,),:by
+        scoped: true
+        visible: true
+      - query: name,iis.put_requests_sec,:eq,:max,:cf-max,(,name,site,),:by
+        scoped: true
+        visible: true
+      - query: name,iis.delete_requests_sec,:eq,:max,:cf-max,(,name,site,),:by
+        scoped: true
+        visible: true
+      - query: name,iis.head_requests_sec,:eq,:max,:cf-max,(,name,site,),:by
+        scoped: true
+        visible: true
+      - query: name,iis.options_requests_sec,:eq,:max,:cf-max,(,name,site,),:by
+        scoped: true
+        visible: true
+      - query: name,iis.trace_requests_sec,:eq,:max,:cf-max,(,name,site,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Requests Per Second
+    row: 0
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,iis.total_connection_attempts,:eq,:max,:cf-max,(,site,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Connection Attempts
+    row: 4
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,iis.maximum_connections,:eq,:max,:cf-max,(,site,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Maximum Connections
+    row: 4
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,iis.locked_errors_sec,:eq,:max,:cf-max,(,site,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Locked Errors
+    row: 6
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,iis.not_found_errors_sec,:eq,:max,:cf-max,(,site,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Not Found Errors
+    row: 6
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,iis.files_sent_sec,:eq,:max,:cf-max,(,name,site,),:by
+        scoped: true
+        visible: true
+      - query: name,iis.files_received_sec,:eq,:max,:cf-max,(,name,site,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Files Sent/Received
+    row: 2
+    width: 6
+  imageWidgets:
+  - col: 0
+    height: 2
+    options:
+      color: '#588fd8'
+      icon: integration--iis
+      sizing: stretched
+    row: 0
+    width: 2
