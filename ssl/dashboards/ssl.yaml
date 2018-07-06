@@ -1,0 +1,39 @@
+description: ""
+icon:
+  color: '#000000'
+  name: integration--sslcert
+labels: []
+name: ssl
+scopes:
+- defaultValue: ""
+  labelKey: ssl_cert_source
+theme: light
+title: SSL
+widgets:
+  numberWidgets:
+  - col: 0
+    height: 4
+    options:
+      color: '#1e3a77'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--sslcert
+      query:
+        query: name,ssl.days_remaining,:eq,:min,:cf-min
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: 'SSL Certificate: Days Remaining'
+      unit: ' days'
+      unitPosition: After
+    row: 0
+    width: 4
