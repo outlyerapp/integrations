@@ -1,0 +1,9 @@
+---
+title: SSL
+description: Checks expiration of SSL certificates
+logo: ssl.svg
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - ssl
