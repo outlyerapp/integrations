@@ -14,6 +14,7 @@ class EC2Discovery(object):
             aws_region = os.environ.get('AWS_REGION')
             if not aws_region:
                 raise Exception("Please ensure AWS_REGION is set.")
+            accound_id = self._get_aws_account_id()
             awsclient = boto3.client('ec2',
                                      region_name=aws_region,
                                      aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
@@ -25,7 +26,6 @@ class EC2Discovery(object):
                     for instance in reservation['Instances']:
 
                         if instance['State']['Name'] == 'running':
-
                             host = {
                                 'hostname': "ec2-" + instance['PrivateDnsName'],
                                 'ip': instance['PrivateIpAddress'],
@@ -34,6 +34,7 @@ class EC2Discovery(object):
                                 'instance.type': 'host',
                                 'cloud.provider': 'aws',
                                 'cloud.service': 'aws.ec2',
+                                'cloud.account_id': accound_id,
                                 'cloud.instance.region': aws_region,
                                 'cloud.instance.az': instance['Placement']['AvailabilityZone'],
                                 'cloud.instance.id': instance['InstanceId'],
@@ -57,6 +58,16 @@ class EC2Discovery(object):
         except Exception as err:
             raise err
             return 3
+
+    def _get_aws_account_id(self) -> str:
+        """
+        Gets the AWS Account ID for the current API key user
+
+        :return:    The AWS Account ID for the current API key user
+        """
+        return boto3.client('sts',
+                     aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID'),
+                     aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')).get_caller_identity().get('Account')
 
 if __name__ == '__main__':
     sys.exit(EC2Discovery().discover())

@@ -14,6 +14,7 @@ class RDSDiscovery(object):
             aws_region = os.environ.get('AWS_REGION')
             if not aws_region:
                 raise Exception("Please ensure AWS_REGION is set.")
+            account_id = self._get_aws_account_id()
             awsclient = boto3.client('rds',
                                      region_name=aws_region,
                                      aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
@@ -33,6 +34,7 @@ class RDSDiscovery(object):
                             'instance.type': 'host',
                             'cloud.provider': 'aws',
                             'cloud.service': 'aws.rds',
+                            'cloud.account_id': account_id,
                             'cloud.instance.region': aws_region,
                             'cloud.instance.az': instance['AvailabilityZone'],
                             'cloud.instance.id': instance['DBInstanceIdentifier'],
@@ -66,6 +68,16 @@ class RDSDiscovery(object):
 
         except Exception as err:
             raise err
+
+    def _get_aws_account_id(self) -> str:
+        """
+        Gets the AWS Account ID for the current API key user
+
+        :return:    The AWS Account ID for the current API key user
+        """
+        return boto3.client('sts',
+                     aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID'),
+                     aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')).get_caller_identity().get('Account')
 
 if __name__ == '__main__':
     sys.exit(RDSDiscovery().discover())
