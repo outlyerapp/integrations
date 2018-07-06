@@ -19,7 +19,7 @@ class SslCheck(Plugin):
         host = self.get('host')
         port = self.get('port', 443)
 
-        expected_cn = self.get('cn', None)
+        expected_cn = self.get('cert_common_name', None)
         warning_days = int(self.get('warning_days', 30))
         critical_days = int(self.get('critical_days', 7))
 
