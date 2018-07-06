@@ -27,7 +27,6 @@ class SslCheck(Plugin):
             self.logger.error('Must either specify host or cert_path environment variables')
             return Status.UNKNOWN
 
-        
         if cert_path and not host:
             if not os.path.exists(cert_path):
                 self.logger.error("Certificate file not found: %s", cert_path)
@@ -60,9 +59,9 @@ class SslCheck(Plugin):
         self.logger.info('Certificate for %s expires in %d days', host, days_left)
 
         if cert_path:
-            self.gauge('ssl_days_remaining', {'cert_path': cert_path}).set(days_left)
+            self.gauge('ssl.days_remaining', {'ssl_cert_source': cert_path}).set(days_left)
         else:
-            self.gauge('ssl_days_remaining', {'host': host}).set(days_left)
+            self.gauge('ssl.days_remaining', {'ssl_cert_source': host}).set(days_left)
 
         if days_left <= critical_days or not_before > datetime.now() or not cn_match:
             return Status.CRITICAL
