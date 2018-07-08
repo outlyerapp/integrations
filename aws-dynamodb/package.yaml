@@ -1,0 +1,11 @@
+---
+title: AWS DynamoDB
+description: Collect metrics to monitor all your AWS DynamoDB Tables
+logo: aws-dynamodb.svg
+version: 1.0.0
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - aws
+  - data-store
