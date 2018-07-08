@@ -362,4 +362,4 @@ class AWSS3(Plugin):
 
 
 if __name__ == '__main__':
-    sys.exit(AWSS3(log_level='INFO').run())
+    sys.exit(AWSS3().run())
