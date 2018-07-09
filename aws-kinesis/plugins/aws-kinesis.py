@@ -254,7 +254,7 @@ class AWSKinesis(Plugin):
     def collect(self, _):
         try:
             aws_region = self.get('AWS_REGION', 'us-east-1')
-            time_range = self.get('time_range', '60')
+            time_range = self.get('time_range', '10')
 
             # Get list of Kinesis Streams in AWS Account Region
             instances = []

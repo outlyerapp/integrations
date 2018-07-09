@@ -4,11 +4,11 @@ from outlyer_plugin import OutlyerPluginTest
 
 class TestPlugin(unittest.TestCase):
 
-    def test_awskinesis_plugin(self):
+    def test_awssqs_plugin(self):
         variables = {
             'AWS_REGION': 'us-west-2',
         }
-        output = OutlyerPluginTest.run_plugin("../plugins/aws-kinesis.py", variables)
+        output = OutlyerPluginTest.run_plugin("../plugins/aws-sqs.py", variables)
         output.print_output()
 
 if __name__ == '__main__':

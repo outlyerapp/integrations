@@ -3,13 +3,26 @@ AWS SQS Integration
 
 == Description ==
 
-Once enabled, this integration will collect metrics on every SQS Query in your AWS account
-and provide a dashboard to view the key metrics.
+Once enabled, this integration will collect metrics on every SQS Queue in your AWS account
+for a particular region(s) and provide a dashboard to view the key metrics. Amazon Simple Queue Service (SQS) is a fully managed 
+message queuing service that enables you to decouple and scale microservices, distributed systems, and serverless applications. 
 
 == Metrics Collected ==
 
 A full list of available Cloudwatch metrics for S3 is available
 <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/sqs-metricscollected.html" target="_blank">here</a>.
+
+|Metric Name                   |Type   |Labels       |Unit   |Description                                                                                                                                                                                                |
+|------------------------------|-------|-------------|-------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|aws.sqs_oldestmessage_max     |gauge  |queue, region|Seconds|The approximate age of the oldest non-deleted message in the queue.                                                                                                                                        |
+|aws.sqs_messagesdelayed_sum   |gauge  |queue, region|Count  |The number of messages in the queue that are delayed and not available for reading immediately.                                                                                                            |
+|aws.sqs_messagesnotvisible_sum|gauge  |queue, region|Count  |The number of messages that are "in flight." Messages are considered in flight if they have been sent to a client but have not yet been deleted or have not yet reached the end of their visibility window.|
+|aws.sqs_messagesvisible_sum   |gauge  |queue, region|Count  |The number of messages available for retrieval from the queue.                                                                                                                                             |
+|aws.sqs_emptyreceives_sum     |gauge  |queue, region|Count  |The number of ReceiveMessage API calls that did not return a message.                                                                                                                                      |
+|aws.sqs_messagesdeleted_sum   |gauge  |queue, region|Count  |The number of messages deleted from the queue.                                                                                                                                                             |
+|aws.sqs_messagesreceived_sum  |gauge  |queue, region|Count  |The number of messages returned by calls to the ReceiveMessage action.                                                                                                                                     |
+|aws.sqs_messagessent_sum      |gauge  |queue, region|Count  |The number of messages added to a queue.                                                                                                                                                                   |
+|aws.sqs_sentmessagesize_avg   |gauge  |queue, region|Bytes  |The size of messages added to a queue.                                                                                                                                                                     |
 
 == Installation ==
 
