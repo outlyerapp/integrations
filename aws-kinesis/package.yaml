@@ -1,0 +1,10 @@
+---
+title: AWS Kinesis
+description: Collect metrics to monitor all your AWS Kinesis Streams
+logo: aws-kinesis.svg
+version: 1.0.0
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - aws
