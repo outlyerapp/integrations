@@ -1,0 +1,110 @@
+description: Overview of all your AWS Billing Costs
+icon:
+  color: '#ffa538'
+  name: integration--aws
+labels:
+- key: aws
+  value: ""
+name: aws-billing
+scopes: []
+theme: light
+title: AWS Billing
+widgets:
+  chartWidgets:
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          max: null
+          min: 0
+          showGridLines: true
+          title: Cost
+          unit: ""
+          unitPosition: After
+      chartType: StackedArea
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.billing_estimated_charges,:eq,:max,(,servicename,),:by
+        visible: true
+      seriesStyle:
+        color: '#e1891f'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: AWS Estimated Costs By Service
+    row: 0
+    width: 11
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          max: null
+          min: 0
+          showGridLines: true
+          title: Cost
+          unit: ""
+          unitPosition: After
+      chartType: StackedArea
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,aws.billing_estimated_charges,:eq,:max,(,linkedaccount,),:by
+        visible: true
+      seriesStyle:
+        color: '#e1891f'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: AWS Estimated Costs By Linked Account
+    row: 2
+    width: 11
+  imageWidgets: []
+  markdownWidgets: []
+  numberWidgets:
+  - col: 0
+    height: 4
+    options:
+      color: '#ffa538'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: SparkLine
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--aws
+      query:
+        query: name,aws.billing_estimated_charges,:eq,:max
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Total Estimated Costs
+      unit: ""
+      unitPosition: After
+    row: 0
+    width: 3
+  statusWidgets: []
