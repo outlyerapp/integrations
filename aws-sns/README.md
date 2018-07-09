@@ -3,13 +3,28 @@ AWS SNS Integration
 
 == Description ==
 
-Once enabled, this integration will collect metrics on every SNS Topic in your AWS account
-and provide a dashboard to view the key metrics.
+This integration monitors your Amazon Simple Notification Service (SNS) topics via Cloudwatch. SNS is a flexible, fully 
+managed pub/sub messaging and mobile notifications service for coordinating the delivery of messages to subscribing endpoints 
+and clients.
+
+Once enabled, this integration will collect metrics on every SNS Topic in your AWS region(s) and provide a dashboard to view 
+the key metrics.
 
 == Metrics Collected ==
 
-A full list of available Cloudwatch metrics for S3 is available
+A full list of available Cloudwatch metrics for SNS is available
 <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/sns-metricscollected.html" target="_blank">here</a>.
+
+|Metric Name                                           |Type   |Labels       |Unit |Description                                                                                                                                                                 |
+|------------------------------------------------------|-------|-------------|-----|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|aws.sns_messagespublished_sum                         |gauge  |topic, region|     |The number of messages published to your Amazon SNS topic.                                                                                                                  |
+|aws.sns_notificationsdelivered_sum                    |gauge  |topic, region|     |The number of messages successfully delivered from your Amazon SNS topic to subscribing endpoints.                                                                          |
+|aws.sns_notificationsfailed_sum                       |gauge  |topic, region|     |The number of messages that Amazon SNS failed to deliver.                                                                                                                   |
+|aws.sns_notificationsfilteredout_sum                  |gauge  |topic, region|     |The number of messages that were rejected by subscription filter policies. A filter policy rejects a message when the message attributes do not match the policy attributes.|
+|aws.sns_notificationsfilteredout_noattributes_sum     |gauge  |topic, region|     |The number of messages that were rejected by subscription filter policies because the messages have no attributes.                                                          |
+|aws.sns_notificationsfilteredout_invalidattributes_sum|gauge  |topic, region|     |The number of messages that were rejected by subscription filter policies because the message's attributes are invalid.                                                     |
+|aws.sns_publishsize_max                               |gauge  |topic, region|     |The size of messages published.                                                                                                                                             |
+|aws.sns_monthtodatespendusd_max                       |gauge  |topic, region|     |The charges you have accrued since the start of the current calendar month for sending SMS messages across all topics                                                       |
 
 == Installation ==
 
