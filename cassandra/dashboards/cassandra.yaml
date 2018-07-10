@@ -1,0 +1,534 @@
+description: ""
+icon:
+  color: '#3cc663'
+  name: dashboard
+labels: []
+name: cassandra
+scopes:
+- defaultValue: ""
+  labelKey: host
+theme: light
+title: Cassandra
+widgets:
+  chartWidgets:
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,cassandra.reads,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Reads per Second
+    row: 4
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,cassandra.writes,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Writes per Second
+    row: 4
+    width: 6
+  - col: 12
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,cassandra.compaction_pending_tasks,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Pending Tasks
+    row: 4
+    width: 5
+  - col: 7
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: StackedBar
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,cassandra.total_disk_space_used,:eq,:max,:cf-max,(,keyspace,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Disk Space Used by Keyspace
+    row: 0
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,cassandra.exceptions_read_timeouts,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Read Timeouts
+    row: 9
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,cassandra.exceptions_write_timeouts,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Write Timeouts
+    row: 11
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,cassandra.exceptions_read_unavailables,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Read Unavailable
+    row: 9
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,cassandra.exceptions_write_unavailables,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Write Unavailable
+    row: 11
+    width: 6
+  - col: 12
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,cassandra.threadpool_request_pending_tasks,:eq,:max,:cf-max,(,stage,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Pending Tasks by Stage
+    row: 7
+    width: 5
+  - col: 12
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,cassandra.threadpool_request_currently_blocked_tasks,:eq,:max,:cf-max,(,stage,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Currently Blocked Tasks by Stage
+    row: 10
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: μs
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,cassandra.read_latency_99th_percentile,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Read Latency
+    row: 6
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: μs
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,cassandra.write_latency_99th_percentile,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Write Latency
+    row: 6
+    width: 6
+  - col: 12
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,cassandra.open_file_descriptors,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      - query: name,cassandra.max_file_descriptors,:eq,:max,:cf-max,(,host,),:by
+        scoped: false
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: 'File Descriptors: Open vs Max'
+    row: 0
+    width: 5
+  markdownWidgets:
+  - col: 0
+    height: 3
+    options:
+      content: |
+        <p><img src="http://6tdr4.us/wp-content/uploads/2018/04/apache-cassandra-logo-enormousit-oracle-consulting-services-sap-services-software-of-apache-cassandra-logo.png" alt="Cassandra Logo"/></p>
+      markdown: '![Cassandra Logo](http://6tdr4.us/wp-content/uploads/2018/04/apache-cassandra-logo-enormousit-oracle-consulting-services-sap-services-software-of-apache-cassandra-logo.png)'
+    row: 0
+    width: 4
+  - col: 6
+    height: 1
+    options:
+      content: |
+        <h1>Writes</h1>
+      markdown: '# Writes'
+    row: 3
+    width: 6
+  - col: 12
+    height: 1
+    options:
+      content: |
+        <h1>Compaction</h1>
+      markdown: '# Compaction'
+    row: 3
+    width: 5
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Exception</h1>
+      markdown: '# Exception'
+    row: 8
+    width: 12
+  - col: 12
+    height: 1
+    options:
+      content: |
+        <h1>Thread Pool</h1>
+      markdown: '# Thread Pool'
+    row: 6
+    width: 5
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Reads</h1>
+      markdown: '# Reads'
+    row: 3
+    width: 6
+  numberWidgets:
+  - col: 4
+    height: 3
+    options:
+      color: '#3cc663'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: thumb_up
+      query:
+        query: name,cassandra.compaction_completed_tasks,:eq,:count,:cf-max
+        scoped: false
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Nodes
+      unit: ""
+      unitPosition: After
+    row: 0
+    width: 3

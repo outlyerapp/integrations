@@ -1,0 +1,9 @@
+---
+title: Cassandra
+description: Open source distributed wide column store NoSQL database
+logo: cassandra.svg
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - data-store
