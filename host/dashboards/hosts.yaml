@@ -7,7 +7,7 @@ labels:
   value: ""
 name: hosts
 scopes:
-- defaultvalue: ""
+- defaultValue: ""
   labelKey: host
 theme: light
 title: Hosts
@@ -21,7 +21,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -33,7 +32,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,sys.mem.pct,:eq,:and,:max,(,host,),:by
+      - query: name,sys.mem.pct,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#298360'
@@ -55,7 +55,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -67,7 +66,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,sys.swap.pct,:eq,:and,:max,(,host,),:by
+      - query: name,sys.swap.pct,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#e1891f'
@@ -89,7 +89,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -101,19 +100,26 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,sys.cpu.guest.pct,:eq,:and,:max
+      - query: name,sys.cpu.guest.pct,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,sys.cpu.steal.pct,:eq,:and,:max
+      - query: name,sys.cpu.steal.pct,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,sys.cpu.nice.pct,:eq,:and,:max
+      - query: name,sys.cpu.nice.pct,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,sys.cpu.irq.pct,:eq,:and,:max
+      - query: name,sys.cpu.irq.pct,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,sys.cpu.iowait.pct,:eq,:and,:max
+      - query: name,sys.cpu.iowait.pct,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,sys.cpu.system.pct,:eq,:and,:max
+      - query: name,sys.cpu.system.pct,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,sys.cpu.user.pct,:eq,:and,:max
+      - query: name,sys.cpu.user.pct,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -135,7 +141,6 @@ widgets:
           mode: Time
           showGridLines: true
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -147,11 +152,14 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,sys.net.tx.packets,:eq,:and,:max
+      - query: name,sys.net.tx.packets,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,sys.net.tx.errs,:eq,:and,:max
+      - query: name,sys.net.tx.errs,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,sys.net.tx.drop,:eq,:and,:max
+      - query: name,sys.net.tx.drop,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -173,7 +181,6 @@ widgets:
           mode: Time
           showGridLines: true
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -185,11 +192,14 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,sys.net.rx.packets,:eq,:and,:max
+      - query: name,sys.net.rx.packets,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,sys.net.rx.errs,:eq,:and,:max
+      - query: name,sys.net.rx.errs,:eq,:max,:cf-max
+        scoped: true
         visible: true
-      - query: ${@SCOPE},name,sys.net.rx.drop,:eq,:and,:max
+      - query: name,sys.net.rx.drop,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -211,11 +221,10 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: bytes
           unitPosition: After
       chartType: Line
       description: ""
@@ -223,7 +232,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,sys.io.read.bytes,:eq,:and,:max,(,host,),:by
+      - query: name,sys.io.read.bytes,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -234,7 +244,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Disk Read
+      title: Disk Read (bytes)
     row: 7
     width: 5
   - col: 7
@@ -245,11 +255,10 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: bytes
           unitPosition: After
       chartType: Line
       description: ""
@@ -257,7 +266,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,sys.io.write.bytes,:eq,:and,:max,(,host,),:by
+      - query: name,sys.io.write.bytes,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -279,7 +289,6 @@ widgets:
           mode: Time
           showGridLines: true
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -291,7 +300,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,sys.cpu.pct,:eq,:and,:max,(,host,),:by
+      - query: name,sys.cpu.pct,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -305,7 +315,6 @@ widgets:
       title: Max CPU
     row: 4
     width: 5
-  imageWidgets: []
   markdownWidgets:
   - col: 0
     height: 1
@@ -353,7 +362,8 @@ widgets:
         path: ""
       icon: memory
       query:
-        query: ${@SCOPE},name,sys.mem.pct,:eq,:and,:max
+        query: name,sys.mem.pct,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: Max
@@ -378,7 +388,8 @@ widgets:
         path: ""
       icon: disc_full
       query:
-        query: ${@SCOPE},name,sys.swap.pct,:eq,:and,:max
+        query: name,sys.swap.pct,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: Average
@@ -403,7 +414,8 @@ widgets:
         path: ""
       icon: memory
       query:
-        query: ${@SCOPE},name,sys.cpu.pct,:eq,:and,:max
+        query: name,sys.cpu.pct,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: Average
@@ -428,7 +440,8 @@ widgets:
         path: ""
       icon: disc_full
       query:
-        query: ${@SCOPE},name,sys.disk.used_pct,:eq,:and,:max
+        query: name,sys.disk.used_pct,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: Max
@@ -440,4 +453,3 @@ widgets:
       unitPosition: After
     row: 7
     width: 2
-  statusWidgets: []
