@@ -44,12 +44,12 @@ NODE_STATS_METRICS = {
     'jvm.gc.collectors.old.collection_count': ('elasticsearch_node_jvm_gc_collectors_old_collection_count', 'gauge'),
     'jvm.gc.collectors.old.collection_time_in_millis': ('elasticsearch_node_jvm_gc_collectors_old_collection_time_in_millis', 'gauge'),
     'indices.search.query_total': ('elasticsearch_node_indices_search_query_total', 'gauge'),
-    'indices.search.query_time_in_millis': ('elasticsearch_node_indices_search_query_time_in_millis', 'gauge'),
+    'indices.search.query_time_in_millis': ('elasticsearch_node_indices_search_query_time_in_millis', 'counter'),
     'indices.search.query_current': ('elasticsearch_node_indices_search_query_current', 'gauge'),
-    'indices.search.fetch_time_in_millis': ('elasticsearch_node_indices_search_fetch_time_in_millis', 'gauge'),
+    'indices.search.fetch_time_in_millis': ('elasticsearch_node_indices_search_fetch_time_in_millis', 'counter'),
     'indices.search.fetch_current': ('elasticsearch_node_indices_search_fetch_current', 'gauge'),
     'indices.indexing.index_total': ('elasticsearch_node_indices_indexing_index_total', 'gauge'),
-    'indices.indexing.index_time_in_millis': ('elasticsearch_node_indices_indexing_index_time_in_millis', 'gauge'),
+    'indices.indexing.index_time_in_millis': ('elasticsearch_node_indices_indexing_index_time_in_millis', 'counter'),
     'indices.indexing.index_failed': ('elasticsearch_node_indices_indexing_index_failed', 'gauge'),
     'indices.refresh.total_time_in_millis': ('elasticsearch_node_indices_refresh_total_time_in_millis', 'gauge'),
     'indices.flush.total_time_in_millis': ('elasticsearch_node_indices_flush_total_time_in_millis', 'gauge'),
@@ -158,3 +158,4 @@ class ElasticsearchPlugin(Plugin):
 
 if __name__ == '__main__':
     sys.exit(ElasticsearchPlugin().run())
+
