@@ -23,6 +23,9 @@
 #
 
 require 'sensu-handler'
+require 'net/http'
+require 'uri'
+require 'json'
 
 #
 # Outlyer Metrics
@@ -42,6 +45,8 @@ class OutlyerMetrics < Sensu::Handler
       name, value, timestamp = line.split(/\s+/)
       emit_metric(name, value, timestamp)
     end
+    # Add a service.status metric for check status
+    emit_metric('service.status', @event['status'], Time.now.to_i * 1000.0)
   end
 
   # Push metric point
@@ -50,8 +55,30 @@ class OutlyerMetrics < Sensu::Handler
   # @param value      [String]
   # @param _timestamp [String]
   def emit_metric(name, value, _timestamp)
-    timeout(3) do
-      # TODO
+    timeout(5) do
+      uri = URI.parse("https://api2.outlyer.com/v2/accounts/" + settings['outlyer']['account'] + "/series")
+      header = {'Content-Type': 'text/json',
+                'Authorization': 'Bearer ' + settings['outlyer']['api_key']}
+
+      # Create datapoint json body
+      datapoint = { samples:
+                    [{
+                      host: 'sensu',
+                      labels: {},
+                      name: name,
+                      timestamp: _timestamp,
+                      type: 'gauge',
+                      value: value
+                    }]
+                  }
+
+      # Create the HTTP objects
+      http = Net::HTTP.new(uri.host, uri.port)
+      request = Net::HTTP::Post.new(uri.request_uri, header)
+      request.body = datapoint.to_json
+
+      # Send the request
+      response = http.request(request)
     end
   # Raised when any metrics could not be sent
   #
