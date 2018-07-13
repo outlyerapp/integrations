@@ -4,41 +4,66 @@ Outlyer Sensu Handler Integration
 == Description ==
 
 This integration provides instructions to install and use the Outlyer Sensu Handler Integration
-to push all your check event metrics and status codes from Sensu checks into Outlyer. A Sensu
-handler is provided by Outlyer which can be installed following the instructions.
+to push all your check event metrics and check status's from Sensu checks into Outlyer. It supports
+both Nagios checks and Graphite Metric check outputs from Sensu.
 
-Once installed and enabled you should see all your check metrics and status codes in Outlyer to
+Once installed and enabled you should see all your check metrics and check status's in Outlyer to
 use on custom dashboards and alerts.
 
 == Metrics Collected ==
 
-The Sensu integration will psuh any metric collected by your Sensu checks to Outlyer. In addition each check
-will also automatically generate a metric `service.status` with the label `service: sensu-{check_name}`
-which can be used for Outlyer dashboard Status widgets and Service alerts.
+The Sensu integration will push any metric collected by your Sensu checks with metric
+names namespaced to the check name as follows:
+
+```
+<check_name>.<metric_name>
+```
+
+In addition the status code of each check is sent as the `service.status` metric
+to Outlyer with the label `service: <check_name>`. You will be able to use this
+metric to configure dashboad status widgets and service check alerts in Outlyer.
+
+For Nagios checks, the timestamp of when the check was executed is used for all the
+metric data points. For Graphite metric checks the timestamp of each metric data
+point is used, apart from the service.status which uses the check execution time
+like Nagios checks.
 
 == Installation ==
 
-Firstly install the Outlyer Sensu plugin on your Sensu machine using the following
+Firstly install the Outlyer Sensu plugin on your Sensu machine(s) using the following
 command:
 
 ```bash
-gem install sensu-plugins-outlyer
+sensu-install outlyer
 ```
 
-Next, we’ll enable the handler by adding it to /etc/sensu/conf.d/handlers.json:
+Next, we’ll enable the handlers by adding it to `/etc/sensu/conf.d/outlyer-handlers.json`:
 
 ```json
 {
   "handlers": {
-    "outlyer": {
+    "outlyer-graphite": {
        "type": "pipe",
        "command": "/opt/sensu/embedded/bin/outlyer-metrics.rb"
+    },
+    "outlyer-nagios": {
+       "type": "pipe",
+       "command": "/opt/sensu/embedded/bin/outlyer-metrics.rb -f nagios"
     }
   }
 }
 ```
 
-and add a configuration at /etc/sensu/conf.d/outlyer.json:
+Two handlers have been configured, one for your Nagios checks `outlyer-nagios` and
+one for your Graphite metric checks `outlyer-graphite`. You can refer to these handlers
+in your check configurations to ensure they are handled by the Outlyer handler with
+the correct check output parsing. 
+
+You can also add the optional `-t` parameter to the handler command to change the default
+timeout for Outlyer API requests from 5 seconds. This is useful if you notice the handler
+timing out as your checks send more metrics creating larger payloads.
+
+Finally add your Outlyer API configuration at /etc/sensu/conf.d/outlyer.json:
 
 ```json
 {
@@ -62,10 +87,16 @@ Finally restart your Sensu server so the new handler is enabled:
 sudo systemctl restart sensu-{server,api}
 ```
 
-You should start seeing all your metrics from Sensu checks appearing in Outlyer shortly afterwards.
+You will need to add the handler to all the checks you want metrics sent to Outlyer for by adding
+`outlyer-nagios` or `outlyer-graphite` to your check handlers configuration as appropriate. Once
+your checks have been configured to use the Outlyer handler you should start seeing all your
+metrics from your configured Sensu checks appearing in Outlyer shortly afterwards.
+
+Please read the Metrics Collected section of this guide to understand how your check metrics
+are sent to Outlyer.
 
 == Changelog ==
 
 |Version|Release Date|Description                                          |
 |-------|------------|-----------------------------------------------------|
-|1.0    |11-Jul-2018 |Initial version of the Outlyer Sensu Handler.        |
+|1.0    |12-Jul-2018 |Initial version of the Outlyer Sensu Handler.        |
