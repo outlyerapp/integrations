@@ -34,7 +34,7 @@ Firstly install the Outlyer Sensu plugin on your Sensu machine(s) using the foll
 command:
 
 ```bash
-sensu-install outlyer
+sudo sensu-install -p outlyer
 ```
 
 Next, we’ll enable the handlers by adding it to `/etc/sensu/conf.d/outlyer-handlers.json`:
@@ -63,14 +63,13 @@ You can also add the optional `-t` parameter to the handler command to change th
 timeout for Outlyer API requests from 5 seconds. This is useful if you notice the handler
 timing out as your checks send more metrics creating larger payloads.
 
-Finally add your Outlyer API configuration at /etc/sensu/conf.d/outlyer.json:
+Finally add your Outlyer API configuration at `/etc/sensu/conf.d/outlyer.json`:
 
 ```json
 {
     "outlyer": {
        "api_key": "<API_KEY>",
-       "account": "<ACCOUNT_NAME>",
-       "tags": []
+       "account": "<ACCOUNT_NAME>" 
     }
 }
 ```
@@ -92,8 +91,21 @@ You will need to add the handler to all the checks you want metrics sent to Outl
 your checks have been configured to use the Outlyer handler you should start seeing all your
 metrics from your configured Sensu checks appearing in Outlyer shortly afterwards.
 
+Also ensure any Sensu checks that send metrics have type `metric` otherwise the output will not
+be processed everytime the check runs.
+
 Please read the Metrics Collected section of this guide to understand how your check metrics
 are sent to Outlyer.
+
+## Troubleshooting
+
+If you don't see metrics appearing in Outlyer after enabling the handlers and checks 
+you should use the following command to view the Sensu server logs to see if any
+errors are being output by the hander:
+
+```bash
+tail -f /var/log/sensu/sensu-server.log | grep outlyer
+```
 
 == Changelog ==
 
