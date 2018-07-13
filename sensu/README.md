@@ -34,7 +34,7 @@ Firstly install the Outlyer Sensu plugin on your Sensu machine(s) using the foll
 command:
 
 ```bash
-sudo sensu-install -p outlyer
+sensu-install -p outlyer
 ```
 
 Next, we’ll enable the handlers by adding it to `/etc/sensu/conf.d/outlyer-handlers.json`:
@@ -78,12 +78,11 @@ Where:
 
 * **api_key**: Your user's API key generated under user settings
 * **account**: The unique account name of the account you want to push metrics too (you will see this in the URL when using the app)
-* **tags**: An array of tags you want to add to all your metrics from Sensu, i.e. region: us-west-1
 
 Finally restart your Sensu server so the new handler is enabled:
 
 ```bash
-sudo systemctl restart sensu-{server,api}
+systemctl restart sensu-{server,api}
 ```
 
 You will need to add the handler to all the checks you want metrics sent to Outlyer for by adding

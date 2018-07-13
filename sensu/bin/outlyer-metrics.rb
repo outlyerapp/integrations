@@ -81,9 +81,9 @@ class OutlyerMetrics < Sensu::Handler
     
     # Add a service status metric
     metrics.push(create_datapoint('service.status', check_status, timestamp, {service: "sensu.#{@check_name}"}))
-    puts metrics
     # Post metrics to Outlyer
     push_metrics(metrics)
+    puts "Successfully pushed #{metrics.length} metrics to Outlyer"
   end
   
   # Create a single data point
