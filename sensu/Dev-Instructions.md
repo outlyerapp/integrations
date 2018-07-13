@@ -20,11 +20,17 @@ gem push sensu-plugins-outlyer-<version_number>.gem
 ## Testing
 
 First uncomment the settings config on line 73 to set the test account and API key.
+
 Then you can use the following command to test the handler with example Nagios
 output data using the following command:
 
 ```bash
 cat ./test/test-nagios-data.json | ruby ./bin/outlyer-metrics.rb -f nagios
+```
+For Graphite metric test:
+
+```bash
+cat ./test/test-graphite-data.json | ruby ./bin/outlyer-metrics.rb
 ```
 
 Note you will have to override the check timestamp to the current time so your

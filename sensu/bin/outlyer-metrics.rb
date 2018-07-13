@@ -67,6 +67,10 @@ class OutlyerMetrics < Sensu::Handler
     @check_name = @event['check']['name']
     @host = @event['client']['name']
     @environment = @event['client']['environment']
+    if @environment.kind_of?(Array)
+      # environment can be an array, so merge values with hyphens
+      @environment = @environment.join("-")
+    end
     timestamp = @event['check']['executed'].to_i * 1000
     
     # Uncomment this line for local testing outside Sensu
@@ -176,7 +180,7 @@ class OutlyerMetrics < Sensu::Handler
       request.add_field("accept", "application/json") 
       request.add_field("Content-Type", "application/json")
       request.body = {samples: datapoints}.to_json
-
+      
       # Send the request
       response = http.request(request)
       if response.code.to_i != 200
