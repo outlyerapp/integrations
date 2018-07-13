@@ -4,7 +4,18 @@ This readme includes development instructions for building, packaging and testin
 
 ## Packaging and Publishing
 
+First build the gem:
 
+```
+gem build sensu-plugins-outlyer.gemspec
+```
+
+Then publish the sensu-plugins-outlyer gem to the Outlyer account on the RubyGems server 
+using the following command:
+
+```bash
+gem push sensu-plugins-outlyer-<version_number>.gem
+```
 
 ## Testing
 
