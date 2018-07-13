@@ -83,7 +83,6 @@ class OutlyerMetrics < Sensu::Handler
     metrics.push(create_datapoint('service.status', check_status, timestamp, {service: "sensu.#{@check_name}"}))
     # Post metrics to Outlyer
     push_metrics(metrics)
-    puts "Successfully pushed #{metrics.length} metrics to Outlyer"
   end
   
   # Create a single data point
@@ -181,9 +180,12 @@ class OutlyerMetrics < Sensu::Handler
       # Send the request
       response = http.request(request)
       if response.code.to_i != 200
-        puts "[OutlyerHandler] Outlyer API Error -- API responded with status code " + response.code
-        puts response.body
+        puts "[OutlyerHandler] Outlyer API Error -- API responded with status code #{response.code}"
+        puts "[OutlyerHandler] Outlyer API Response: #{response.body}"
+        puts "[OutlyerHandler] Outlyer API Request Body: #{request.body}"
+        return
       end
+      puts "Successfully pushed #{datapoints.length} metrics to Outlyer"
     end
   # Raised when any metrics could not be sent
   #
