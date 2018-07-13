@@ -1,0 +1,9 @@
+---
+title: Sensu Handler
+description: Collects metrics from Sensu using a Sensu Handler
+logo: sensu.svg
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - monitoring
