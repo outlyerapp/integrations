@@ -19,7 +19,12 @@ gem push sensu-plugins-outlyer-<version_number>.gem
 
 ## Testing
 
-First uncomment the settings config on line 73 to set the test account and API key.
+First set the path to your handler configuration file with your API details as
+an environment variable:
+
+```bash
+export SENSU_CONFIG_FILES='/Users/dgildeh/Development/Outlyer/integrations/sensu/test/test-config.json'
+```
 
 Then you can use the following command to test the handler with example Nagios
 output data using the following command:

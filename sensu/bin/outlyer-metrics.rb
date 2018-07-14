@@ -61,11 +61,10 @@ class OutlyerMetrics < Sensu::Handler
   # Create a handle and event set
   #
   def handle
-    
     output = @event['check']['output']
     check_status = @event['check']['status'].to_f
     @check_name = @event['check']['name']
-    @host = @event['client']['name']
+    @host = @event['client']['name'].strip.to_s
     @environment = @event['client']['environment']
     if @environment.kind_of?(Array)
       # environment can be an array, so merge values with hyphens
@@ -73,9 +72,6 @@ class OutlyerMetrics < Sensu::Handler
     end
     timestamp = @event['check']['executed'].to_i * 1000
     
-    # Uncomment this line for local testing outside Sensu
-    #@settings = { "outlyer" => {"account" => "", "api_key" => ""}}
-
     # Parse output for metric data
     metrics = if config[:output_format] == 'nagios' then
              parse_nagios_output(output, timestamp)
@@ -149,16 +145,70 @@ class OutlyerMetrics < Sensu::Handler
   #
   def parse_graphite_output(output)
     data = []
+    
+    # Get Scheme to parse Graphite metrics if exists
+    scheme = nil
+    if settings['outlyer'].key?('schemes') && settings['outlyer']['schemes'] != nil
+      if settings['outlyer']['schemes'].key?(@check_name)
+        scheme = settings['outlyer']['schemes'][@check_name]
+      else
+        # Get default scheme if check specific scheme not defined
+        scheme = settings['outlyer']['schemes']['default']
+      end
+    end
+    
+    # Parse the metric on each line in graphite format
     output.split("\n").each do |metric|
       m = metric.split
       next unless m.count == 3
-      name = m[0].split('.', 2)[1]
+      # Get name and extract labels - we remove hostname if in metric name
+      # as it contains dots and breaks parsing
+      metric_parts = m[0].gsub("#{@host}", 'host').split('.')     
+      labels = {service: "sensu.#{@check_name}"}
+      if scheme
+        metric_name = metric_parts.last(scheme['metric_name_length'].to_i).join('.')
+        # Get dimensions from metric name
+        schema_parts = scheme['schema'].split('.')
+        if (metric_parts.length - scheme['metric_name_length'].to_i) != schema_parts.length
+          puts "[OutlyerHandler] Schema Parsing Error: metric parts (#{metric_parts.length - scheme['metric_name_length'].to_i}) is not same length as schema (#{schema_parts.length})"
+          return []
+        end
+        schema_parts.each_with_index do |val,index|
+          if val != 'host' && val != 'name'
+            labels.merge!(Hash[sanitize_value(val),sanitize_value(metric_parts[index])])
+          end
+        end
+      else
+        metric_name = sanitize_value(metric_parts.join('.'))
+      end
       value = m[1].to_f
-      time = m[2].to_i * 1000
-      point = create_datapoint(@check_name + '.' + name, value, time)
+      time = Time.now.to_i * 1000
+      point = create_datapoint(metric_name, value, time, labels)
+      puts point
       data.push(point)
     end
     data
+  end
+  
+  # Ensures all label values conform to Outlyer's data format requirements:
+  #   
+  #   * values can only contain the characters `-._A-Za-z0-9`, other characters 
+  #     will be replaced by underscore including spaces
+  #   * values can only be 80 characters or less
+  #
+  # @param value      [String] The value to sanitize
+  # @param max_length [Integer] The maximum length of string, default 80
+  #
+  def sanitize_value(value, max_length = 80)
+    if !value
+      return ''
+    end
+    value = value.gsub(/[^-._A-Za-z0-9]/i, '_').downcase
+    if value.length > max_length
+      puts "Warning: value '#{value}' is greater than 80 characters and will be truncated to last 80 characters"
+      value = value.split(//).last(max_length).join
+    end
+    value
   end
 
   # Post check metrics to Outlyer's Series API:
@@ -170,7 +220,7 @@ class OutlyerMetrics < Sensu::Handler
   def push_metrics(datapoints)
     Timeout.timeout(config[:api_timeout].to_i) do
       uri = URI.parse("https://api2.outlyer.com/v2/accounts/#{settings['outlyer']['account']}/series")
-
+      
       # Create the HTTP objects
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
@@ -180,7 +230,7 @@ class OutlyerMetrics < Sensu::Handler
       request.add_field("accept", "application/json") 
       request.add_field("Content-Type", "application/json")
       request.body = {samples: datapoints}.to_json
-      
+      puts(request.body)
       # Send the request
       response = http.request(request)
       if response.code.to_i != 200

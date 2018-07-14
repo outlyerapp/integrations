@@ -1,0 +1,12 @@
+{
+    "outlyer": {
+       "account": "",
+       "api_key": "",
+       "schemes": {
+            "default": {
+                "metric_name_length": 2,
+                "schema": "applicationenv.alertgroup.applicationrole.sensuserver.application.runningschedule.host"
+            }
+       }
+    }
+}
