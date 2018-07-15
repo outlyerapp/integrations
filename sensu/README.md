@@ -197,7 +197,7 @@ you should use the following command to view the Sensu server logs to see if any
 errors are being output by the hander:
 
 ```bash
-tail -f /var/log/sensu/sensu-server.log | grep outlyer
+tail -f /var/log/sensu/sensu-server.log | grep outlyer-metrics
 ```
 You can also set the handler command line option `-d true` to enable debug output
 for the handler to see the actual payload of metrics being sent to Outlyer.
