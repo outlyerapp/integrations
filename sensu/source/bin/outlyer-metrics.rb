@@ -51,6 +51,12 @@ class OutlyerMetrics < Sensu::Handler
          short: '-t TIMEOUT',
          long: '--timeout TIMEOUT',
          default: '5'
+       
+  option :debug,
+       description: 'Enable debug for more verbose output',
+       short: '-d DEBUG',
+       long: '--debug DEBUG',
+       default: 'false'
   
   # Override filters from Sensu::Handler.
   # They are not appropriate for metric handlers
@@ -61,6 +67,12 @@ class OutlyerMetrics < Sensu::Handler
   # Create a handle and event set
   #
   def handle
+    
+    @debug = false
+    if config[:debug] == 'true'
+      @debug = true
+    end
+    
     output = @event['check']['output']
     check_status = @event['check']['status'].to_f
     @check_name = @event['check']['name']
@@ -80,7 +92,7 @@ class OutlyerMetrics < Sensu::Handler
           end 
     
     # Add a service status metric
-    metrics.push(create_datapoint('service.status', check_status, timestamp, {service: "sensu.#{@check_name}"}))
+    metrics.push(create_datapoint('service.status', check_status, timestamp, {service: "sensu.#{sanitize_value(@check_name)}"}))
     # Post metrics to Outlyer
     push_metrics(metrics)
   end
@@ -127,10 +139,11 @@ class OutlyerMetrics < Sensu::Handler
       begin
         name = metric_parts[0]
         value = metric_parts[1].split(";")[0].to_f
-        data.push(create_datapoint(@check_name + '.' + name, value, timestamp))
+        labels = {service: "sensu.#{sanitize_value(@check_name)}"}
+        data.push(create_datapoint(name, value, timestamp, labels))
       rescue => error
         # Raised when any metrics could not be parsed
-        puts "[OutlyerHandler] The Nagios metric '#{metric}' could not be parsed: #{error.message}"
+        puts "The Nagios metric '#{metric}' could not be parsed: #{error.message}"
       end 
     end
     data
@@ -164,18 +177,19 @@ class OutlyerMetrics < Sensu::Handler
       # Get name and extract labels - we remove hostname if in metric name
       # as it contains dots and breaks parsing
       metric_parts = m[0].gsub("#{@host}", 'host').split('.')     
-      labels = {service: "sensu.#{@check_name}"}
+      labels = {service: "sensu.#{sanitize_value(@check_name)}"}
       if scheme
         metric_name = metric_parts.last(scheme['metric_name_length'].to_i).join('.')
         # Get dimensions from metric name
-        schema_parts = scheme['schema'].split('.')
+        schema_parts = scheme['scheme'].split('.')
         if (metric_parts.length - scheme['metric_name_length'].to_i) != schema_parts.length
-          puts "[OutlyerHandler] Schema Parsing Error: metric parts (#{metric_parts.length - scheme['metric_name_length'].to_i}) is not same length as schema (#{schema_parts.length})"
+          puts "Schema Parsing Error: metric parts (#{metric_parts.length - scheme['metric_name_length'].to_i}) is not same length as schema (#{schema_parts.length})"
+          puts "Example metric: m[0]"
           return []
         end
         schema_parts.each_with_index do |val,index|
-          if val != 'host' && val != 'name'
-            labels.merge!(Hash[sanitize_value(val),sanitize_value(metric_parts[index])])
+          if val != 'host' && val != 'hostname' && val != 'name'
+            labels.merge!(Hash[sanitize_value(val, 40),sanitize_value(metric_parts[index])])
           end
         end
       else
@@ -229,12 +243,17 @@ class OutlyerMetrics < Sensu::Handler
       request.add_field("accept", "application/json") 
       request.add_field("Content-Type", "application/json")
       request.body = {samples: datapoints}.to_json
+      
+      if @debug
+        puts "DEBUG: Outlyer API Payload: #{request.body}"
+      end
+      
       # Send the request
       response = http.request(request)
       if response.code.to_i != 200
-        puts "[OutlyerHandler] Outlyer API Error -- API responded with status code #{response.code}"
-        puts "[OutlyerHandler] Outlyer API Response: #{response.body}"
-        puts "[OutlyerHandler] Outlyer API Request Body: #{request.body}"
+        puts "Outlyer API Error -- API responded with status code #{response.code}"
+        puts "Outlyer API Response: #{response.body}"
+        puts "Outlyer API Request Body: #{request.body}"
         return
       end
       puts "Successfully pushed #{datapoints.length} metrics to Outlyer"
@@ -242,9 +261,9 @@ class OutlyerMetrics < Sensu::Handler
   # Raised when any metrics could not be sent
   #
   rescue Timeout::Error
-    puts '[OutlyerHandler] Outlyer API Error -- timed out while sending metrics'
+    puts 'Outlyer API Error -- timed out while sending metrics'
   rescue => error
-    puts "[OutlyerHandler] Outlyer API Error -- failed to send metrics: #{error.message}"
+    puts "Outlyer API Error -- failed to send metrics: #{error.message}"
     puts " #{error.backtrace.join("\n\t")}"
   end
 end

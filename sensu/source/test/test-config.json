@@ -5,7 +5,7 @@
        "schemes": {
             "default": {
                 "metric_name_length": 2,
-                "schema": "businessunit.applicationenv.alertgroup.applicationrole.sensuserver.owneremail.runningschedule.host"
+                "scheme": "businessunit.applicationenv.alertgroup.applicationrole.sensuserver.owneremail.runningschedule.host"
             }
        }
     }
