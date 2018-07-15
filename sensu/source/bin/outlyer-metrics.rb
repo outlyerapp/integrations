@@ -184,7 +184,6 @@ class OutlyerMetrics < Sensu::Handler
       value = m[1].to_f
       time = Time.now.to_i * 1000
       point = create_datapoint(metric_name, value, time, labels)
-      puts point
       data.push(point)
     end
     data
@@ -230,7 +229,6 @@ class OutlyerMetrics < Sensu::Handler
       request.add_field("accept", "application/json") 
       request.add_field("Content-Type", "application/json")
       request.body = {samples: datapoints}.to_json
-      puts(request.body)
       # Send the request
       response = http.request(request)
       if response.code.to_i != 200
