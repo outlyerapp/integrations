@@ -27,21 +27,14 @@ handler configuration file with your API details as an environment variable:
 export SENSU_CONFIG_FILES='/Users/dgildeh/Development/Outlyer/sensu-config.json'
 ```
 
-Then you can use the following command to test the handler with example Nagios
-output data using the following command:
+Ensure your handler has execution permissions set:
 
 ```bash
-cat ./test/test-nagios-data.json | ruby ./bin/outlyer-metrics.rb -f nagios
+chmod +x ./bin/outlyer-metrics.rb
 ```
-For Graphite metric test:
+
+The run the unit tests:
 
 ```bash
-cat ./test/test-graphite-data.json | ruby ./bin/outlyer-metrics.rb
-```
-
-Note you will have to override the check timestamp to the current time so your
-metrics will appear in Outlyer using the test above:
-
-```ruby
-timestamp =  Time.now.to_i * 1000
+ruby test/test_outlyer_handler.rb 
 ```

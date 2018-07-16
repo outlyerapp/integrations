@@ -22,6 +22,7 @@
 #   
 #     -f: set the Handler's check output format to parse. Can either be `graphite` (default) or `nagios`.
 #     -t: Set the timeout in seconds for the Outlyer API requests
+#     -d: Enable debugging to see additional logging in Output
 #   
 # NOTES:
 #
@@ -53,10 +54,11 @@ class OutlyerMetrics < Sensu::Handler
          default: '5'
        
   option :debug,
-       description: 'Enable debug for more verbose output',
-       short: '-d DEBUG',
-       long: '--debug DEBUG',
-       default: 'false'
+         description: 'Enable debug for more verbose output',
+         boolean: true,
+         short: '-d',
+         long: '--debug', 
+         default: false
   
   # Override filters from Sensu::Handler.
   # They are not appropriate for metric handlers
@@ -67,12 +69,7 @@ class OutlyerMetrics < Sensu::Handler
   # Create a handle and event set
   #
   def handle
-    
-    @debug = false
-    if config[:debug] == 'true'
-      @debug = true
-    end
-    
+
     output = @event['check']['output']
     check_status = @event['check']['status'].to_f
     @check_name = @event['check']['name']
@@ -83,6 +80,10 @@ class OutlyerMetrics < Sensu::Handler
       @environment = @environment.join("-")
     end
     timestamp = @event['check']['executed'].to_i * 1000
+    
+    if config[:debug]
+      puts "Handling check #{@check_name} for host #{@host} in environment #{@environment}"
+    end
     
     # Parse output for metric data
     metrics = if config[:output_format] == 'nagios' then
@@ -183,8 +184,12 @@ class OutlyerMetrics < Sensu::Handler
         # Get dimensions from metric name
         schema_parts = scheme['scheme'].split('.')
         if (metric_parts.length - scheme['metric_name_length'].to_i) != schema_parts.length
-          puts "Schema Parsing Error: metric parts (#{metric_parts.length - scheme['metric_name_length'].to_i}) is not same length as schema (#{schema_parts.length})"
-          puts "Example metric: m[0]"
+          puts "Scheme Parsing Error: metric parts (#{metric_parts.length - scheme['metric_name_length'].to_i}) is not same length as schema (#{schema_parts.length})"
+          puts "Scheme: #{scheme['scheme']}"
+          puts "Example metric: #{m[0]}"
+          if config[:debug]
+            puts "Event Data: \n#{JSON.pretty_generate(@event)}"
+          end
           return []
         end
         schema_parts.each_with_index do |val,index|
@@ -196,7 +201,7 @@ class OutlyerMetrics < Sensu::Handler
         metric_name = sanitize_value(metric_parts.join('.'))
       end
       value = m[1].to_f
-      time = Time.now.to_i * 1000
+      time = m[2].to_i * 1000
       point = create_datapoint(metric_name, value, time, labels)
       data.push(point)
     end
@@ -242,9 +247,9 @@ class OutlyerMetrics < Sensu::Handler
       request.add_field("Authorization", "Bearer #{settings['outlyer']['api_key']}")
       request.add_field("accept", "application/json") 
       request.add_field("Content-Type", "application/json")
-      request.body = {samples: datapoints}.to_json
+      request.body = JSON.pretty_generate({samples: datapoints})
       
-      if @debug
+      if config[:debug]
         puts "DEBUG: Outlyer API Payload: #{request.body}"
       end
       
@@ -262,8 +267,13 @@ class OutlyerMetrics < Sensu::Handler
   #
   rescue Timeout::Error
     puts 'Outlyer API Error -- timed out while sending metrics'
+    exit(2)
   rescue => error
     puts "Outlyer API Error -- failed to send metrics: #{error.message}"
     puts " #{error.backtrace.join("\n\t")}"
+    if config[:debug]
+      puts "Event Data: \n#{JSON.pretty_generate(@event)}"
+    end
+    exit(2)
   end
 end

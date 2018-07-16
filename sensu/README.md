@@ -81,9 +81,10 @@ In addition, the optional command line options are accepted by the handler:
 * **-t**: Use this to change the API request timeout to Outlyer. This may need increasing
 if the volume of metrics being sent per check increases substantially. By default it is 5
 seconds which is more than enough for most Sensu checks.
-* **-d**: Set this to `true` to enable debugging output of the handler. This will show you
-the final payload being posted to Outlyer to help debug if you don't see metrics in Outlyer
-after the check runs successfully.
+* **-d**: Add this flag to enable debugging output of the handler. This will show you
+the final payload being posted to Outlyer and other data to help debug if you don't
+see metrics in Outlyer after the check runs successfully. **Do not switch this on in production
+unless troubleshooting as it will increase your Sensu logging substantially!**
 
 Finally add your Outlyer API configuration at `/etc/sensu/conf.d/outlyer.json`:
 
