@@ -48,18 +48,57 @@ class TestOutlyerHandler < Test::Unit::TestCase
     metrics_host = "ip-10-127-222-123.us-east-2.compute.internal"
     client_name = "client-12"
     scheme = "CLOUDTRUST.DEV.OPS_TEAM.APPSERVER.#{metrics_host}"
-    output = %Q{#{scheme}.cpu-pcnt-usage.user 4.57 #{Time.now.to_i}
-#{scheme}.cpu-pcnt-usage.nice 0.00 #{Time.now.to_i}
-#{scheme}.cpu-pcnt-usage.system 1.52 #{Time.now.to_i}
-#{scheme}.cpu-pcnt-usage.idle 93.91 #{Time.now.to_i}
-#{scheme}.cpu-pcnt-usage.iowait 0.00 #{Time.now.to_i}
-#{scheme}.cpu-pcnt-usage.irq 0.00 #{Time.now.to_i}
-#{scheme}.cpu-pcnt-usage.softirq 0.00 #{Time.now.to_i}
-#{scheme}.cpu-pcnt-usage.steal 0.00 #{Time.now.to_i}
-#{scheme}.cpu-pcnt-usage.guest 0.00 #{Time.now.to_i}}
+    output = %Q{#{scheme}.cpu-pcnt-usage.user 4.57 #{Time.now.to_i}}
     event = create_new_event('graphite-check', output, client_name)
     
     # Initialize class with command line args piped in
+    run_script_with_input(event.to_json, ['-d'])
+  end
+  
+  def test_graphite_filters
+    
+    metrics_host = "ip-10-127-222-123.us-east-2.compute.internal"
+    client_name = "client-12"
+    output = %Q{#{metrics_host}.disk.xvda1.used 18727404 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.avail 7475712 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.capacity 72 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.iused 157928 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.iavail 12948744 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.icapacity 2 #{Time.now.to_i}
+#{metrics_host}.disk.xvda.reads 1193784 #{Time.now.to_i}
+#{metrics_host}.disk.xvda.readsMerged 62 #{Time.now.to_i}
+#{metrics_host}.disk.xvda.sectorsRead 103321552 #{Time.now.to_i}
+#{metrics_host}.disk.xvda.readTime 6937703 #{Time.now.to_i}
+#{metrics_host}.disk.xvda.writes 50310848 #{Time.now.to_i}
+#{metrics_host}.disk.xvda.writesMerged 1417312 #{Time.now.to_i}
+#{metrics_host}.disk.xvda.sectorsWritten 838980806 #{Time.now.to_i}
+#{metrics_host}.disk.xvda.writeTime 389973086 #{Time.now.to_i}
+#{metrics_host}.disk.xvda.ioInProgress 0 #{Time.now.to_i}
+#{metrics_host}.disk.xvda.ioTime 6000110 #{Time.now.to_i}
+#{metrics_host}.disk.xvda.ioTimeWeighted 396981551 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.reads 1193697 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.readsMerged 62 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.sectorsRead 103317400 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.readTime 6937670 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.writes 50310847 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.writesMerged 1417312 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.sectorsWritten 838980798 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.writeTime 389973085 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.ioInProgress 0 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.ioTime 6000092 #{Time.now.to_i}
+#{metrics_host}.disk.xvda1.ioTimeWeighted 396981517 #{Time.now.to_i}
+#{metrics_host}.disk_usage.root.used 18289 #{Time.now.to_i}
+#{metrics_host}.disk_usage.root.avail 7301 #{Time.now.to_i}
+#{metrics_host}.disk_usage.root.used_percentage 72 #{Time.now.to_i}
+#{metrics_host}.disk_usage.root.dev.used 0 #{Time.now.to_i}
+#{metrics_host}.disk_usage.root.dev.avail 3885 #{Time.now.to_i}
+#{metrics_host}.disk_usage.root.dev.used_percentage 0 #{Time.now.to_i}
+#{metrics_host}.disk_usage.root.run.used 409 #{Time.now.to_i}
+#{metrics_host}.disk_usage.root.run.avail 3503 #{Time.now.to_i}
+#{metrics_host}.disk_usage.root.run.used_percentage 11 #{Time.now.to_i}
+    }
+    
+    event = create_new_event('graphite-check', output, client_name)
     run_script_with_input(event.to_json, ['-d'])
   end
     

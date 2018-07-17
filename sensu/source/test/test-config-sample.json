@@ -6,6 +6,18 @@
             {
                 "filter": "*.*.*.*.*.*.*.*.*.*.*.*.*",
                 "template": "businessunit.applicationenv.alertgroup.applicationrole.name_tag.owneremail.runningschedule.host.host.host.host.name.name"
+            },
+            {
+                "filter": "*.*.*.*.disk.*.*",
+                "template": "host.host.host.host.name.mount.name"
+            },
+            {
+                "filter": "*.*.*.*.disk_usage.*.*",
+                "template": "host.host.host.host.name.mount.name"
+            },
+            {
+                "filter": "*.*.*.*.disk_usage.*.*.*",
+                "template": "host.host.host.host.name.mount.mount.name"
             }
        ]
     }
