@@ -210,6 +210,12 @@ class OutlyerMetrics < Sensu::Handler
             end
             
           else
+            # If no template found, ignore metric and put warning in handler
+            # this avoids un-configured checks sending bad data to Outlyer
+            puts "No scheme was found that matches the metric '#{m[0]}.'"
+            puts "Please configure a scheme for the check '#{@check_name}' "\
+              "on the Sensu client '#{@host}'."
+            exit(2)
             metric_name = sanitize_value(m[0])
           end
         else
