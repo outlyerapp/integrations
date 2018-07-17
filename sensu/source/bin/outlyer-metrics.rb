@@ -75,10 +75,6 @@ class OutlyerMetrics < Sensu::Handler
     @check_name = @event['check']['name']
     @host = @event['client']['name'].strip.to_s
     @environment = @event['client']['environment']
-    if @environment.kind_of?(Array)
-      # environment can be an array, so merge values with hyphens
-      @environment = @environment.join("-")
-    end
     timestamp = @event['check']['executed'].to_i * 1000
     
     if config[:debug]
@@ -91,7 +87,7 @@ class OutlyerMetrics < Sensu::Handler
           else
              parse_graphite_output(output)
           end 
-    
+      
     # Add a service status metric
     metrics.push(create_datapoint('service.status', check_status, timestamp, {service: "sensu.#{sanitize_value(@check_name)}"}))
     # Post metrics to Outlyer
@@ -100,23 +96,21 @@ class OutlyerMetrics < Sensu::Handler
   
   # Create a single data point
   #
-  # @param name     [String] metric name
-  # @param value    [Float] metric value
-  # @param time     [Integer] epoch timestamp of metric in milliseconds
-  # @param labels   [HashMap] (Optional) Additional labels to append to data point
+  # @param name         [String] metric name
+  # @param value        [Float] metric value
+  # @param time         [Integer] epoch timestamp of metric in milliseconds
+  # @param labels       [HashMap] (Optional) Additional labels to append to data point
+  # @param metric_host  [String] (Optional) Set a host for the metric
   #
-  def create_datapoint(name, value, time, labels = nil)
+  def create_datapoint(name, value, time, labels = {}, metric_host=@host)
     datapoint = {
-                  host: @host,
-                  labels: {
-                            environment: @environment,
-                          },
+                  host: metric_host,
+                  labels: labels,
                   name: name,
                   timestamp: time,
                   type: 'gauge',
                   value: value
                 }
-    datapoint[:labels].merge!(labels) unless labels.nil?
     datapoint
   end
 
@@ -160,49 +154,71 @@ class OutlyerMetrics < Sensu::Handler
   def parse_graphite_output(output)
     data = []
     
-    # Get Scheme to parse Graphite metrics if exists
-    scheme = nil
+    # Get Schemes to parse Graphite metrics if exists
+    schemes = nil
     if settings['outlyer'].key?('schemes') && settings['outlyer']['schemes'] != nil
-      if settings['outlyer']['schemes'].key?(@check_name)
-        scheme = settings['outlyer']['schemes'][@check_name]
-      else
-        # Get default scheme if check specific scheme not defined
-        scheme = settings['outlyer']['schemes']['default']
-      end
+        schemes = settings['outlyer']['schemes']
     end
     
     # Parse the metric on each line in graphite format
     output.split("\n").each do |metric|
       m = metric.split
       next unless m.count == 3
-      # Get name and extract labels - we remove hostname if in metric name
-      # as it contains dots and breaks parsing
-      metric_parts = m[0].gsub("#{@host}", 'host').split('.')     
-      labels = {service: "sensu.#{sanitize_value(@check_name)}"}
-      if scheme
-        metric_name = metric_parts.last(scheme['metric_name_length'].to_i).join('.')
-        # Get dimensions from metric name
-        schema_parts = scheme['scheme'].split('.')
-        if (metric_parts.length - scheme['metric_name_length'].to_i) != schema_parts.length
-          puts "Scheme Parsing Error: metric parts (#{metric_parts.length - scheme['metric_name_length'].to_i}) is not same length as schema (#{schema_parts.length})"
-          puts "Scheme: #{scheme['scheme']}"
-          puts "Example metric: #{m[0]}"
-          if config[:debug]
-            puts "Event Data: \n#{JSON.pretty_generate(@event)}"
+        labels = {service: "sensu.#{sanitize_value(@check_name)}"}
+        metric_host = @host
+        
+        # Check to see if we have a scheme filter that matches the metric name
+        template = nil
+        if schemes
+          schemes.each do |scheme|
+            filter = Regexp.new("^#{Regexp.escape(scheme['filter']).gsub('\*','[^\.]*?')}$")
+            if m[0] =~ filter
+              template = scheme['template']
+              if config[:debug]
+                puts "Template Found: '#{template}' with REGEX '#{filter.inspect}'"
+              end
+              break
+            end
           end
-          return []
-        end
-        schema_parts.each_with_index do |val,index|
-          if val != 'host' && val != 'hostname' && val != 'name'
-            labels.merge!(Hash[sanitize_value(val, 40),sanitize_value(metric_parts[index])])
+          
+          # Found a template to parse metric
+          if template
+            metric_parts = m[0].split('.')
+            template_parts = template.split('.')
+            
+            # Iterate through the template to parse the metric labels
+            template_parts.each_with_index do |val,index|
+              key = sanitize_value(val, 40)
+              value = sanitize_value(metric_parts[index])
+              if labels.key?(key)
+                # If value is spread over multiple parts re-append the value
+                labels[key] += ".#{value}"
+              else
+                labels.merge!(Hash[key,value])
+              end
+            end
+            
+            # Now we have all the labels extracted, need to ensure a
+            # name was given and optional host
+            if labels.key?('name')
+              metric_name = labels['name']
+              labels.delete('name')
+            end
+            if labels.key?('host')
+              metric_host = labels['host']
+              labels.delete('host')
+            end
+            
+          else
+            metric_name = sanitize_value(m[0])
           end
+        else
+          metric_name = sanitize_value(m[0])
         end
-      else
-        metric_name = sanitize_value(metric_parts.join('.'))
-      end
+        
       value = m[1].to_f
       time = m[2].to_i * 1000
-      point = create_datapoint(metric_name, value, time, labels)
+      point = create_datapoint(metric_name, value, time, labels, metric_host)
       data.push(point)
     end
     data

@@ -2,11 +2,11 @@
     "outlyer": {
        "account": "",
        "api_key": "",
-       "schemes": {
-            "default": {
-                "metric_name_length": 2,
-                "scheme": "businessunit.applicationenv.alertgroup.applicationrole.sensuserver.owneremail.runningschedule.host"
+       "schemes": [
+            {
+                "filter": "*.*.*.*.*.*.*.*.*.*.*.*.*",
+                "template": "businessunit.applicationenv.alertgroup.applicationrole.name_tag.owneremail.runningschedule.host.host.host.host.name.name"
             }
-       }
+       ]
     }
 }

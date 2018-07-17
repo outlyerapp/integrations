@@ -25,8 +25,9 @@ class TestOutlyerHandler < Test::Unit::TestCase
   
   def test_graphite_output_1
     
-    host = "ip-10-127-222-123.us-east-2.compute.internal"
-    scheme = "CLOUDTRUST.DEV.OPS_TEAM.APPSERVER.asg-sensu-server.DLCLOUDTRUST.00:00:23:59:1-7.#{host}"
+    metrics_host = "ip-10-127-222-123.us-east-2.compute.internal"
+    client_name = "client-12"
+    scheme = "CLOUDTRUST.DEV.OPS_TEAM.APPSERVER.asg-sensu-server.DLCLOUDTRUST.00:00:23:59:1-7.#{metrics_host}"
     output = %Q{#{scheme}.cpu-pcnt-usage.user 4.57 #{Time.now.to_i}
 #{scheme}.cpu-pcnt-usage.nice 0.00 #{Time.now.to_i}
 #{scheme}.cpu-pcnt-usage.system 1.52 #{Time.now.to_i}
@@ -36,7 +37,7 @@ class TestOutlyerHandler < Test::Unit::TestCase
 #{scheme}.cpu-pcnt-usage.softirq 0.00 #{Time.now.to_i}
 #{scheme}.cpu-pcnt-usage.steal 0.00 #{Time.now.to_i}
 #{scheme}.cpu-pcnt-usage.guest 0.00 #{Time.now.to_i}}
-    event = create_new_event('graphite-check', output, host)
+    event = create_new_event('graphite-check', output, client_name)
     
     # Initialize class with command line args piped in
     run_script_with_input(event.to_json, ['-d'])
