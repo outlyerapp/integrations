@@ -23,11 +23,6 @@ In addition the status code of each check is sent as the `service.status` metric
 to Outlyer with the label `service: sensu.<check_name>`. You will be able to use this
 metric to configure dashboad status widgets and service check alerts in Outlyer.
 
-All metrics will also get the `environment` label pulled from the client's environment 
-field that ran the check. If this field is an array, all parts of the array will be 
-combined into a single string with `-` joining them so you can filter to specific metrics 
-in your environments.
-
 ## Nagios Checks
 
 For Nagios checks, the timestamp of when the check was executed is used for all the
@@ -37,7 +32,9 @@ metric data points.
 
 For Graphite metric checks the timestamp of each metric data
 point is used, apart from the service.status which uses the check execution time
-like Nagios checks. In addition if you configure `schemes` in your Outlyer handler
+like Nagios checks.
+
+In addition if you configure `schemes` in your Outlyer handler
 configuration, your metric paths will be transformed from long Graphite metric names
 to a metric name with dimensional key/value labels extracted from the Graphite metric
 name path.
@@ -93,11 +90,12 @@ Finally add your Outlyer API configuration at `/etc/sensu/conf.d/outlyer.json`:
     "outlyer": {
        "api_key": "<API_KEY>",
        "account": "<ACCOUNT_NAME>",
-       "schemes": {
-            "default": {
-                "metric_name_length": 2,
-                "scheme": "businessunit.applicationenv.alertgroup.applicationrole.sensuserver.owneremail.runningschedule.host"
+       "schemes": [
+            {
+                "filter": "*.*.*.*.*.*",
+                "template": "host.host.host.host.name.name"
             }
+       ]
     }
 }
 ```
@@ -108,8 +106,8 @@ Where:
 * **account**: The unique account name of the account you want to push metrics too (you will see this in the URL when using the app)
 * **schemes**: (Optional) Define your Graphite naming schemes here to transform your metric name schemes into labels for outlyer. 
 Read more on schemes below. If this is removed all Graphite metrics will be sent as-is. However if your Graphite metric names are longer
-than 80 characters they will be truncated to the last 80 characters. Using Schemes is recommended to ensure all your metrics are sent
-with labels so they are easily discoverable in Outlyer.
+than 80 characters the metric name will be truncated to the last 80 characters. Using Schemes is recommended to ensure all your metrics
+are sent with labels so they are easily discoverable in Outlyer.
 
 Finally restart your Sensu server so the new handler is enabled:
 
@@ -138,48 +136,69 @@ separated by full-stops. If you have used the `--scheme` command line option for
 metric checks to append these properties to your metric names, you will need to define a scheme
 for your checks in your Outlyer handler configuration.
 
-For example if you encode all your metrics with the following path:
+The schemes can be optionally added to your `/etc/sensu/conf.d/outlyer.json` configuration file to define
+a list of filters and templates for the different metrics being sent from your Sensu Graphite metric checks.
+If not filter matches, it will send the metric name as-is, truncating to the last 80 characters of the metric
+name if its longer than 80 characters.
 
-```
-{environment}.{region}.{team}.{application}.{hostname}.{metric_name}
-```
-
-then Outlyer will transform the metric name into just {metric_name} with the labels
-environment, region, team, application and host for the rest of the path. This means
-you can then use the labels in Outlyer to filter metrics to the specific environment, 
-team or host, and then select the metric_name for graphing and alerting.
-
-In order for the metric names to be parsed correctly you need to define schemes in your
-Outlyer handler configuration. A `default` configuration can be provided that will be used
-across all your checks if you use the same scheme for all your metrics. However additional
-configurations can be defined using the check's name in Sensu to define specific schemes
-for specific checks. For example if you have a Sensu check with name `metrics_cpu` you can
-add the `metrics_cpu` scheme to the list of schemes in the Outlyer configuration with its 
-own scheme. If a specific check scheme isn't defined, it will always use the `default` scheme.
-
-The handler will remove the hostname (as these usually contain full-stops in the name) and then
-split the metric name into parts broken by full-stops, the same way Graphite splits metrics into
-a browsable tree. In your scheme you then define two variables:
-
-* **metric_name_length**: This is the number of parts from the end that are used by the actual metric name. These will be combined to form the final metric name in Outlyer.
-* **scheme**: This is the full-stop seperated scheme for the rest of the metric so they can be transformed into labels. The name of the label will be the string provided in the scheme part.
-
-In the example above the following scheme would transform the metrics into labels:
-environment, region, team, application, hostname with the metric name being the last 2
-parts of the metric name:
+The schemes is an array of scheme objects, which include a filter property and template as below:
 
 ```json
-"schemes": {
-            "default": {
-                "metric_name_length": 2,
-                "scheme": "environment.region.team.application.hostname"
-            }
+{
+    "filter": "*.*.*.*.*.*",
+    "template": "host.host.host.host.name.name"
+}
 ```
 
-When parsing the metric names in the handler, if the length of the Graphite metric
-name differs from the scheme + metric_name_length no metrics will be parsed and sent
-to Outlyer and you will see a warning in the Handler output. You can then fix the 
-scheme definition for the Handler to start seeing metrics again.
+where:
+
+* **filter**: Filter is the format of the metrics to match your metrics against, if multiple filters match, the first scheme filter in the
+schemes array will be used.
+* **template**: The template used to parse the matched graphite metric into labeled metrics. The `name` label to determine the parts that
+include the metric name (i.e. cpu-pcnt-usage.guest) are mandatory, and `host` can be used if the hostname of where the metric is from is in
+the metric path. Using `host` will override the host name used to run the sensu check when sending the metric to Outlyer, otherwise it will
+use the client name of the client that ran the check as the host.
+
+As an example assume we have the following metric:
+
+```
+DEV.us-east-1.emailapp.ip-10-127-222-123.us-east-2.compute.internal.cpu-pcnt-usage.guest 12.3 1531798162
+```
+
+The following filters will match:
+
+```
+*.*.*.*.*.*.*.*.*               # Any metric with 9 dot seperated parts
+DEV.*.*.*.*.*.*.*.*             # Any metric starting with DEV followed by 8 parts
+DEV.*.emailapp.*.*.*.*.*.*      # Any metric starting with DEV, followed by anything, then emailapp, then 6 parts
+```
+
+Once matched, you can then apply a template to extract the labels from the dot-seperated metric parts:
+
+```
+environment.region.application.host.host.host.host.name.name
+```
+
+Using the same label name over multiple parts will combine the parts into a single label value. This will create the following data-point
+in Outlyer:
+
+```
+{
+      "host": "ip-10-127-222-123.us-east-2.compute.internal",
+      "labels": {
+        "environment": "dev",
+        "region": "us-east-1",
+        "application": "emailapp"
+      },
+      "name": "cpu-pcnt-usage.guest",
+      "timestamp": 1531798162000,
+      "type": "gauge",
+      "value": 12.3
+}
+```
+
+You will now be able to filter your Sensu Graphite metrics using the host, metic name or any of the labels to build advanced analytics
+queries in Outlyer.
 
 ## Upgrading
 
