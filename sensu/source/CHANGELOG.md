@@ -3,7 +3,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
-## [0.6.0] - 2018-07-16
+## [0.7.0] - 2018-07-16
 - Made debug flag boolean
 - Added additional debug logging for troubleshooting
 - Added Unit Tests

@@ -138,8 +138,12 @@ for your checks in your Outlyer handler configuration.
 
 The schemes can be optionally added to your `/etc/sensu/conf.d/outlyer.json` configuration file to define
 a list of filters and templates for the different metrics being sent from your Sensu Graphite metric checks.
-If not filter matches, it will send the metric name as-is, truncating to the last 80 characters of the metric
-name if its longer than 80 characters.
+
+If no schemes are provided, it will send the metric name as-is, truncating to the last 80 characters of the metric
+name if its longer than 80 characters. However if schemes is provided and no filter match is found for the metric,
+the handler will only return the `service.status` metric with a status code of 3 (UNKNOWN) so you can easily setup
+alerts in Outlyer to let you know if the handler is dropping metrics for your checks if the metric parsing is not
+setup correctly.
 
 The schemes is an array of scheme objects, which include a filter property and template as below:
 

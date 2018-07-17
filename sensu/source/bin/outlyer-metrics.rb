@@ -71,11 +71,9 @@ class OutlyerMetrics < Sensu::Handler
   def handle
 
     output = @event['check']['output']
-    check_status = @event['check']['status'].to_f
     @check_name = @event['check']['name']
     @host = @event['client']['name'].strip.to_s
     @environment = @event['client']['environment']
-    timestamp = @event['check']['executed'].to_i * 1000
     
     if config[:debug]
       puts "Handling check #{@check_name} for host #{@host} in environment #{@environment}"
@@ -88,30 +86,8 @@ class OutlyerMetrics < Sensu::Handler
              parse_graphite_output(output)
           end 
       
-    # Add a service status metric
-    metrics.push(create_datapoint('service.status', check_status, timestamp, {service: "sensu.#{sanitize_value(@check_name)}"}))
     # Post metrics to Outlyer
     push_metrics(metrics)
-  end
-  
-  # Create a single data point
-  #
-  # @param name         [String] metric name
-  # @param value        [Float] metric value
-  # @param time         [Integer] epoch timestamp of metric in milliseconds
-  # @param labels       [HashMap] (Optional) Additional labels to append to data point
-  # @param metric_host  [String] (Optional) Set a host for the metric
-  #
-  def create_datapoint(name, value, time, labels = {}, metric_host=@host)
-    datapoint = {
-                  host: metric_host,
-                  labels: labels,
-                  name: name,
-                  timestamp: time,
-                  type: 'gauge',
-                  value: value
-                }
-    datapoint
   end
 
   # Parse the Nagios output format:
@@ -141,6 +117,7 @@ class OutlyerMetrics < Sensu::Handler
         puts "The Nagios metric '#{metric}' could not be parsed: #{error.message}"
       end 
     end
+    data.push(create_status_metric(@event['check']['status'].to_f))
     data
   end
   
@@ -161,15 +138,15 @@ class OutlyerMetrics < Sensu::Handler
     end
     
     # Parse the metric on each line in graphite format
+    metric_host = @host
     output.split("\n").each do |metric|
       m = metric.split
       next unless m.count == 3
         labels = {service: "sensu.#{sanitize_value(@check_name)}"}
-        metric_host = @host
         
         # Check to see if we have a scheme filter that matches the metric name
-        template = nil
         if schemes
+          template = nil
           schemes.each do |scheme|
             filter = Regexp.new("^#{Regexp.escape(scheme['filter']).gsub('\*','[^\.]*?')}$")
             if m[0] =~ filter
@@ -215,8 +192,8 @@ class OutlyerMetrics < Sensu::Handler
             puts "No scheme was found that matches the metric '#{m[0]}.'"
             puts "Please configure a scheme for the check '#{@check_name}' "\
               "on the Sensu client '#{@host}'."
-            exit(2)
-            metric_name = sanitize_value(m[0])
+            data.push(create_status_metric(3))
+            return data
           end
         else
           metric_name = sanitize_value(m[0])
@@ -227,7 +204,28 @@ class OutlyerMetrics < Sensu::Handler
       point = create_datapoint(metric_name, value, time, labels, metric_host)
       data.push(point)
     end
+    if config[:debug]
+      puts "Parsed #{data.length} of #{output.split("\n").length} metrics"
+    end 
+    data.push(create_status_metric(@event['check']['status'].to_f, metric_host))
     data
+  end
+  
+  # Create the status metric for the check with status:
+  #   
+  #   0 - OK
+  #   1 - WARN
+  #   2 - CRITICAL
+  #   3 - UNKNOWN
+  # 
+  # Unknown is used to tell Outlyer there was a parsing error for the check
+  # 
+  # @param check_status   [Integer] Check status code
+  # @param host           [String] (Optional) hostname of host that ran the check
+  # @param timestamp      [Integer] (Optional) timestamp of when host ran the check
+  #
+  def create_status_metric(check_status, host=@host, timestamp=@event['check']['executed'].to_i * 1000)
+    return create_datapoint('service.status', check_status, timestamp, {service: "sensu.#{sanitize_value(@check_name)}"}, host)
   end
   
   # Ensures all label values conform to Outlyer's data format requirements:
@@ -249,6 +247,26 @@ class OutlyerMetrics < Sensu::Handler
       value = value.split(//).last(max_length).join
     end
     value
+  end
+  
+  # Create a single data point
+  #
+  # @param name         [String] metric name
+  # @param value        [Float] metric value
+  # @param time         [Integer] epoch timestamp of metric in milliseconds
+  # @param labels       [HashMap] (Optional) Additional labels to append to data point
+  # @param metric_host  [String] (Optional) Set a host for the metric
+  #
+  def create_datapoint(name, value, time, labels = {}, metric_host=@host)
+    datapoint = {
+                  host: metric_host,
+                  labels: labels,
+                  name: name,
+                  timestamp: time,
+                  type: 'gauge',
+                  value: value
+                }
+    datapoint
   end
 
   # Post check metrics to Outlyer's Series API:
