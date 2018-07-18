@@ -81,7 +81,7 @@ class OutlyerMetrics < Sensu::Handler
     
     # Parse output for metric data
     metrics = if config[:output_format] == 'nagios' then
-             parse_nagios_output(output, timestamp)
+             parse_nagios_output(output)
           else
              parse_graphite_output(output)
           end 
@@ -94,9 +94,8 @@ class OutlyerMetrics < Sensu::Handler
   #   <message> | <metric path 1>=<metric value 1>, <metric path 2>=<metric value 2>...
   #
   # @param output   [String] The full check output
-  # @param timestamp[Integer] The epoch timestamp in milliseconds the check was executed
   #
-  def parse_nagios_output(output, timestamp)
+  def parse_nagios_output(output)
     data = []
     parts = output.strip.split('|')
     
@@ -111,7 +110,7 @@ class OutlyerMetrics < Sensu::Handler
         name = metric_parts[0]
         value = metric_parts[1].split(";")[0].to_f
         labels = {service: "sensu.#{sanitize_value(@check_name)}"}
-        data.push(create_datapoint(name, value, timestamp, labels))
+        data.push(create_datapoint(name, value, @event['check']['executed'].to_i * 1000, labels))
       rescue => error
         # Raised when any metrics could not be parsed
         puts "The Nagios metric '#{metric}' could not be parsed: #{error.message}"
@@ -189,7 +188,7 @@ class OutlyerMetrics < Sensu::Handler
           else
             # If no template found, ignore metric and put warning in handler
             # this avoids un-configured checks sending bad data to Outlyer
-            puts "No scheme was found that matches the metric '#{m[0]}.'"
+            puts "No scheme was found that matches the metric '#{m[0]}'."
             puts "Please configure a scheme for the check '#{@check_name}' "\
               "on the Sensu client '#{@host}'."
             data.push(create_status_metric(3))
