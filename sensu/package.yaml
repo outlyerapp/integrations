@@ -2,6 +2,7 @@
 title: Sensu Handler
 description: Collects metrics from Sensu using a Sensu Handler
 logo: sensu.svg
+version: 0.7.0
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT

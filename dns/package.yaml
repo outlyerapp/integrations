@@ -1,0 +1,10 @@
+---
+title: DNS Check
+description: Monitor the resolvability and lookup times of any DNS entry
+logo: dns-logo.svg
+version: 1.0.0
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - web
