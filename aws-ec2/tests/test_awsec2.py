@@ -9,9 +9,12 @@ class TestPlugin(unittest.TestCase):
     def test_awsec2_discovery_plugin(self):
         variables = {
             'AWS_REGION': 'us-east-1',
+#            'AWS_ACCESS_KEY_ID': '',
+#            'AWS_SECRET_ACCESS_KEY': ''
         }
         output = OutlyerPluginTest.run_plugin("../plugins/ec2-discovery.py", variables)
-        pprint.pprint(output.stdout)
+        instances = json.loads(output.stdout)
+        pprint.pprint(instances)
 
     def test_aws_ec2_plugin(self):
         # Run discovery script first to get list of instance in account

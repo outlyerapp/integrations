@@ -27,7 +27,7 @@ class EC2Discovery(object):
 
                         if instance['State']['Name'] == 'running':
                             host = {
-                                'hostname': "ec2-" + instance['PrivateDnsName'],
+                                'hostname': instance['PrivateDnsName'],
                                 'ip': instance['PrivateIpAddress'],
                             }
                             labels = {
