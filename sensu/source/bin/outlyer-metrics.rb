@@ -224,7 +224,11 @@ class OutlyerMetrics < Sensu::Handler
   # @param timestamp      [Integer] (Optional) timestamp of when host ran the check
   #
   def create_status_metric(check_status, host=@host, timestamp=@event['check']['executed'].to_i * 1000)
-    return create_datapoint('service.status', check_status, timestamp, {service: "sensu.#{sanitize_value(@check_name)}"}, host)
+    labels = {
+      service: sanitize_value(@check_name),
+      source: 'sensu'      
+    }
+    return create_datapoint('service.status', check_status, timestamp, labels, host)
   end
   
   # Ensures all label values conform to Outlyer's data format requirements:
