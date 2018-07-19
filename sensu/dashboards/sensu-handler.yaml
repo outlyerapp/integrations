@@ -1,0 +1,250 @@
+description: Helper dashboard to see what checks are sending back metrics via Sensu
+icon:
+  color: '#92c72e'
+  name: group_work
+labels:
+- key: sensu
+  value: ""
+name: sensu-handler
+scopes:
+- defaultValue: ""
+  labelKey: host
+theme: light
+title: Sensu Handler
+widgets:
+  chartWidgets:
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          max: 0
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedBar
+      description: If a check is sending back metrics that aren't being parsed, use
+        this chart to identify the check and host its running on to fix.
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,service.status,:eq,source,sensu,:eq,:and,status,unknown,:eq,:and,:count,(,service,host,),:by
+        scoped: false
+        visible: true
+      seriesStyle:
+        color: '#ff5e44'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Unconfigured Checks (Status Code 3 UNKNOWN)
+    row: 3
+    width: 5
+  - col: 5
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedBar
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,service.status,:eq,source,sensu,:eq,:and,:count,:cf-max,(,host,),:by
+        scoped: false
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Number of Checks Reporting Per Host
+    row: 3
+    width: 5
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: ""
+          unitPosition: After
+      chartType: StackedBar
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,service.status,:eq,source,sensu,:eq,:and,:max,:cf-max,(,service,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Check by Status
+    row: 6
+    width: 13
+  markdownWidgets:
+  - col: 0
+    height: 3
+    options:
+      content: |
+        <h1>Outlyer Sensu Handler</h1>
+
+        <p><img src="https://docs2.outlyer.com/integrations/images/sensu/sensu.svg" width="300" height="180"></p>
+      markdown: |-
+        # Outlyer Sensu Handler
+        <img src="https://docs2.outlyer.com/integrations/images/sensu/sensu.svg" width=300 height=180>
+    row: 0
+    width: 4
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Host/Check Drill-In</h1>
+      markdown: '# Host/Check Drill-In'
+    row: 5
+    width: 13
+  numberWidgets:
+  - col: 4
+    height: 3
+    options:
+      color: '#92c72e'
+      description: Total number of Sensu checks sending back metrics right now
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: group_work
+      query:
+        query: name,service.status,:eq,source,sensu,:eq,:and,:max,:cf-max,(,service,),:by,:count
+        scoped: false
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Total Checks Reporting
+      unit: auto
+      unitPosition: After
+    row: 0
+    width: 3
+  - col: 7
+    height: 3
+    options:
+      color: '#92c72e'
+      description: Maximum number of hosts that are currently sending back metrics
+        to Outlyer via Sensu checks
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: group_work
+      query:
+        query: name,service.status,:eq,source,sensu,:eq,:and,:max,:cf-max,(,host,),:by,:count
+        scoped: false
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Total Hosts Reporting
+      unit: auto
+      unitPosition: After
+    row: 0
+    width: 3
+  - col: 10
+    height: 2
+    options:
+      color: '#92c72e'
+      description: Total number of metrics being returned by Sensu Checks (Metrics
+        Per Host * Total Hosts)
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: group_work
+      query:
+        query: |-
+          source,sensu,:eq,:max,:cf-max,(,name,),:by,:count,
+          name,service.status,:eq,source,sensu,:eq,:and,:max,:cf-max,(,host,),:by,:count,
+          :mul
+        scoped: false
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Total Sensu Metrics
+      unit: auto
+      unitPosition: After
+    row: 3
+    width: 3
+  - col: 10
+    height: 3
+    options:
+      color: '#92c72e'
+      description: Average number of metrics returned per Sensu client
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: group_work
+      query:
+        query: source,sensu,:eq,:max,:cf-max,(,name,),:by,:count
+        scoped: false
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Ave. Sensu Metrics Per Host
+      unit: auto
+      unitPosition: After
+    row: 0
+    width: 3

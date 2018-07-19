@@ -16,12 +16,12 @@ use on custom dashboards and alerts.
 == Metrics Collected ==
 
 The Sensu integration will push any metric collected by your Sensu checks with the
-label `service=sensu.<check_name>` added so you can easily filter all your metrics
+label `service:<check_name>` and `source:sensu` added so you can easily filter all your metrics
 for a particular check in Outlyer using the `service` label. 
 
 In addition the status code of each check is sent as the `service.status` metric
-to Outlyer with the label `service: sensu.<check_name>`. You will be able to use this
-metric to configure dashboad status widgets and service check alerts in Outlyer.
+to Outlyer with the same labels. You will be able to use this metric to configure dashboad status
+widgets and service check alerts in Outlyer.
 
 ## Nagios Checks
 
