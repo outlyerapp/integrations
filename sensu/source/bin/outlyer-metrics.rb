@@ -109,7 +109,8 @@ class OutlyerMetrics < Sensu::Handler
       begin
         name = metric_parts[0]
         value = metric_parts[1].split(";")[0].to_f
-        labels = {service: "sensu.#{sanitize_value(@check_name)}"}
+        labels = {service: sanitize_value(@check_name),
+                  source: 'sensu'}
         data.push(create_datapoint(name, value, @event['check']['executed'].to_i * 1000, labels))
       rescue => error
         # Raised when any metrics could not be parsed
@@ -141,7 +142,8 @@ class OutlyerMetrics < Sensu::Handler
     output.split("\n").each do |metric|
       m = metric.split
       next unless m.count == 3
-        labels = {service: "sensu.#{sanitize_value(@check_name)}"}
+        labels = {service: sanitize_value(@check_name),
+                  source: 'sensu'}
         
         # Check to see if we have a scheme filter that matches the metric name
         if schemes
@@ -220,15 +222,19 @@ class OutlyerMetrics < Sensu::Handler
   # Unknown is used to tell Outlyer there was a parsing error for the check
   # 
   # @param check_status   [Integer] Check status code
-  # @param host           [String] (Optional) hostname of host that ran the check
+  # @param hostname       [String] (Optional) hostname of host that ran the check
   # @param timestamp      [Integer] (Optional) timestamp of when host ran the check
   #
-  def create_status_metric(check_status, host=@host, timestamp=@event['check']['executed'].to_i * 1000)
+  def create_status_metric(check_status, hostname=@host, timestamp=@event['check']['executed'].to_i * 1000)
     labels = {
       service: sanitize_value(@check_name),
       source: 'sensu'      
     }
-    return create_datapoint('service.status', check_status, timestamp, labels, host)
+    point = create_datapoint('service.status', check_status, timestamp, labels, hostname)
+    if config[:debug]
+      puts "Created status datapoint with properties #{point}"
+    end
+    point
   end
   
   # Ensures all label values conform to Outlyer's data format requirements:
@@ -258,11 +264,11 @@ class OutlyerMetrics < Sensu::Handler
   # @param value        [Float] metric value
   # @param time         [Integer] epoch timestamp of metric in milliseconds
   # @param labels       [HashMap] (Optional) Additional labels to append to data point
-  # @param metric_host  [String] (Optional) Set a host for the metric
+  # @param hostname     [String] (Optional) Set a hostname for the metric
   #
-  def create_datapoint(name, value, time, labels = {}, metric_host=@host)
+  def create_datapoint(name, value, time, labels = {}, hostname=@host)
     datapoint = {
-                  host: metric_host,
+                  host: hostname,
                   labels: labels,
                   name: name,
                   timestamp: time,

@@ -3,8 +3,8 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
-## [0.8.0] - 2018-07-18
-- Added `source:sensu` label to `service.status` metric
+## [0.9.0] - 2018-07-18
+- Added `source:sensu` label to metrics
 - Fixed bug with Nagios parsing
 
 ## [0.7.0] - 2018-07-16
