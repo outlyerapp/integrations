@@ -207,8 +207,19 @@ class OutlyerMetrics < Sensu::Handler
     end
     if config[:debug]
       puts "Parsed #{data.length} of #{output.split("\n").length} metrics"
-    end 
-    data.push(create_status_metric(@event['check']['status'].to_f, metric_host))
+    end  
+    
+    # Handle scenario where output was not valid Graphite output
+    if data.length == 0 && @event['check']['status'].to_i > 0
+      # Happens when check is mis-configured and outputs error message
+      # Treat as UNKNOWN status
+      puts "Output is not Graphite format for check '#{@check_name}' "\
+              "on the Sensu client '#{@host}'. Returning UNKNOWN status. Output: \n"\
+              "#{output}"
+      data.push(create_status_metric(3))
+    else
+      data.push(create_status_metric(@event['check']['status'].to_f, metric_host))
+    end
     data
   end
   
@@ -230,11 +241,7 @@ class OutlyerMetrics < Sensu::Handler
       service: sanitize_value(@check_name),
       source: 'sensu'      
     }
-    point = create_datapoint('service.status', check_status, timestamp, labels, hostname)
-    if config[:debug]
-      puts "Created status datapoint with properties #{point}"
-    end
-    point
+    create_datapoint('service.status', check_status, timestamp, labels, hostname)
   end
   
   # Ensures all label values conform to Outlyer's data format requirements:

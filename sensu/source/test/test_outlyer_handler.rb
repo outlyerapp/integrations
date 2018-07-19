@@ -23,7 +23,7 @@ class TestOutlyerHandler < Test::Unit::TestCase
     run_script_with_input(event.to_json, ['-f', 'nagios', '-d'])
   end
   
-  def test_graphite_output_1
+  def test_graphite_output
     
     metrics_host = "ip-10-127-222-123.us-east-2.compute.internal"
     client_name = "client-12"
@@ -102,6 +102,13 @@ class TestOutlyerHandler < Test::Unit::TestCase
     event = create_new_event('graphite-disk-check', output, client_name)
     run_script_with_input(event.to_json, ['-d'])
   end
+  
+  def test_graphite_warning
+    client_name = "i-0b6546d8bc0585d05"
+    output = %Q{Invalid check argument(s): invalid option: -d, ["/opt/sensu/embedded/lib/ruby/gems/2.4.0/gems/mixlib-cli-1.7.0/lib/mixlib/cli.rb:230:in `parse_options'", "/opt/sensu/embedded/lib/ruby/gems/2.4.0/gems/sensu-plugin-1.4.5/lib/sensu-plugin/cli.rb:13:in `initialize'", "/opt/sensu/embedded/lib/ruby/gems/2.4.0/gems/sensu-plugin-1.4.5/lib/sensu-plugin/cli.rb:57:in `new'", "/opt/sensu/embedded/lib/ruby/gems/2.4.0/gems/sensu-plugin-1.4.5/lib/sensu-plugin/cli.rb:57:in `block in <class:CLI>'"]}
+    event = create_new_event('graphite-warning', output, client_name, 1)
+    run_script_with_input(event.to_json, ['-d'])
+  end
     
   # Run the handler script with arguments and input event JSON
   # 
@@ -124,8 +131,9 @@ class TestOutlyerHandler < Test::Unit::TestCase
   # @param check_name  [String]  The name of the check being run
   # @param output      [String]  The output of the check
   # @param hostname    [String]  Hostname of client running check
+  # @param status_code [Integer] Status code of check
   #
-  def create_new_event(check_name, output, hostname)
+  def create_new_event(check_name, output, hostname, status_code=0)
     event = {
       id: "ef6b87d2-1f89-439f-8bea-33881436ab90",
       action: "create",
@@ -135,7 +143,7 @@ class TestOutlyerHandler < Test::Unit::TestCase
         type: "metric",
         total_state_change: 11,
         history: ["0", "0", "1", "1", "2", "2"],
-        status: 0,
+        status: status_code.to_i,
         output: output,
         executed: Time.now.to_i,
         issued: Time.now.to_i,

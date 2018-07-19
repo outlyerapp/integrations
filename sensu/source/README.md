@@ -33,8 +33,14 @@ Ensure your handler has execution permissions set:
 chmod +x ./bin/outlyer-metrics.rb
 ```
 
-The run the unit tests:
+To run all the unit tests:
 
 ```bash
 ruby test/test_outlyer_handler.rb 
+```
+
+To run a specific unit test:
+
+```bash
+ruby -I test test/test_outlyer_handler.rb -n <test_name>
 ```

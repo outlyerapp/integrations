@@ -3,9 +3,10 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 This CHANGELOG follows the format listed at [Keep A Changelog](http://keepachangelog.com/)
 
-## [0.9.0] - 2018-07-18
+## [0.10.0] - 2018-07-18
 - Added `source:sensu` label to metrics
 - Fixed bug with Nagios parsing
+- Fixed handling checks that send message, not Graphite metrics
 
 ## [0.7.0] - 2018-07-16
 - Made debug flag boolean
