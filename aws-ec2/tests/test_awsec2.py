@@ -31,7 +31,7 @@ class TestPlugin(unittest.TestCase):
         pluginvariables['hostname'] = instances['instances'][0]['hostname']
         pluginvariables['ip'] = instances['instances'][0]['ip']
         output = OutlyerPluginTest.run_plugin("../plugins/aws-ec2.py", pluginvariables)
-        output.print_metrics_md()
+        output.print_output()
 
 if __name__ == '__main__':
     unittest.main()

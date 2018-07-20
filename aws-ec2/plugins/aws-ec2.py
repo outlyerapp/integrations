@@ -148,7 +148,9 @@ class AWSEC2(Plugin):
             instance = self.get('cloud.instance.id')
 
             # Get metrics for the EC2 Instance
-            cloudwatch = boto3.client('cloudwatch', aws_region)
+            cloudwatch = boto3.client('cloudwatch', aws_region,
+                                      aws_access_key_id=self.get('AWS_ACCESS_KEY_ID'),
+                                      aws_secret_access_key=self.get('AWS_SECRET_ACCESS_KEY'))
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(minutes=int(time_range))
             response = cloudwatch.get_metric_data(
@@ -181,7 +183,7 @@ class AWSEC2(Plugin):
                         self.gauge(metric_name, metric_labels).set(value, ts=ts)
                 else:
                     if metric['Id'] == 'ec2_cpuutilization_max':
-                    	self.gauge('sys.cpu.pct', metric_labels).set(value, ts=ts)
+                    	self.gauge('sys.cpu.pct', metric_labels).set(0)
                     else:
                         self.gauge(metric_name, metric_labels).set(0)
 
