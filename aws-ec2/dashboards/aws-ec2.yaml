@@ -1,4 +1,4 @@
-description: EC2 Cloudwatch Metrics
+description: EC2 Cloudwatch Metrics. Shows the maximum across all your hosts by default. Use the dashboard scopes to drill into a specific host's metrics.
 icon:
   color: '#ffa538'
   name: integration--ec2
