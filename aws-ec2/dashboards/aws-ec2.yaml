@@ -9,6 +9,12 @@ name: aws-ec2
 scopes:
 - defaultValue: ""
   labelKey: host
+- defaultValue: ""
+  labelKey: cloud.instance.region
+- defaultValue: ""
+  labelKey: cloud.instance.az
+- defaultValue: ""
+  labelKey: cloud.instance.type
 theme: light
 title: AWS EC2
 widgets:
@@ -33,7 +39,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_cpuutilization_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,sys.cpu.pct,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -67,7 +73,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_diskreadbytes_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,aws.ec2_diskreadbytes_max,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -101,7 +107,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_diskreadops_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,aws.ec2_diskreadops_max,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -135,7 +141,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_diskwritebytes_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,aws.ec2_diskwritebytes_max,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -169,7 +175,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_diskwriteops_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,aws.ec2_diskwriteops_max,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -203,7 +209,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_networkin_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,aws.ec2_networkin_max,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -237,7 +243,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_networkout_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,aws.ec2_networkout_max,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -271,7 +277,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_networkpacketsin_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,aws.ec2_networkpacketsin_max,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -305,7 +311,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_networkpacketsout_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,aws.ec2_networkpacketsout_max,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -339,7 +345,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_statuscheckfailed_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,aws.ec2_statuscheckfailed_max,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -373,7 +379,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_statuscheckfailed_instance_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,aws.ec2_statuscheckfailed_instance_max,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -407,7 +413,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_statuscheckfailed_system_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,aws.ec2_statuscheckfailed_system_max,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -441,7 +447,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_cpucreditusage_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,aws.ec2_cpucreditusage_max,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -475,7 +481,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,aws.ec2_cpucreditbalance_max,:eq,:max,:cf-max,(,host,),:by
+      - query: name,aws.ec2_cpucreditbalance_max,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
