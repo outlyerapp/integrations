@@ -147,7 +147,7 @@ class AWSEC2(Plugin):
             time_range = self.get('time_range', '10')
             instance = self.get('cloud.instance.id')
 
-            # Get metrics for the RDS Instance
+            # Get metrics for the EC2 Instance
             cloudwatch = boto3.client('cloudwatch', aws_region)
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(minutes=int(time_range))
@@ -158,9 +158,16 @@ class AWSEC2(Plugin):
                 ScanBy='TimestampAscending')
 
             metric_labels = {
-                'engine': self.get('rds.engine'),
-                'region': aws_region
+                'cloud.service': 'aws.ec2',
+                'cloud.instance.type': self.get('cloud.instance.type'),
+                'cloud.instance.region': aws_region,
+                'cloud.instance.az': self.get('cloud.instance.az')
             }
+
+            instance_tags = self.get('INSTANCE_LABELS', '').split(',')
+            for tag in instance_tags:
+                if self.get(tag.strip()):
+                    metric_labels[tag] = self.get(tag.strip())
 
             # Get last value for each metric, if no values set metric to 0
             for metric in response['MetricDataResults']:
@@ -168,13 +175,15 @@ class AWSEC2(Plugin):
                 if len(metric['Values']) > 0:
                     value = metric['Values'][-1]
                     ts = int(metric['Timestamps'][-1].utcnow().timestamp() * 1000)
-                    self.gauge(metric_name, metric_labels).set(value, ts=ts)
-                    if metric['Id'] == 'rds_cpuutalization_max':
+                    if metric['Id'] == 'ec2_cpuutilization_max':
                     	self.gauge('sys.cpu.pct', metric_labels).set(value, ts=ts)
+                    else:
+                        self.gauge(metric_name, metric_labels).set(value, ts=ts)
                 else:
-                    self.gauge(metric_name, metric_labels).set(0)
-                    if metric['Id'] == 'rds_cpuutalization_max':
+                    if metric['Id'] == 'ec2_cpuutilization_max':
                     	self.gauge('sys.cpu.pct', metric_labels).set(value, ts=ts)
+                    else:
+                        self.gauge(metric_name, metric_labels).set(0)
 
             return Status.OK
         except Exception as err:
@@ -195,7 +204,7 @@ class AWSEC2(Plugin):
                             'Value': instance
                         }]
                     },
-                    'Period': 60,
+                    'Period': 300,
                     'Stat': instance_metric['stat'],
                     'Unit': instance_metric['unit'],
                 }

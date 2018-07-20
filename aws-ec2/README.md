@@ -19,24 +19,26 @@ metrics across your EC2 instances in your AWS account.
 A full list of available Cloudwatch metrics for the RDS is available
 <a href="https://docs.aws.amazon.com/AmazonCloudWatch/latest/monitoring/ec2-metricscollected.html" target="_blank">here</a>.
 
-|Metric Name                           |Type   |Labels    |Unit   |Description                                                                                                           |
-|--------------------------------------|-------|----------|-------|----------------------------------------------------------------------------------------------------------------------|
-|aws.ec2_cpucreditusage_max            |gauge  |region    |Count  |The number of CPU credits spent by the instance for CPU utilization.                                                  |
-|aws.ec2_cpusurpluscreditbalance_max   |gauge  |region    |Count  |The number of surplus credits that have been spent by a T2 Unlimited instance when its CPUCreditBalance is zero.      |
-|aws.ec2_cpucreditbalance_max          |gauge  |region    |Count  |The number of earned CPU credits that an instance has accrued since it was launched or started.                       |
-|aws.ec2_cpucreditscharged_max         |gauge  |region    |Count  |The number of spent surplus credits that are not paid down by earned CPU credits, and thus incur an additional charge.|
-|aws.ec2_cpuutilization_max            |gauge  |region    |Percent|The percentage of allocated EC2 compute units that are currently in use on the instance.                              |
-|aws.ec2_networkout_max                |gauge  |region    |Bytes  |The number of bytes sent out on all network interfaces by the instance.                                               |
-|aws.ec2_networkpacketsout_max         |gauge  |region    |Count  |The number of packets sent out on all network interfaces by the instance.                                             |
-|aws.ec2_networkin_max                 |gauge  |region    |Bytes  |The number of bytes received on all network interfaces by the instance.                                               |
-|aws.ec2_networkpacketsin_max          |gauge  |region    |Count  |The number of packets received on all network interfaces by the instance.                                             |
-|aws.ec2_diskwriteops_max              |gauge  |region    |Count  |Completed write operations to all instance store volumes available to the instance in a specified period of time.     |
-|aws.ec2_diskwritebytes_max            |gauge  |region    |Bytes  |Bytes written to all instance store volumes available to the instance.                                                |
-|aws.ec2_diskreadops_max               |gauge  |region    |Count  |Completed read operations from all instance store volumes available to the instance in a specified period of time.    |
-|aws.ec2_diskreadbytes_max             |gauge  |region    |Bytes  |Bytes read from all instance store volumes available to the instance.                                                 |
-|aws.ec2_statuscheckfailed_max         |gauge  |region    |Count  |Reports whether the instance has passed both the instance status check and the system status check in the last minute.|
-|aws.ec2_statuscheckfailed_system_max  |gauge  |region    |Count  |Reports whether the instance has passed the system status check in the last minute.                                   |
-|aws.ec2_statuscheckfailed_instance_max|gauge  |region    |Count  |Reports whether the instance has passed the instance status check in the last minute.                                 |
+|Metric Name                           |Type   |Labels                                                                      |Unit   |Description                                                                                                           |
+|--------------------------------------|-------|----------------------------------------------------------------------------|-------|----------------------------------------------------------------------------------------------------------------------|
+|aws.ec2_cpucreditusage_max            |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Count  |The number of CPU credits spent by the instance for CPU utilization.                                                  |
+|aws.ec2_networkout_max                |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Bytes  |The number of bytes sent out on all network interfaces by the instance.                                               |
+|aws.ec2_networkpacketsout_max         |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Count  |The number of packets sent out on all network interfaces by the instance.                                             |
+|aws.ec2_cpusurpluscreditbalance_max   |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Count  |The number of surplus credits that have been spent by a T2 Unlimited instance when its CPUCreditBalance is zero.      |
+|sys.cpu.pct                           |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Percent|The percentage of allocated EC2 compute units that are currently in use on the instance.                              |
+|aws.ec2_diskwriteops_max              |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Count  |Completed write operations to all instance store volumes available to the instance in a specified period of time.     |
+|aws.ec2_cpucreditbalance_max          |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Count  |The number of earned CPU credits that an instance has accrued since it was launched or started.                       |
+|aws.ec2_cpucreditscharged_max         |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Count  |The number of spent surplus credits that are not paid down by earned CPU credits, and thus incur an additional charge.|
+|aws.ec2_diskreadops_max               |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Count  |Completed read operations from all instance store volumes available to the instance in a specified period of time.    |
+|aws.ec2_diskwritebytes_max            |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Bytes  |Bytes written to all instance store volumes available to the instance.                                                |
+|aws.ec2_networkin_max                 |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Bytes  |The number of bytes received on all network interfaces by the instance.                                               |
+|aws.ec2_networkpacketsin_max          |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Count  |The number of packets received on all network interfaces by the instance.                                             |
+|aws.ec2_diskreadbytes_max             |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Bytes  |Bytes read from all instance store volumes available to the instance.                                                 |
+|aws.ec2_statuscheckfailed_max         |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Count  |Reports whether the instance has passed both the instance status check and the system status check in the last minute.|
+|aws.ec2_statuscheckfailed_system_max  |gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Count  |Reports whether the instance has passed the system status check in the last minute.                                   |
+|aws.ec2_statuscheckfailed_instance_max|gauge  |cloud.service, cloud.instance.type, cloud.instance.region, cloud.instance.az|Count  |Reports whether the instance has passed the instance status check in the last minute.                                 |
+
+Additional labels can be applied to all the metrics from this plugin via the `INSTANCE_LABELS` plugin variable.
 
 == Installation ==
 
@@ -77,7 +79,7 @@ discovers:
     #metric_labels:
     #  - 'environment'
 
-    check_command: "/bin/bash -c 'echo ok'"
+    #check_command: 
     check_interval: 30
 
     env:
@@ -100,11 +102,13 @@ Both plugins must set the following variables to run:
 
 In addition the following variables can be set to override the default values:
 
+* `INSTANCE_LABELS`: A comma seperated list of any labels applied to the EC2 instance from the discovery script to add to all the metrics from the aws-ec2.py plugin.
 * `time_range`: The time range in minutes to query your metrics over. By default this is set to the last
 10 minutes but if you run your functions rarely this can be set to longer for testing purposes.
 
 == Changelog ==
 
-|Version|Release Date|Description                                          |
-|-------|------------|-----------------------------------------------------|
-|1.0    |25-Jun-2018 |Initial version of our EC2 monitoring integration.   |
+|Version|Release Date|Description                                           |
+|-------|------------|------------------------------------------------------|
+|1.1    |19-Jul-2018 |Added INSTANCE_LABELS variable and fixed several bugs.|
+|1.0    |25-Jun-2018 |Initial version of our EC2 monitoring integration.    |

@@ -20,13 +20,18 @@ class TestPlugin(unittest.TestCase):
         # Run discovery script first to get list of instance in account
         variables = {
             'AWS_REGION': 'us-east-1',
+            'INSTANCE_LABELS': 'cloud.instance.image_id, cloud.service',
+#            'AWS_ACCESS_KEY_ID': '',
+#            'AWS_SECRET_ACCESS_KEY': ''
         }
         output = OutlyerPluginTest.run_plugin("../plugins/ec2-discovery.py", variables)
         instances = json.loads(output.stdout)
 
-        variables['cloud.instance.id'] = instances['instances'][0]['labels']['cloud.instance.id']
-        output = OutlyerPluginTest.run_plugin("../plugins/aws-ec2.py", variables)
-        output.print_output()
+        pluginvariables = {**variables, **instances['instances'][0]['labels']}
+        pluginvariables['hostname'] = instances['instances'][0]['hostname']
+        pluginvariables['ip'] = instances['instances'][0]['ip']
+        output = OutlyerPluginTest.run_plugin("../plugins/aws-ec2.py", pluginvariables)
+        output.print_metrics_md()
 
 if __name__ == '__main__':
     unittest.main()
