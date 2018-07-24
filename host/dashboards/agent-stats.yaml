@@ -33,6 +33,7 @@ widgets:
         path: ""
       queries:
       - query: name,sys.load.1,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#bc54f2'
@@ -67,6 +68,7 @@ widgets:
         path: ""
       queries:
       - query: name,sys.mem.pct,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#3cc663'
@@ -100,6 +102,7 @@ widgets:
         path: ""
       queries:
       - query: name,agent.publish_metrics,:eq,:sum,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -134,6 +137,7 @@ widgets:
         path: ""
       queries:
       - query: name,agent.cpu_pct,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#bc54f2'
@@ -168,6 +172,7 @@ widgets:
         path: ""
       queries:
       - query: name,agent.mem_pct,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#3cc663'
@@ -201,6 +206,7 @@ widgets:
         path: ""
       queries:
       - query: name,agent.publish_latency,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#ffa538'
@@ -234,6 +240,7 @@ widgets:
         path: ""
       queries:
       - query: name,sys.load.1,:eq,:max,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -272,106 +279,6 @@ widgets:
     row: 3
     width: 2
   numberWidgets:
-  - col: 9
-    height: 2
-    options:
-      color: '#bc54f2'
-      description: ""
-      displayMax: 100
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: memory
-      query:
-        query: name,sys.cpu.pct,:eq,:max,:cf-max
-        visible: false
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: CPU Usage
-      unit: '%'
-      unitPosition: After
-    row: 0
-    width: 2
-  - col: 9
-    height: 2
-    options:
-      color: '#3cc663'
-      description: ""
-      displayMax: 100
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: memory
-      query:
-        query: name,sys.mem.pct,:eq,:max,:cf-max
-        visible: false
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Memory Usage
-      unit: '%'
-      unitPosition: After
-    row: 2
-    width: 2
-  - col: 9
-    height: 2
-    options:
-      color: '#bc54f2'
-      description: ""
-      displayMax: 100
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: memory
-      query:
-        query: name,agent.cpu_pct,:eq,:max,:cf-max
-        visible: false
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Agent CPU Usage
-      unit: '%'
-      unitPosition: After
-    row: 8
-    width: 2
-  - col: 9
-    height: 2
-    options:
-      color: '#3cc663'
-      description: ""
-      displayMax: 100
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: memory
-      query:
-        query: name,agent.mem_pct,:eq,:max,:cf-max
-        visible: false
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Agent Mem Usage
-      unit: '%'
-      unitPosition: After
-    row: 10
-    width: 2
   - col: 0
     height: 2
     options:
@@ -386,6 +293,7 @@ widgets:
       icon: storage
       query:
         query: name,sys.cpu.pct,:eq,service,system,:eq,:and,:count,:cf-max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -411,6 +319,7 @@ widgets:
       icon: integration--statsd
       query:
         query: name,agent.publish_metrics,:eq,:sum,:cf-max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
@@ -421,4 +330,108 @@ widgets:
       unit: ""
       unitPosition: After
     row: 6
+    width: 2
+  - col: 9
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displayMax: 100
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: memory
+      query:
+        query: name,sys.cpu.pct,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: CPU Usage %
+      unit: '%'
+      unitPosition: After
+    row: 0
+    width: 2
+  - col: 9
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displayMax: 100
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: memory
+      query:
+        query: name,sys.mem.pct,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Memory Usage
+      unit: '%'
+      unitPosition: After
+    row: 2
+    width: 2
+  - col: 9
+    height: 2
+    options:
+      color: '#ffb863'
+      description: ""
+      displayMax: 100
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: memory
+      query:
+        query: name,agent.cpu_pct,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Agent CPU Usage %
+      unit: '%'
+      unitPosition: After
+    row: 8
+    width: 2
+  - col: 9
+    height: 2
+    options:
+      color: '#ffb863'
+      description: ""
+      displayMax: 100
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: memory
+      query:
+        query: name,agent.mem_pct,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Agent Memory Usage %
+      unit: '%'
+      unitPosition: After
+    row: 10
     width: 2
