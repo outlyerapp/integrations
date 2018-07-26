@@ -38,10 +38,10 @@ The plugin must set the following variables to run:
 
 * `AWS_ACCESS_KEY_ID`: The AWS Access Key copied above
 * `AWS_SECRET_ACCESS_KEY`: The AWS Secret Key copied above
+* `AWS_REGION`: The AWS Region your Lambda functions are running in
 
 In addition the following variables can be set to override the default values:
 
-* `AWS_REGION`: The AWS Region your Lambda functions are running in (Default `us-east-1`)
 * `time_range`: The time range in minutes to query your metrics over. By default this is set to the last 
 10 minutes but if you run your functions rarely this can be set to longer for testing purposes.
 

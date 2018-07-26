@@ -299,15 +299,22 @@ class AWSS3(Plugin):
 
     def collect(self, _):
         try:
+            aws_region = self.get('AWS_REGION')
+            if not aws_region:
+                raise Exception("Please set AWS_REGION")
             time_range = self.get('time_range', '2')
 
             # Get list of all S3 buckets in AWS Account
-            awsclient = boto3.client('s3')
+            awsclient = boto3.client('s3', aws_region,
+                                     aws_access_key_id=self.get('AWS_ACCESS_KEY_ID'),
+                                     aws_secret_access_key=self.get('AWS_SECRET_ACCESS_KEY'))
             buckets = awsclient.list_buckets()['Buckets']
             self.logger.info(f"Successfully found {len(buckets)} buckets")
 
             # Get metrics for each bucket
-            cloudwatch = boto3.client('cloudwatch')
+            cloudwatch = boto3.client('cloudwatch', aws_region,
+                                      aws_access_key_id=self.get('AWS_ACCESS_KEY_ID'),
+                                      aws_secret_access_key=self.get('AWS_SECRET_ACCESS_KEY'))
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(days=int(time_range))
             for instance in buckets:

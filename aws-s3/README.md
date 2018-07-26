@@ -65,6 +65,7 @@ The plugin must set the following variables to run:
 
 * `AWS_ACCESS_KEY_ID`: The AWS Access Key copied above
 * `AWS_SECRET_ACCESS_KEY`: The AWS Secret Key copied above
+* `AWS_REGION`: The AWS Region to list S3 buckets for
 
 In addition the following variables can be set to override the default values:
 

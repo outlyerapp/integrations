@@ -54,19 +54,25 @@ class AWSLambda(Plugin):
 
     def collect(self, _):
         try:
-            aws_region = self.get('AWS_REGION', 'us-east-1')
+            aws_region = self.get('AWS_REGION')
+            if not aws_region:
+                raise Exception("Please set AWS_REGION")
             time_range = self.get('time_range', '10')
 
             # Get list of Lambda Functions in AWS Account Region
             instances = []
-            awsclient = boto3.client('lambda', aws_region)
+            awsclient = boto3.client('lambda', aws_region,
+                                     aws_access_key_id=self.get('AWS_ACCESS_KEY_ID'),
+                                     aws_secret_access_key=self.get('AWS_SECRET_ACCESS_KEY'))
             paginator = awsclient.get_paginator('list_functions')
             for response in paginator.paginate():
                 for instance in response['Functions']:
                     instances.append(instance['FunctionName'])
 
             # Get metrics for each function
-            cloudwatch = boto3.client('cloudwatch', aws_region)
+            cloudwatch = boto3.client('cloudwatch', aws_region,
+                                     aws_access_key_id=self.get('AWS_ACCESS_KEY_ID'),
+                                     aws_secret_access_key=self.get('AWS_SECRET_ACCESS_KEY'))
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(minutes=int(time_range))
             for instance in instances:
