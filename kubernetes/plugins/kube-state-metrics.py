@@ -2,6 +2,7 @@
 
 import sys
 import requests
+import math
 
 from outlyer_plugin import Plugin, Status
 from prometheus_client.parser import text_string_to_metric_families
@@ -28,13 +29,18 @@ COUNTER_METRICS = [
     'kube_pod_container_status_restarts_total',
 ]
 
-
 class KubeStateMetricsPlugin(Plugin):
 
     def collect(self, _):
-        HOST = self.get('host', 'kube-state-metrics.kube-system')
+        HOST = self.get('ip', 'kube-state-metrics.kube-system')
         PORT = self.get('port', '8080')
         PATH = self.get('endpoint', 'metrics')
+
+        # Get cluster name to apply as label to all metrics
+        cluster_name = self.get('k8s.cluster')
+        metric_labels = {'k8s.cluster': 'unknown'}
+        if cluster_name:
+            metric_labels['k8s.cluster'] = cluster_name
 
         try:
             res = requests.get(f'http://{HOST}:{PORT}/{PATH}', timeout=20).text
@@ -42,15 +48,21 @@ class KubeStateMetricsPlugin(Plugin):
             for family in text_string_to_metric_families(res):
                 for sample in family.samples:
                     if sample[0] in COUNTER_METRICS:
-                        self.counter(sample[0], sample[1]).set(sample[2])
+                        labels = {**metric_labels, **sample[1]}
+                        value = sample[2]
+                        if not math.isnan(value):
+                            self.counter(sample[0], labels).set(value)
                     elif sample[0] in GAUGE_METRICS:
-                        self.gauge(sample[0], sample[1]).set(sample[2])
+                        labels = {**metric_labels, **sample[1]}
+                        value = sample[2]
+                        if not math.isnan(value):
+                            self.gauge(sample[0], labels).set(value)
 
             return Status.OK
+
         except Exception as ex:
             self.logger.error('Unable to scrape metrics from kube-state-metrics: %s', str(ex))
             return Status.CRITICAL
-
 
 if __name__ == '__main__':
     sys.exit(KubeStateMetricsPlugin().run())

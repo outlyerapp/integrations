@@ -4,7 +4,9 @@ icon:
   name: integration--docker
 labels: []
 name: kubernetes-cluster-overview
-scopes: []
+scopes:
+- defaultValue: ""
+  labelKey: k8s.cluster
 theme: light
 title: Kubernetes Cluster Overview
 widgets:
@@ -29,7 +31,7 @@ widgets:
         path: ""
       queries:
       - query: name,apiserver_request_count,:eq,:max,(,code,),:by
-        scoped: false
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -63,7 +65,7 @@ widgets:
         path: ""
       queries:
       - query: name,kube_pod_container_status_restarts_total,:eq,:max,(,pod,),:by
-        scoped: false
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -97,7 +99,7 @@ widgets:
         path: ""
       queries:
       - query: name,kube_pod_info,:eq,:sum,(,node,),:by
-        scoped: false
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -131,7 +133,7 @@ widgets:
         path: ""
       queries:
       - query: name,kube_pod_container_status_waiting_reason,:eq,reason,errimagepull,:eq,:and,:max,(,pod,),:by
-        scoped: false
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -165,7 +167,7 @@ widgets:
         path: ""
       queries:
       - query: name,kube_pod_status_phase,:eq,phase,failed,:eq,:and,:max,(,pod,),:by
-        scoped: false
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -199,7 +201,7 @@ widgets:
         path: ""
       queries:
       - query: name,apiserver_request_latencies_summary,:eq,quantile,0.99,:eq,:and,:max,:cf-max,(,verb,),:by
-        scoped: false
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -234,7 +236,7 @@ widgets:
         path: ""
       queries:
       - query: name,kube_node_status_condition,:eq,status,true,:eq,:and,:sum,:cf-max,(,condition,),:by
-        scoped: false
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -295,8 +297,8 @@ widgets:
         path: ""
       icon: content_copy
       query:
-        query: name,kube_pod_info,:eq,:count
-        scoped: false
+        query: name,kube_pod_info,:eq,:count,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -304,7 +306,7 @@ widgets:
       - status: Error
         threshold: 0
       title: Current Number of Pods
-      unit: ""
+      unit: auto
       unitPosition: After
     row: 8
     width: 3
@@ -322,7 +324,7 @@ widgets:
       icon: content_copy
       query:
         query: name,kube_node_status_capacity_pods,:eq,:sum
-        scoped: false
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -330,7 +332,7 @@ widgets:
       - status: Error
         threshold: 0
       title: Cluster Capacity of Pods
-      unit: ""
+      unit: auto
       unitPosition: After
     row: 8
     width: 3
@@ -347,8 +349,8 @@ widgets:
         path: ""
       icon: check
       query:
-        query: name,kube_node_status_condition,:eq,condition,ready,:eq,:and,status,true,:eq,:and,:count
-        scoped: false
+        query: name,kube_node_status_condition,:eq,condition,ready,:eq,:and,status,true,:eq,:and,:count,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue

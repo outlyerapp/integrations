@@ -33,8 +33,7 @@ class KubeApiServerPlugin(Plugin):
         endpoint = '/' + os.environ['endpoint'] if 'endpoint' in os.environ else '/healthz'
 
         # Get cluster name to apply as label to all metrics
-        cluster_name_key = self.get('cluster_name_key', 'k8s.node.cluster')
-        cluster_name = self.get(cluster_name_key, None)
+        cluster_name = self.get('k8s.cluster')
         metric_labels = {'k8s.cluster': 'unknown'}
         if cluster_name:
             metric_labels['k8s.cluster'] = cluster_name
@@ -55,7 +54,7 @@ class KubeApiServerPlugin(Plugin):
                 return Status.CRITICAL
         else:
             try:
-                # Scrape a Prometheus endpoint
+                # Scrape a Promtheus endpoint
                 res = v1.api_client.call_api(endpoint, 'GET',
                                              auth_settings=auth_settings,
                                              _request_timeout=20,
