@@ -141,7 +141,7 @@ class AWSEC2(Plugin):
 
     def collect(self, _):
         try:
-            aws_region = self.get('AWS_REGION')
+            aws_region = self.get('cloud.instance.region')
             if not aws_region:
                 raise Exception("Please set AWS_REGION")
             time_range = self.get('time_range', '10')

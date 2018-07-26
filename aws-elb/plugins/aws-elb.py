@@ -149,14 +149,16 @@ class AWSELB(Plugin):
 
     def collect(self, _):
         try:
-            aws_region = self.get('AWS_REGION')
+            aws_region = self.get('cloud.instance.region')
             if not aws_region:
                 raise Exception("Please set AWS_REGION")
             time_range = self.get('time_range', '10')
             instance = self.get('cloud.instance.id')
 
             # Get metrics for the ELB Instance
-            cloudwatch = boto3.client('cloudwatch', aws_region)
+            cloudwatch = boto3.client('cloudwatch', aws_region,
+                                      aws_access_key_id=self.get('AWS_ACCESS_KEY_ID'),
+                                      aws_secret_access_key=self.get('AWS_SECRET_ACCESS_KEY'))
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(minutes=int(time_range))
             response = cloudwatch.get_metric_data(

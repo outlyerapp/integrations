@@ -1,13 +1,13 @@
-description: Amazon RDS
+description: Amazon RDS Cloudwatch Metrics
 icon:
   color: '#ffa538'
-  name: integration--aws-rds
+  name: integration--amazon-rds
 labels:
 - key: aws
   value: ""
 - key: rds
   value: ""
-name: amazon-rds
+name: aws-rds
 scopes: []
 theme: light
 title: Amazon RDS
