@@ -79,7 +79,7 @@ discovers:
     #metric_labels:
     #  - 'environment'
 
-    check_command: "/bin/bash -c 'echo ok'"
+    #check_command: 
     check_interval: 30
 
     env:
