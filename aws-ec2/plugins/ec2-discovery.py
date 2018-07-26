@@ -46,7 +46,10 @@ class EC2Discovery(object):
                                 for tag in instance['Tags']:
                                     key = tag['Key']
                                     value = tag['Value']
-                                    labels[key] = value
+                                    if key == 'Name':
+                                        labels['cloud.instance.name'] = value
+                                    else:
+                                        labels[key] = value
 
                             host['labels'] = labels
                             instances.append(host)
