@@ -124,7 +124,7 @@ INSTANCE_METRICS = [
     },
 ]
 
-class AWSSQS(Plugin):
+class AWSSNS(Plugin):
 
     def collect(self, _):
         try:
@@ -205,4 +205,4 @@ class AWSSQS(Plugin):
 
 
 if __name__ == '__main__':
-    sys.exit(AWSSQS().run())
+    sys.exit(AWSSNS().run())
