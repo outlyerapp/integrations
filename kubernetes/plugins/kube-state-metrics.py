@@ -27,11 +27,9 @@ GAUGE_METRICS = [
     'kube_pod_container_resource_limits_cpu_cores',
     'kube_pod_container_resource_requests_memory_bytes',
     'kube_pod_container_resource_limits_memory_bytes',
-    'kube_pod_container_resource_limits',
     'kube_pod_container_status_terminated_reason',
     'kube_pod_status_ready',
     'kube_service_info',
-    'kube_pod_status_ready',
 ]
 
 COUNTER_METRICS = [
