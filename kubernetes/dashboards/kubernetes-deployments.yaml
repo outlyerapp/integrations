@@ -5,9 +5,11 @@ icon:
 labels: []
 name: kubernetes-deployments
 scopes:
-- defaultValue: ""
+- defaultValue: None
+  labelKey: k8s.cluster
+- defaultValue: None
   labelKey: namespace
-- defaultValue: ""
+- defaultValue: None
   labelKey: deployment
 theme: light
 title: Kubernetes Deployments
@@ -67,11 +69,11 @@ widgets:
   - col: 0
     height: 2
     options:
-      color: '#588fd8'
+      color: '#4dccc5'
       description: ""
       displayMax: 0
       displayMin: 0
-      displayTrend: None
+      displayTrend: Gauge
       externalLink:
         linkType: dashboard
         path: ""
@@ -93,11 +95,11 @@ widgets:
   - col: 6
     height: 2
     options:
-      color: '#588fd8'
+      color: '#4dccc5'
       description: ""
       displayMax: 0
       displayMin: 0
-      displayTrend: None
+      displayTrend: Gauge
       externalLink:
         linkType: dashboard
         path: ""
@@ -119,11 +121,11 @@ widgets:
   - col: 8
     height: 2
     options:
-      color: '#588fd8'
+      color: '#ff5e44'
       description: ""
       displayMax: 0
       displayMin: 0
-      displayTrend: None
+      displayTrend: SparkLine
       externalLink:
         linkType: dashboard
         path: ""
@@ -136,7 +138,7 @@ widgets:
       statistic: LastValue
       thresholds:
       - status: Error
-        threshold: 0
+        threshold: 1
       title: Unavailable
       unit: ""
       unitPosition: After
@@ -145,11 +147,11 @@ widgets:
   - col: 4
     height: 2
     options:
-      color: '#588fd8'
+      color: '#4dccc5'
       description: ""
       displayMax: 0
       displayMin: 0
-      displayTrend: None
+      displayTrend: Gauge
       externalLink:
         linkType: dashboard
         path: ""
@@ -171,11 +173,11 @@ widgets:
   - col: 2
     height: 2
     options:
-      color: '#588fd8'
+      color: '#4dccc5'
       description: ""
       displayMax: 0
       displayMin: 0
-      displayTrend: None
+      displayTrend: Gauge
       externalLink:
         linkType: dashboard
         path: ""
