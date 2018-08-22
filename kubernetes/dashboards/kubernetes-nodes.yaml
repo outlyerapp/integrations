@@ -1,0 +1,472 @@
+description: ""
+icon:
+  color: '#3a6db2'
+  name: integration--docker
+labels: []
+name: kubernetes-nodes
+scopes:
+- defaultValue: None
+  labelKey: k8s.cluster
+- defaultValue: None
+  labelKey: k8s.node.label
+- defaultValue: None
+  labelKey: node
+theme: light
+title: Kubernetes Nodes
+widgets:
+  chartWidgets:
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: '%'
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kube_node_memory_usage_pct,:eq,:max,:cf-max,(,node,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#298360'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: Fill
+        lineStyle: Solid
+        status: Error
+        threshold: 85
+      title: Memory Usage (pct)
+    row: 1
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kube_node_fs_nodefs_used_bytes,:eq,:max,:cf-max,(,node,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Used (bytes)
+    row: 7
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kube_node_cpu_usage_cores,:eq,:max,:cf-max,(,node,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: CPU Usage (cores)
+    row: 4
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kube_pod_container_resource_requests_memory_bytes,:eq,:sum,:cf-sum
+        scoped: true
+        visible: true
+      - query: name,kube_node_status_allocatable_memory_bytes,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Sum Memory Requests vs Memory Allocatable
+    row: 15
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kube_pod_container_resource_requests_cpu_cores,:eq,:sum,:cf-sum
+        scoped: true
+        visible: true
+      - query: name,kube_node_status_allocatable_cpu_cores,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Sum CPU Requests vs CPU Allocatable
+    row: 15
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bs
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kube_node_network_rx_bytes,:eq,:max,:cf-max,(,node,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Network Received (bytes/sec)
+    row: 10
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bs
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kube_node_network_tx_bytes,:eq,:max,:cf-max,(,node,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Network Transmitted (bytes/sec)
+    row: 10
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kube_node_memory_usage_bytes,:eq,:max,:cf-max,(,node,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#298360'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Memory Usage (bytes)
+    row: 1
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: '%'
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kube_node_cpu_usage_pct,:eq,:max,:cf-max,(,node,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: Fill
+        lineStyle: Solid
+        status: Error
+        threshold: 85
+      title: CPU Usage (pct)
+    row: 4
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kube_node_network_rx_errors,:eq,:max,:cf-max,(,node,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Network Received (errors)
+    row: 12
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kube_node_network_tx_errors,:eq,:max,:cf-max,(,node,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Network Transmitted (errors)
+    row: 12
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: '%'
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kube_node_fs_nodefs_used_pct,:eq,:max,:cf-max,(,node,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: Fill
+        lineStyle: Solid
+        status: Error
+        threshold: 85
+      title: Used (pct)
+    row: 7
+    width: 6
+  markdownWidgets:
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Memory</h1>
+      markdown: '# Memory'
+    row: 0
+    width: 12
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>CPU</h1>
+      markdown: '# CPU'
+    row: 3
+    width: 12
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Network</h1>
+      markdown: '# Network'
+    row: 9
+    width: 12
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Filesystem</h1>
+      markdown: '# Filesystem'
+    row: 6
+    width: 12
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Node Allocatable</h1>
+      markdown: '# Node Allocatable'
+    row: 14
+    width: 12
