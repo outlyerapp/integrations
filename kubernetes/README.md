@@ -5,7 +5,7 @@ Kubernetes Integration
 
 Kubernetes is an open source system for automating deployment, scaling, and management of containerized applications.
 
-This integration will monitor your Kubernetes cluster by collecting metrics from API Server and [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics).
+This integration will monitor your Kubernetes cluster by collecting metrics from API Server, [kube-state-metrics](https://github.com/kubernetes/kube-state-metrics), and Kubelet.
 
 Once enabled you will get default dashboards and alert rules to help you get started monitoring your key Kubernetes metrics.
 
@@ -32,6 +32,8 @@ Once enabled you will get default dashboards and alert rules to help you get sta
 |kube_deployment_status_replicas_unavailable      |Gauge  |k8s.cluster, deployment, namespace                                                  |    |The number of unavailable replicas per deployment.                                                                     |
 |kube_deployment_status_replicas_updated          |Gauge  |k8s.cluster, deployment, namespace                                                  |    |The number of updated replicas per deployment.                                                                         |
 |kube_node_spec_unschedulable                     |Gauge  |k8s.cluster, node                                                                   |    |Whether a node can schedule new pods.                                                                                  |
+|kube_node_status_allocatable_cpu_cores           |Gauge  |k8s.cluster, node                                                                   |core|The CPU resources of a node that are available for scheduling.                                                         |
+|kube_node_status_allocatable_memory_bytes        |Gauge  |k8s.cluster, node                                                                   |byte|The memory resources of a node that are available for scheduling.                                                      |
 |kube_node_status_capacity_pods                   |Gauge  |k8s.cluster, node                                                                   |    |The total pod resources of the node.                                                                                   |
 |kube_node_status_condition                       |Gauge  |k8s.cluster, node, condition, status                                                |    |The condition of a cluster node.                                                                                       |
 |kube_pod_container_status_restarts_total         |Counter|k8s.cluster, container, namespace, pod                                              |    |The number of container restarts per second.                                                                           |
@@ -47,18 +49,36 @@ Once enabled you will get default dashboards and alert rules to help you get sta
 |kube_service_info                                |Gauge  |k8s.cluster, service, namespace, cluster_ip                                         |    |Information about service.                                                                                             |
 
 
-### Kubernetes cAdvisor: kubernetes-cadvisor.py
+### Kubernetes Kubelet: kubernetes-kubelet.py
 
-| Metric Name                           |Type   |Labels                                                            |Unit        |Description                                               |
-|---------------------------------------|-------|------------------------------------------------------------------|------------|----------------------------------------------------------|
-|container_cpu_usage_seconds_total      |Counter|k8s.cluster, container, cpu, id, image, name, namespace, pod      |cpu/second  |Cumulative cpu time consumed per cpu in seconds.          |
-|container_fs_reads_bytes_total         |Counter|k8s.cluster, container, device, id, image, name, namespace, pod   |byte/second |Cumulative count of bytes read.                           |
-|container_fs_writes_bytes_total        |Counter|k8s.cluster, container, device, id, image, name, namespace, pod   |byte/second |Cumulative count of bytes written.                        |
-|container_memory_usage_bytes           |Gauge  |k8s.cluster, container, id, image, name, namespace, pod           |byte        |Current memory usage in bytes.                            |
-|container_network_receive_bytes_total  |Counter|k8s.cluster, container, id, image, interface, name, namespace, pod|byte/second |Cumulative count of bytes received.                       |
-|container_network_receive_errors_total |Counter|k8s.cluster, container, id, image, interface, name, namespace, pod|error/second|Cumulative count of errors encountered while receiving.   |
-|container_network_transmit_bytes_total |Counter|k8s.cluster, container, id, image, interface, name, namespace, pod|byte/second |Cumulative count of bytes transmitted.                    |
-|container_network_transmit_errors_total|Counter|k8s.cluster, container, id, image, interface, name, namespace, pod|error/second|Cumulative count of errors encountered while transmitting.|
+| Metric Name                             |Type   |Labels                                                                                 |Unit        |Description                                               |
+|-----------------------------------------|-------|---------------------------------------------------------------------------------------|------------|----------------------------------------------------------|
+|container_cpu_cfs_throttled_seconds_total|Gauge  |k8s.cluster, node, container, id, image, name, namespace, pod, k8s.pod.label           |second      |Total time duration the container has been throttled.     |
+|container_cpu_usage_seconds_total        |Counter|k8s.cluster, node, container, cpu, id, image, name, namespace, pod, k8s.pod.label      |core/second |Rate of CPU time consumed per cpu in seconds.             |
+|container_fs_reads_bytes_total           |Counter|k8s.cluster, node, container, device, id, image, name, namespace, pod, k8s.pod.label   |byte/second |Rate of bytes read.                                       |
+|container_fs_writes_bytes_total          |Counter|k8s.cluster, node, container, device, id, image, name, namespace, pod, k8s.pod.label   |byte/second |Rate of bytes written.                                    |
+|container_memory_working_set_bytes       |Gauge  |k8s.cluster, node, container, id, image, name, namespace, pod, k8s.pod.label           |byte        |Current working set in bytes.                             |
+|container_memory_swap                    |Gauge  |k8s.cluster, node, container, id, image, name, namespace, pod, k8s.pod.label           |byte        |Container swap usage in bytes.                            |
+|container_network_receive_bytes_total    |Counter|k8s.cluster, node, container, id, image, interface, name, namespace, pod, k8s.pod.label|byte/second |Rate of bytes received.                                   |
+|container_network_receive_errors_total   |Counter|k8s.cluster, node, container, id, image, interface, name, namespace, pod, k8s.pod.label|error/second|Rate of errors encountered while receiving.               |
+|container_network_transmit_bytes_total   |Counter|k8s.cluster, node, container, id, image, interface, name, namespace, pod, k8s.pod.label|byte/second |Rate of bytes transmitted.                                |
+|container_network_transmit_errors_total  |Counter|k8s.cluster, node, container, id, image, interface, name, namespace, pod, k8s.pod.label|error/second|Rate of errors encountered while transmitting.            |
+|kube_node_cpu_usage_cores                |Gauge  |k8s.cluster, node, k8s.node.label                                                      |core        |The total CPU usage (sum of all cores).                   |
+|kube_node_cpu_usage_pct                  |Gauge  |k8s.cluster, node, k8s.node.label                                                      |fraction    |The percentage of CPU cores used.                         |
+|kube_node_fs_imagefs_available_bytes     |Gauge  |k8s.cluster, node, k8s.node.label                                                      |byte        |The storage space available for the imagefs filesystem.   |
+|kube_node_fs_imagefs_inodes_free         |Gauge  |k8s.cluster, node, k8s.node.label                                                      |inode       |The free inodes in the imagefs filesystem.                |
+|kube_node_fs_nodefs_available_bytes      |Gauge  |k8s.cluster, node, k8s.node.label                                                      |byte        |The storage space available for the nodefs filesystem.    |
+|kube_node_fs_nodefs_capacity_bytes       |Gauge  |k8s.cluster, node, k8s.node.label                                                      |byte        |The total capacity of the nodefs filesystem storage.      |
+|kube_node_fs_nodefs_inodes_free          |Gauge  |k8s.cluster, node, k8s.node.label                                                      |inode       |The free inodes in the nodefs filesystem.                 |
+|kube_node_fs_nodefs_used_bytes           |Gauge  |k8s.cluster, node, k8s.node.label                                                      |byte        |The bytes used in the nodefs filesystem.                  |
+|kube_node_fs_nodefs_used_pct             |Gauge  |k8s.cluster, node, k8s.node.label                                                      |fraction    |The percentage of nodefs filesystem usage.                |
+|kube_node_memory_available_bytes         |Gauge  |k8s.cluster, node, k8s.node.label                                                      |byte        |The memory available in the node.                         |
+|kube_node_memory_usage_byte              |Gauge  |k8s.cluster, node, k8s.node.label                                                      |byte        |The memory used by the node.                              |
+|kube_node_memory_usage_pct               |Gauge  |k8s.cluster, node, k8s.node.label                                                      |fraction    |The percentage of memory used in the node.                |
+|kube_node_network_rx_bytes               |Counter|k8s.cluster, node, k8s.node.label                                                      |byte/sec    |Rate of bytes received.                                   |
+|kube_node_network_tx_bytes               |Counter|k8s.cluster, node, k8s.node.label                                                      |byte/sec    |Rate of bytes transmitted.                                |
+|kube_node_network_rx_errors              |Counter|k8s.cluster, node, k8s.node.label                                                      |error/sec   |Rate of errors encountered while receiving.               |        
+|kube_node_network_tx_errors              |Counter|k8s.cluster, node, k8s.node.label                                                      |error/sec   |Rate of errors encountered while transmitting.            |
 
 == Installation ==
 
@@ -82,21 +102,23 @@ This plugin is used to scrape metrics from `kube-state-metrics`. If you have dep
 |port     |8080                          |kube-state-metrics metrics port.                      |
 |endpoint |metrics                       |kube-state-metrics metrics endpoint.                  |
 
-### Kubernetes cAdvisor: kubernetes-cadvisor.py
-This plugin is used to scrape metrics from the embedded cAdvisor instance that ships with Kubelet. Just run the plugin against all your Kuberentes Nodes.
+### Kubernetes Kubelet: kubernetes-kubelet.py
+This plugin is used to scrape container and pod metrics from the embedded cAdvisor instance that ships with Kubelet and node metrics from the Kubelet Summary API. Just run the plugin against all your Kuberentes Nodes.
 
-|Variable  |Default                                            |Description                                                                                                             |
-|----------|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
-|protocol  |http                                               |Kubelet REST API protocol (http or https).                                                                              |
-|ip        |127.0.0.1                                          |Kubelet host.                                                                                                           |
-|port      |10255                                              |Kubelet REST API port (set it to 10250 when using https protocol).                                                      |
-|endpoint  |metrics/cadvisor                                   |cAdvisor metrics endpoint.                                                                                              |
-|token_path|/var/run/secrets/kubernetes.io/serviceaccount/token|The path to the mounted Kubernetes Secret file containing the API token to access Kubelet REST API using https protocol.|
+|Variable         |Default                                            |Description                                                                                                             |
+|-----------------|---------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+|protocol         |http                                               |Kubelet REST API protocol (http or https).                                                                              |
+|ip               |127.0.0.1                                          |Kubelet host.                                                                                                           |
+|port             |10255                                              |Kubelet REST API port (set it to 10250 when using https protocol).                                                      |
+|cadvisor_endpoint|metrics/cadvisor                                   |cAdvisor metrics endpoint.                                                                                              |
+|summary_endpoint |stats/summary                                      |Kubelet Summary API endpoint.                                                                                           |
+|token_path       |/var/run/secrets/kubernetes.io/serviceaccount/token|The path to the mounted Kubernetes Secret file containing the API token to access Kubelet REST API using https protocol.|
 
 == Changelog ==
 
 |Version|Release Date|Description                                                       |
 |-------|------------|------------------------------------------------------------------|
+|1.3    |21-Aug-2018 |Creates Nodes Dashboard.                                          |
 |1.2    |10-Aug-2018 |Creates Pods Dashboard.                                           |
 |1.1    |25-Jun-2018 |Adds k8s.cluster label and collects new API Server latency metric.|
 |1.0    |24-May-2018 |Initial version of our Kubernetes monitoring integration.         |
