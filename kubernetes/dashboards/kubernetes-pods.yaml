@@ -8,6 +8,10 @@ scopes:
 - defaultValue: None
   labelKey: k8s.cluster
 - defaultValue: None
+  labelKey: k8s.pod.label
+- defaultValue: None
+  labelKey: node
+- defaultValue: None
   labelKey: namespace
 - defaultValue: None
   labelKey: pod
@@ -36,7 +40,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container_memory_usage_bytes,:eq,:max,:cf-max
+      - query: name,container_memory_working_set_bytes,:eq,:max,:cf-max
         scoped: true
         visible: true
       - query: name,kube_pod_container_resource_requests_memory_bytes,:eq,:max,:cf-max
@@ -55,9 +59,9 @@ widgets:
         status: Error
         threshold: 0
       title: 'Memory Usage: Current vs Request vs Limit'
-    row: 8
-    width: 7
-  - col: 7
+    row: 15
+    width: 6
+  - col: 6
     height: 2
     options:
       axes:
@@ -95,219 +99,8 @@ widgets:
         status: Error
         threshold: 0
       title: 'CPU Usage: Current vs Request vs Limit'
-    row: 8
+    row: 15
     width: 6
-  - col: 0
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: bytes
-          unitPosition: After
-      chartType: StackedArea
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,container_network_receive_bytes_total,:eq,:max,:cf-max
-        scoped: true
-        visible: true
-      - query: name,container_network_transmit_bytes_total,:eq,:max,:cf-max
-        scoped: true
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: 'Network Usage: Received vs Transmitted'
-    row: 14
-    width: 7
-  - col: 7
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: bytes
-          unitPosition: After
-      chartType: StackedArea
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,container_network_receive_errors_total,:eq,:max,:cf-max
-        scoped: true
-        visible: true
-      - query: name,container_network_transmit_errors_total,:eq,:max,:cf-max
-        scoped: true
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: 'Network Errors: Received vs Transmitted'
-    row: 14
-    width: 6
-  - col: 3
-    height: 3
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: auto
-          unitPosition: After
-      chartType: Line
-      description: 'Shows the following phases:  Unknown, Pending, and Failed'
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: phase,running,:eq,:not,phase, succeeded,:eq,:not,:and,:max,:cf-max,(,pod,phase,),:by
-        scoped: true
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Pods Phase
-    row: 1
-    width: 5
-  - col: 8
-    height: 3
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: auto
-          unitPosition: After
-      chartType: Line
-      description: 'Shows the following reasons:  ContainerCreating, CrashLoopBackOff,
-        ErrImagePull, and ImagePullBackOff'
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,kube_pod_container_status_waiting_reason,:eq,:max,:cf-max,(,pod,reason,),:by
-        scoped: true
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Pods Waiting Reason
-    row: 1
-    width: 5
-  - col: 3
-    height: 3
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: auto
-          unitPosition: After
-      chartType: Line
-      description: 'Shows the following reasons: OOMKilled, Error, and ContainerCannotRun'
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name, kube_pod_container_status_terminated_reason ,:eq,reason, completed,:eq,:not,:and,:max,:cf-max,(,reason,pod,),:by
-        scoped: true
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Pods Terminated Reason
-    row: 4
-    width: 5
-  - col: 8
-    height: 3
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: auto
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,kube_pod_container_status_restarts_total,:eq,:max,:cf-max,(,pod,),:by
-        scoped: true
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Container Restarts per Pod
-    row: 4
-    width: 5
   - col: 0
     height: 2
     options:
@@ -327,7 +120,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container_fs_reads_bytes_total,:eq,:max,:cf-max
+      - query: name,container_network_receive_bytes_total,:eq,:max,:cf-max,(,pod,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -339,10 +132,44 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Reads (Bytes per Second)
-    row: 11
-    width: 7
-  - col: 7
+      title: Network Received (bytes/sec)
+    row: 10
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: StackedArea
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container_network_transmit_errors_total,:eq,:max,:cf-max,(,pod,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Network Transmitted (errors)
+    row: 12
+    width: 6
+  - col: 0
     height: 2
     options:
       axes:
@@ -361,7 +188,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container_fs_writes_bytes_total,:eq,:max,:cf-max
+      - query: name,container_fs_reads_bytes_total,:eq,:max,:cf-max,(,pod,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -373,100 +200,285 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Writes (Bytes per Second)
-    row: 11
+      title: Reads (bytes/sec)
+    row: 7
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bs
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container_fs_writes_bytes_total,:eq,:max,:cf-max,(,pod,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Writes (bytes/sec)
+    row: 7
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container_cpu_cfs_throttled_seconds_total,:eq,:max,:cf-max,(,pod,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: CPU Throttle
+    row: 4
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container_cpu_usage_seconds_total,:eq,:max,:cf-max,(,pod,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: CPU Usage (cores)
+    row: 4
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container_memory_working_set_bytes,:eq,:max,:cf-max,(,pod,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Memory Usage (bytes)
+    row: 1
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bs
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container_network_transmit_bytes_total,:eq,:max,:cf-max,(,pod,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Network Transmitted (bytes/sec)
+    row: 10
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container_network_receive_errors_total,:eq,:max,:cf-max,(,pod,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Network Received (errors)
+    row: 12
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container_memory_swap,:eq,:max,:cf-max,(,pod,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Swap Usage (bytes)
+    row: 1
     width: 6
   markdownWidgets:
-  - col: 3
-    height: 1
-    options:
-      content: |
-        <h1>Pod Conditions</h1>
-      markdown: '# Pod Conditions'
-    row: 0
-    width: 10
   - col: 0
     height: 1
     options:
       content: |
-        <h1>Memory and CPU: Requests and Limits</h1>
-      markdown: '# Memory and CPU: Requests and Limits'
-    row: 7
-    width: 13
-  - col: 0
-    height: 3
-    options:
-      content: |
-        <p><img src="https://avatars1.githubusercontent.com/u/13629408?s=230&amp;v=4" alt="Kubernetes Logo"/></p>
-      markdown: '![Kubernetes Logo](https://avatars1.githubusercontent.com/u/13629408?s=230&v=4)'
-    row: 0
-    width: 3
+        <h1>Requests and Limits</h1>
+      markdown: '# Requests and Limits'
+    row: 14
+    width: 12
   - col: 0
     height: 1
     options:
       content: |
         <h1>Network</h1>
       markdown: '# Network'
-    row: 13
-    width: 13
+    row: 9
+    width: 12
   - col: 0
     height: 1
     options:
       content: |
         <h1>Disk I/O</h1>
       markdown: '# Disk I/O'
-    row: 10
-    width: 13
-  numberWidgets:
+    row: 6
+    width: 12
   - col: 0
-    height: 2
+    height: 1
     options:
-      color: '#4dccc5'
-      description: Pods ready to serve requests.
-      displayMax: 0
-      displayMin: 0
-      displayTrend: BarChart
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: integration--docker
-      query:
-        query: name,kube_pod_status_ready,:eq,condition,true,:eq,:and,:sum,:cf-max
-        scoped: true
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Pods Ready
-      unit: auto
-      unitPosition: After
+      content: |
+        <h1>CPU</h1>
+      markdown: '# CPU'
     row: 3
-    width: 3
+    width: 12
   - col: 0
-    height: 2
+    height: 1
     options:
-      color: '#ff5e44'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: BarChart
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: integration--docker
-      query:
-        query: name,kube_deployment_status_replicas_unavailable,:eq,:sum,:cf-max
-        scoped: true
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 1
-      title: Pods Unavailable
-      unit: auto
-      unitPosition: After
-    row: 5
-    width: 3
+      content: |
+        <h1>Memory</h1>
+      markdown: '# Memory'
+    row: 0
+    width: 12
