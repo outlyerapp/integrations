@@ -54,28 +54,27 @@ class KubeApiServerPlugin(Plugin):
                 return Status.CRITICAL
         else:
             try:
-                # Scrape a Promtheus endpoint
+                # Scrape a Prometheus endpoint
                 res = v1.api_client.call_api(endpoint, 'GET',
                                              auth_settings=auth_settings,
                                              _request_timeout=20,
                                              _return_http_data_only=True,
                                              response_type=str)
 
-                # Covert Prometheus response to Outlyer Native format
+                # Convert Prometheus response to Outlyer Native format
                 for family in text_string_to_metric_families(res):
                     for sample in family.samples:
                         labels = {k: v for k, v in sample[1].items() if v != ''}
                         labels = {**metric_labels, **labels}
-                        if sample[0] in COUNTER_METRICS:
-                            value = sample[2]
-                            if not math.isnan(value):
+                        value = sample[2]
+                        if not math.isnan(value):
+                            if sample[0] in COUNTER_METRICS:
                                 self.counter(sample[0], labels).set(value)
-                        elif sample[0] in GAUGE_METRICS:
-                            value = sample[2]
-                            if not math.isnan(value):
+                            elif sample[0] in GAUGE_METRICS:
                                 self.gauge(sample[0], labels).set(value)
 
                 return Status.OK
+                
             except Exception as ex:
                 self.logger.error('API Server is unavailable: %s', str(ex))
                 return Status.CRITICAL
