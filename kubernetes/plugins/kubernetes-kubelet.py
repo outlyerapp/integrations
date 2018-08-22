@@ -99,12 +99,12 @@ class KubeletPlugin(Plugin):
 
 
     def scrape_cadvisor(self, cadvisor_metrics_url, header, cluster_global_labels, api_server_client):
-        gauge_metrics = [
+        GAUGE_METRICS = [
             'container_memory_working_set_bytes',
             'container_memory_swap',
         ]
 
-        counter_metrics = [
+        COUNTER_METRICS = [
             'container_cpu_usage_seconds_total',
             'container_cpu_cfs_throttled_seconds_total',
             'container_network_receive_bytes_total',
@@ -137,9 +137,9 @@ class KubeletPlugin(Plugin):
                         if labels["pod"]:
                             for label in pod_labels[labels["pod"]]:
                                 labels["k8s.pod.label"] = label
-                                if sample[0] in counter_metrics:
+                                if sample[0] in COUNTER_METRICS:
                                     self.counter(sample[0], labels).set(value)
-                                else:
+                                elif sample[0] in GAUGE_METRICS:
                                     self.gauge(sample[0], labels).set(value)
 
             return Status.OK

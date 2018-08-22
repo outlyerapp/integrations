@@ -61,7 +61,7 @@ class KubeStateMetricsPlugin(Plugin):
                     if not math.isnan(value):
                         if sample[0] in COUNTER_METRICS:
                             self.counter(sample[0], labels).set(value)
-                        else:
+                        elif sample[0] in GAUGE_METRICS:
                             self.gauge(sample[0], labels).set(value)
 
             return Status.OK
