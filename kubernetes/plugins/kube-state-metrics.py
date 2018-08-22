@@ -52,9 +52,10 @@ class KubeStateMetricsPlugin(Plugin):
             metric_labels['k8s.cluster'] = cluster_name
 
         try:
-            res = requests.get(f'http://{HOST}:{PORT}/{PATH}', timeout=20).text
+            res = requests.get(f'http://{HOST}:{PORT}/{PATH}', timeout=20)
+            res.raise_for_status()
 
-            for family in text_string_to_metric_families(res):
+            for family in text_string_to_metric_families(res.text):
                 for sample in family.samples:
                     labels = {**metric_labels, **sample[1]}
                     value = sample[2]
