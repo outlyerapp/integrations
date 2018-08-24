@@ -3,7 +3,7 @@ name: "kube-cadvisor"
 description: "check to get kube cadvisor metrics"
 command: "kubebernetes-cadvisor.py"
 disabled: false
-format: "Prometheus"
+handler: "Prometheus"
 icon: "assignment_turned_in"
 interval: 30
 plugins:

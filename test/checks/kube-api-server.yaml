@@ -3,7 +3,7 @@ name: "kube-api-server"
 description: "check to get kube api server metrics"
 command: "kubebernetes-api-server.py"
 disabled: false
-format: "Prometheus"
+handler: "Prometheus"
 icon: "assignment_turned_in"
 interval: 30
 plugins:
