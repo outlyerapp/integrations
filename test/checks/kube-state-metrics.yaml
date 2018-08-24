@@ -1,0 +1,12 @@
+title: "Kube state metrics"
+description: "check to get kube state metrics"
+command: "kube-state-metrics-test.py"
+disabled: false
+format: "Prometheus"
+icon: "assignment_turned_in"
+interval: 30
+plugins:
+- "kube-state-metrics-test.py"
+selectors:
+- "host=minikube"
+variables:
