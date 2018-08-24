@@ -98,7 +98,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_pod_info,:eq,:sum,(,node,),:by
+      - query: name,kube_pod_info,:eq,:sum,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -201,7 +201,7 @@ widgets:
         linkType: dashboard
         path: hosts
       queries:
-      - query: name,kube_node_status_condition,:eq,condition,ready,:eq,:not,:and,status,true,:eq,:and,:max,:cf-max,(,condition,node,),:by
+      - query: name,kube_node_status_condition,:eq,condition,ready,:eq,:not,:and,status,true,:eq,:and,:max,:cf-max,(,condition,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -304,7 +304,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_memory_usage_pct,:eq,:max,:cf-max,(,node,),:by
+      - query: name,kube_node_memory_usage_pct,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -338,7 +338,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_cpu_usage_pct,:eq,:max,:cf-max,(,node,),:by
+      - query: name,kube_node_cpu_usage_pct,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -372,7 +372,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_fs_nodefs_used_pct,:eq,:max,:cf-max,(,node,),:by
+      - query: name,kube_node_fs_nodefs_used_pct,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:

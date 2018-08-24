@@ -10,7 +10,7 @@ scopes:
 - defaultValue: None
   labelKey: k8s.pod.label
 - defaultValue: None
-  labelKey: node
+  labelKey: k8s.node.name
 - defaultValue: None
   labelKey: namespace
 - defaultValue: None

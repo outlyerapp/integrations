@@ -10,7 +10,7 @@ scopes:
 - defaultValue: None
   labelKey: k8s.node.label
 - defaultValue: None
-  labelKey: node
+  labelKey: k8s.node.name
 theme: light
 title: Kubernetes Nodes
 widgets:
@@ -34,7 +34,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_memory_usage_pct,:eq,:max,:cf-max,(,node,),:by
+      - query: name,kube_node_memory_usage_pct,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -68,7 +68,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_fs_nodefs_used_bytes,:eq,:max,:cf-max,(,node,),:by
+      - query: name,kube_node_fs_nodefs_used_bytes,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -102,7 +102,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_cpu_usage_cores,:eq,:max,:cf-max,(,node,),:by
+      - query: name,kube_node_cpu_usage_cores,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -210,7 +210,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_network_rx_bytes,:eq,:max,:cf-max,(,node,),:by
+      - query: name,kube_node_network_rx_bytes,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -244,7 +244,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_network_tx_bytes,:eq,:max,:cf-max,(,node,),:by
+      - query: name,kube_node_network_tx_bytes,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -278,7 +278,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_memory_usage_bytes,:eq,:max,:cf-max,(,node,),:by
+      - query: name,kube_node_memory_usage_bytes,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -312,7 +312,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_cpu_usage_pct,:eq,:max,:cf-max,(,node,),:by
+      - query: name,kube_node_cpu_usage_pct,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -346,7 +346,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_network_rx_errors,:eq,:max,:cf-max,(,node,),:by
+      - query: name,kube_node_network_rx_errors,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -380,7 +380,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_network_tx_errors,:eq,:max,:cf-max,(,node,),:by
+      - query: name,kube_node_network_tx_errors,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -414,7 +414,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_fs_nodefs_used_pct,:eq,:max,:cf-max,(,node,),:by
+      - query: name,kube_node_fs_nodefs_used_pct,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:

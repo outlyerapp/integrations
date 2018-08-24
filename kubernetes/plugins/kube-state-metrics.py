@@ -57,6 +57,9 @@ class KubeStateMetricsPlugin(Plugin):
 
             for family in text_string_to_metric_families(res.text):
                 for sample in family.samples:
+                    node_name = sample[1].pop('node', None)
+                    if node_name is not None:
+                        sample[1]['k8s.node.name'] = node_name
                     labels = {**metric_labels, **sample[1]}
                     value = sample[2]
                     if not math.isnan(value):

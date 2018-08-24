@@ -31,7 +31,7 @@ class KubeletPlugin(Plugin):
         cluster_global_labels = {'k8s.cluster': 'unknown'}
         if cluster_name:
             cluster_global_labels['k8s.cluster'] = cluster_name
-        cluster_global_labels['node'] = self.get('k8s.node.name')
+        cluster_global_labels['k8s.node.name'] = self.get('k8s.node.name')
 
         # Creates API Server client for core v1 API
         config.load_incluster_config()
@@ -55,7 +55,7 @@ class KubeletPlugin(Plugin):
             
             labels = {**cluster_global_labels}
             
-            node_api_server = api_server_client.list_node(field_selector='metadata.name='+labels['node'])
+            node_api_server = api_server_client.list_node(field_selector='metadata.name='+labels['k8s.node.name'])
             
             node_labels = []
             for label_key, label_value in node_api_server.items[0].metadata.labels.items():
