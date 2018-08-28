@@ -11,84 +11,17 @@ import tzlocal
 from outlyer_plugin import Plugin, Status
 
 
-def reverse_readline(filename, buf_size=8192):
-    """a generator that returns the lines of a file in reverse order"""
-    with open(filename) as fh:
-        segment = None
-        offset = 0
-        fh.seek(0, os.SEEK_END)
-        file_size = remaining_size = fh.tell()
-        while remaining_size > 0:
-            offset = min(file_size, offset + buf_size)
-            fh.seek(file_size - offset)
-            buffer = fh.read(min(remaining_size, buf_size))
-            remaining_size -= buf_size
-            lines = buffer.split('\n')
-            # the first line of the buffer is probably not a complete line so
-            # we'll save it and append it to the last line of the next bzuffer
-            # we read
-            if segment is not None:
-                # if the previous chunk starts right from the beginning of line
-                # do not concact the segment to the last line of new chunk
-                # instead, yield the segment first
-                if buffer[-1] is not '\n':
-                    lines[-1] += segment
-                else:
-                    yield segment
-            segment = lines[0]
-            for index in range(len(lines) - 1, 0, -1):
-                if len(lines[index]):
-                    yield lines[index]
-        # Don't yield None if the file was empty
-        if segment is not None:
-            yield segment
-
-
-var_pattern = re.compile(r'\$(\w+)|(.)')
-
-
-def find_vars(text):
-    return var_pattern.findall(text)
-
-
-def log_format_2_regex(text):
-    return '^' + ''.join('(?P<' + g + '>.*?)' if g else re.escape(c) for g, c in find_vars(text)) + '$'
-
-
 class NginxPlugin(Plugin):
-
-    LOG_FORMATS = [
-        '$remote_addr - $remote_user [$time_local] "$request" $status '
-        '$body_bytes_sent "$http_referer" "$http_user_agent"',
-
-        '$remote_addr - $remote_user [$time_local] "$request" $status '
-        '$body_bytes_sent $request_time "$http_referer" "$http_user_agent"',
-
-        '$remote_addr - $remote_user [$time_local] "$request" $status '
-        '$body_bytes_sent "$http_referer" "$http_user_agent" "$request_time"',
-
-        '$remote_addr - $remote_user [$time_local] "$request" $status '
-        '$body_bytes_sent "$http_referer" "$http_user_agent" "$request_time "'
-        '"$upstream_connect_time" "$upstream_header_time" "$upstream_response_time"',
-
-        '$remote_addr - $remote_user [$time_local] "$request" $status '
-        '$body_bytes_sent "$http_referer" "$http_user_agent" $request_time '
-        '$upstream_response_time $pipe'
-    ]
-
-    TIME_FIELDS = [
-        'request_time', 'upstream_connect_time', 'upstream_header_time', 'upstream_response_time'
-    ]
 
     def collect(self, _):
         is_nginx_plus = self.get('nginx_plus', False)
-        if is_nginx_plus:
+        
+        if is_nginx_plus == 'True':
             self.__collect_nginx_plus()
         else:
             self.__collect_nginx_open_source()
 
         self.__collect_process_metrics()
-        self.__collect_access_log_metrics()
         return Status.OK
 
 
@@ -99,22 +32,44 @@ class NginxPlugin(Plugin):
         try:
             # Connection metrics
             res = self.__get_nginx_plus_data("/connections")
-            self.gauge('nginx.connections_accepted').set(res['accepted'])
-            self.gauge('nginx.connections_dropped').set(res['dropped'])
-            self.gauge('nginx.connections_active').set(res['active'])
-            self.gauge('nginx.connections_idle').set(res['idle'])
+            self.gauge('nginx_plus.connections_accepted_total').set(res['accepted'])
+            self.gauge('nginx_plus.connections_dropped_total').set(res['dropped'])
+            self.counter('nginx_plus.connections_dropped_per_sec').set(res['dropped'])
+            self.gauge('nginx_plus.connections_active_current').set(res['active'])
+            self.gauge('nginx_plus.connections_idle_current').set(res['idle'])
 
             # Request Metrics
             res = self.__get_nginx_plus_data("/http/requests")
-            self.gauge('nginx.requests_current').set(res['current'])
-            self.gauge('nginx.requests_total').set(res['total'])
+            self.gauge('nginx_plus.requests_current').set(res['current'])
+            self.gauge('nginx_plus.requests_total').set(res['total'])
+            self.counter('nginx_plus.requests_per_sec').set(res['total'])
 
             # SSL metrics
             res = self.__get_nginx_plus_data("/ssl")
             self.gauge('nginx_plus.ssl_handshakes').set(res['handshakes'])
             self.gauge('nginx_plus.ssl_handshakes_failed').set(res['handshakes_failed'])
             self.gauge('nginx_plus.ssl_session_reuses').set(res['session_reuses'])
-
+            
+            # Server Zone metrics
+            res = self.__get_nginx_plus_data('/http/server_zones')
+            for server_zone_name, server_zone in res.items():
+                labels = {'server_zone': server_zone_name}
+                responses = server_zone['responses']
+                self.gauge('nginx_plus.server_zone_requests', labels).set(server_zone['requests'])
+                self.gauge('nginx_plus.server_zone_responses_1xx', labels).set(responses['1xx'])
+                self.gauge('nginx_plus.server_zone_responses_2xx', labels).set(responses['2xx'])
+                self.gauge('nginx_plus.server_zone_responses_3xx', labels).set(responses['3xx'])
+                self.gauge('nginx_plus.server_zone_responses_4xx', labels).set(responses['4xx'])
+                self.gauge('nginx_plus.server_zone_responses_5xx', labels).set(responses['5xx'])
+                self.gauge('nginx_plus.server_zone_responses_total', labels).set(responses['total'])
+                self.counter('nginx_plus.server_zone_requests_per_sec', labels).set(server_zone['requests'])
+                self.counter('nginx_plus.server_zone_responses_1xx_per_sec', labels).set(responses['1xx'])
+                self.counter('nginx_plus.server_zone_responses_2xx_per_sec', labels).set(responses['2xx'])
+                self.counter('nginx_plus.server_zone_responses_3xx_per_sec', labels).set(responses['3xx'])
+                self.counter('nginx_plus.server_zone_responses_4xx_per_sec', labels).set(responses['4xx'])
+                self.counter('nginx_plus.server_zone_responses_5xx_per_sec', labels).set(responses['5xx'])
+                self.counter('nginx_plus.server_zone_responses_total_per_sec', labels).set(responses['total'])
+                
             # Upstream metrics
             res = self.__get_nginx_plus_data("/http/upstreams")
             self.gauge('nginx_plus.upstream_count').set(len(res.items()))
@@ -132,6 +87,13 @@ class NginxPlugin(Plugin):
                     self.gauge('nginx_plus.upstream_peer_responses_4xx', labels).set(peer['responses']['4xx'])
                     self.gauge('nginx_plus.upstream_peer_responses_5xx', labels).set(peer['responses']['5xx'])
                     self.gauge('nginx_plus.upstream_peer_responses_total', labels).set(peer['responses']['total'])
+                    self.counter('nginx_plus.upstream_peer_requests_per_sec', labels).set(peer['requests'])
+                    self.counter('nginx_plus.upstream_peer_responses_1xx_per_sec', labels).set(peer['responses']['1xx'])
+                    self.counter('nginx_plus.upstream_peer_responses_2xx_per_sec', labels).set(peer['responses']['2xx'])
+                    self.counter('nginx_plus.upstream_peer_responses_3xx_per_sec', labels).set(peer['responses']['3xx'])
+                    self.counter('nginx_plus.upstream_peer_responses_4xx_per_sec', labels).set(peer['responses']['4xx'])
+                    self.counter('nginx_plus.upstream_peer_responses_5xx_per_sec', labels).set(peer['responses']['5xx'])
+                    self.counter('nginx_plus.upstream_peer_responses_total_per_sec', labels).set(peer['responses']['total'])
                     self.gauge('nginx_plus.upstream_peer_sent', labels).set(peer['sent'])
                     self.gauge('nginx_plus.upstream_peer_received', labels).set(peer['received'])
                     self.gauge('nginx_plus.upstream_peer_fails', labels).set(peer['fails'])
@@ -139,9 +101,11 @@ class NginxPlugin(Plugin):
                     self.gauge('nginx_plus.upstream_peer_health_checks_checks', labels).set(peer['health_checks']['checks'])
                     self.gauge('nginx_plus.upstream_peer_health_checks_fails', labels).set(peer['health_checks']['fails'])
                     self.gauge('nginx_plus.upstream_peer_health_checks_unhealthy', labels).set(peer['health_checks']['unhealthy'])
-                    if peer['health_checks']['last_passed'] == False:
+                    last_passed = peer['health_checks'].get('last_passed')
+                    
+                    if last_passed == False:
                         self.gauge('nginx_plus.upstream_peer_health_checks_last_passed', labels).set(1)
-                    else:
+                    elif last_passed == True:
                         self.gauge('nginx_plus.upstream_peer_health_checks_last_passed', labels).set(0)
 
                     # Collect peer state
@@ -196,89 +160,6 @@ class NginxPlugin(Plugin):
         return response.json()
 
 
-    def __collect_access_log_metrics(self):
-        """
-        Collect metrics from Nginx access log file
-        """
-        log_path = self.get('access_log', '/var/log/nginx/access.log')
-        if not log_path:
-            self.logger.error('Log path not specified in configuration file')
-            sys.exit(2)
-
-        interval = 60
-        count = 0
-        total = 0.0
-        warned = False
-
-        metrics = dict()
-
-        for code in '1xx', '2xx', '3xx', '4xx', '5xx', 'requests':
-            metrics[f'nginx.{code}'] = 0
-
-        for k in self.TIME_FIELDS:
-            metrics[f'nginx.total_{k}'] = 0
-            metrics[f'nginx.count_{k}'] = 0
-            metrics[f'nginx.min_{k}'] = 0
-            metrics[f'nginx.max_{k}'] = 0
-
-        log_formats = [re.compile(log_format_2_regex(x)) for x in self.LOG_FORMATS]
-
-        start_time = datetime.now(tzlocal.get_localzone())
-
-        try:
-            for line in reverse_readline(log_path):
-
-                m = None
-                for pattern in log_formats:
-                    m = pattern.match(line)
-                    if m:
-                        break
-                if not m:
-                    if not warned:
-                        self.logger.warn('log file does not match any known format')
-                    warned = True
-                    continue
-
-                data = m.groupdict()
-
-                line_time = datetime.strptime(data['time_local'], '%d/%b/%Y:%H:%M:%S %z')
-                if (start_time - line_time).total_seconds() >= interval:
-                    break
-
-                code = data['status']
-                metrics[f'nginx.{code}'] = metrics.get(f'nginx.{code}', 0) + 1
-                metrics[f'nginx.{code[0]}xx'] += 1
-
-                for k in self.TIME_FIELDS:
-                    try:
-                        val = float(data[k])
-                        if metrics[f'nginx.count_{k}'] == 0 or val > metrics[f'nginx.max_{k}']:
-                            metrics[f'nginx.max_{k}'] = val
-                        if metrics[f'nginx.count_{k}'] == 0 or val < metrics[f'nginx.min_{k}']:
-                            metrics[f'nginx.min_{k}'] = val
-                        metrics[f'nginx.count_{k}'] += 1
-                        metrics[f'nginx.total_{k}'] += val
-
-                    except KeyError:
-                        pass
-
-        except FileNotFoundError:
-            self.logger.error('Nginx log file not found: %s', log_path)
-            sys.exit(2)
-
-        for k in self.TIME_FIELDS:
-            if metrics[f'nginx.count_{k}'] > 0:
-                metrics[f'nginx.avg_{k}'] = metrics[f'nginx.total_{k}'] / metrics[f'nginx.count_{k}']
-            del metrics[f'nginx.total_{k}']
-            del metrics[f'nginx.count_{k}']
-
-        for code in '1xx', '2xx', '3xx', '4xx', '5xx', 'requests':
-            metrics[f'nginx.{code}_per_sec'] = metrics[f'nginx.{code}'] / interval
-
-        for k, v in metrics.items():
-            self.gauge(k).set(v)
-
-
     def __collect_process_metrics(self):
         """
         Collect metrics from Nginx process
@@ -305,7 +186,6 @@ class NginxPlugin(Plugin):
         self.gauge('nginx.worker_proc_count').set(worker_count)
 
 
-
     def __collect_nginx_open_source(self):
         """
         Collect metrics from open source Nginx (module: ngx_http_stub_status_module)
@@ -324,6 +204,7 @@ class NginxPlugin(Plugin):
             m = re.search(r'Active connections:\s+(\d+)', text)
             if m:
                 active = int(m.group(1))
+                self.gauge('nginx.connections_active').set(active)
 
             m = re.search(r'server accepts handled requests\n\s+(\d+)\s+(\d+)\s+(\d+)', text)
             if m:
@@ -331,17 +212,20 @@ class NginxPlugin(Plugin):
                 handled = int(m.group(2))
                 total = int(m.group(3))
                 self.gauge('nginx.connections_accepted').set(accepted)
-                self.gauge('nginx.connections_dropped').set(accepted - handled)
+                self.gauge('nginx.connections_handled').set(handled)
+                self.gauge('nginx.connections_dropped_total').set(accepted - handled)
+                self.counter('nginx.connections_dropped_per_sec').set(accepted - handled)
                 self.gauge('nginx.requests_total').set(total)
+                self.counter('nginx.requests_per_sec').set(total)
 
             m = re.search(r'Reading:\s+(\d+)\s+Writing:\s+(\d+)\s+Waiting:\s+(\d+)', text)
             if m:
                 reading = int(m.group(1))
                 writing = int(m.group(2))
                 waiting = int(m.group(3))
-                self.gauge('nginx.connections_active').set(active - waiting)
-                self.gauge('nginx.requests_current').set(reading + writing)
-                self.gauge('nginx.connections_idle').set(waiting)
+                self.gauge('nginx.connections_reading').set(reading)
+                self.gauge('nginx.connections_writing').set(writing)
+                self.gauge('nginx.connections_waiting').set(waiting)
 
         except requests.exceptions.RequestException as ex:
             self.logger.error('Unable to connect to Nginx server: ' + str(ex))
