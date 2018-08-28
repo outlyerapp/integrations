@@ -4,16 +4,12 @@ icon:
   name: integration--nginx
 labels: []
 name: nginx
-scopes:
-- defaultValue: ""
-  labelKey: upstream
-- defaultValue: ""
-  labelKey: peer
+scopes: []
 theme: light
 title: Nginx
 widgets:
   chartWidgets:
-  - col: 9
+  - col: 6
     height: 3
     options:
       axes:
@@ -24,172 +20,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
-          unitPosition: After
-      chartType: Area
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,nginx.4xx_per_sec,:eq,:max
-        visible: true
-      seriesStyle:
-        color: '#ff5e44'
-        palette: Gradient
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: HTTP 4xx per second
-    row: 0
-    width: 8
-  - col: 9
-    height: 3
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
-          unitPosition: After
-      chartType: Area
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,nginx.5xx_per_sec,:eq,:max
-        visible: true
-      seriesStyle:
-        color: '#ff5e44'
-        palette: Gradient
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: HTTP 5xx per second
-    row: 3
-    width: 8
-  - col: 9
-    height: 3
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
-          unitPosition: After
-      chartType: Area
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,nginx.2xx_per_sec,:eq,:max
-        visible: true
-      seriesStyle:
-        color: '#4dccc5'
-        palette: Gradient
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: HTTP 2xx per second
-    row: 7
-    width: 8
-  - col: 9
-    height: 3
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
-          unitPosition: After
-      chartType: Area
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,nginx.3xx_per_sec,:eq,:max
-        visible: true
-      seriesStyle:
-        color: '#4dccc5'
-        palette: Gradient
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: HTTP 3xx per second
-    row: 10
-    width: 8
-  - col: 9
-    height: 3
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
-          unitPosition: After
-      chartType: Area
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,nginx.1xx_per_sec,:eq,:max
-        visible: true
-      seriesStyle:
-        color: '#4dccc5'
-        palette: Gradient
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: HTTP 1xx per second
-    row: 13
-    width: 8
-  - col: 9
-    height: 3
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
+          unit: auto
           unitPosition: After
       chartType: Line
       description: ""
@@ -197,10 +28,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,nginx_plus.upstream_peer_state,:eq,:and,:sum,(,peer,state,),:by
+      - query: name,nginx.requests_per_sec,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
-        color: '#ff5e44'
+        color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
@@ -208,10 +40,10 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Peers States
-    row: 18
-    width: 8
-  - col: 12
+      title: Total Requests per Second
+    row: 1
+    width: 5
+  - col: 3
     height: 2
     options:
       axes:
@@ -222,7 +54,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: auto
           unitPosition: After
       chartType: Line
       description: ""
@@ -230,7 +62,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,nginx_plus.upstream_peer_sent,:eq,:and,:max,(,peer,),:by
+      - query: name,nginx.connections_dropped_per_sec,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -241,11 +74,11 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Bytes sent to peer
-    row: 26
-    width: 5
-  - col: 12
-    height: 3
+      title: Connections Dropped per Second
+    row: 5
+    width: 7
+  - col: 3
+    height: 2
     options:
       axes:
         xAxis:
@@ -255,7 +88,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: auto
           unitPosition: After
       chartType: Line
       description: ""
@@ -263,7 +96,14 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: ${@SCOPE},name,nginx_plus.upstream_peer_received,:eq,:and,:max,(,peer,),:by
+      - query: name,nginx.connections_reading,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      - query: name,nginx.connections_writing,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      - query: name,nginx.connections_waiting,:eq,:max,:cf-max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -274,77 +114,9 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Bytes received from peer
-    row: 28
-    width: 5
-  - col: 12
-    height: 3
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: ${@SCOPE},name,nginx_plus.upstream_peer_fails,:eq,:and,:sum,(,peer,),:by
-        visible: true
-      - query: ${@SCOPE},name,nginx_plus.upstream_peer_unavailable,:eq,:and,:sum,(,peer,),:by
-        visible: true
-      seriesStyle:
-        color: '#ff5e44'
-        palette: Gradient
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Server Fails vs Unavailable
-    row: 22
-    width: 5
-  - col: 0
-    height: 3
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: ""
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: ${@SCOPE},name,nginx_plus.upstream_peer_health_checks_last_passed,:eq,:and,:max,(,peer,),:by
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: OK
-        threshold: 0
-      title: Health Checks Failing
-    row: 22
-    width: 6
+      title: Connections Active (status)
+    row: 7
+    width: 7
   imageWidgets:
   - col: 0
     height: 4
@@ -353,119 +125,40 @@ widgets:
       icon: integration--nginx
       sizing: stretched
     row: 0
-    width: 4
+    width: 3
   markdownWidgets:
-  - col: 0
-    height: 1
-    options:
-      content: |
-        <h1>Requests and Connections</h1>
-      markdown: '# Requests and Connections'
-    row: 6
-    width: 6
-  - col: 4
-    height: 3
-    options:
-      content: |
-        <h1>Client Errors</h1>
-      markdown: '# Client Errors'
-    row: 0
-    width: 2
-  - col: 4
-    height: 3
-    options:
-      content: |
-        <h1>Server Errors</h1>
-      markdown: '# Server Errors'
-    row: 3
-    width: 2
-  - col: 6
-    height: 1
-    options:
-      content: |
-        <h1>Requests by HTTP Code</h1>
-      markdown: '# Requests by HTTP Code'
-    row: 6
-    width: 11
-  - col: 0
-    height: 1
-    options:
-      content: |
-        <h1>Nginx Plus: Upstreams</h1>
-      markdown: '# Nginx Plus: Upstreams'
-    row: 16
-    width: 17
-  - col: 12
-    height: 1
-    options:
-      content: |
-        <h1>Server Checks</h1>
-      markdown: '# Server Checks'
-    row: 21
-    width: 5
   - col: 3
     height: 1
     options:
       content: |
-        <h1>Peers Health</h1>
-      markdown: '# Peers Health'
-    row: 17
-    width: 14
+        <h1>Requests</h1>
+      markdown: '# Requests'
+    row: 0
+    width: 8
   - col: 0
     height: 1
     options:
       content: |
-        <h1>Health Check Stats</h1>
-      markdown: '# Health Check Stats'
-    row: 21
-    width: 6
-  - col: 0
-    height: 1
-    options:
-      content: |
-        <h1>Upstreams</h1>
-      markdown: '# Upstreams'
-    row: 17
-    width: 3
-  - col: 6
-    height: 1
-    options:
-      content: |
-        <h1>Requests / Responses by Code</h1>
-      markdown: '# Requests / Responses by Code'
-    row: 21
-    width: 6
-  - col: 12
-    height: 1
-    options:
-      content: |
-        <h1>Network I/O</h1>
-      markdown: '# Network I/O'
-    row: 25
-    width: 5
-  - col: 0
-    height: 1
-    options:
-      content: |
-        <h1>SSL</h1>
-      markdown: '# SSL'
-    row: 27
-    width: 6
+        <h1>Connections</h1>
+      markdown: '# Connections'
+    row: 4
+    width: 13
   numberWidgets:
-  - col: 0
+  - col: 3
     height: 3
     options:
-      color: '#588fd8'
+      color: '#4e75c5'
       description: ""
       displayMax: 0
       displayMin: 0
-      displayTrend: BarChart
+      displayTrend: Gauge
       externalLink:
         linkType: dashboard
         path: ""
       icon: check
       query:
         query: name,nginx.requests_total,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -475,12 +168,12 @@ widgets:
       title: Requests Total
       unit: ' '
       unitPosition: After
-    row: 7
+    row: 1
     width: 3
-  - col: 3
-    height: 3
+  - col: 10
+    height: 2
     options:
-      color: '#588fd8'
+      color: '#4e75c5'
       description: ""
       displayMax: 0
       displayMin: 0
@@ -491,23 +184,23 @@ widgets:
       icon: check
       query:
         query: name,nginx.connections_accepted,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
       thresholds:
       - status: Error
         threshold: 0
-      title: Connections Accepted
+      title: Connections Accepted Total
       unit: ""
       unitPosition: After
-    row: 10
+    row: 5
     width: 3
-  - col: 3
-    height: 3
+  - col: 0
+    height: 2
     options:
-      color: '#588fd8'
+      color: '#4e75c5'
       description: ""
-      displayMax: 0
       displayMin: 0
       displayTrend: BarChart
       externalLink:
@@ -516,23 +209,23 @@ widgets:
       icon: check
       query:
         query: name,nginx.connections_active,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
       thresholds:
       - status: Error
         threshold: 0
-      title: Connections Active
+      title: Current Connections Active
       unit: ""
       unitPosition: After
-    row: 13
+    row: 7
     width: 3
   - col: 0
-    height: 3
+    height: 2
     options:
       color: '#ff5e44'
       description: ""
-      displayMax: 0
       displayMin: 0
       displayTrend: BarChart
       externalLink:
@@ -540,44 +233,20 @@ widgets:
         path: ""
       icon: thumb_down
       query:
-        query: name,nginx.connections_dropped,:eq,:max,:cf-max
+        query: name,nginx.connections_dropped_total,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
       thresholds:
       - status: Error
         threshold: 0
-      title: Connections Dropped
+      title: Connections Dropped Total
       unit: ""
       unitPosition: After
-    row: 10
+    row: 5
     width: 3
-  - col: 0
-    height: 3
-    options:
-      color: '#588fd8'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: BarChart
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: name,nginx.connections_idle,:eq,:max,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Connections Idle
-      unit: ""
-      unitPosition: After
-    row: 13
-    width: 3
-  - col: 0
+  - col: 11
     height: 2
     options:
       color: '#588fd8'
@@ -591,6 +260,7 @@ widgets:
       icon: integration--nginx
       query:
         query: name,nginx.master_proc_count,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -600,9 +270,9 @@ widgets:
       title: ' Process'
       unit: ' master'
       unitPosition: After
-    row: 4
+    row: 0
     width: 2
-  - col: 2
+  - col: 11
     height: 2
     options:
       color: '#588fd8'
@@ -616,6 +286,7 @@ widgets:
       icon: integration--nginx
       query:
         query: name,nginx.worker_proc_count,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -625,530 +296,31 @@ widgets:
       title: Process
       unit: ' workers'
       unitPosition: After
-    row: 4
+    row: 2
     width: 2
-  - col: 6
-    height: 3
+  - col: 10
+    height: 2
     options:
-      color: '#ff5e44'
+      color: '#4e75c5'
       description: ""
       displayMax: 0
       displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: error
-      query:
-        query: name,nginx.5xx,:eq,:max,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: HTTP 5xx (last min)
-      unit: ""
-      unitPosition: After
-    row: 3
-    width: 3
-  - col: 6
-    height: 3
-    options:
-      color: '#ff5e44'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: error
-      query:
-        query: name,nginx.4xx,:eq,:max,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: HTTP 4xx (last min)
-      unit: ""
-      unitPosition: After
-    row: 0
-    width: 3
-  - col: 6
-    height: 3
-    options:
-      color: '#4dccc5'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: Gauge
+      displayTrend: BarChart
       externalLink:
         linkType: dashboard
         path: ""
       icon: check
       query:
-        query: name,nginx.2xx,:eq,:max,:cf-max
+        query: name,nginx.connections_handled,:eq,:max,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
       thresholds:
       - status: Error
         threshold: 0
-      title: HTTP 2xx (last min)
+      title: Connections Handled Total
       unit: ""
       unitPosition: After
     row: 7
-    width: 3
-  - col: 6
-    height: 3
-    options:
-      color: '#4dccc5'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: name,nginx.1xx,:eq,:max,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: HTTP 1xx (last min)
-      unit: ""
-      unitPosition: After
-    row: 13
-    width: 3
-  - col: 6
-    height: 3
-    options:
-      color: '#4dccc5'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: name,nginx.3xx,:eq,:max,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: HTTP 3xx (last min)
-      unit: ""
-      unitPosition: After
-    row: 10
-    width: 3
-  - col: 3
-    height: 3
-    options:
-      color: '#588fd8'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: BarChart
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: name,nginx.requests_current,:eq,:max,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Requests Current
-      unit: ' '
-      unitPosition: After
-    row: 7
-    width: 3
-  - col: 0
-    height: 3
-    options:
-      color: '#3cc663'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: BarChart
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: name,nginx_plus.ssl_handshakes,:eq,:max,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Handshakes
-      unit: ""
-      unitPosition: After
-    row: 28
-    width: 2
-  - col: 2
-    height: 3
-    options:
-      color: '#ff5e44'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: BarChart
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: name,nginx_plus.ssl_handshakes_failed,:eq,:max,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Handshakes Failed
-      unit: ""
-      unitPosition: After
-    row: 28
-    width: 2
-  - col: 4
-    height: 3
-    options:
-      color: '#3cc663'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: BarChart
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: name,nginx_plus.ssl_session_reuses,:eq,:max,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Session Reuses
-      unit: ""
-      unitPosition: After
-    row: 28
-    width: 2
-  - col: 0
-    height: 3
-    options:
-      color: '#4dccc5'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: integration--nginx
-      query:
-        query: name,nginx_plus.upstream_count,:eq,:max,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Upstreams
-      unit: ""
-      unitPosition: After
-    row: 18
-    width: 3
-  - col: 3
-    height: 3
-    options:
-      color: '#ff5e44'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: thumb_down
-      query:
-        query: ${@SCOPE},name,nginx_plus.upstream_peer_state,:eq,:and,state,unhealthy,:eq,:and,:sum,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 1
-      title: Unhealthy Peers
-      unit: ""
-      unitPosition: After
-    row: 18
-    width: 3
-  - col: 6
-    height: 3
-    options:
-      color: '#4dccc5'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: ${@SCOPE},name,nginx_plus.upstream_peer_state,:eq,:and,state,up,:eq,:and,:sum,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Healthy Peers
-      unit: ""
-      unitPosition: After
-    row: 18
-    width: 3
-  - col: 2
-    height: 2
-    options:
-      color: '#ff5e44'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: BarChart
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: thumb_down
-      query:
-        query: ${@SCOPE},name,nginx_plus.upstream_peer_health_checks_fails,:eq,:and,:sum,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Total Fails
-      unit: ""
-      unitPosition: After
-    row: 25
-    width: 2
-  - col: 4
-    height: 2
-    options:
-      color: '#ff5e44'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: BarChart
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: thumb_down
-      query:
-        query: ${@SCOPE},name,nginx_plus.upstream_peer_health_checks_unhealthy,:eq,:and,:sum,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Total Unhealthy
-      unit: ""
-      unitPosition: After
-    row: 25
-    width: 2
-  - col: 0
-    height: 2
-    options:
-      color: '#4dccc5'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: BarChart
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: ${@SCOPE},name,nginx_plus.upstream_peer_health_checks_checks,:eq,:and,:sum,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Total Checks
-      unit: ""
-      unitPosition: After
-    row: 25
-    width: 2
-  - col: 6
-    height: 3
-    options:
-      color: '#4dccc5'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: ${@SCOPE},name,nginx_plus.upstream_peer_requests,:eq,:and,:sum,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Requests
-      unit: ""
-      unitPosition: After
-    row: 22
-    width: 3
-  - col: 9
-    height: 3
-    options:
-      color: '#4dccc5'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: ${@SCOPE},name,nginx_plus.upstream_peer_responses_1xx,:eq,:and,:sum,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Responses 1xx
-      unit: ""
-      unitPosition: After
-    row: 28
-    width: 3
-  - col: 9
-    height: 3
-    options:
-      color: '#4dccc5'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: ${@SCOPE},name,nginx_plus.upstream_peer_responses_2xx,:eq,:and,:sum,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Responses 2xx
-      unit: ""
-      unitPosition: After
-    row: 22
-    width: 3
-  - col: 9
-    height: 3
-    options:
-      color: '#4dccc5'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: ${@SCOPE},name,nginx_plus.upstream_peer_responses_3xx,:eq,:and,:sum,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Responses 3xx
-      unit: ""
-      unitPosition: After
-    row: 25
-    width: 3
-  - col: 6
-    height: 3
-    options:
-      color: '#ff5e44'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: thumb_down
-      query:
-        query: ${@SCOPE},name,nginx_plus.upstream_peer_responses_4xx,:eq,:and,:sum,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Responses 4xx
-      unit: ""
-      unitPosition: After
-    row: 25
-    width: 3
-  - col: 6
-    height: 3
-    options:
-      color: '#ff5e44'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: Gauge
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: thumb_down
-      query:
-        query: ${@SCOPE},name,nginx_plus.upstream_peer_responses_5xx,:eq,:and,:sum,:cf-max
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Responses 5xx
-      unit: ""
-      unitPosition: After
-    row: 28
     width: 3
