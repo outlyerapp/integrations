@@ -4,7 +4,9 @@ icon:
   name: integration--nginx
 labels: []
 name: nginx
-scopes: []
+scopes:
+- defaultValue: None
+  labelKey: host
 theme: light
 title: Nginx
 widgets:
@@ -28,7 +30,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,nginx.requests_per_sec,:eq,:max,:cf-max
+      - query: name,nginx.requests_per_sec,:eq,:max,:cf-max,(,host,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -62,7 +64,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,nginx.connections_dropped_per_sec,:eq,:max,:cf-max
+      - query: name,nginx.connections_dropped_per_sec,:eq,:max,:cf-max,(,host,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -96,13 +98,13 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,nginx.connections_reading,:eq,:max,:cf-max
+      - query: name,nginx.connections_reading,:eq,:max,:cf-max,(,host,),:by
         scoped: true
         visible: true
       - query: name,nginx.connections_writing,:eq,:max,:cf-max
         scoped: true
         visible: true
-      - query: name,nginx.connections_waiting,:eq,:max,:cf-max
+      - query: name,nginx.connections_waiting,:eq,:max,:cf-max,(,host,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -157,7 +159,7 @@ widgets:
         path: ""
       icon: check
       query:
-        query: name,nginx.requests_total,:eq,:max,:cf-max
+        query: name,nginx.requests_total,:eq,:sum,:cf-max
         scoped: true
         visible: true
       rounding: None
@@ -183,7 +185,7 @@ widgets:
         path: ""
       icon: check
       query:
-        query: name,nginx.connections_accepted,:eq,:max,:cf-max
+        query: name,nginx.connections_accepted,:eq,:sum,:cf-max
         scoped: true
         visible: true
       rounding: None
@@ -208,7 +210,7 @@ widgets:
         path: ""
       icon: check
       query:
-        query: name,nginx.connections_active,:eq,:max,:cf-max
+        query: name,nginx.connections_active,:eq,:sum,:cf-max
         scoped: true
         visible: true
       rounding: None
@@ -233,7 +235,7 @@ widgets:
         path: ""
       icon: thumb_down
       query:
-        query: name,nginx.connections_dropped_total,:eq,:max,:cf-max
+        query: name,nginx.connections_dropped_total,:eq,:sum,:cf-max
         scoped: true
         visible: true
       rounding: None
@@ -259,7 +261,7 @@ widgets:
         path: ""
       icon: integration--nginx
       query:
-        query: name,nginx.master_proc_count,:eq,:max,:cf-max
+        query: name,nginx.master_proc_count,:eq,:sum,:cf-max
         scoped: true
         visible: true
       rounding: None
@@ -285,7 +287,7 @@ widgets:
         path: ""
       icon: integration--nginx
       query:
-        query: name,nginx.worker_proc_count,:eq,:max,:cf-max
+        query: name,nginx.worker_proc_count,:eq,:sum,:cf-max
         scoped: true
         visible: true
       rounding: None
@@ -311,7 +313,7 @@ widgets:
         path: ""
       icon: check
       query:
-        query: name,nginx.connections_handled,:eq,:max,:cf-max
+        query: name,nginx.connections_handled,:eq,:sum,:cf-max
         scoped: true
         visible: true
       rounding: None
