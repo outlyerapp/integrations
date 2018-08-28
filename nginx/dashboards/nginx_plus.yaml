@@ -6,6 +6,8 @@ labels: []
 name: nginx-plus
 scopes:
 - defaultValue: None
+  labelKey: host
+- defaultValue: None
   labelKey: server_zone
 - defaultValue: None
   labelKey: upstream
@@ -46,7 +48,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: HTTP 4xx per second
+      title: HTTP 4xx per Second
     row: 8
     width: 5
   - col: 7
@@ -80,7 +82,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: HTTP 5xx per second
+      title: HTTP 5xx per Second
     row: 10
     width: 5
   - col: 12
@@ -114,7 +116,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: HTTP 2xx per second
+      title: HTTP 2xx per Second
     row: 6
     width: 5
   - col: 7
@@ -148,7 +150,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: HTTP 3xx per second
+      title: HTTP 3xx per Second
     row: 8
     width: 5
   - col: 7
@@ -182,7 +184,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: HTTP 1xx per second
+      title: HTTP 1xx per Second
     row: 6
     width: 5
   - col: 9
@@ -250,7 +252,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Bytes sent to peer
+      title: Bytes Sent to Peer
     row: 28
     width: 6
   - col: 12
@@ -284,7 +286,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Bytes received from peer
+      title: Bytes Received from Peer
     row: 28
     width: 5
   - col: 0
@@ -306,10 +308,10 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,nginx_plus.upstream_peer_fails,:eq,:sum,:cf-max
+      - query: name,nginx_plus.upstream_peer_fails,:eq,:sum,:cf-max,(,peer,),:by
         scoped: true
         visible: true
-      - query: name,nginx_plus.upstream_peer_unavailable,:eq,:sum,:cf-max
+      - query: name,nginx_plus.upstream_peer_unavailable,:eq,:sum,:cf-max,(,peer,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -377,8 +379,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,nginx_plus.connections_dropped_per_second,:eq,:max,:cf-max
-        scoped: false
+      - query: name,nginx_plus.connections_dropped_per_sec,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -411,8 +413,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,nginx_plus.connections_active_current,:eq,:max,:cf-max
-        scoped: false
+      - query: name,nginx_plus.connections_active_current,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -525,7 +527,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: HTTP 1xx per second
+      title: HTTP 1xx per Second
     row: 21
     width: 5
   - col: 11
@@ -559,7 +561,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: HTTP 2xx per second
+      title: HTTP 2xx per Second
     row: 21
     width: 6
   - col: 6
@@ -593,7 +595,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: HTTP 3xx per second
+      title: HTTP 3xx per Second
     row: 23
     width: 5
   - col: 6
@@ -627,7 +629,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Requests per second
+      title: Requests per Second
     row: 18
     width: 11
   - col: 11
@@ -661,7 +663,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: HTTP 4xx per second
+      title: HTTP 4xx per Second
     row: 23
     width: 6
   - col: 6
@@ -695,7 +697,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: HTTP 5xx per second
+      title: HTTP 5xx per Second
     row: 25
     width: 5
   - col: 11
@@ -729,7 +731,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Total HTTP responses per second
+      title: Total HTTP Responses per Second
     row: 25
     width: 6
   - col: 12
@@ -763,7 +765,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Total HTTP responses per second
+      title: Total HTTP Responses per Second
     row: 10
     width: 5
   imageWidgets:
@@ -886,8 +888,8 @@ widgets:
         path: ""
       icon: check
       query:
-        query: name,nginx_plus.connections_accepted_total,:eq,:max,:cf-max
-        scoped: false
+        query: name,nginx_plus.connections_accepted_total,:eq,:sum,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -912,8 +914,8 @@ widgets:
         path: ""
       icon: thumb_down
       query:
-        query: name,nginx_plus.connections_dropped_total,:eq,:max,:cf-max
-        scoped: false
+        query: name,nginx_plus.connections_dropped_total,:eq,:sum,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -938,8 +940,8 @@ widgets:
         path: ""
       icon: check
       query:
-        query: name,nginx_plus.connections_idle_current,:eq,:max,:cf-max
-        scoped: false
+        query: name,nginx_plus.connections_idle_current,:eq,:sum,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -964,8 +966,8 @@ widgets:
         path: ""
       icon: integration--nginx
       query:
-        query: name,nginx.master_proc_count,:eq,:max,:cf-max
-        scoped: false
+        query: name,nginx.master_proc_count,:eq,:sum,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -990,8 +992,8 @@ widgets:
         path: ""
       icon: integration--nginx
       query:
-        query: name,nginx.worker_proc_count,:eq,:max,:cf-max
-        scoped: false
+        query: name,nginx.worker_proc_count,:eq,:sum,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -1224,7 +1226,7 @@ widgets:
         path: ""
       icon: check
       query:
-        query: name,nginx_plus.upstream_peer_health_checks_checks,:eq,,:sum,:cf-max
+        query: name,nginx_plus.upstream_peer_health_checks_checks,:eq,:sum,:cf-max
         scoped: true
         visible: true
       rounding: None
@@ -1250,8 +1252,8 @@ widgets:
         path: ""
       icon: check
       query:
-        query: name,nginx_plus.connections_accepted_total,:eq,:max,:cf-max
-        scoped: false
+        query: name,nginx_plus.connections_accepted_total,:eq,:sum,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
