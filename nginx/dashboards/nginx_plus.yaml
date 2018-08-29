@@ -427,7 +427,7 @@ widgets:
         threshold: 0
       title: Connections Active
     row: 3
-    width: 5
+    width: 6
   - col: 0
     height: 3
     options:
