@@ -240,7 +240,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,nginx_plus.upstream_peer_sent,:eq,:max,:cf-max
+      - query: name,nginx_plus.upstream_peer_bytes_sent,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -274,7 +274,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,nginx_plus.upstream_peer_received,:eq,:max,:cf-max
+      - query: name,nginx_plus.upstream_peer_bytes_received,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -360,7 +360,7 @@ widgets:
       title: Health Checks Failing by Peer
     row: 18
     width: 6
-  - col: 6
+  - col: 3
     height: 2
     options:
       axes:
@@ -392,9 +392,9 @@ widgets:
         status: Error
         threshold: 0
       title: Connections Dropped per Second
-    row: 1
-    width: 5
-  - col: 6
+    row: 3
+    width: 6
+  - col: 9
     height: 2
     options:
       axes:
@@ -413,7 +413,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,nginx_plus.connections_active_current,:eq,:max,:cf-max,(,host,),:by
+      - query: name,nginx_plus.connections_active,:eq,:max,:cf-max,(,host,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -719,7 +719,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,nginx_plus.upstream_peer_responses_total_per_sec,:eq,:max,:cf-max
+      - query: name,nginx_plus.upstream_peer_responses_per_sec,:eq,:max,:cf-max
         scoped: true
         visible: true
       seriesStyle:
@@ -753,7 +753,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,nginx_plus.server_zone_responses_total_per_sec,:eq,:max
+      - query: name,nginx_plus.server_zone_responses_per_sec,:eq,:max
         scoped: true
         visible: true
       seriesStyle:
@@ -785,7 +785,7 @@ widgets:
         <h1>Connections</h1>
       markdown: '# Connections'
     row: 0
-    width: 11
+    width: 12
   - col: 0
     height: 1
     options:
@@ -850,14 +850,14 @@ widgets:
       markdown: '# Server Zone Requests'
     row: 5
     width: 7
-  - col: 14
+  - col: 15
     height: 1
     options:
       content: |
         <h1>Process</h1>
       markdown: '# Process'
     row: 0
-    width: 3
+    width: 2
   - col: 6
     height: 1
     options:
@@ -875,7 +875,7 @@ widgets:
     row: 5
     width: 10
   numberWidgets:
-  - col: 11
+  - col: 7
     height: 2
     options:
       color: '#4e75c5'
@@ -900,7 +900,7 @@ widgets:
       unit: ""
       unitPosition: After
     row: 1
-    width: 3
+    width: 4
   - col: 3
     height: 2
     options:
@@ -926,8 +926,8 @@ widgets:
       unit: ""
       unitPosition: After
     row: 1
-    width: 3
-  - col: 3
+    width: 4
+  - col: 11
     height: 2
     options:
       color: '#4e75c5'
@@ -940,7 +940,7 @@ widgets:
         path: ""
       icon: check
       query:
-        query: name,nginx_plus.connections_idle_current,:eq,:sum,:cf-max
+        query: name,nginx_plus.connections_idle,:eq,:sum,:cf-max
         scoped: true
         visible: true
       rounding: None
@@ -951,9 +951,9 @@ widgets:
       title: Connections Idle
       unit: ""
       unitPosition: After
-    row: 3
-    width: 3
-  - col: 14
+    row: 1
+    width: 4
+  - col: 15
     height: 2
     options:
       color: '#588fd8'
@@ -978,8 +978,8 @@ widgets:
       unit: ' master'
       unitPosition: After
     row: 1
-    width: 3
-  - col: 14
+    width: 2
+  - col: 15
     height: 2
     options:
       color: '#588fd8'
@@ -1004,7 +1004,7 @@ widgets:
       unit: ' workers'
       unitPosition: After
     row: 3
-    width: 3
+    width: 2
   - col: 0
     height: 2
     options:
@@ -1239,29 +1239,3 @@ widgets:
       unitPosition: After
     row: 21
     width: 2
-  - col: 11
-    height: 2
-    options:
-      color: '#4e75c5'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: BarChart
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: name,nginx_plus.connections_accepted_total,:eq,:sum,:cf-max
-        scoped: true
-        visible: true
-      rounding: None
-      statistic: LastValue
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Connections Accepted Total
-      unit: ""
-      unitPosition: After
-    row: 3
-    width: 3
