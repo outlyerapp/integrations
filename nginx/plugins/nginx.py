@@ -16,7 +16,7 @@ class NginxPlugin(Plugin):
     def collect(self, _):
         is_nginx_plus = self.get('nginx_plus', False)
         
-        if is_nginx_plus == 'True':
+        if is_nginx_plus == 'true':
             self.__collect_nginx_plus()
         else:
             self.__collect_nginx_open_source()
