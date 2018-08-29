@@ -35,8 +35,8 @@ class NginxPlugin(Plugin):
             self.gauge('nginx_plus.connections_accepted_total').set(res['accepted'])
             self.gauge('nginx_plus.connections_dropped_total').set(res['dropped'])
             self.counter('nginx_plus.connections_dropped_per_sec').set(res['dropped'])
-            self.gauge('nginx_plus.connections_active_current').set(res['active'])
-            self.gauge('nginx_plus.connections_idle_current').set(res['idle'])
+            self.gauge('nginx_plus.connections_active').set(res['active'])
+            self.gauge('nginx_plus.connections_idle').set(res['idle'])
 
             # Request Metrics
             res = self.__get_nginx_plus_data("/http/requests")
@@ -54,21 +54,25 @@ class NginxPlugin(Plugin):
             res = self.__get_nginx_plus_data('/http/server_zones')
             for server_zone_name, server_zone in res.items():
                 labels = {'server_zone': server_zone_name}
+
+                self.gauge('nginx_plus.server_zone_requests_total', labels).set(server_zone['requests'])
+                self.counter('nginx_plus.server_zone_requests_per_sec', labels).set(server_zone['requests'])
+
                 responses = server_zone['responses']
-                self.gauge('nginx_plus.server_zone_requests', labels).set(server_zone['requests'])
+
                 self.gauge('nginx_plus.server_zone_responses_1xx', labels).set(responses['1xx'])
                 self.gauge('nginx_plus.server_zone_responses_2xx', labels).set(responses['2xx'])
                 self.gauge('nginx_plus.server_zone_responses_3xx', labels).set(responses['3xx'])
                 self.gauge('nginx_plus.server_zone_responses_4xx', labels).set(responses['4xx'])
                 self.gauge('nginx_plus.server_zone_responses_5xx', labels).set(responses['5xx'])
                 self.gauge('nginx_plus.server_zone_responses_total', labels).set(responses['total'])
-                self.counter('nginx_plus.server_zone_requests_per_sec', labels).set(server_zone['requests'])
+                
                 self.counter('nginx_plus.server_zone_responses_1xx_per_sec', labels).set(responses['1xx'])
                 self.counter('nginx_plus.server_zone_responses_2xx_per_sec', labels).set(responses['2xx'])
                 self.counter('nginx_plus.server_zone_responses_3xx_per_sec', labels).set(responses['3xx'])
                 self.counter('nginx_plus.server_zone_responses_4xx_per_sec', labels).set(responses['4xx'])
                 self.counter('nginx_plus.server_zone_responses_5xx_per_sec', labels).set(responses['5xx'])
-                self.counter('nginx_plus.server_zone_responses_total_per_sec', labels).set(responses['total'])
+                self.counter('nginx_plus.server_zone_responses_per_sec', labels).set(responses['total'])
                 
             # Upstream metrics
             res = self.__get_nginx_plus_data("/http/upstreams")
@@ -80,22 +84,26 @@ class NginxPlugin(Plugin):
                     self.gauge('nginx_plus.upstream_peer_id', labels).set(peer['id'])
                     self.gauge('nginx_plus.upstream_peer_weight', labels).set(peer['weight'])
                     self.gauge('nginx_plus.upstream_peer_active', labels).set(peer['active'])
-                    self.gauge('nginx_plus.upstream_peer_requests', labels).set(peer['requests'])
+
+                    self.gauge('nginx_plus.upstream_peer_requests_total', labels).set(peer['requests'])
+                    self.counter('nginx_plus.upstream_peer_requests_per_sec', labels).set(peer['requests'])
+
                     self.gauge('nginx_plus.upstream_peer_responses_1xx', labels).set(peer['responses']['1xx'])
                     self.gauge('nginx_plus.upstream_peer_responses_2xx', labels).set(peer['responses']['2xx'])
                     self.gauge('nginx_plus.upstream_peer_responses_3xx', labels).set(peer['responses']['3xx'])
                     self.gauge('nginx_plus.upstream_peer_responses_4xx', labels).set(peer['responses']['4xx'])
                     self.gauge('nginx_plus.upstream_peer_responses_5xx', labels).set(peer['responses']['5xx'])
                     self.gauge('nginx_plus.upstream_peer_responses_total', labels).set(peer['responses']['total'])
-                    self.counter('nginx_plus.upstream_peer_requests_per_sec', labels).set(peer['requests'])
+                    
                     self.counter('nginx_plus.upstream_peer_responses_1xx_per_sec', labels).set(peer['responses']['1xx'])
                     self.counter('nginx_plus.upstream_peer_responses_2xx_per_sec', labels).set(peer['responses']['2xx'])
                     self.counter('nginx_plus.upstream_peer_responses_3xx_per_sec', labels).set(peer['responses']['3xx'])
                     self.counter('nginx_plus.upstream_peer_responses_4xx_per_sec', labels).set(peer['responses']['4xx'])
                     self.counter('nginx_plus.upstream_peer_responses_5xx_per_sec', labels).set(peer['responses']['5xx'])
-                    self.counter('nginx_plus.upstream_peer_responses_total_per_sec', labels).set(peer['responses']['total'])
-                    self.gauge('nginx_plus.upstream_peer_sent', labels).set(peer['sent'])
-                    self.gauge('nginx_plus.upstream_peer_received', labels).set(peer['received'])
+                    self.counter('nginx_plus.upstream_peer_responses_per_sec', labels).set(peer['responses']['total'])
+                    
+                    self.gauge('nginx_plus.upstream_peer_bytes_sent', labels).set(peer['sent'])
+                    self.gauge('nginx_plus.upstream_peer_bytes_received', labels).set(peer['received'])
                     self.gauge('nginx_plus.upstream_peer_fails', labels).set(peer['fails'])
                     self.gauge('nginx_plus.upstream_peer_unavailable', labels).set(peer['unavail'])
                     self.gauge('nginx_plus.upstream_peer_health_checks_checks', labels).set(peer['health_checks']['checks'])
