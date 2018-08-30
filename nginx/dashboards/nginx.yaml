@@ -1,0 +1,328 @@
+description: ""
+icon:
+  color: '#27a84c'
+  name: integration--nginx
+labels: []
+name: nginx
+scopes:
+- defaultValue: None
+  labelKey: host
+theme: light
+title: Nginx
+widgets:
+  chartWidgets:
+  - col: 6
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,nginx.requests_per_sec,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Total Requests per Second
+    row: 1
+    width: 5
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,nginx.connections_dropped_per_sec,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Connections Dropped per Second
+    row: 5
+    width: 7
+  - col: 3
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,nginx.connections_reading,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      - query: name,nginx.connections_writing,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      - query: name,nginx.connections_waiting,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Connections Active (status)
+    row: 7
+    width: 7
+  imageWidgets:
+  - col: 0
+    height: 4
+    options:
+      color: '#27a84c'
+      icon: integration--nginx
+      sizing: stretched
+    row: 0
+    width: 3
+  markdownWidgets:
+  - col: 3
+    height: 1
+    options:
+      content: |
+        <h1>Requests</h1>
+      markdown: '# Requests'
+    row: 0
+    width: 8
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Connections</h1>
+      markdown: '# Connections'
+    row: 4
+    width: 13
+  numberWidgets:
+  - col: 3
+    height: 3
+    options:
+      color: '#4e75c5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,nginx.requests_total,:eq,:sum,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Requests Total
+      unit: ' '
+      unitPosition: After
+    row: 1
+    width: 3
+  - col: 10
+    height: 2
+    options:
+      color: '#4e75c5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,nginx.connections_accepted,:eq,:sum,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Connections Accepted Total
+      unit: ""
+      unitPosition: After
+    row: 5
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      color: '#4e75c5'
+      description: ""
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,nginx.connections_active,:eq,:sum,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Current Connections Active
+      unit: ""
+      unitPosition: After
+    row: 7
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      color: '#ff5e44'
+      description: ""
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: thumb_down
+      query:
+        query: name,nginx.connections_dropped_total,:eq,:sum,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Connections Dropped Total
+      unit: ""
+      unitPosition: After
+    row: 5
+    width: 3
+  - col: 11
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--nginx
+      query:
+        query: name,nginx.master_proc_count,:eq,:sum,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: ' Process'
+      unit: ' master'
+      unitPosition: After
+    row: 0
+    width: 2
+  - col: 11
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--nginx
+      query:
+        query: name,nginx.worker_proc_count,:eq,:sum,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Process
+      unit: ' workers'
+      unitPosition: After
+    row: 2
+    width: 2
+  - col: 10
+    height: 2
+    options:
+      color: '#4e75c5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,nginx.connections_handled,:eq,:sum,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Connections Handled Total
+      unit: ""
+      unitPosition: After
+    row: 7
+    width: 3
