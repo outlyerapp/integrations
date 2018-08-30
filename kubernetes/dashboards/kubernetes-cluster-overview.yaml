@@ -77,10 +77,10 @@ widgets:
         status: Error
         threshold: 0
       title: Container Restarts per Pod
-    row: 11
+    row: 13
     width: 3
   - col: 0
-    height: 2
+    height: 3
     options:
       axes:
         xAxis:
@@ -98,7 +98,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_pod_info,:eq,:sum,(,node,),:by
+      - query: name,kube_pod_info,:eq,:sum,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -111,8 +111,8 @@ widgets:
         status: Error
         threshold: 0
       title: Current Number of Pods per Node
-    row: 8
-    width: 5
+    row: 9
+    width: 8
   - col: 0
     height: 2
     options:
@@ -145,7 +145,7 @@ widgets:
         status: Error
         threshold: 0
       title: Pods Phase
-    row: 11
+    row: 13
     width: 4
   - col: 11
     height: 2
@@ -182,7 +182,7 @@ widgets:
     row: 1
     width: 4
   - col: 0
-    height: 2
+    height: 3
     options:
       axes:
         xAxis:
@@ -201,7 +201,7 @@ widgets:
         linkType: dashboard
         path: hosts
       queries:
-      - query: name,kube_node_status_condition,:eq,condition,ready,:eq,:not,:and,status,true,:eq,:and,:max,:cf-max,(,condition,node,),:by
+      - query: name,kube_node_status_condition,:eq,condition,ready,:eq,:not,:and,status,true,:eq,:and,:max,:cf-max,(,condition,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -215,7 +215,7 @@ widgets:
         threshold: 1
       title: Node Conditions
     row: 6
-    width: 5
+    width: 8
   - col: 4
     height: 2
     options:
@@ -249,7 +249,7 @@ widgets:
         status: Error
         threshold: 0
       title: Pods Waiting Reason
-    row: 11
+    row: 13
     width: 4
   - col: 8
     height: 2
@@ -283,9 +283,9 @@ widgets:
         status: Error
         threshold: 0
       title: Pods Terminated Reason
-    row: 11
+    row: 13
     width: 4
-  - col: 5
+  - col: 8
     height: 2
     options:
       axes:
@@ -293,7 +293,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: 100
           min: 0
           showGridLines: false
           title: ""
@@ -305,22 +304,22 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,sys.mem.pct,:eq,:max,:cf-max,(,host,),:by
-        scoped: false
+      - query: name,kube_node_memory_usage_pct,:eq,:max,:cf-max,(,k8s.node.name,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
-      - display: None
+      - display: Fill
         lineStyle: Solid
         status: Error
-        threshold: 0
+        threshold: 85
       title: Memory Usage per Node
     row: 6
-    width: 5
-  - col: 10
+    width: 7
+  - col: 8
     height: 2
     options:
       axes:
@@ -328,7 +327,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: 100
           min: 0
           showGridLines: false
           title: ""
@@ -340,33 +338,33 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,sys.cpu.pct,:eq,:max,:cf-max,(,host,),:by
-        scoped: false
+      - query: name,kube_node_cpu_usage_pct,:eq,:max,:cf-max,(,k8s.node.name,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
         palette: MultiColor
       summarization: Avg
       thresholds:
-      - display: None
+      - display: Fill
         lineStyle: Solid
         status: Error
-        threshold: 0
+        threshold: 85
       title: CPU Usage per Node
-    row: 6
-    width: 5
-  - col: 5
+    row: 8
+    width: 7
+  - col: 8
     height: 2
     options:
       axes:
         xAxis:
           mode: Time
-          showGridLines: true
+          showGridLines: false
         yAxis:
           min: 0
-          showGridLines: true
+          showGridLines: false
           title: ""
-          unit: auto
+          unit: '%'
           unitPosition: After
       chartType: Line
       description: ""
@@ -374,7 +372,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_pod_container_resource_requests_memory_bytes,:eq,:sum,:cf-sum,(,node,),:by
+      - query: name,kube_node_fs_nodefs_used_pct,:eq,:max,:cf-max,(,k8s.node.name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -382,47 +380,13 @@ widgets:
         palette: MultiColor
       summarization: Avg
       thresholds:
-      - display: None
+      - display: Fill
         lineStyle: Solid
         status: Error
-        threshold: 0
-      title: Sum Memory Requests per Node
-    row: 8
-    width: 5
-  - col: 10
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: true
-        yAxis:
-          min: 0
-          showGridLines: true
-          title: ""
-          unit: auto
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,kube_pod_container_resource_requests_cpu_cores,:eq,:sum,:cf-sum,(,node,),:by
-        scoped: true
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Sum CPU Requests per Node
-    row: 8
-    width: 5
+        threshold: 85
+      title: Filesystem Usage per Node
+    row: 10
+    width: 7
   markdownWidgets:
   - col: 3
     height: 1
@@ -446,7 +410,7 @@ widgets:
       content: |
         <h1>Pod Conditions</h1>
       markdown: '# Pod Conditions'
-    row: 10
+    row: 12
     width: 15
   - col: 11
     height: 1
