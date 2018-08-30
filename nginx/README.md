@@ -14,7 +14,7 @@ This integration will help you monitor both Nginx open source and Nginx Plus by 
 
 Once enabled you will get a default Nginx/Nginx Plus dashboard to help you get started monitoring your key Nginx metrics.
 
-== Metrics Collected for Nginx Open Source ==
+== Metrics Collected ==
 
 |Metric Name                                       |Type   |Labels               |Unit             |Nginx Version.   |Description                                                                                                                                                    |
 |--------------------------------------------------|-------|---------------------|-----------------|-----------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------|
