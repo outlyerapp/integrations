@@ -12,7 +12,7 @@ class TestPlugin(unittest.TestCase):
 #            'AWS_ACCESS_KEY_ID': '',
 #            'AWS_SECRET_ACCESS_KEY': ''
         }
-        output = OutlyerPluginTest.run_plugin("../plugins/ec2-discovery.py", variables)
+        output = OutlyerPluginTest.run_plugin("../collectors/ec2-discovery.py", variables)
         instances = json.loads(output.stdout)
         pprint.pprint(instances)
 
@@ -24,13 +24,13 @@ class TestPlugin(unittest.TestCase):
 #            'AWS_ACCESS_KEY_ID': '',
 #            'AWS_SECRET_ACCESS_KEY': ''
         }
-        output = OutlyerPluginTest.run_plugin("../plugins/ec2-discovery.py", variables)
+        output = OutlyerPluginTest.run_plugin("../collectors/ec2-discovery.py", variables)
         instances = json.loads(output.stdout)
 
         pluginvariables = {**variables, **instances['instances'][0]['labels']}
         pluginvariables['hostname'] = instances['instances'][0]['hostname']
         pluginvariables['ip'] = instances['instances'][0]['ip']
-        output = OutlyerPluginTest.run_plugin("../plugins/aws-ec2.py", pluginvariables)
+        output = OutlyerPluginTest.run_plugin("../collectors/aws-ec2.py", pluginvariables)
         output.print_output()
 
 if __name__ == '__main__':

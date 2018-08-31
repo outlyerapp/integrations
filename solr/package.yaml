@@ -1,7 +1,8 @@
 ---
 title: Solr
-description: Solr is the popular, blazing-fast, open source enterprise search platform built on Apache Lucene
+description: Outlyer Monitoring Integration for Solr, the open source enterprise search platform built on Apache Lucene
 logo: solr.svg
+version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT

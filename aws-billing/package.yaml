@@ -1,6 +1,6 @@
 ---
 title: AWS Billing
-description: Collect metrics from your AWS Billing to monitor your AWS Costs
+description: Outlyer Monitoring Integration to collect metrics from your AWS account Billing to monitor your AWS Costs
 logo: aws-billing.svg
 version: 1.0.0
 author: Outlyer

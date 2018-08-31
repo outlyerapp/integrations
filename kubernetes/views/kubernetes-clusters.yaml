@@ -1,0 +1,13 @@
+description: See all your Kubernetes Pods organized by cluster and nodes
+groups:
+- k8s.cluster
+- instance.parent
+icon:
+  color: '#3a6db2'
+  name: integration--docker
+legend: []
+name: kubernetes-clusters
+selectors:
+- instance.type:container
+title: Kubernetes Clusters
+type: host

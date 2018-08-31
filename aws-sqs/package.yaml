@@ -1,6 +1,6 @@
 ---
 title: AWS SQS
-description: Collect metrics to monitor all your AWS SQS Queues
+description: Outlyer Monitoring Integration to collect metrics from your AWS SQS Queues
 logo: aws-sqs.svg
 version: 1.0.0
 author: Outlyer

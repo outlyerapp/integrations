@@ -1,7 +1,8 @@
 ---
 title: Redis
-description: Open source in-memory data store
+description: Outlyer Monitoring Integration for Redis, the open source in-memory data store
 logo: redis.svg
+version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT

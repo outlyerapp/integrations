@@ -1,6 +1,6 @@
 ---
 title: AWS Lambda
-description: Collect metrics to monitor all your AWS Lambda Functions
+description: Outlyer Monitoring Integration to collect metrics from your AWS Lambda Functions
 logo: aws-lambda.svg
 version: 1.0.0
 author: Outlyer

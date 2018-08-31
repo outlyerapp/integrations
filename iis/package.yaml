@@ -1,7 +1,8 @@
 ---
 title: IIS
-description: Microsoft Internet Information Services
+description: Outlyer Monitoring Integration for Microsoft's Internet Information Services (IIS) webserver
 logo: iis.png
+version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT

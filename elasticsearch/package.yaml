@@ -1,7 +1,8 @@
 ---
 title: Elasticsearch
-description: Distributed document store and search engine
+description: Outlyer Monitoring Integration for Elasticsearch, the distributed document store and search engine
 logo: elasticsearch.svg
+version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT

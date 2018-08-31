@@ -1,7 +1,8 @@
 ---
 title: Cassandra
-description: Open source distributed wide column store NoSQL database
+description: Outlyer Monitoring Integration for the Apache Cassandra NoSQL database
 logo: cassandra.svg
+version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT

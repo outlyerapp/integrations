@@ -230,4 +230,4 @@ for the handler to see the actual payload of metrics being sent to Outlyer.
 
 |Version|Release Date|Description                                          |
 |-------|------------|-----------------------------------------------------|
-|1.0    |12-Jul-2018 |Initial version of the Outlyer Sensu Handler.        |
+|0.9    |12-Jul-2018 |Initial version of the Outlyer Sensu Handler.        |

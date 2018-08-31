@@ -1,6 +1,6 @@
 ---
 title: AWS SNS
-description: Collect metrics to monitor all your AWS SNS Topics
+description: Outlyer Monitoring Integration to collect metrics from your AWS SNS Topics
 logo: aws-sns.svg
 version: 1.0.0
 author: Outlyer

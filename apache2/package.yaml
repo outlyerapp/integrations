@@ -1,7 +1,8 @@
 ---
 title: Apache HTTP Server 2
-description: Popular Open source Web Server for hosting web applications
+description: Outlyer Monitoring Integration for the Apache 2 HTTP Web Server
 logo: apache2.svg
+version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT

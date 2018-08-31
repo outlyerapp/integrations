@@ -1,7 +1,8 @@
 ---
 title: MySQL
-description: World's most popular open source database
+description: Outlyer Monitoring Integration for MySQL, the world's most popular open-source relational database
 logo: mysql.svg
+version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT

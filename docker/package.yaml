@@ -1,7 +1,8 @@
 ---
 title: Docker
-description: Container management service
+description: Outlyer Monitoring Integration for the Docker container management service
 logo: docker.svg
+version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT

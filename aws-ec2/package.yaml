@@ -1,8 +1,8 @@
 ---
 title: AWS EC2
-description: Collect metrics to monitor all your AWS EC2 Instances via Cloudwatch
+description: Outlyer Monitoring Integration to collect metrics from your AWS EC2 Instances via Cloudwatch
 logo: aws-ec2.svg
-version: 1.0.0
+version: 1.1.0
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT

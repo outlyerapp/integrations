@@ -1,7 +1,8 @@
 ---
 title: Kubernetes
-description: Kubernetes Monitoring Checks, Dashboards and Alerts
+description: Outlyer Monitoring Integration for Kubernetes, the container orchestration platform
 logo: kubernetes.svg
+version: 1.3.0
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT

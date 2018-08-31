@@ -9,7 +9,7 @@ class TestPlugin(unittest.TestCase):
         variables = {
             'AWS_REGION': 'us-east-1',
         }
-        output = OutlyerPluginTest.run_plugin("../plugins/elb-discovery.py", variables)
+        output = OutlyerPluginTest.run_plugin("../collectors/elb-discovery.py", variables)
         pprint.pprint(output.stdout)
 
 if __name__ == '__main__':

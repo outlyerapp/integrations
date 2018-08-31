@@ -1,6 +1,6 @@
 ---
 title: AWS Kinesis
-description: Collect metrics to monitor all your AWS Kinesis Streams
+description: Outlyer Monitoring Integration to collect metrics from your AWS Kinesis Streams
 logo: aws-kinesis.svg
 version: 1.0.0
 author: Outlyer

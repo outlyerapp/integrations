@@ -1,6 +1,6 @@
 ---
 title: Consul
-description: Check Consul Services are running
+description: Outlyer Monitoring Integration for the Hashicorp Consul service discovery service
 logo: consul.svg
 version: 1.0.0
 author: Outlyer
