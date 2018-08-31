@@ -1,0 +1,10 @@
+---
+title: Outlyer Agent
+description: Outlyer Monitoring Integration to install the Outlyer Agent and view key agent metrics in your account
+logo: outlyer-icon.svg
+version: 1.0.0
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - os & system

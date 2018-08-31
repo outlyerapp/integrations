@@ -1,5 +1,4 @@
-description: Dashboard for Hosts running the Agent Proxies pushing in metrics from
-  Kafka requests
+description: Dashboard for key stats from your running Outlyer agents
 icon:
   color: '#ffb863'
   name: integration--ec2

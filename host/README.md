@@ -4,7 +4,7 @@ Host Integration
 == Description ==
 
 This integration is installed by default to provide the default dashboards to view your host and agent metrics collected
-by the agent. It can not be uninstalled.
+by the agent.
 
 == Metrics Collected ==
 
@@ -12,7 +12,7 @@ This integration only uses the default metrics collected by the agent.
 
 == Installation ==
 
-None required. This Integration is installed by default into your account and cannot be removed.
+None required. Just install this integration to see the dashboards in your account.
 
 == Changelog ==
 
