@@ -20,9 +20,6 @@ GAUGE_METRICS = [
     'etcd_debugging_mvcc_db_total_size_in_bytes',
     'process_open_fds',
     'process_max_fds',
-]
-
-COUNTER_METRICS = [
     'etcd_server_leader_changes_seen_total',
     'etcd_server_proposals_failed_total',
     'etcd_debugging_mvcc_put_total',
@@ -33,6 +30,10 @@ COUNTER_METRICS = [
     'etcd_network_client_grpc_sent_bytes_total',
     'etcd_network_peer_received_bytes_total',
     'etcd_network_peer_sent_bytes_total',
+]
+
+COUNTER_METRICS = [
+
 ]
 
 
