@@ -3,8 +3,9 @@
 title: A test integration
 description: An integration to test our integration service
 version: 1.2.3
-icon: https://docs2.outlyer.com/assets/img/outlyer-logo-black.svg
+icon: 
+  url: https://docs2.outlyer.com/assets/img/outlyer-logo-black.svg
 labels:
-- key: test
-- key: internal
-- key: integration
+- test
+- internal
+- integration
