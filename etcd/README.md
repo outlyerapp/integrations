@@ -31,9 +31,9 @@ Once enabled you will get a default etcd cluster overview dashboard and alert ru
 |etcd_network_client_grpc_sent_bytes_total    |Gauge  |       |byte|The total number of bytes sent to grpc clients.          |
 |etcd_network_peer_received_bytes_total       |Gauge  |from   |byte|The total number of bytes received from peers.           |
 |etcd_network_peer_sent_bytes_total           |Gauge  |to     |byte|The total number of bytes sent to peers.                 |
-|process_resident_memory_bytes                |Gauge  |       |byte|Resident memory size in bytes.                           |
-|process_open_fds                             |Gauge  |       |    |Number of open file descriptors.                         |
-|process_max_fds                              |Gauge  |       |    |Maximum number of open file descriptors.                 |
+|etcd_process_resident_memory_bytes           |Gauge  |       |byte|Resident memory size in bytes.                           |
+|etcd_process_open_fds                        |Gauge  |       |    |Number of open file descriptors.                         |
+|etcd_process_max_fds                         |Gauge  |       |    |Maximum number of open file descriptors.                 |
 
 == Installation ==
 

@@ -22,7 +22,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: bytes
           unitPosition: After
       chartType: Line
       description: ""
@@ -56,7 +56,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: bytes
           unitPosition: After
       chartType: Line
       description: ""
@@ -64,7 +64,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,process_resident_memory_bytes,:eq,:max,:cf-max,(,host,),:by
+      - query: name,etcd_process_resident_memory_bytes,:eq,:max,:cf-max,(,host,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -90,7 +90,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: bytes
           unitPosition: After
       chartType: Line
       description: ""
@@ -127,7 +127,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: bytes
           unitPosition: After
       chartType: Line
       description: ""
@@ -249,10 +249,10 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,process_open_fds,:eq,:max,:cf-max,(,host,),:by
+      - query: name,etcd_process_open_fds,:eq,:max,:cf-max,(,host,),:by
         scoped: true
         visible: true
-      - query: name,process_max_fds,:eq,:max,:cf-max,(,host,),:by
+      - query: name,etcd_process_max_fds,:eq,:max,:cf-max,(,host,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -306,8 +306,9 @@ widgets:
     height: 2
     options:
       content: |
-        <p><img src="https://raw.githubusercontent.com/coreos/etcd/master/logos/etcd-horizontal-color.png" alt="etcd logo"/></p>
-      markdown: '![etcd logo](https://raw.githubusercontent.com/coreos/etcd/master/logos/etcd-horizontal-color.png)'
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/etcd/resources/etcd.svg?sanitize=true" width="320"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/etcd/resources/etcd.svg?sanitize=true"
+        width="320" />
     row: 0
     width: 4
   numberWidgets:
