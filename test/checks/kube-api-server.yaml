@@ -1,0 +1,13 @@
+title: "Kube API server"
+name: "kube-api-server"
+description: "check to get kube api server metrics"
+command: "kubebernetes-api-server.py"
+disabled: false
+handler: "Prometheus"
+icon: "assignment_turned_in"
+interval: 30
+plugins:
+- "kubebernetes-api-server.py"
+selectors:
+- "host=minikube"
+env:
