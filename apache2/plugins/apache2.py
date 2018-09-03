@@ -39,8 +39,6 @@ class ApachePlugin(Plugin):
                         self.gauge('apache2.load15', {}).set(float(value))
                     elif key == 'Total Accesses':
                         self.counter('apache2.total_accesses', {}).set(float(value))
-                    elif key == 'Total kBytes':
-                        self.counter('apache2.total_kbytes', {}).set(float(value))
                     elif key == 'Uptime':
                         self.gauge('apache2.uptime', {}).set(float(value))
                     elif key == 'ReqPerSec':
