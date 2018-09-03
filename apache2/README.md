@@ -14,7 +14,7 @@ Once enabled you will get a default Apache dashboard to help you get started mon
 |Metric Name                  |Type   |Labels|Unit          |Description                                       |
 |-----------------------------|-------|------|--------------|--------------------------------------------------|
 |apache2.total_accesses       |Gauge  |      |              |The total number of accesses.                     |
-|apache2.uptime               |Counter|      |second        |The amount of time the server has been running.   |
+|apache2.uptime               |Gauge  |      |second        |The amount of time the server has been running.   |
 |apache2.req_per_sec          |Gauge  |      |request/second|The number of requests performed per second.      |
 |apache2.bytes_per_sec        |Gauge  |      |byte/second   |The number of bytes served per second.            |
 |apache2.bytes_per_req        |Gauge  |      |byte/second   |The number of bytes served per request.           |
