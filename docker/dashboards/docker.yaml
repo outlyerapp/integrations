@@ -480,8 +480,9 @@ widgets:
     height: 4
     options:
       content: |
-        <p><img src="https://d1q6f0aelx0por.cloudfront.net/product-logos/75765bad-5683-40e7-b4cb-cdd4f7cc9b9e-docker.png" alt="Docker logo"/></p>
-      markdown: '![Docker logo](https://d1q6f0aelx0por.cloudfront.net/product-logos/75765bad-5683-40e7-b4cb-cdd4f7cc9b9e-docker.png)'
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/docker/resources/docker.svg?sanitize=true" width="250"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/docker/resources/docker.svg?sanitize=true"
+        width="250" />
     row: 0
     width: 3
   - col: 6
