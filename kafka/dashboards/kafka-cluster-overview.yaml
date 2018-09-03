@@ -19,7 +19,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -32,8 +31,10 @@ widgets:
         path: ""
       queries:
       - query: name,kafka_cluster_controllerstats_leaderelectionrateandtimems_count,:eq,:sum
+        scoped: true
         visible: true
       - query: name,kafka_cluster_controllerstats_uncleanleaderelectionspersec_count,:eq,:sum
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -55,7 +56,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -68,6 +68,7 @@ widgets:
         path: ""
       queries:
       - query: name,kafka_network_requestmetrics_requestspersec_count,:eq,:avg,(,request,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -89,7 +90,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -102,6 +102,7 @@ widgets:
         path: ""
       queries:
       - query: name,kafka_server_brokertopicmetrics_messagesinpersec_count,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -123,7 +124,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -138,6 +138,7 @@ widgets:
       - query: |-
           name,kafka_server_brokertopicmetrics_bytesinpersec_count,:eq,:sum,
           name,kafka_server_brokertopicmetrics_bytesoutpersec_count,:eq,:sum
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -159,7 +160,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ms
@@ -172,6 +172,7 @@ widgets:
         path: ""
       queries:
       - query: name,kafka_network_requestmetrics_totaltimems_count,:eq,:avg,(,request,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -193,7 +194,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -206,6 +206,7 @@ widgets:
         path: ""
       queries:
       - query: name,kafka_server_replicamanager_isrexpandspersec_count,:eq,:max,name,kafka_server_replicamanager_isrshrinkspersec_count,:eq,:max,:sub,:derivative
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -227,7 +228,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -240,6 +240,7 @@ widgets:
         path: ""
       queries:
       - query: name,java_lang_garbagecollector_collectiontime,:eq,:avg,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -261,7 +262,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -274,8 +274,10 @@ widgets:
         path: ""
       queries:
       - query: name,java_lang_memory_heapmemoryusage_used,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       - query: name,java_lang_memory_heapmemoryusage_committed,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -297,7 +299,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -310,6 +311,7 @@ widgets:
         path: ""
       queries:
       - query: name,kafka_server_replicamanager_isrshrinkspersec_count,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -331,7 +333,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -344,6 +345,7 @@ widgets:
         path: ""
       queries:
       - query: name,kafka_server_replicamanager_isrexpandspersec_count,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -365,7 +367,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -378,6 +379,7 @@ widgets:
         path: ""
       queries:
       - query: name,kafka_server_replicamanager_leadercount,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -399,7 +401,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -412,6 +413,7 @@ widgets:
         path: ""
       queries:
       - query: name,kafka_server_replicafetchermanager_maxlag,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -433,7 +435,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -446,8 +447,10 @@ widgets:
         path: ""
       queries:
       - query: name,java_lang_classloading_loadedclasscount,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       - query: name,java_lang_classloading_unloadedclasscount,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -469,7 +472,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -482,8 +484,10 @@ widgets:
         path: ""
       queries:
       - query: name,java_lang_operatingsystem_maxfiledescriptorcount,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       - query: name,java_lang_operatingsystem_openfiledescriptorcount,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -505,7 +509,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -518,6 +521,7 @@ widgets:
         path: ""
       queries:
       - query: name,java_lang_garbagecollector_collectioncount,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -545,8 +549,9 @@ widgets:
     height: 2
     options:
       content: |
-        <p><img src="https://pbs.twimg.com/profile_images/781633389577195521/kazUJooF_reasonably_small.jpg" alt="Kafka Logo"/></p>
-      markdown: '![Kafka Logo](https://pbs.twimg.com/profile_images/781633389577195521/kazUJooF_reasonably_small.jpg)'
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/kafka/resources/kafka.svg?sanitize=true" width="100"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/kafka/resources/kafka.svg?sanitize=true"
+        width="100" />
     row: 0
     width: 3
   - col: 0
@@ -563,8 +568,6 @@ widgets:
     options:
       color: '#424242'
       description: ""
-      displayMax: null
-      displayMin: null
       displayTrend: SparkLine
       externalLink:
         linkType: dashboard
@@ -572,6 +575,7 @@ widgets:
       icon: announcement
       query:
         query: name,kafka_server_replicamanager_underreplicatedpartitions,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -588,8 +592,6 @@ widgets:
     options:
       color: '#424242'
       description: ""
-      displayMax: null
-      displayMin: null
       displayTrend: SparkLine
       externalLink:
         linkType: dashboard
@@ -597,6 +599,7 @@ widgets:
       icon: announcement
       query:
         query: name,kafka_controller_kafkacontroller_offlinepartitionscount,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: Max
@@ -613,8 +616,6 @@ widgets:
     options:
       color: '#3cc663'
       description: ""
-      displayMax: null
-      displayMin: null
       displayTrend: SparkLine
       externalLink:
         linkType: dashboard
@@ -622,6 +623,7 @@ widgets:
       icon: check
       query:
         query: name,kafka_controller_kafkacontroller_activecontrollercount,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -638,8 +640,6 @@ widgets:
     options:
       color: '#3a6db2'
       description: ""
-      displayMax: null
-      displayMin: null
       displayTrend: SparkLine
       externalLink:
         linkType: dashboard
@@ -647,6 +647,7 @@ widgets:
       icon: collections
       query:
         query: name,kafka_server_replicamanager_partitioncount,:eq,:sum
+        scoped: true
         visible: true
       rounding: None
       statistic: Max
@@ -663,8 +664,6 @@ widgets:
     options:
       color: '#3cc663'
       description: ""
-      displayMax: null
-      displayMin: null
       displayTrend: SparkLine
       externalLink:
         linkType: dashboard
@@ -672,6 +671,7 @@ widgets:
       icon: compare_arrows
       query:
         query: name,kafka_network_socketserver_networkprocessoravgidlepercent,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: Max
@@ -688,8 +688,6 @@ widgets:
     options:
       color: '#3cc663'
       description: ""
-      displayMax: null
-      displayMin: null
       displayTrend: SparkLine
       externalLink:
         linkType: dashboard
@@ -697,6 +695,7 @@ widgets:
       icon: swap_horiz
       query:
         query: name,kafka_server_kafkarequesthandlerpool_requesthandleravgidlepercent_oneminuterate,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: Max
@@ -722,6 +721,7 @@ widgets:
       icon: check
       query:
         query: name,kafka_controller_kafkacontroller_activecontrollercount,:eq,:count,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -747,6 +747,7 @@ widgets:
       icon: check
       query:
         query: name,kafka_server_brokertopicmetrics_messagesinpersec_count,:eq,kafka-broker,true,:eq,:and,:sum
+        scoped: true
         visible: true
       rounding: None
       statistic: Max
@@ -772,6 +773,7 @@ widgets:
       icon: announcement
       query:
         query: name,kafka_cluster_controllerstats_uncleanleaderelectionspersec_count,:eq,:sum
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -797,6 +799,7 @@ widgets:
       icon: integration--java
       query:
         query: name,java_lang_threading_threadcount,:eq,:sum,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -822,6 +825,7 @@ widgets:
       icon: integration--java
       query:
         query: name,java_lang_threading_peakthreadcount,:eq,:sum,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -847,6 +851,7 @@ widgets:
       icon: integration--java
       query:
         query: name,java_lang_threading_daemonthreadcount,:eq,:sum,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -858,4 +863,3 @@ widgets:
       unitPosition: After
     row: 11
     width: 3
-  statusWidgets: []
