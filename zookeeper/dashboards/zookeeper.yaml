@@ -21,7 +21,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -34,6 +33,7 @@ widgets:
         path: ""
       queries:
       - query: name,zk_max_latency,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -55,7 +55,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -68,6 +67,7 @@ widgets:
         path: ""
       queries:
       - query: name,zk_outstanding_requests,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -89,7 +89,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -102,8 +101,10 @@ widgets:
         path: ""
       queries:
       - query: name,zk_open_file_descriptor_count,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       - query: name,zk_max_file_descriptor_count,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -125,7 +126,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -138,6 +138,7 @@ widgets:
         path: ""
       queries:
       - query: name,zk_num_alive_connections,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -159,7 +160,6 @@ widgets:
           mode: Time
           showGridLines: true
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -173,6 +173,7 @@ widgets:
         path: ""
       queries:
       - query: name,sys.disk.used_pct,:eq,role,zookeeper,:eq,:and,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -194,7 +195,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -207,8 +207,10 @@ widgets:
         path: ""
       queries:
       - query: name,zk_packets_received,:eq,:max
+        scoped: true
         visible: true
       - query: name,zk_packets_sent,:eq,:max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -222,7 +224,7 @@ widgets:
       title: Requests Sent vs. Received
     row: 2
     width: 6
-  - col: 11
+  - col: 10
     height: 2
     options:
       axes:
@@ -230,7 +232,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -243,8 +244,10 @@ widgets:
         path: ""
       queries:
       - query: name,zk_followers,:eq,:max
+        scoped: true
         visible: true
       - query: name,zk_synced_followers,:eq,:max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -257,7 +260,7 @@ widgets:
         threshold: 0
       title: Followers vs. Synced Followers
     row: 0
-    width: 3
+    width: 4
   - col: 8
     height: 2
     options:
@@ -266,7 +269,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -279,6 +281,7 @@ widgets:
         path: ""
       queries:
       - query: name,zk_min_latency,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -300,7 +303,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -313,6 +315,7 @@ widgets:
         path: ""
       queries:
       - query: name,zk_avg_latency,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -348,18 +351,17 @@ widgets:
     height: 2
     options:
       content: |
-        <p><img src="http://educareit.com/images/zookeeper.png" alt="Zookeeper Logo"/></p>
-      markdown: '![Zookeeper Logo](http://educareit.com/images/zookeeper.png)'
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/zookeeper/resources/zookeeper.svg?sanitize=true" width="140"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/general-fixes/zookeeper/resources/zookeeper.svg?sanitize=true"
+        width="140" />
     row: 0
-    width: 3
+    width: 2
   numberWidgets:
-  - col: 7
+  - col: 6
     height: 2
     options:
       color: '#3cc663'
       description: ""
-      displayMax: null
-      displayMin: null
       displayTrend: SparkLine
       externalLink:
         linkType: dashboard
@@ -367,6 +369,7 @@ widgets:
       icon: integration--java
       query:
         query: name,zk_znode_count,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -378,13 +381,11 @@ widgets:
       unitPosition: After
     row: 0
     width: 2
-  - col: 5
+  - col: 4
     height: 2
     options:
       color: '#3cc663'
       description: ""
-      displayMax: null
-      displayMin: null
       displayTrend: SparkLine
       externalLink:
         linkType: dashboard
@@ -392,6 +393,7 @@ widgets:
       icon: integration--java
       query:
         query: name,zk_watch_count,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -403,7 +405,7 @@ widgets:
       unitPosition: After
     row: 0
     width: 2
-  - col: 3
+  - col: 2
     height: 2
     options:
       color: '#588fd8'
@@ -417,6 +419,7 @@ widgets:
       icon: insert_emoticon
       query:
         query: name,host.status,:eq,role,zookeeper,:eq,:and,:count,:cf-max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -428,13 +431,11 @@ widgets:
       unitPosition: After
     row: 0
     width: 2
-  - col: 9
+  - col: 8
     height: 2
     options:
       color: '#3cc663'
       description: ""
-      displayMax: null
-      displayMin: null
       displayTrend: SparkLine
       externalLink:
         linkType: dashboard
@@ -442,6 +443,7 @@ widgets:
       icon: integration--java
       query:
         query: name,zk_pending_syncs,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -453,4 +455,3 @@ widgets:
       unitPosition: After
     row: 0
     width: 2
-  statusWidgets: []
