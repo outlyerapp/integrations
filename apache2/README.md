@@ -14,27 +14,26 @@ Once enabled you will get a default Apache dashboard to help you get started mon
 |Metric Name                  |Type   |Labels|Unit          |Description                                       |
 |-----------------------------|-------|------|--------------|--------------------------------------------------|
 |apache2.total_accesses       |Gauge  |      |              |The total number of accesses.                     |
-|apache2.total_kbytes         |Gauge  |      |kilobyte      |The total number of kilobytes served.             |
-|apache2.uptime               |Counter|      |second        |The amount of time the server has been running.   |
+|apache2.uptime               |Gauge  |      |second        |The amount of time the server has been running.   |
 |apache2.req_per_sec          |Gauge  |      |request/second|The number of requests performed per second.      |
 |apache2.bytes_per_sec        |Gauge  |      |byte/second   |The number of bytes served per second.            |
 |apache2.bytes_per_req        |Gauge  |      |byte/second   |The number of bytes served per request.           |
-|apache2.busy_workers         |Gauge  |      |              |The number of workers serving requests.           |
-|apache2.idle_workers         |Gauge  |      |              |The number of idle workers.                       |
-|apache2.conns_total          |Gauge  |      |              |The total number of connections performed.        |
-|apache2.conns_async_writing  |Gauge  |      |              |The number of asynchronous writes connections.    |
-|apache2.conns_async_keepalive|Gauge  |      |              |The number of asynchronous keep alive connections.|
-|apache2.conns_async_closing  |Gauge  |      |              |The number of asynchronous closing connections.   |
+|apache2.busy_workers         |Gauge  |      |worker        |The number of workers serving requests.           |
+|apache2.idle_workers         |Gauge  |      |worker        |The number of idle workers.                       |
+|apache2.conns_total          |Gauge  |      |connection    |The total number of connections performed.        |
+|apache2.conns_async_writing  |Gauge  |      |connection    |The number of asynchronous writes connections.    |
+|apache2.conns_async_keepalive|Gauge  |      |connection    |The number of asynchronous keep alive connections.|
+|apache2.conns_async_closing  |Gauge  |      |connection    |The number of asynchronous closing connections.   |
 |apache2.stats.open           |Gauge  |      |              |Open slot with no current process.                |
-|apache2.stats.waiting        |Gauge  |      |              |Idle workers waiting for connection.              |
-|apache2.stats.starting       |Gauge  |      |              |The number of busy workers starting up.           |
-|apache2.stats.reading        |Gauge  |      |              |The number of busy workers reading request.       |
-|apache2.stats.sending        |Gauge  |      |              |The number of busy workers sending reply.         |
-|apache2.stats.keepalive      |Gauge  |      |              |The number of workers busy with keepalive (read). |
-|apache2.stats.dnslookup      |Gauge  |      |              |The number of workers busy with DNS Lookup.       |
-|apache2.stats.closing        |Gauge  |      |              |The number of busy workers closing connection.    |
-|apache2.stats.logging        |Gauge  |      |              |The number of busy workers logging.               |
-|apache2.stats.finishing      |Gauge  |      |              |The number of busy workers gracefully finishing.  |
+|apache2.stats.waiting        |Gauge  |      |worker        |Idle workers waiting for connection.              |
+|apache2.stats.starting       |Gauge  |      |worker        |The number of busy workers starting up.           |
+|apache2.stats.reading        |Gauge  |      |worker        |The number of busy workers reading request.       |
+|apache2.stats.sending        |Gauge  |      |worker        |The number of busy workers sending reply.         |
+|apache2.stats.keepalive      |Gauge  |      |worker        |The number of workers busy with keepalive (read). |
+|apache2.stats.dnslookup      |Gauge  |      |worker        |The number of workers busy with DNS Lookup.       |
+|apache2.stats.closing        |Gauge  |      |worker        |The number of busy workers closing connection.    |
+|apache2.stats.logging        |Gauge  |      |worker        |The number of busy workers logging.               |
+|apache2.stats.finishing      |Gauge  |      |worker        |The number of busy workers gracefully finishing.  |
 |apache2.stats.idle_cleanup   |Gauge  |      |              |The number of idle cleanup of workers.            |
 
 == Installation ==

@@ -11,26 +11,26 @@ Once enabled you will get a default HAProxy dashboard to help you get started mo
 
 == Metrics Collected ==
 
-|Metric Name     |Type |Labels        |Unit           |Description                                                                          |
-|----------------|-----|--------------|---------------|-------------------------------------------------------------------------------------|
-|haproxy.bin     |Gauge|pxname, svname|byte           |Number of bytes received by the frontend.                                            |
-|haproxy.bout    |Gauge|pxname, svname|byte           |Number of bytes sent by the frontend.                                                |
-|haproxy.dreq    |Gauge|pxname, svname|request/second |Rate of requests denied due to security concerns (ACL-restricted).                   |
-|haproxy.dresp   |Gauge|pxname, svname|response/second|Rate of responses denied due to security concerns (ACL-restricted).                  |
-|haproxy.ereq    |Gauge|pxname, svname|error/second   |Rate of request errors.                                                              |
-|haproxy.hrsp_4xx|Gauge|pxname, svname|response/second|Rate of HTTP client errors.                                                          |
-|haproxy.hrsp_5xx|Gauge|pxname, svname|response/second|Rate of HTTP server errors.                                                          |
-|haproxy.scur    |Gauge|pxname, svname|session        |Current number of active sessions.                                                   |
-|haproxy.status  |Gauge|pxname, svname|               |Current backend status (0 = UP, 1 = DOWN).                                           |
-|haproxy.rate    |Gauge|pxname, svname|session/second |Number of sessions created per second.                                               |
-|haproxy.req_rate|Gauge|pxname, svname|request/second |HTTP requests per second.                                                            |
-|haproxy.econ    |Gauge|pxname, svname|error/second   |Rate of requests that encountered an error attempting to connect to a backend server.|
-|haproxy.eresp   |Gauge|pxname, svname|error/second   |Rate of requests whose responses yielded an error.                                   |
-|haproxy.wretr   |Gauge|pxname, svname|retry/second   |Rate of times a connection was retried.                                              |
-|haproxy.wredis  |Gauge|pxname, svname|error/second   |Rate of times a request was redispatched to a different backend.                     |
-|haproxy.qcur    |Gauge|pxname, svname|request        |Current number of requests unassigned in queue.                                      |
-|haproxy.qtime   |Gauge|pxname, svname|millisecond    |Average queue time over the last 1024 requests.                                      |
-|haproxy.rtime   |Gauge|pxname, svname|millisecond    |Average response time over the last 1024 requests (0 for TCP).                       |
+|Metric Name     |Type   |Labels        |Unit           |Description                                                                          |
+|----------------|-------|--------------|---------------|-------------------------------------------------------------------------------------|
+|haproxy.bin     |Counter|pxname, svname|byte/second    |Rate of bytes received by the frontend per second.                                   |
+|haproxy.bout    |Counter|pxname, svname|byte/second    |Rate of bytes sent by the frontend per second.                                       |
+|haproxy.dreq    |Counter|pxname, svname|request/second |Rate of requests denied due to security concerns (ACL-restricted).                   |
+|haproxy.dresp   |Counter|pxname, svname|response/second|Rate of responses denied due to security concerns (ACL-restricted).                  |
+|haproxy.ereq    |Counter|pxname, svname|error/second   |Rate of request errors.                                                              |
+|haproxy.hrsp_4xx|Counter|pxname, svname|response/second|Rate of HTTP client errors.                                                          |
+|haproxy.hrsp_5xx|Counter|pxname, svname|response/second|Rate of HTTP server errors.                                                          |
+|haproxy.scur    |Gauge  |pxname, svname|session        |Current number of active sessions.                                                   |
+|haproxy.status  |Gauge  |pxname, svname|               |Current backend status (0 = UP, 1 = DOWN).                                           |
+|haproxy.rate    |Gauge  |pxname, svname|session/second |Number of sessions created per second.                                               |
+|haproxy.req_rate|Gauge  |pxname, svname|request/second |HTTP requests per second.                                                            |
+|haproxy.econ    |Counter|pxname, svname|error/second   |Rate of requests that encountered an error attempting to connect to a backend server.|
+|haproxy.eresp   |Counter|pxname, svname|error/second   |Rate of requests whose responses yielded an error.                                   |
+|haproxy.wretr   |Counter|pxname, svname|retry/second   |Rate of times a connection was retried.                                              |
+|haproxy.wredis  |Counter|pxname, svname|error/second   |Rate of times a request was redispatched to a different backend.                     |
+|haproxy.qcur    |Gauge  |pxname, svname|request        |Current number of requests unassigned in queue.                                      |
+|haproxy.qtime   |Gauge  |pxname, svname|millisecond    |Average queue time over the last 1024 requests.                                      |
+|haproxy.rtime   |Gauge  |pxname, svname|millisecond    |Average response time over the last 1024 requests (0 for TCP).                       |
 
 == Installation ==
 

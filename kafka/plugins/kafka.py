@@ -5,10 +5,7 @@ from jmxquery import JMXConnection, JMXQuery
 
 from outlyer_plugin import Status, Plugin
 
-COUNTER_METRICS = [
-    'kafka_producer_producer-metrics_record-send-total',
-    'kafka_consumer_consumer-fetch-manager-metrics_records-consumed-total',
-]
+COUNTER_METRICS = []
 
 class KafkaPlugin(Plugin):
     def collect(self, _):

@@ -461,8 +461,9 @@ widgets:
     height: 3
     options:
       content: |
-        <p><img src="http://6tdr4.us/wp-content/uploads/2018/04/apache-cassandra-logo-enormousit-oracle-consulting-services-sap-services-software-of-apache-cassandra-logo.png" alt="Cassandra Logo"/></p>
-      markdown: '![Cassandra Logo](http://6tdr4.us/wp-content/uploads/2018/04/apache-cassandra-logo-enormousit-oracle-consulting-services-sap-services-software-of-apache-cassandra-logo.png)'
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/cassandra/resources/cassandra.svg?sanitize=true" width="350"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/cassandra/resources/cassandra.svg?sanitize=true"
+        width="350" />
     row: 0
     width: 4
   - col: 6

@@ -19,7 +19,6 @@ widgets:
           mode: Time
           showGridLines: true
         yAxis:
-          max: null
           min: 0
           showGridLines: true
           title: ""
@@ -32,8 +31,10 @@ widgets:
         path: ""
       queries:
       - query: name,kafka_producer_producer-metrics_request-rate,:eq,:max
+        scoped: true
         visible: true
       - query: name,kafka_producer_producer-metrics_response-rate,:eq,:max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -55,7 +56,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -68,8 +68,10 @@ widgets:
         path: ""
       queries:
       - query: name,kafka_producer_producer-metrics_outgoing-byte-rate,:eq,:max
+        scoped: true
         visible: true
       - query: name,kafka_producer_producer-metrics_incoming-byte-rate,:eq,:max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -91,7 +93,6 @@ widgets:
           mode: Time
           showGridLines: false
         yAxis:
-          max: null
           min: 0
           showGridLines: false
           title: ""
@@ -104,6 +105,7 @@ widgets:
         path: ""
       queries:
       - query: name,kafka_producer_producer-metrics_request-latency-avg,:eq,:max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -125,7 +127,6 @@ widgets:
           mode: Time
           showGridLines: true
         yAxis:
-          max: null
           min: 0
           showGridLines: true
           title: ""
@@ -138,6 +139,7 @@ widgets:
         path: ""
       queries:
       - query: name,kafka_producer_producer-metrics_io-wait-time-ns-avg,:eq,:max
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -151,14 +153,14 @@ widgets:
       title: I/O Wait Average (ns)
     row: 4
     width: 6
-  imageWidgets: []
   markdownWidgets:
   - col: 0
     height: 2
     options:
       content: |
-        <p><img src="https://pbs.twimg.com/profile_images/781633389577195521/kazUJooF_reasonably_small.jpg" alt="Kafka Logo"/></p>
-      markdown: '![Kafka Logo](https://pbs.twimg.com/profile_images/781633389577195521/kazUJooF_reasonably_small.jpg)'
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/kafka/resources/kafka.svg?sanitize=true" width="100"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/kafka/resources/kafka.svg?sanitize=true"
+        width="100" />
     row: 0
     width: 3
   numberWidgets:
@@ -176,6 +178,7 @@ widgets:
       icon: integration--java
       query:
         query: name,kafka_producer_producer-metrics_connection-count,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -201,6 +204,7 @@ widgets:
       icon: integration--java
       query:
         query: name,kafka_producer_producer-metrics_waiting-threads,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -226,6 +230,7 @@ widgets:
       icon: check
       query:
         query: name,kafka_producer_producer-metrics_record-send-total,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -237,4 +242,3 @@ widgets:
       unitPosition: After
     row: 0
     width: 3
-  statusWidgets: []

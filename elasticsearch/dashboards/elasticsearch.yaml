@@ -534,8 +534,9 @@ widgets:
     height: 4
     options:
       content: |
-        <p><img src="https://www.unixmen.com/wp-content/uploads/2017/06/elasticsearch.jpg" alt="Elasticsearch logo"/></p>
-      markdown: '![Elasticsearch logo](https://www.unixmen.com/wp-content/uploads/2017/06/elasticsearch.jpg)'
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/elasticsearch/resources/elasticsearch.svg?sanitize=true" width="350"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/elasticsearch/resources/elasticsearch.svg?sanitize=true"
+        width="350" />
     row: 0
     width: 4
   - col: 4

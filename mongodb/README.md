@@ -11,28 +11,28 @@ Once enabled you will get a default MongoDB dashboard to help you get started mo
 
 == Metrics Collected ==
 
-|Metric Name                  |Type |Labels  |Unit            |Description                                                                                                 |
-|-----------------------------|-----|--------|----------------|------------------------------------------------------------------------------------------------------------|
-|mongodb.collections          |Gauge|database|                |Number of collections in the database.                                                                      |
-|mongodb.objects              |Gauge|database|                |number of objects (i.e. documents) in the database across all collections.                                  |
-|mongodb.avg_obj_size         |Gauge|database|byte            |Average size of each document in bytes. This is the dataSize divided by the number of documents.            |
-|mongodb.data_size            |Gauge|database|byte            |Total size of the uncompressed data held in this database. The dataSize decreases when you remove documents.|
-|mongodb.storage_size         |Gauge|database|byte            |Total amount of space allocated to collections in this database for document storage.                       |
-|mongodb.indexes              |Gauge|database|                |Total number of indexes across all collections in the database.                                             |
-|mongodb.index_size           |Gauge|database|byte            |Total size of all indexes created on this database.                                                         |
-|mongodb.fs_used_size         |Gauge|database|byte            |Total size of all disk space in use on the filesystem where MongoDB stores data.                            |
-|mongodb.fs_total_size        |Gauge|database|byte            |Total size of all disk capacity on the filesystem where MongoDB stores data.                                |
-|mongodb.network.bytes_in     |Gauge|        |byte/second     |Rate of bytes that reflects the amount of network traffic received.                                         |
-|mongodb.network.bytes_out    |Gauge|        |byte/second     |Rate of bytes that reflects the amount of network traffic sent.                                             |
-|mongodb.network.num_requests |Gauge|        |request/second  |Rate of of distinct requests that the server has received.                                                  |
-|mongodb.opcounters.delete    |Gauge|        |operation/second|Rate of delete operations since the mongod instance last started.                                           |
-|mongodb.opcounters.getmore   |Gauge|        |operation/second|Rate of “getmore” operations since the mongod instance last started.                                        |
-|mongodb.opcounters.insert    |Gauge|        |operation/second|Rate of insert operations received since the mongod instance last started.                                  |
-|mongodb.opcounters.query     |Gauge|        |operation/second|Rate of queries received since the mongod instance last started.                                            |
-|mongodb.opcounters.update    |Gauge|        |operation/second|Rate of update operations received since the mongod instance last started.                                  |
-|mongodb.connections.available|Gauge|        |                |Number of unused incoming connections available.                                                            |
-|mongodb.connections.current  |Gauge|        |                |Number of incoming connections from clients to the database server.                                         |
-|mongodb.uptime               |Gauge|        |second          |Number of seconds that the current MongoDB process has been active.                                         |
+|Metric Name                  |Type   |Labels  |Unit            |Description                                                                                                 |
+|-----------------------------|-------|--------|----------------|------------------------------------------------------------------------------------------------------------|
+|mongodb.collections          |Gauge  |database|                |Number of collections in the database.                                                                      |
+|mongodb.objects              |Gauge  |database|                |number of objects (i.e. documents) in the database across all collections.                                  |
+|mongodb.avg_obj_size         |Gauge  |database|byte            |Average size of each document in bytes. This is the dataSize divided by the number of documents.            |
+|mongodb.data_size            |Gauge  |database|byte            |Total size of the uncompressed data held in this database. The dataSize decreases when you remove documents.|
+|mongodb.storage_size         |Gauge  |database|byte            |Total amount of space allocated to collections in this database for document storage.                       |
+|mongodb.indexes              |Gauge  |database|                |Total number of indexes across all collections in the database.                                             |
+|mongodb.index_size           |Gauge  |database|byte            |Total size of all indexes created on this database.                                                         |
+|mongodb.fs_used_size         |Gauge  |database|byte            |Total size of all disk space in use on the filesystem where MongoDB stores data.                            |
+|mongodb.fs_total_size        |Gauge  |database|byte            |Total size of all disk capacity on the filesystem where MongoDB stores data.                                |
+|mongodb.network.bytes_in     |Counter|        |byte/second     |Rate of bytes that reflects the amount of network traffic received.                                         |
+|mongodb.network.bytes_out    |Counter|        |byte/second     |Rate of bytes that reflects the amount of network traffic sent.                                             |
+|mongodb.network.num_requests |Counter|        |request/second  |Rate of of distinct requests that the server has received.                                                  |
+|mongodb.opcounters.delete    |Counter|        |operation/second|Rate of delete operations since the mongod instance last started.                                           |
+|mongodb.opcounters.getmore   |Counter|        |operation/second|Rate of “getmore” operations since the mongod instance last started.                                        |
+|mongodb.opcounters.insert    |Counter|        |operation/second|Rate of insert operations received since the mongod instance last started.                                  |
+|mongodb.opcounters.query     |Counter|        |operation/second|Rate of queries received since the mongod instance last started.                                            |
+|mongodb.opcounters.update    |Counter|        |operation/second|Rate of update operations received since the mongod instance last started.                                  |
+|mongodb.connections.available|Gauge  |        |                |Number of unused incoming connections available.                                                            |
+|mongodb.connections.current  |Gauge  |        |                |Number of incoming connections from clients to the database server.                                         |
+|mongodb.uptime               |Gauge  |        |second          |Number of seconds that the current MongoDB process has been active.                                         |
 
 == Installation ==
 
