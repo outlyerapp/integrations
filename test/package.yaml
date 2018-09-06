@@ -3,7 +3,7 @@
 title: A test integration
 name: test-name
 description: An integration to test our integration service
-version: 3.2.1
+version: 4.2.1
 icon:
   url: https://docs2.outlyer.com/assets/img/outlyer-logo-black.svg
 labels:
