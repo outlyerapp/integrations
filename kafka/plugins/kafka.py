@@ -2,21 +2,29 @@
 
 import sys
 from jmxquery import JMXConnection, JMXQuery
-
 from outlyer_plugin import Status, Plugin
 
-COUNTER_METRICS = []
+COUNTER_METRICS = [
+    'kafka_producer_producer-metrics_record-send-total',
+    'kafka_consumer_consumer-fetch-manager-metrics_records-consumed-total',
+    'kafka_server_brokertopicmetrics_messagesinpersec_count',
+    'kafka_server_brokertopicmetrics_messagesoutpersec_count',
+    'kafka_server_brokertopicmetrics_bytesoutpersec_count',
+    'kafka_server_brokertopicmetrics_bytesinpersec_count',
+    'kafka_network_requestmetrics_requestspersec_count',
+    'kafka_network_requestmetrics_totaltimems_count',
+]
 
 class KafkaPlugin(Plugin):
     def collect(self, _):
+        try:
+            host = self.get('host', 'localhost')
+            port = self.get('port', 9999)
+            jmx_url = f'service:jmx:rmi:///jndi/rmi://{host}:{port}/jmxrmi'
 
-        host = self.get('host', 'localhost')
-        port = self.get('port', 9999)
-        jmx_url = f'service:jmx:rmi:///jndi/rmi://{host}:{port}/jmxrmi'
+            jmxConnection = JMXConnection(jmx_url)
 
-        jmxConnection = JMXConnection(jmx_url)
-
-        jmxQuery = [
+            jmxQuery = [
                     # UnderReplicatedPartitions
                     JMXQuery("kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions/Value",
                               metric_name="kafka_server_ReplicaManager_UnderReplicatedPartitions"),
@@ -94,43 +102,43 @@ class KafkaPlugin(Plugin):
                     # MaxLag
                     JMXQuery("kafka.server:type=ReplicaFetcherManager,name=MaxLag,clientId=Replica",
                              metric_name="kafka_server_ReplicaFetcherManager_MaxLag"),
-                    
+
                     # OpenFileDescriptorCount
                     JMXQuery("java.lang:type=OperatingSystem/OpenFileDescriptorCount",
                              metric_name="java_lang_OperatingSystem_OpenFileDescriptorCount"),
-                    
+
                     # MaxFileDescriptorCount
                     JMXQuery("java.lang:type=OperatingSystem/MaxFileDescriptorCount",
                              metric_name="java_lang_OperatingSystem_MaxFileDescriptorCount"),
-          
+
                     # Producer: connection-count
                     JMXQuery("kafka.producer:type=producer-metrics,client-id=*/connection-count",
                              metric_name="kafka_producer_producer-metrics_connection-count"),
-                    
+
                     # Producer: waiting-threads
                     JMXQuery("kafka.producer:type=producer-metrics,client-id=*/waiting-threads",
                              metric_name="kafka_producer_producer-metrics_waiting-threads"),
-          
+
                     # Producer: record-send-total
                     JMXQuery("kafka.producer:type=producer-metrics,client-id=*/record-send-total",
                              metric_name="kafka_producer_producer-metrics_record-send-total"),
-          
+
                     # Producer: request-rate
                     JMXQuery("kafka.producer:type=producer-metrics,client-id=*/request-rate",
                              metric_name="kafka_producer_producer-metrics_request-rate"),
-          
+
                     # Producer: response-rate
                     JMXQuery("kafka.producer:type=producer-metrics,client-id=*/response-rate",
                              metric_name="kafka_producer_producer-metrics_response-rate"),
-          
+
                     # Producer: outgoing-byte-rate
                     JMXQuery("kafka.producer:type=producer-metrics,client-id=*/outgoing-byte-rate",
                              metric_name="kafka_producer_producer-metrics_outgoing-byte-rate"),
-          
+
                     # Producer: incoming-byte-rate
                     JMXQuery("kafka.producer:type=producer-metrics,client-id=*/incoming-byte-rate",
                              metric_name="kafka_producer_producer-metrics_incoming-byte-rate"),
-          
+
                     # Producer: request-latency-avg
                     JMXQuery("kafka.producer:type=producer-metrics,client-id=*/request-latency-avg",
                              metric_name="kafka_producer_producer-metrics_request-latency-avg"),
@@ -138,7 +146,7 @@ class KafkaPlugin(Plugin):
                     # Producer: io-wait-time-ns-avg
                     JMXQuery("kafka.producer:type=producer-metrics,client-id=*/io-wait-time-ns-avg",
                              metric_name="kafka_producer_producer-metrics_io-wait-time-ns-avg"),
-          
+
                     # Consumer: records-consumed-total
                     JMXQuery("kafka.consumer:type=consumer-fetch-manager-metrics,client-id=*/records-consumed-total",
                              metric_name="kafka_consumer_consumer-fetch-manager-metrics_records-consumed-total"),
@@ -196,21 +204,24 @@ class KafkaPlugin(Plugin):
                              metric_name="kafka_consumer_consumer-coordinator-metrics_sync-rate"),
                    ]
 
-        metrics = jmxConnection.query(jmxQuery)
+            metrics = jmxConnection.query(jmxQuery)
 
-        for metric in metrics:
-            try:
-                if (metric.value_type != "String") and (metric.value_type != ""):
-                    if metric.metric_name in COUNTER_METRICS:
-                        self.counter(metric.metric_name, metric.metric_labels).set(metric.value)
-                    else:
-                        self.gauge(metric.metric_name, metric.metric_labels).set(metric.value)
-            except:
-                # Ignore if a new type is returned from JMX that isn't a number
-                pass
+            for metric in metrics:
+                try:
+                    if (metric.value_type != "String") and (metric.value_type != ""):
+                        if metric.metric_name.lower() in COUNTER_METRICS:
+                            self.counter(metric.metric_name, metric.metric_labels).set(metric.value)
+                        else:
+                            self.gauge(metric.metric_name, metric.metric_labels).set(metric.value)
+                except:
+                    # Ignore if a new type is returned from JMX that isn't a number
+                    pass
 
 
-        return Status.OK
+            return Status.OK
+        except Exception as ex:
+            self.logger.error('Unable to scrape metrics from Kafka')
+            return Status.CRITICAL
 
 
 if __name__ == '__main__':
