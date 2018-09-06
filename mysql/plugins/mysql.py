@@ -13,7 +13,6 @@ GAUGE_METRICS = [
 ]
 
 COUNTER_METRICS = [
-    "Table_locks_waited",
     "Bytes_received",
     "Bytes_sent",
     "Connection_errors_accept",

@@ -400,8 +400,9 @@ widgets:
     height: 3
     options:
       content: |
-        <p><img src="https://avatars1.githubusercontent.com/u/13629408?s=230&amp;v=4" alt="Kubernetes Logo"/></p>
-      markdown: '![Kubernetes Logo](https://avatars1.githubusercontent.com/u/13629408?s=230&v=4)'
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/kubernetes/resources/kubernetes.svg?sanitize=true" width="250"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/kubernetes/resources/kubernetes.svg?sanitize=true"
+        width="250" />
     row: 0
     width: 3
   - col: 0

@@ -29,6 +29,7 @@ widgets:
         path: ""
       queries:
       - query: name,service.status,:eq,service,consul,:eq,:and,:avg,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -62,6 +63,7 @@ widgets:
         path: ""
       queries:
       - query: name,consul_health_node_status,:eq,:max,(,host,status,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -95,6 +97,7 @@ widgets:
         path: ""
       queries:
       - query: name,consul_health_service_status,:eq,:max,(,host,status,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -128,6 +131,7 @@ widgets:
         path: ""
       queries:
       - query: name,consul_runtime_num_goroutines,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -161,6 +165,7 @@ widgets:
         path: ""
       queries:
       - query: name,consul_runtime_alloc_bytes,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -194,6 +199,7 @@ widgets:
         path: ""
       queries:
       - query: name,consul_runtime_heap_objects,:eq,:max,(,host,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -212,8 +218,9 @@ widgets:
     height: 6
     options:
       content: |
-        <p><img src="https://www.datocms-assets.com/2885/1506456506-blog-consul-list.svg" alt="Consul logo"/></p>
-      markdown: '![Consul logo](https://www.datocms-assets.com/2885/1506456506-blog-consul-list.svg)'
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/consul/resources/consul.svg?sanitize=true" width="350"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/consul/resources/consul.svg?sanitize=true"
+        width="350" />
     row: 0
     width: 4
   - col: 0
@@ -247,6 +254,7 @@ widgets:
       icon: check
       query:
         query: name,consul_serf_lan_members,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -272,6 +280,7 @@ widgets:
       icon: check
       query:
         query: name,consul_raft_peers,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -297,6 +306,7 @@ widgets:
       icon: check
       query:
         query: name,consul_client_agents,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -322,6 +332,7 @@ widgets:
       icon: check
       query:
         query: name,consul_datacenters,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -347,6 +358,7 @@ widgets:
       icon: check
       query:
         query: name,consul_raft_leader,:eq,:min
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -372,6 +384,7 @@ widgets:
       icon: check
       query:
         query: name,consul_catalog_services,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -397,6 +410,7 @@ widgets:
       icon: check
       query:
         query: name,consul_health_failure_tolerance,:eq,:max
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -422,6 +436,7 @@ widgets:
       icon: thumb_down
       query:
         query: name,consul_health_node_status,:eq,status,critical,:eq,:and,:sum
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -447,6 +462,7 @@ widgets:
       icon: thumb_down
       query:
         query: name,consul_health_service_status,:eq,status,critical,:eq,:and,:sum
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -468,7 +484,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - scoped: false
+      - scoped: true
         service: consul
       showIcon: true
       title: Consul Cluster Health
