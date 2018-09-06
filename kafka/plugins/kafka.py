@@ -5,10 +5,7 @@ from jmxquery import JMXConnection, JMXQuery
 from outlyer_plugin import Status, Plugin
 
 COUNTER_METRICS = [
-    'kafka_producer_producer-metrics_record-send-total',
-    'kafka_consumer_consumer-fetch-manager-metrics_records-consumed-total',
     'kafka_server_brokertopicmetrics_messagesinpersec_count',
-    'kafka_server_brokertopicmetrics_messagesoutpersec_count',
     'kafka_server_brokertopicmetrics_bytesoutpersec_count',
     'kafka_server_brokertopicmetrics_bytesinpersec_count',
     'kafka_network_requestmetrics_requestspersec_count',
