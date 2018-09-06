@@ -1,7 +1,8 @@
 ---
 title: Zookeeper
 description: Outlyer Monitoring Integration for Zookeeper, the centralized service for maintaining cluster configuration information
-logo: zookeeper.svg
+icon:
+  url: zookeeper.svg
 version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com

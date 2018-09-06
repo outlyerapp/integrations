@@ -1,7 +1,8 @@
 ---
 title: AWS DynamoDB
 description: Outlyer Monitoring Integration to collect metrics from your AWS DynamoDB Tables
-logo: aws-dynamodb.svg
+icon:
+  url: aws-dynamodb.svg
 version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com

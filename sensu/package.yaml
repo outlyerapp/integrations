@@ -1,7 +1,8 @@
 ---
 title: Sensu Handler
 description: Outlyer Monitoring Integration to collect metrics from Sensu using a Sensu Handler
-logo: sensu.svg
+icon:
+  url: sensu.svg
 version: 0.9.0
 author: Outlyer
 author-uri: https://www.outlyer.com

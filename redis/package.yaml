@@ -1,7 +1,8 @@
 ---
 title: Redis
 description: Outlyer Monitoring Integration for Redis, the open source in-memory data store
-logo: redis.svg
+icon:
+  url: redis.svg
 version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com
