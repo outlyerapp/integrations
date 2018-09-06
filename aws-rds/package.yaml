@@ -1,7 +1,8 @@
 ---
 title: AWS RDS
 description: Outlyer Monitoring Integration to collect metrics from your AWS RDS Instances
-logo: aws-rds.svg
+icon:
+  url: aws-rds.svg
 version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com

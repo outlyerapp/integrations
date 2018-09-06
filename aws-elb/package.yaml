@@ -1,7 +1,8 @@
 ---
 title: AWS ELB
 description: Outlyer Monitoring Integration to collect metrics from your AWS Elastic Load Balancers (ELBs)
-logo: aws-elb.svg
+icon:
+  url: aws-elb.svg
 version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com

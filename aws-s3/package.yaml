@@ -1,7 +1,8 @@
 ---
 title: AWS S3
 description: Outlyer Monitoring Integration to collect metrics from your AWS S3 Buckets
-logo: aws-s3.svg
+icon:
+  url: aws-s3.svg
 version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com

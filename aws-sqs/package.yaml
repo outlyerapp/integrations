@@ -1,7 +1,8 @@
 ---
 title: AWS SQS
 description: Outlyer Monitoring Integration to collect metrics from your AWS SQS Queues
-logo: aws-sqs.svg
+icon:
+  url: aws-sqs.svg
 version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com
