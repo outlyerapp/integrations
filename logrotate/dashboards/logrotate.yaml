@@ -1,6 +1,6 @@
 description: ""
 icon:
-  color: '#000000'
+  color: '#298360'
   name: dashboard
 labels: []
 name: logrotate
@@ -38,10 +38,10 @@ widgets:
         palette: MultiColor
       summarization: Avg
       thresholds:
-      - display: Fill
+      - display: None
         lineStyle: Solid
         status: Error
-        threshold: 86400
+        threshold: 0
       title: Last Rotation
     row: 0
     width: 8
@@ -84,8 +84,8 @@ widgets:
     height: 3
     options:
       content: |
-        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/logrotate/resources/logrotate.svg?sanitize=true" width="250"/></p>
-      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/logrotate/resources/logrotate.svg?sanitize=true"
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/logrotate-integration/logrotate/resources/logrotate.svg?sanitize=true" width="250"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/logrotate-integration/logrotate/resources/logrotate.svg?sanitize=true"
         width="250" />
     row: 0
     width: 3
