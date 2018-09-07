@@ -84,8 +84,8 @@ widgets:
     height: 3
     options:
       content: |
-        <p><img src="https://www.iconspng.com/clipart/logrotate/logrotate.svg" width="250"/></p>
-      markdown: <img src="https://www.iconspng.com/clipart/logrotate/logrotate.svg"
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/logrotate/resources/logrotate.svg?sanitize=true" width="250"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/logrotate/resources/logrotate.svg?sanitize=true"
         width="250" />
     row: 0
     width: 3
