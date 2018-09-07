@@ -6,6 +6,8 @@ labels: []
 name: logrotate
 scopes:
 - defaultValue: None
+  labelKey: host
+- defaultValue: None
   labelKey: log_file
 theme: light
 title: Logrotate
@@ -30,7 +32,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,logrotate.last_rotation,:eq,:max,:cf-max,(,log_file,),:by
+      - query: name,logrotate.last_rotation,:eq,:max,:cf-max,(,host,log_file,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -64,7 +66,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,logrotate.size_bytes,:eq,:max,:cf-max,(,log_file,),:by
+      - query: name,logrotate.size_bytes,:eq,:max,:cf-max,(,host,log_file,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -84,8 +86,8 @@ widgets:
     height: 3
     options:
       content: |
-        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/logrotate-integration/logrotate/resources/logrotate.svg?sanitize=true" width="250"/></p>
-      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/logrotate-integration/logrotate/resources/logrotate.svg?sanitize=true"
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/logrotate/resources/logrotate.svg?sanitize=true" width="250"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/logrotate/resources/logrotate.svg?sanitize=true"
         width="250" />
     row: 0
     width: 3
@@ -105,7 +107,7 @@ widgets:
       icon: insert_drive_file
       query:
         query: name,logrotate.size_bytes,:eq,:sum,:cf-max
-        scoped: false
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
