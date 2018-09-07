@@ -7,12 +7,15 @@ import glob
 import os
 from datetime import datetime
 
+
 class LogrotatePlugin(Plugin):
 
     def collect(self, _):
+        logrotate_state = self.get('logrotate_state', '/var/lib/logrotate/status')
+
         try:
             logs_info = []
-            with open('/var/lib/logrotate/status') as file:
+            with open(logrotate_state) as file:
                 for line in file.readlines()[1:]:
                     m = re.search(r'"(.+?)" (.*)', line)
                     log_file = m.group(1)
@@ -35,7 +38,7 @@ class LogrotatePlugin(Plugin):
             return Status.OK
 
         except Exception as ex:
-            self.logger.error('Error collecting Logrotate metrics: %s', str(ex))
+            self.logger.error('Error collecting logrotate metrics: %s', str(ex))
             return Status.CRITICAL
 
 
