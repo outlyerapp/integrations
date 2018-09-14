@@ -32,11 +32,11 @@ class JavaJMXPlugin(Plugin):
                         # Garbage Collection
                         JMXQuery("java.lang:type=GarbageCollector,name=*/CollectionTime",
                                  metric_name="java_lang_GarbageCollector_CollectionTime",
-                                 metric_labels={"name": "{name}"}),
+                                 metric_labels={"gc_name": "{name}"}),
 
                         JMXQuery("java.lang:type=GarbageCollector,name=*/CollectionCount",
                                  metric_name="java_lang_GarbageCollector_CollectionCount",
-                                 metric_labels={"name": "{name}"}),
+                                 metric_labels={"gc_name": "{name}"}),
 
                         # Memory
                         JMXQuery("java.lang:type=Memory/HeapMemoryUsage",
