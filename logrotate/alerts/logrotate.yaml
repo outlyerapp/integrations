@@ -1,0 +1,22 @@
+actions: {}
+criteria:
+  metricCriteria:
+  - description: Triggers an alert if any of the log files are not rotated for more
+      than 25 hours.
+    disabled: false
+    lastTriggered: ""
+    levelThresholds:
+    - level: warning
+      operator: '>='
+      threshold: 90000
+    - level: critical
+      operator: '>='
+      threshold: 90000
+    query: name,logrotate.last_rotation,:eq,:max,(,log_file,),:by
+    timeout: 60
+    title: Last Rotation (1 day)
+description: ""
+labels: []
+muted: false
+name: logrotate
+title: Logrotate
