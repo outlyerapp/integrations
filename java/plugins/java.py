@@ -2,9 +2,12 @@
 
 import sys
 from jmxquery import JMXConnection, JMXQuery
-
 from outlyer_plugin import Status, Plugin
 
+COUNTER_METRICS = [
+    'java_lang_garbagecollector_collectiontime',
+    'java_lang_garbagecollector_collectioncount',
+]
 
 class JavaJMXPlugin(Plugin):
     def collect(self, _):
@@ -62,13 +65,16 @@ class JavaJMXPlugin(Plugin):
             for metric in metrics:
                 try:
                     if (metric.value_type != "String") and (metric.value_type != ""):
-                        self.gauge(metric.metric_name, metric.metric_labels).set(metric.value)
+                        if metric.metric_name.lower() in COUNTER_METRICS:
+                            self.counter(metric.metric_name, metric.metric_labels).set(metric.value)
+                        else:
+                            self.gauge(metric.metric_name, metric.metric_labels).set(metric.value)
                 except:
                     # Ignore if a new type is returned from JMX that isn't a number
                     pass
 
             return Status.OK
-        
+
         except Exception as ex:
             self.logger.error('Unable to scrape metrics from JVM: %s', str(ex))
             return Status.CRITICAL
