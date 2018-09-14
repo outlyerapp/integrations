@@ -6,7 +6,9 @@ labels:
 - key: java
   value: ""
 name: java-jvm
-scopes: []
+scopes:
+- defaultValue: None
+  labelKey: host
 theme: light
 title: Java JVM
 widgets:
@@ -30,13 +32,13 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,java_lang_threading_threadcount,:eq,:max
+      - query: name,java_lang_threading_threadcount,:eq,:max,(,name,host,),:by
         scoped: true
         visible: true
-      - query: name,java_lang_threading_daemonthreadcount,:eq,:max
+      - query: name,java_lang_threading_daemonthreadcount,:eq,:max,(,name,host,),:by
         scoped: true
         visible: true
-      - query: name,java_lang_threading_peakthreadcount,:eq,:max
+      - query: name,java_lang_threading_peakthreadcount,:eq,:max,(,name,host,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -70,13 +72,13 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,java_lang_memory_heapmemoryusage_used,:eq,:max
+      - query: name,java_lang_memory_heapmemoryusage_used,:eq,:max,(,name,host,),:by
         scoped: true
         visible: true
-      - query: name,java_lang_memory_heapmemoryusage_committed,:eq,:max
+      - query: name,java_lang_memory_heapmemoryusage_committed,:eq,:max,(,name,host,),:by
         scoped: true
         visible: true
-      - query: name,java_lang_memory_heapmemoryusage_max,:eq,:max
+      - query: name,java_lang_memory_heapmemoryusage_max,:eq,:max,(,name,host,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -110,13 +112,13 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,java_lang_memory_nonheapmemoryusage_used,:eq,:max
+      - query: name,java_lang_memory_nonheapmemoryusage_used,:eq,:max,(,name,host,),:by
         scoped: true
         visible: true
-      - query: name,java_lang_memory_nonheapmemoryusage_committed,:eq,:max
+      - query: name,java_lang_memory_nonheapmemoryusage_committed,:eq,:max,(,name,host,),:by
         scoped: true
         visible: true
-      - query: name,java_lang_memory_nonheapmemoryusage_max,:eq,:max
+      - query: name,java_lang_memory_nonheapmemoryusage_max,:eq,:max,(,name,host,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -150,7 +152,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,java_lang_garbagecollector_collectiontime,:eq,:max,(,name,),:by
+      - query: name,java_lang_garbagecollector_collectiontime,:eq,:max,(,name,host,gc_name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -184,7 +186,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,java_lang_garbagecollector_collectioncount,:eq,:max,(,name,),:by
+      - query: name,java_lang_garbagecollector_collectioncount,:eq,:max,(,name,host,gc_name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -218,7 +220,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,java_lang_classloading_loadedclasscount,:eq,:max,:cf-max
+      - query: name,java_lang_classloading_loadedclasscount,:eq,:max,:cf-max,(,name,host,),:by
         scoped: true
         visible: true
       seriesStyle:
