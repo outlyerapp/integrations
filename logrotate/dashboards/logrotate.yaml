@@ -1,0 +1,121 @@
+description: ""
+icon:
+  color: '#298360'
+  name: dashboard
+labels: []
+name: logrotate
+scopes:
+- defaultValue: None
+  labelKey: host
+- defaultValue: None
+  labelKey: log_file
+theme: light
+title: Logrotate
+widgets:
+  chartWidgets:
+  - col: 3
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: seconds
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,logrotate.last_rotation,:eq,:max,:cf-max,(,host,log_file,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Last Rotation
+    row: 0
+    width: 8
+  - col: 3
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,logrotate.size_bytes,:eq,:max,:cf-max,(,host,log_file,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Log file size
+    row: 3
+    width: 8
+  markdownWidgets:
+  - col: 0
+    height: 3
+    options:
+      content: |
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/logrotate/resources/logrotate.svg?sanitize=true" width="250"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/logrotate/resources/logrotate.svg?sanitize=true"
+        width="250" />
+    row: 0
+    width: 3
+  numberWidgets:
+  - col: 0
+    height: 3
+    options:
+      color: '#284fa0'
+      description: Represents the sum of the sizes of all log files being managed
+        by logrotate (all files listed in the logrotate state file).
+      displayMax: 0
+      displayMin: 0
+      displayTrend: BarChart
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: insert_drive_file
+      query:
+        query: name,logrotate.size_bytes,:eq,:sum,:cf-max
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Sum of the sizes of all log files
+      unit: bytes
+      unitPosition: After
+    row: 3
+    width: 3

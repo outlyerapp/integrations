@@ -1,0 +1,11 @@
+---
+title: logrotate
+description: Outlyer Monitoring Integration for logrotate, the system utility that manages the automatic rotation and compression of log files. 
+icon:
+  url: logrotate.svg
+version: 1.0.0
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - os & system

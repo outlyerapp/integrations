@@ -48,7 +48,7 @@ widgets:
       title: Clean Vs. Unclean Leader Election Rate
     row: 0
     width: 6
-  - col: 3
+  - col: 6
     height: 2
     options:
       axes:
@@ -81,8 +81,8 @@ widgets:
         threshold: 0
       title: Network Requests Per Sec
     row: 6
-    width: 7
-  - col: 3
+    width: 6
+  - col: 6
     height: 2
     options:
       axes:
@@ -95,7 +95,7 @@ widgets:
           title: ""
           unit: ""
           unitPosition: After
-      chartType: StackedBar
+      chartType: Line
       description: ""
       externalLink:
         linkType: dashboard
@@ -113,10 +113,10 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Messages In Per Broker
+      title: Messages In Per Sec (Per Broker)
     row: 4
-    width: 7
-  - col: 10
+    width: 6
+  - col: 12
     height: 2
     options:
       axes:
@@ -127,7 +127,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: bs
           unitPosition: After
       chartType: StackedArea
       description: ""
@@ -151,8 +151,8 @@ widgets:
         threshold: 0
       title: Bytes In / Bytes Out Per Sec
     row: 4
-    width: 8
-  - col: 10
+    width: 6
+  - col: 12
     height: 2
     options:
       axes:
@@ -185,8 +185,8 @@ widgets:
         threshold: 0
       title: Total Request Time
     row: 6
-    width: 8
-  - col: 14
+    width: 6
+  - col: 12
     height: 2
     options:
       axes:
@@ -219,7 +219,7 @@ widgets:
         threshold: 1
       title: ISR Delta Rate of Change
     row: 8
-    width: 4
+    width: 6
   - col: 12
     height: 2
     options:
@@ -231,7 +231,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: ms
           unitPosition: After
       chartType: Line
       description: ""
@@ -251,7 +251,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Garbage Collection Time
+      title: Garbage Collection Time Rate
     row: 13
     width: 6
   - col: 0
@@ -265,7 +265,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: bytes
           unitPosition: After
       chartType: Line
       description: ""
@@ -324,8 +324,8 @@ widgets:
         threshold: 0
       title: ISR Shrinks Per Sec
     row: 8
-    width: 5
-  - col: 5
+    width: 6
+  - col: 6
     height: 2
     options:
       axes:
@@ -358,7 +358,7 @@ widgets:
         threshold: 0
       title: ISR Expands Per Sec
     row: 8
-    width: 5
+    width: 6
   - col: 9
     height: 2
     options:
@@ -393,7 +393,7 @@ widgets:
       title: Partition Leader Per Broker
     row: 2
     width: 3
-  - col: 10
+  - col: 0
     height: 2
     options:
       axes:
@@ -425,8 +425,8 @@ widgets:
         status: Error
         threshold: 0
       title: MaxLag Per Broker
-    row: 8
-    width: 4
+    row: 6
+    width: 6
   - col: 12
     height: 2
     options:
@@ -499,8 +499,8 @@ widgets:
         status: Error
         threshold: 0
       title: Opened vs Total File Descriptors
-    row: 6
-    width: 3
+    row: 4
+    width: 6
   - col: 6
     height: 2
     options:
@@ -532,7 +532,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Garbage Collection Count
+      title: Garbage Collection Count Rate
     row: 13
     width: 6
   imageWidgets:
@@ -646,7 +646,7 @@ widgets:
         path: ""
       icon: collections
       query:
-        query: name,kafka_server_replicamanager_partitioncount,:eq,:sum
+        query: name,kafka_server_replicamanager_partitioncount,:eq,:sum,:cf-max
         scoped: true
         visible: true
       rounding: None
@@ -732,32 +732,6 @@ widgets:
       unit: ""
       unitPosition: After
     row: 0
-    width: 3
-  - col: 0
-    height: 2
-    options:
-      color: '#588fd8'
-      description: ""
-      displayMax: 0
-      displayMin: 0
-      displayTrend: None
-      externalLink:
-        linkType: dashboard
-        path: ""
-      icon: check
-      query:
-        query: name,kafka_server_brokertopicmetrics_messagesinpersec_count,:eq,kafka-broker,true,:eq,:and,:sum
-        scoped: true
-        visible: true
-      rounding: None
-      statistic: Max
-      thresholds:
-      - status: Error
-        threshold: 0
-      title: Total Messages In
-      unit: ""
-      unitPosition: After
-    row: 4
     width: 3
   - col: 9
     height: 2

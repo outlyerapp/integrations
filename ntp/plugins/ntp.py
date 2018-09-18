@@ -33,11 +33,10 @@ class NTPCheckPlugin(Plugin):
             msg, address = client.recvfrom(buf)
             t = struct.unpack("!12I", msg)[10]
             t -= time_1970
-            ntp_clock = datetime.strptime(time.ctime(t).replace("  ", " "), '%a %b %d %H:%M:%S %Y').date()
-
-            time_delta = datetime.now().date() - ntp_clock
-            self.gauge('ntp_drift', {}).set(time_delta.seconds)
-            if int(time_delta.seconds) < drift:
+            ntp_dt = datetime.strptime(time.ctime(t).replace("  ", " "), '%a %b %d %H:%M:%S %Y')
+            delta_seconds = int((datetime.now() - ntp_dt).total_seconds())
+            self.gauge('ntp_drift', {}).set(delta_seconds)
+            if abs(delta_seconds) < drift:
                 return Status.OK
             else:
                 return Status.CRITICAL
