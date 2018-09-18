@@ -10,3 +10,13 @@ labels:
 - test
 - internal
 - integration
+form:
+- name: test-form
+  description: test description for a form field
+  prompt: test prompt for a form field
+  default: default name
+  type: string
+  required: True
+- name: test-form2
+  prompt: test prompt num 2
+  type: float
