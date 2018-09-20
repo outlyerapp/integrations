@@ -101,6 +101,7 @@ This plugin is used to scrape metrics from `kube-state-metrics`. If you have dep
 |host     |kube-state-metrics.kube-system|Specifies the FQDN for kube-state-metrics K8s Service.|
 |port     |8080                          |kube-state-metrics metrics port.                      |
 |endpoint |metrics                       |kube-state-metrics metrics endpoint.                  |
+|timeout  |40                            |timeout querying kube-state-metrics endpoint.         |
 
 ### Kubernetes Kubelet: kubernetes-kubelet.py
 This plugin is used to scrape container and pod metrics from the embedded cAdvisor instance that ships with Kubelet and node metrics from the Kubelet Summary API. Just run the plugin against all your Kuberentes Nodes.
@@ -118,6 +119,7 @@ This plugin is used to scrape container and pod metrics from the embedded cAdvis
 
 |Version|Release Date|Description                                                       |
 |-------|------------|------------------------------------------------------------------|
+|1.3.1  |20-Sep-2018 |Add timeout to KSM query                                          |
 |1.3    |21-Aug-2018 |Creates Nodes Dashboard.                                          |
 |1.2    |10-Aug-2018 |Creates Pods Dashboard.                                           |
 |1.1    |25-Jun-2018 |Adds k8s.cluster label and collects new API Server latency metric.|
