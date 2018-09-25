@@ -1,7 +1,7 @@
 title: "Kube CADVISOR"
 name: "kube-cadvisor"
 description: "check to get kube cadvisor metrics"
-command: "{{.test-form}} {{.test-form2}} kubebernetes-cadvisor.py"
+command: "{{.testform}} {{.testform2}} kubebernetes-cadvisor.py"
 disabled: false
 handler: "Prometheus"
 icon: "assignment_turned_in"
