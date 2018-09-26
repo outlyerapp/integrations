@@ -5,7 +5,7 @@ icon:
 labels:
 - key: tutorials
   value: ""
-name: analytics-examples
+name: analytics-tutorial
 scopes: []
 theme: light
 title: Analytics Tutorial
@@ -30,7 +30,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by
+      - query: name,sys.cpu.pct,:eq,:min,:cf-min,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -41,7 +42,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: CPU (User) Utalization Per Container
+      title: CPU Utalization Per Host
     row: 0
     width: 10
   - col: 3
@@ -63,7 +64,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:des-fast
+      - query: name,sys.cpu.pct,:eq,:min,(,host,),:by,:des-fast
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -96,7 +98,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:des-slow
+      - query: name,sys.cpu.pct,:eq,:min,(,host,),:by,:des-slow
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -129,7 +132,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:stddev
+      - query: name,sys.cpu.pct,:eq,:min,(,host,),:by,:stddev
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -140,7 +144,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: CPU Utalization Per Container - Standard Deviation
+      title: CPU Utalization Per Host - Standard Deviation
     row: 8
     width: 10
   - col: 3
@@ -162,7 +166,10 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,sys.disk.used,:eq,host,aks-agentpool-13236091-1,:eq,:and,:max,1073741824,:div
+      - query: |-
+          name,sys.disk.used,:eq,
+          :max,1073741824,:div
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -196,6 +203,7 @@ widgets:
         path: ""
       queries:
       - query: name,sys.net.rx.packets,:eq,:min,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -229,6 +237,7 @@ widgets:
         path: ""
       queries:
       - query: name,sys.net.rx.packets,:eq,:min,(,host,),:by,:derivative
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -262,6 +271,7 @@ widgets:
         path: ""
       queries:
       - query: name,sys.net.rx.packets,:eq,:min,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -295,6 +305,7 @@ widgets:
         path: ""
       queries:
       - query: name,sys.net.rx.packets,:eq,:min,(,host,),:by,10m,:trend
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -328,6 +339,7 @@ widgets:
         path: ""
       queries:
       - query: name,sys.net.rx.packets,:eq,:min,(,host,),:by
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -360,7 +372,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,sys.net.rx.packets,:eq,:min,(,host,),:by,:stat-max,80,:gt,:filter
+      - query: name,sys.net.rx.packets,:eq,:min,(,host,),:by,:stat-max,120,:gt,:filter
+        scoped: false
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -383,7 +396,7 @@ widgets:
 
         <p>You can select specific metrics using the metric name, labels and a summarisation (min, max, avg, sum, count) for any metric in Outlyer:</p>
 
-        <p><strong>name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by</strong></p>
+        <p><strong>name,sys.cpu.pct,:eq,:min,:cf-min,(,host,),:by</strong></p>
 
         <p>The :by function will split your query into a separate time-series for label(s) specified if you want to return a value.</p>
       markdown: |-
@@ -391,7 +404,7 @@ widgets:
 
         You can select specific metrics using the metric name, labels and a summarisation (min, max, avg, sum, count) for any metric in Outlyer:
 
-        **name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by**
+        **name,sys.cpu.pct,:eq,:min,:cf-min,(,host,),:by**
 
         The :by function will split your query into a separate time-series for label(s) specified if you want to return a value.
     row: 0
@@ -404,7 +417,7 @@ widgets:
 
         <p>Sometimes you want to be able to filter noisy queries to return smoother lines which make it easier to see trends in your charts. This can be done using Double Exponential Smoothing functions to your series as below using the :des-fast operator:</p>
 
-        <p><strong>name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:des-fast</strong></p>
+        <p><strong>name,sys.cpu.pct,:eq,:min,(,host,),:by,:des-fast</strong></p>
 
         <p>There are also :des-slower and :des-slow operators which take longer to render but will perform DES over longer time periods.</p>
       markdown: |-
@@ -412,7 +425,7 @@ widgets:
 
         Sometimes you want to be able to filter noisy queries to return smoother lines which make it easier to see trends in your charts. This can be done using Double Exponential Smoothing functions to your series as below using the :des-fast operator:
 
-        **name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:des-fast**
+        **name,sys.cpu.pct,:eq,:min,(,host,),:by,:des-fast**
 
         There are also :des-slower and :des-slow operators which take longer to render but will perform DES over longer time periods.
     row: 2
@@ -427,17 +440,18 @@ widgets:
 
         <p>The first example converts a metric for disk space in Bytes into GB by dividing the values by 1073741824:</p>
 
-        <p><strong>name,sys.disk.used,:eq,host,aks-agentpool-13236091-1,:eq,:and,:max,1073741824,:div</strong></p>
+        <p><strong>name,sys.disk.used,:eq,
+        :max,1073741824,:div</strong></p>
 
         <p>The second example shows an real-time calculation of the standard deviation between all the container CPU usage shown in the graph at the top:</p>
 
-        <p><strong>name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:stddev</strong></p>
+        <p><strong>name,sys.cpu.pct,:eq,:min,(,host,),:by,:stddev</strong></p>
       markdown: "# Maths Functions\n\nOutlyer provides a full set of Math functions
         that allow you to perform advanced maths on your timeseries. \n\nThe first
         example converts a metric for disk space in Bytes into GB by dividing the
-        values by 1073741824:\n\n**name,sys.disk.used,:eq,host,aks-agentpool-13236091-1,:eq,:and,:max,1073741824,:div**\n\n\n\nThe
+        values by 1073741824:\n\n**name,sys.disk.used,:eq,\n:max,1073741824,:div**\n\nThe
         second example shows an real-time calculation of the standard deviation between
-        all the container CPU usage shown in the graph at the top:\n\n**name,container.cpu.user,:eq,k8s.pod.namespace,sock-shop,:eq,:and,:min,(,container,),:by,:stddev**"
+        all the container CPU usage shown in the graph at the top:\n\n**name,sys.cpu.pct,:eq,:min,(,host,),:by,:stddev**"
     row: 6
     width: 3
   - col: 0
@@ -482,12 +496,29 @@ widgets:
 
         <p>Sometimes you want to filter series based on their value. For this the :filter function can be used. In this example the series are being filtered to only show hosts who’s sys.net.tex.packets count went above 400:</p>
 
-        <p><strong>name,sys.net.rx.packets,:eq,:min,(,host,),:by,:stat-max,400,:gt,:filter</strong></p>
+        <p><strong>name,sys.net.rx.packets,:eq,:min,(,host,),:by,:stat-max,120,:gt,:filter</strong></p>
       markdown: |
         # Filters
 
         Sometimes you want to filter series based on their value. For this the :filter function can be used. In this example the series are being filtered to only show hosts who's sys.net.tex.packets count went above 400:
 
-        **name,sys.net.rx.packets,:eq,:min,(,host,),:by,:stat-max,400,:gt,:filter**
+        **name,sys.net.rx.packets,:eq,:min,(,host,),:by,:stat-max,120,:gt,:filter**
     row: 14
     width: 3
+  - col: 0
+    height: 2
+    options:
+      content: |
+        <h1>Read More</h1>
+
+        <p>This is just a basic overview of the Outlyer query language. If you wish to learn more you can read our full documentation here:</p>
+
+        <p><a href="https://www.outlyer.com/docs/analytics/" rel="nofollow noopener" target="_blank">https://www.outlyer.com/docs/analytics/</a></p>
+      markdown: |-
+        # Read More
+
+        This is just a basic overview of the Outlyer query language. If you wish to learn more you can read our full documentation here:
+
+        [https://www.outlyer.com/docs/analytics/](https://www.outlyer.com/docs/analytics/)
+    row: 16
+    width: 13

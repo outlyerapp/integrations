@@ -18,4 +18,5 @@ Just install this integration to import the tutorial dashboards into your accoun
 
 |Version|Release Date|Description                                         |
 |-------|------------|----------------------------------------------------|
-|1.0    |15-May-2018 |Initial integration                                 |
+|1.0.0  |15-May-2018 |Initial integration                                 |
+|1.0.1  |25-Sep-2018 |Fixed dashboard to remove specific labels in queries|
