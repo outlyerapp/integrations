@@ -20,12 +20,12 @@ class KubeletPlugin(Plugin):
         CADVISOR_ENDPOINT = self.get('cadvisor_endpoint', 'metrics/cadvisor')
         TOKEN_PATH = self.get('token_path', '/var/run/secrets/kubernetes.io/serviceaccount/token')
         header = token = ''
-        
+
         if PROTOCOL == 'https':
             with open(TOKEN_PATH) as token_file: 
                 token = token_file.read()
                 header = {'authorization': 'bearer ' + token}
-        
+
         # Creates cluster global labels
         cluster_name = self.get('k8s.cluster')
         cluster_global_labels = {'k8s.cluster': 'unknown'}
@@ -52,40 +52,40 @@ class KubeletPlugin(Plugin):
 
             node = res.get('node')
             pods = res.get('pods')
-            
+
             labels = {**cluster_global_labels}
-            
+
             node_api_server = api_server_client.list_node(field_selector='metadata.name='+labels['k8s.node.name'])
-            
+
             node_labels = []
             for label_key, label_value in node_api_server.items[0].metadata.labels.items():
                 label = f'{label_key}: {label_value}'
                 node_labels.append(label)
-            
+
             for label in node_labels:
                 labels['k8s.node.label'] = label
                 node_memory_usage_bytes = node['memory']['workingSetBytes']
-                node_allocatable_memory_bytes = int(node_api_server.items[0].status.allocatable['memory'][:-2])*1024
+                node_allocatable_memory_bytes = self.__to_byte(node_api_server.items[0].status.allocatable['memory'])
                 self.gauge('kube_node_memory_usage_pct', labels).set(node_memory_usage_bytes/node_allocatable_memory_bytes*100)
                 self.gauge('kube_node_memory_usage_bytes', labels).set(node_memory_usage_bytes)
-                
+
                 node_cpu_usage_cores = node['cpu']['usageNanoCores']/1000000000
-                node_allocatable_cpu_cores = int(node_api_server.items[0].status.allocatable['cpu'][:-1])
+                node_allocatable_cpu_cores = self.__to_core(node_api_server.items[0].status.allocatable['cpu'])
                 self.gauge('kube_node_cpu_usage_cores', labels).set(node_cpu_usage_cores)
-                self.gauge('kube_node_cpu_usage_pct', labels).set(node_cpu_usage_cores/node_allocatable_cpu_cores*100000)
-    
+                self.gauge('kube_node_cpu_usage_pct', labels).set(node_cpu_usage_cores/node_allocatable_cpu_cores*100)
+
                 self.counter('kube_node_network_rx_bytes', labels).set(node['network']['rxBytes'])
                 self.counter('kube_node_network_tx_bytes', labels).set(node['network']['txBytes'])
                 self.counter('kube_node_network_rx_errors', labels).set(node['network']['rxErrors'])
                 self.counter('kube_node_network_tx_errors', labels).set(node['network']['txErrors'])
-                
+
                 node_fs_nodefs_used_bytes = node['fs']['usedBytes']
                 node_fs_nodefs_capacity_bytes = node['fs']['capacityBytes']
                 node_fs_nodefs_used_pct = node_fs_nodefs_used_bytes/node_fs_nodefs_capacity_bytes*100
                 self.gauge('kube_node_fs_nodefs_used_bytes', labels).set(node_fs_nodefs_used_bytes)
                 self.gauge('kube_node_fs_nodefs_capacity_bytes', labels).set(node_fs_nodefs_capacity_bytes)
                 self.gauge('kube_node_fs_nodefs_used_pct', labels).set(node_fs_nodefs_used_pct)
-                
+
                 # Kubelet eviction policy is based on these metrics
                 # https://kubernetes.io/docs/tasks/administer-cluster/out-of-resource/
                 self.gauge('kube_node_memory_available_bytes', labels).set(node['memory']['availableBytes'])
@@ -93,13 +93,12 @@ class KubeletPlugin(Plugin):
                 self.gauge('kube_node_fs_nodefs_inodes_free', labels).set(node['fs']['inodesFree'])
                 self.gauge('kube_node_fs_imagefs_available_bytes', labels).set(node['runtime']['imageFs']['availableBytes'])
                 self.gauge('kube_node_fs_imagefs_inodes_free', labels).set(node['runtime']['imageFs']['inodesFree'])
-            
+
             return Status.OK
 
         except Exception as ex:
             self.logger.error('Unable to scrape metrics from Kubelet Summary API: %s', str(ex))
             sys.exit(Status.CRITICAL)
-
 
     def scrape_cadvisor(self, cadvisor_metrics_url, header, cluster_global_labels, api_server_client):
         GAUGE_METRICS = [
@@ -122,7 +121,7 @@ class KubeletPlugin(Plugin):
             res = requests.get(cadvisor_metrics_url, timeout=20, verify=False, headers=header)
             res.raise_for_status()
             res = res.text
-            
+
             pods_api_server = api_server_client.list_pod_for_all_namespaces(watch=False)
             pod_labels = {}
             for pod in pods_api_server.items:
@@ -153,6 +152,28 @@ class KubeletPlugin(Plugin):
             self.logger.error('Unable to scrape metrics from cAdvisor: %s', str(ex))
             sys.exit(Status.CRITICAL)
 
+    def __to_byte(self, mem):
+        mem_digits = int(''.join([i for i in mem if i.isdigit()]))
+        unit = ''.join([i for i in mem if not i.isdigit()])
+
+        if not unit:
+            return mem_digits
+        else:
+            conversion_table = {
+                'k': 1000,
+                'ki': 1024,
+                'm': 1000000,
+                'mi': 1048576,
+                'g': 1000000000,
+                'gi': 1073741824
+            }
+            return mem_digits * conversion_table.get(unit.lower())
+
+    def __to_core(self, cpu):
+        if 'm' not in cpu:
+            return float(cpu)
+        else:
+            return float(cpu[:-1])/1000
 
 if __name__ == '__main__':
     sys.exit(KubeletPlugin().run())
