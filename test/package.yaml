@@ -11,31 +11,31 @@ labels:
 - internal
 - integration
 form:
-- name: string input field
+- name: stringinputfield
   description: test description for a form field
   prompt: test prompt for a form field
   default: default name
   type: string
   required: True
-- name: int input field
-  prompt: test prompt num 2
+- name: intinputfield
+  prompt: testpromptnum 2
   type: int
   default: 1
-- name: float input field
+- name: floatinputfield
   prompt: test prompt num 3
   type: float
-- name: date field
+- name: datefield
   prompt: test prompt num 4
   type: date
   default: 1537970123
-- name: label selector field 1
+- name: labelselectorfield 1
   prompt: test prompt num 5
   type: labelSelectors
-  selectors:
+  default:
     - "host=minikube"
     - "role=web"
-- name: label selector field 2
+- name: labelselectorfield 2
   prompt: test prompt num 5
   type: labelSelectors
-  selectors:
+  default:
     - "env=prod"
