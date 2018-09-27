@@ -119,7 +119,8 @@ This plugin is used to scrape container and pod metrics from the embedded cAdvis
 
 |Version|Release Date|Description                                                       |
 |-------|------------|------------------------------------------------------------------|
-|1.3.1  |20-Sep-2018 |Add timeout to KSM query                                          |
+|1.3.2  |27-Sep-2018 |Fixes node memory and cpu allocatable units.                      |
+|1.3.1  |20-Sep-2018 |Add timeout to KSM query.                                         |
 |1.3    |21-Aug-2018 |Creates Nodes Dashboard.                                          |
 |1.2    |10-Aug-2018 |Creates Pods Dashboard.                                           |
 |1.1    |25-Jun-2018 |Adds k8s.cluster label and collects new API Server latency metric.|
