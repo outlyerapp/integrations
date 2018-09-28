@@ -1,13 +1,13 @@
-Zookeeper Integration
+ZooKeeper Integration
 =====================
 
 == Description ==
 
-Zookeeper is a centralized service for maintaining configuration information, naming, providing distributed synchronization, and providing group services.
+ZooKeeper is a centralized service for maintaining configuration information, naming, providing distributed synchronization, and providing group services.
 
-This integration will monitor your Zookeeper cluster by collecting Zookeeper metrics using [four letter words](http://zookeeper.apache.org/doc/r3.4.12/zookeeperAdmin.html#sc_zkCommands) commands.
+This integration will monitor your ZooKeeper cluster by collecting ZooKeeper metrics using [four letter words](http://zookeeper.apache.org/doc/r3.4.12/zookeeperAdmin.html#sc_zkCommands) commands.
 
-Once enabled you will get a default Zookeeper dashboard and alert rules to help you get started monitoring your key Zookeeper metrics.
+Once enabled you will get a default ZooKeeper dashboard and alert rules to help you get started monitoring your key ZooKeeper metrics.
 
 == Metrics Collected ==
 
@@ -33,20 +33,21 @@ Once enabled you will get a default Zookeeper dashboard and alert rules to help 
 
 == Installation ==
 
-Run the Zookeeper plugin against your Zookeeper instances and it will start collecting metrics.
+Run the ZooKeeper plugin against your ZooKeeper instances and it will start collecting metrics.
 
 ### Plugin Environment Variables
 
-The Zookeeper plugin can be customized via environment variables.
+The ZooKeeper plugin can be customized via environment variables.
 
 |Variable |Default  |Description    |
 |---------|---------|---------------|
-|ip       |localhost|Zookeeper host.|
-|port     |2181     |Zookeeper port.|
+|ip       |localhost|ZooKeeper host.|
+|port     |2181     |ZooKeeper port.|
 
 == Changelog ==
 
 |Version|Release Date|Description                                             |
 |-------|------------|--------------------------------------------------------|
+|1.0.2  |28-Sep-2018 |Fixes ZooKeeper dashboard logo URL and updates docs.    |
 |1.0.1  |28-Sep-2018 |Uses ip environment variable instead of host.           |
-|1.0    |25-May-2018 |Initial version of our Zookeeper monitoring integration.|
+|1.0    |25-May-2018 |Initial version of our ZooKeeper monitoring integration.|
