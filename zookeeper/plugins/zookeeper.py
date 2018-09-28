@@ -53,9 +53,9 @@ class ZookeeperPlugin(Plugin):
         return data
 
     def collect(self, _) -> Status:
-        HOST = self.get('host', 'localhost')
-        PORT = self.get('port', 2181)
-        self._address = (HOST, int(PORT))
+        host = self.get('ip', 'localhost')
+        port = self.get('port', 2181)
+        self._address = (host, int(port))
         self._timeout = 10
         # Test the server is running in a non-error state
         if self._send_cmd('ruok').decode("utf-8") == 'imok':

@@ -41,11 +41,12 @@ The Zookeeper plugin can be customized via environment variables.
 
 |Variable |Default  |Description    |
 |---------|---------|---------------|
-|host     |localhost|Zookeeper host.|
+|ip       |localhost|Zookeeper host.|
 |port     |2181     |Zookeeper port.|
 
 == Changelog ==
 
 |Version|Release Date|Description                                             |
 |-------|------------|--------------------------------------------------------|
+|1.0.1  |28-Sep-2018 |Uses ip environment variable instead of host.           |
 |1.0    |25-May-2018 |Initial version of our Zookeeper monitoring integration.|
