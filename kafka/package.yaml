@@ -3,7 +3,7 @@ title: Kafka
 description: Outlyer Monitoring Integration for Kafka, the distributed streaming and message queue platform
 icon:
   url: kafka.svg
-version: 1.0.0
+version: 1.0.1
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT
