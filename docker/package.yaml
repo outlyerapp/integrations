@@ -3,7 +3,7 @@ title: Docker
 description: Outlyer Monitoring Integration for the Docker container management service
 icon:
   url: docker.svg
-version: 1.0.0
+version: 1.1.0
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT

@@ -4,12 +4,14 @@ icon:
   name: integration--docker
 labels: []
 name: docker
-scopes: []
+scopes:
+- defaultValue: ""
+  labelKey: host
 theme: light
 title: Docker
 widgets:
   chartWidgets:
-  - col: 8
+  - col: 2
     height: 2
     options:
       axes:
@@ -28,8 +30,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container.cpu.total,:eq,:max,(,host,),:by
-        scoped: false
+      - query: name,container.cpu.total,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -41,9 +43,9 @@ widgets:
         status: Error
         threshold: 0
       title: CPU Total
-    row: 1
-    width: 4
-  - col: 12
+    row: 4
+    width: 5
+  - col: 7
     height: 2
     options:
       axes:
@@ -62,11 +64,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container.cpu.system,:eq,:max,(,host,),:by
-        scoped: false
+      - query: name,container.cpu.system,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
-      - query: name,container.cpu.user,:eq,:max,(,host,),:by
-        scoped: false
+      - query: name,container.cpu.user,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -78,9 +80,9 @@ widgets:
         status: Error
         threshold: 0
       title: CPU System vs User
-    row: 1
-    width: 4
-  - col: 6
+    row: 4
+    width: 5
+  - col: 0
     height: 2
     options:
       axes:
@@ -99,8 +101,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container.mem.used,:eq,:max,(,host,),:by
-        scoped: false
+      - query: name,container.mem.used,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -112,9 +114,9 @@ widgets:
         status: Error
         threshold: 0
       title: Memory Used
-    row: 4
-    width: 5
-  - col: 6
+    row: 7
+    width: 6
+  - col: 0
     height: 2
     options:
       axes:
@@ -133,8 +135,8 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container.mem.swap,:eq,:max,(,host,),:by
-        scoped: false
+      - query: name,container.mem.swap,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -146,9 +148,9 @@ widgets:
         status: Error
         threshold: 0
       title: Swap
-    row: 6
-    width: 5
-  - col: 11
+    row: 9
+    width: 6
+  - col: 6
     height: 2
     options:
       axes:
@@ -167,11 +169,11 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container.mem.active,:eq,:max,(,host,),:by
-        scoped: false
+      - query: name,container.mem.active,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
-      - query: name,container.mem.inactive,:eq,:max,(,container,),:by
-        scoped: false
+      - query: name,container.mem.inactive,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -183,109 +185,7 @@ widgets:
         status: Error
         threshold: 0
       title: Memory Active vs Inactive
-    row: 4
-    width: 5
-  - col: 11
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: bytes
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,container.mem.cached,:eq,:max,(,host,),:by
-        scoped: false
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Memory Cached
-    row: 6
-    width: 5
-  - col: 0
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: bytes
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,container.io.write.bytes,:eq,:max,(,host,),:by
-        scoped: false
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Disk Write
-    row: 9
-    width: 6
-  - col: 0
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: bytes
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,container.io.read.bytes,:eq,:max,(,host,),:by
-        scoped: false
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Disk Read
-    row: 11
+    row: 7
     width: 6
   - col: 6
     height: 2
@@ -306,11 +206,113 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container.net.rx.bytes,:eq,:max,(,host,),:by
-        scoped: false
+      - query: name,container.mem.cached,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
-      - query: name,container.net.tx.bytes,:eq,:max,(,container,),:by
-        scoped: false
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Memory Cached
+    row: 9
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container.io.write.bytes,:eq,:max,(,host,name,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Disk Write
+    row: 12
+    width: 6
+  - col: 6
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container.io.read.bytes,:eq,:max,(,host,name,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Disk Read
+    row: 12
+    width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,container.net.rx.bytes,:eq,:max,(,host,name,),:by
+        scoped: true
+        visible: true
+      - query: name,container.net.tx.bytes,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -322,9 +324,9 @@ widgets:
         status: Error
         threshold: 0
       title: Network I/O
-    row: 9
-    width: 10
-  - col: 11
+    row: 15
+    width: 12
+  - col: 6
     height: 2
     options:
       axes:
@@ -343,14 +345,14 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container.net.tx.errs,:eq,:max,(,host,),:by
-        scoped: false
+      - query: name,container.net.tx.errs,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
-      - query: name,container.net.tx.packets,:eq,:max,(,host,),:by
-        scoped: false
+      - query: name,container.net.tx.packets,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
-      - query: name,container.net.tx.drop,:eq,:max,(,host,),:by
-        scoped: false
+      - query: name,container.net.tx.drop,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -362,9 +364,9 @@ widgets:
         status: Error
         threshold: 0
       title: TX - packets/errors/dropped
-    row: 11
-    width: 5
-  - col: 6
+    row: 17
+    width: 6
+  - col: 0
     height: 2
     options:
       axes:
@@ -383,14 +385,14 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,container.net.rx.errs,:eq,:max,(,host,),:by
-        scoped: false
+      - query: name,container.net.rx.errs,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
-      - query: name,container.net.rx.packets,:eq,:max,(,host,),:by
-        scoped: false
+      - query: name,container.net.rx.packets,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
-      - query: name,container.net.rx.drop,:eq,:max,(,host,),:by
-        scoped: false
+      - query: name,container.net.rx.drop,:eq,:max,(,host,name,),:by
+        scoped: true
         visible: true
       seriesStyle:
         color: '#588fd8'
@@ -402,10 +404,10 @@ widgets:
         status: Error
         threshold: 0
       title: RX - packets/errors/dropped
-    row: 11
-    width: 5
-  - col: 0
-    height: 2
+    row: 17
+    width: 6
+  - col: 6
+    height: 3
     options:
       axes:
         xAxis:
@@ -436,48 +438,11 @@ widgets:
         status: Error
         threshold: 0
       title: Container Count by Status
-    row: 4
-    width: 6
-  - col: 0
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: false
-        yAxis:
-          min: 0
-          showGridLines: false
-          title: ""
-          unit: auto
-          unitPosition: After
-      chartType: StackedArea
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,container.io.write.bytes,:eq,:max,(,host,),:by
-        scoped: false
-        visible: true
-      - query: name,container.io.read.bytes,:eq,:max,(,container,),:by
-        scoped: false
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Write vs Read Rate
-    row: 7
+    row: 0
     width: 6
   markdownWidgets:
   - col: 0
-    height: 4
+    height: 3
     options:
       content: |
         <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/docker/resources/docker.svg?sanitize=true" width="250"/></p>
@@ -485,40 +450,40 @@ widgets:
         width="250" />
     row: 0
     width: 3
-  - col: 6
+  - col: 0
     height: 1
     options:
       content: |
         <h1>CPU</h1>
       markdown: '# CPU'
-    row: 0
-    width: 10
-  - col: 6
+    row: 3
+    width: 12
+  - col: 0
     height: 1
     options:
       content: |
         <h1>Memory</h1>
       markdown: '# Memory'
-    row: 3
-    width: 10
+    row: 6
+    width: 12
   - col: 0
     height: 1
     options:
       content: |
         <h1>Disk I/O</h1>
       markdown: '# Disk I/O'
-    row: 6
-    width: 6
-  - col: 6
+    row: 11
+    width: 12
+  - col: 0
     height: 1
     options:
       content: |
         <h1>Network</h1>
       markdown: '# Network'
-    row: 8
-    width: 10
+    row: 14
+    width: 12
   numberWidgets:
-  - col: 6
+  - col: 0
     height: 2
     options:
       color: '#3a6db2'
@@ -532,7 +497,7 @@ widgets:
       icon: integration--docker
       query:
         query: name,container.cpu.cores,:eq,:max
-        scoped: false
+        scoped: true
         visible: true
       rounding: None
       statistic: LastValue
@@ -542,10 +507,10 @@ widgets:
       title: CPU Cores
       unit: ""
       unitPosition: After
-    row: 1
+    row: 4
     width: 2
   - col: 3
-    height: 4
+    height: 3
     options:
       color: '#4dccc5'
       description: ""
