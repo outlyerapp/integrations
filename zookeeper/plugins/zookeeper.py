@@ -3,7 +3,8 @@
 from outlyer_plugin import Status, Plugin
 import sys
 import socket
-
+import docker
+import psutil
 
 GAUGE_METRICS = [
     'zk_avg_latency',
@@ -70,6 +71,30 @@ class ZookeeperPlugin(Plugin):
                 self.counter(key, {'zookeeper': key}).set(int(value))
             elif key in GAUGE_METRICS:
                 self.gauge(key, {'zookeeper': key}).set(int(value))
+        
+        instance_type = self.get('instance.type')
+        if instance_type == "container":
+            zookeeper_container_name = self.get('instance.alias', None)
+            client = docker.from_env()
+            for container in client.containers.list():
+                if container.name == zookeeper_container_name:
+                    zookeeper_container = container
+                    break
+
+            out = zookeeper_container.exec_run('df -h').decode('utf-8')
+            lines = out.split('\n')
+            lines.pop(0)
+            for line in lines:
+                line = line.split()
+                if line:
+                    device = line[0]
+                    used_pct = line[4].replace('%', '')
+                    self.gauge('zk_disk_used_pct', {'device': device}).set(float(used_pct))
+        else:
+            for partition in psutil.disk_partitions(all=False):
+                labels = {'device': partition.device}
+                self.gauge('zk_disk_used_pct', labels).set(psutil.disk_usage(partition.mountpoint).percent)
+
         return status
 
 
