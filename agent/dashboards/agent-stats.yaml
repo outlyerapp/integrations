@@ -31,7 +31,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,sys.load.1,:eq,:max,(,host,),:by
+      - query: name,sys.cpu.pct,:eq,:max,(,host,),:by
         scoped: false
         visible: true
       seriesStyle:
