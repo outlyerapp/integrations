@@ -71,7 +71,7 @@ class ZookeeperPlugin(Plugin):
                 self.counter(key, {'zookeeper': key}).set(int(value))
             elif key in GAUGE_METRICS:
                 self.gauge(key, {'zookeeper': key}).set(int(value))
-        
+
         instance_type = self.get('instance.type')
         if instance_type == "container":
             zookeeper_container_name = self.get('instance.alias', None)
@@ -91,7 +91,7 @@ class ZookeeperPlugin(Plugin):
                     used_pct = line[4].replace('%', '')
                     self.gauge('zk_disk_used_pct', {'device': device}).set(float(used_pct))
         else:
-            for partition in psutil.disk_partitions(all=False):
+            for partition in psutil.disk_partitions(all=True):
                 labels = {'device': partition.device}
                 self.gauge('zk_disk_used_pct', labels).set(psutil.disk_usage(partition.mountpoint).percent)
 
