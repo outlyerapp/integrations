@@ -15,6 +15,7 @@ class NTPCheckPlugin(Plugin):
         if StrictVersion(agent_version) >= StrictVersion("1.4.6"):
             from ntplib import NTPClient
         else:
+            self.logger.warning("This plugin requires agent version 1.4.6 or newer")
             return Status.CRITICAL
 
         # Set how much drift is acceptable before failing, by default 5 mins (300 secs)
