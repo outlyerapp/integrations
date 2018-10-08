@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import random
 import sys
 from datetime import datetime
 from outlyer_agent import __version__ as agent_version
@@ -19,6 +20,7 @@ class NTPCheckPlugin(Plugin):
         # Set how much drift is acceptable before failing, by default 5 mins (300 secs)
         drift = int(self.get("drift", "300"))
         hosts = self.get("ntp-hosts", "0.pool.ntp.org,1.pool.ntp.org,2.pool.ntp.org").split(",")
+        random.shuffle(hosts)
 
         for h in hosts:
             try:
@@ -26,6 +28,7 @@ class NTPCheckPlugin(Plugin):
                 if ntp_ts:
                     break
             except Exception as e:
+                self.logger.warning(f"NTP host request '{h}' failed")
                 ntp_ts = None
                 continue
 
