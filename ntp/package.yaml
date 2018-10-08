@@ -3,7 +3,7 @@ title: NTP
 description: Outlyer Monitoring check to check the server clock time offset (drift) to an NTP server
 icon:
   url: ntp.svg
-version: 1.1.0
+version: 2.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT
