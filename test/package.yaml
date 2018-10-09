@@ -5,11 +5,14 @@ name: test-name
 description: An integration to test our integration service
 version: 4.2.1
 icon:
-  url: https://docs2.outlyer.com/assets/img/outlyer-logo-black.svg
+  url: hhttps://raw.githubusercontent.com/outlyerapp/integrations/master/test/resources/outlyer-logo-black.svg?sanitize=true
+author: 
+  name: Outlyer
+  url: https://www.outlyer.com
 labels:
-- test
-- internal
-- integration
+  test: test
+  internal: test
+  integration: test
 form:
 - name: stringinputfield
   description: test description for a form field
