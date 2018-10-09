@@ -2,10 +2,11 @@
 title: AWS SQS
 description: Outlyer Monitoring Integration to collect metrics from your AWS SQS Queues
 icon:
-  url: aws-sqs.svg
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/aws-sqs/resources/aws-sqs.svg?sanitize=true
 version: 1.0.0
-author: Outlyer
-author-uri: https://www.outlyer.com
+author: 
+  name: Outlyer
+  url: https://www.outlyer.com
 license: MIT
-categories:
-  - aws
+labels:
+  aws: sqs

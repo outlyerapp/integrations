@@ -2,10 +2,11 @@
 title: Kubernetes
 description: Outlyer Monitoring Integration for Kubernetes, the container orchestration platform
 icon:
-  url: kubernetes.svg
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/kubernetes/resources/kubernetes.svg?sanitize=true
 version: 1.3.2
-author: Outlyer
-author-uri: https://www.outlyer.com
+author: 
+  name: Outlyer
+  url: https://www.outlyer.com
 license: MIT
-categories:
-  - containers
+labels:
+  containers: kubernetes

@@ -2,10 +2,11 @@
 title: Sensu Handler
 description: Outlyer Monitoring Integration to collect metrics from Sensu using a Sensu Handler
 icon:
-  url: sensu.svg
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/sensu/resources/sensu.svg?sanitize=true
 version: 0.9.0
-author: Outlyer
-author-uri: https://www.outlyer.com
+author: 
+  name: Outlyer
+  url: https://www.outlyer.com
 license: MIT
-categories:
-  - monitoring
+labels:
+  monitoring: sensu
