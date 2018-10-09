@@ -2,11 +2,12 @@
 title: AWS DynamoDB
 description: Outlyer Monitoring Integration to collect metrics from your AWS DynamoDB Tables
 icon:
-  url: aws-dynamodb.svg
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/aws-dynamodb/resources/aws-dynamodb.svg?sanitize=true
 version: 1.0.0
-author: Outlyer
-author-uri: https://www.outlyer.com
+author:
+  name: Outlyer
+  url: https://www.outlyer.com
 license: MIT
-categories:
-  - aws
-  - data-store
+label:
+  aws: dynamodb
+  data-store: dynamodb

@@ -2,10 +2,11 @@
 title: Tutorial
 description: Outlyer Monitoring Tutorial with a collection of tutorial dashboards to introduce new users to Outlyer
 icon:
-  url: tutorial.svg
-version: 1.0.0
-author: Outlyer
-author-uri: https://www.outlyer.com
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/tutorial/resources/tutorial.svg?sanitize=true
+version: 1.0.1
+author: 
+  name: Outlyer
+  url: https://www.outlyer.com
 license: MIT
-categories:
-  - getting started
+labels:
+  outlyer: getting-started

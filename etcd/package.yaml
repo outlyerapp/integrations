@@ -2,11 +2,11 @@
 title: etcd
 description: Outlyer Monitoring Integration for etcd, the distributed reliable key-value store
 icon:
-  url: etcd.svg
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/etcd/resources/etcd.svg?sanitize
 version: 1.0.0
-author: Outlyer
-author-uri: https://www.outlyer.com
+author: 
+  name: Outlyer
+  url: https://www.outlyer.com
 license: MIT
-categories:
-  - configuration
-  - containers
+labels:
+  configuration: etcd

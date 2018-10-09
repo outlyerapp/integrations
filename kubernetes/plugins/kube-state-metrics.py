@@ -44,6 +44,7 @@ class KubeStateMetricsPlugin(Plugin):
         HOST = self.get('ip', 'kube-state-metrics.kube-system')
         PORT = self.get('port', '8080')
         PATH = self.get('endpoint', 'metrics')
+        TIMEOUT = self.get('timeout', 40)
 
         # Get cluster name to apply as label to all metrics
         cluster_name = self.get('k8s.cluster')
@@ -52,7 +53,7 @@ class KubeStateMetricsPlugin(Plugin):
             metric_labels['k8s.cluster'] = cluster_name
 
         try:
-            res = requests.get(f'http://{HOST}:{PORT}/{PATH}', timeout=20)
+            res = requests.get(f'http://{HOST}:{PORT}/{PATH}', timeout=TIMEOUT)
             res.raise_for_status()
 
             for family in text_string_to_metric_families(res.text):

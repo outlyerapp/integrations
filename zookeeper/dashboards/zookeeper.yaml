@@ -10,7 +10,7 @@ labels:
 name: zookeeper
 scopes: []
 theme: light
-title: Zookeeper
+title: ZooKeeper
 widgets:
   chartWidgets:
   - col: 8
@@ -352,7 +352,7 @@ widgets:
     options:
       content: |
         <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/zookeeper/resources/zookeeper.svg?sanitize=true" width="140"/></p>
-      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/general-fixes/zookeeper/resources/zookeeper.svg?sanitize=true"
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/zookeeper/resources/zookeeper.svg?sanitize=true"
         width="140" />
     row: 0
     width: 2

@@ -2,10 +2,11 @@
 title: Java JMX
 description: Outlyer Monitoring Integration for Java applications using JMX
 icon:
-  url: java.svg
-version: 1.0.0
-author: Outlyer
-author-uri: https://www.outlyer.com
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/java/resources/java.svg?sanitize=true
+version: 1.0.1
+author: 
+  name: Outlyer
+  url: https://www.outlyer.com
 license: MIT
-categories:
-  - java
+labels:
+  java: jmx

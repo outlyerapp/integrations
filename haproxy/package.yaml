@@ -2,10 +2,12 @@
 title: HAProxy
 description: Outlyer Monitoring Integration for HAProxy, the reliable, high-performance load balancer
 icon:
-  url: haproxy.svg
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/haproxy/resources/haproxy.svg?sanitize=true
 version: 1.0.0
-author: Outlyer
-author-uri: https://www.outlyer.com
+author: 
+  name: Outlyer
+  url: https://www.outlyer.com
 license: MIT
-categories:
-  - load-balancer
+labels:
+  web: haproxy
+  load-balancers: haproxy

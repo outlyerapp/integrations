@@ -44,4 +44,5 @@ Run the Docker plugin against your instances to start collecting the number of c
 
 |Version|Release Date|Description                                          |
 |-------|------------|-----------------------------------------------------|
+|1.1.0  |03-Oct-2018 |Creates scoped Docker dashboard and renames plugin.  |
 |1.0    |06-Jun-2018 |Initial version of our Docker monitoring integration.|

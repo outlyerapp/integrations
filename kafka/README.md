@@ -84,11 +84,12 @@ The Kafka plugin can be customized via environment variables.
 
 |Variable |Default     |Description                       |
 |---------|------------|----------------------------------|
-|host     |localhost   |Broker/Producer/Consumer host.    |
+|ip       |localhost   |Broker/Producer/Consumer host.    |
 |port     |9999        |Broker/Producer/Consumer JMX port.|
 
 == Changelog ==
 
 |Version|Release Date|Description                                          |
 |-------|------------|-----------------------------------------------------|
+|1.0.1  |28-Sep-2018 |Uses ip environment variable instead of host.        |
 |1.0    |17-May-2018 |Initial version of our Kafka  monitoring integration.|
