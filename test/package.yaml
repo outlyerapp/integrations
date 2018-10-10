@@ -5,7 +5,7 @@ name: test-name
 description: An integration to test our integration service
 version: 4.2.1
 icon:
-  url: hhttps://raw.githubusercontent.com/outlyerapp/integrations/master/test/resources/outlyer-logo-black.svg?sanitize=true
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/test/test/resources/outlyer-logo-black.svg?sanitize=true
 author: 
   name: Outlyer
   url: https://www.outlyer.com

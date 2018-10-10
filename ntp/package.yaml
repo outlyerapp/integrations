@@ -2,7 +2,7 @@
 title: NTP
 description: Outlyer Monitoring check to check the server clock time offset (drift) to an NTP server
 icon:
-  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/ntp/resources/ntp.svg?santize=true
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/ntp/resources/ntp.svg?sanitize=true
 version: 2.0.0
 author: 
   name: Outlyer
