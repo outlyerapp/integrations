@@ -3,7 +3,7 @@ icon:
   color: '#000000'
   name: http
 labels: []
-name: http
+name: http-1
 scopes:
 - defaultValue: ""
   labelKey: site
@@ -30,7 +30,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,http.status_code,:eq,:max,:cf-max
+      - query: name,http.status_code,:eq,:max,:cf-max,(,site,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -64,7 +64,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,http.response_size,:eq,:max,:cf-max
+      - query: name,http.response_size,:eq,:max,:cf-max,(,site,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -98,7 +98,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,http.response_time,:eq,:max,:cf-max
+      - query: name,http.response_time,:eq,:max,:cf-max,(,site,),:by
         scoped: true
         visible: true
       seriesStyle:
