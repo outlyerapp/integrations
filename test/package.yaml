@@ -42,3 +42,8 @@ form:
   type: labelSelectors
   default:
     - "env=prod"
+- name: labelSelectorTest
+  prompt: Select hosts to monitor
+  type: labelSelectors
+  default:
+    - "role=web"
