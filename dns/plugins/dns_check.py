@@ -26,7 +26,7 @@ class DNSCheck(Plugin):
 
   def collect(self, _):
 
-      hostname = self.get('hostname')
+      hostname = self.get('record', '')
       record_type = self.get('record_type', 'A')
       resolver = dns.resolver.Resolver()
 
