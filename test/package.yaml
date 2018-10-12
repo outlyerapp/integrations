@@ -11,38 +11,13 @@ author:
   url: https://www.outlyer.com
 labels:
   test: test
-  internal: test
-  integration: test
 form:
-- name: stringinputfield
-  description: test description for a form field
-  prompt: test prompt for a form field
-  default: default name
+- name: name
+  description: enter a name for your check
+  prompt: Name for check
   type: string
   required: True
-- name: intinputfield
-  prompt: testpromptnum 2
-  type: int
-  default: 1
-- name: floatinputfield
-  prompt: test prompt num 3
-  type: float
-- name: datefield
-  prompt: test prompt num 4
-  type: date
-  default: 1537970123
-- name: labelselectorfield 1
-  prompt: test prompt num 5
-  type: labelSelectors
-  default:
-    - "host=minikube"
-    - "role=web"
-- name: labelselectorfield 2
-  prompt: test prompt num 5
-  type: labelSelectors
-  default:
-    - "env=prod"
-- name: labelSelectorTest
+- name: selectors
   prompt: Select hosts to monitor
   type: labelSelectors
   default:

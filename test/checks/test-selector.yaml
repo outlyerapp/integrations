@@ -1,5 +1,5 @@
 title: "Test selector {{.stringinputfield}}"
-name: "kube-{{.stringinputfield}}"
+name: "kube-{{.name}}"
 description: "check to get kube cadvisor metrics"
 command: "{{.testform}} {{.testform2}} kubebernetes-cadvisor.py"
 disabled: false
@@ -8,5 +8,5 @@ icon: "assignment_turned_in"
 interval: 30
 plugins:
 - "kubebernetes-cadvisor.py"
-selectors: {{.labelSelectorTest}}
+selectors: {{.selectors}}
 env:
