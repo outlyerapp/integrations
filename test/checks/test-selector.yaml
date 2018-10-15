@@ -1,7 +1,7 @@
 title: "Test {{.name}}"
 name: "test-{{.name}}"
 description: "check to get kube cadvisor metrics"
-command: "kubebernetes-cadvisor.py"
+command: "test_plugin.py"
 disabled: false
 handler: "Prometheus"
 icon: "assignment_turned_in"
