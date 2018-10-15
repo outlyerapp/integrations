@@ -3,7 +3,7 @@ name: "test-{{.name}}"
 description: "check to get kube cadvisor metrics"
 command: "test_plugin.py"
 disabled: false
-handler: "Prometheus"
+handler: "Native"
 icon: "assignment_turned_in"
 interval: 30
 plugins:
