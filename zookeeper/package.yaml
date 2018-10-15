@@ -3,7 +3,7 @@ title: Zookeeper
 description: Outlyer Monitoring Integration for Zookeeper, the centralized service for maintaining cluster configuration information
 icon:
   url: zookeeper.svg
-version: 1.0.2
+version: 1.0.3
 author: Outlyer
 author-uri: https://www.outlyer.com
 license: MIT
