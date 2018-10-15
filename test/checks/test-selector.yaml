@@ -1,7 +1,7 @@
-title: "Test selector {{.stringinputfield}}"
-name: "kube-{{.name}}"
+title: "Test {{.name}}"
+name: "test-{{.name}}"
 description: "check to get kube cadvisor metrics"
-command: "{{.testform}} {{.testform2}} kubebernetes-cadvisor.py"
+command: "kubebernetes-cadvisor.py"
 disabled: false
 handler: "Prometheus"
 icon: "assignment_turned_in"
