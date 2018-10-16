@@ -1,0 +1,487 @@
+description: Displays metrics from Openshift.
+icon:
+  color: '#dd3e26'
+  name: integration--redhat
+labels: []
+name: openshift-container-platform
+scopes:
+- defaultValue: None
+  labelKey: k8s.cluster
+- defaultValue: None
+  labelKey: cluster_quota_name
+theme: light
+title: OpenShift Container Platform
+widgets:
+  chartWidgets:
+  - col: 5
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: StackedBar
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,openshift.users,:eq,:sum,:cf-sum,(,username,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Active Users
+    row: 0
+    width: 7
+  - col: 5
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: StackedBar
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,openshift.routes,:eq,:max,:cf-max,(,route_name,ingress.conditions.type,ingress.conditions.status,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: 'Routes: Ingress by Type and Status'
+    row: 2
+    width: 7
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: core
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,openshift.clusterquota.cpu.limit,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      - query: name,openshift.clusterquota.cpu.used,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: CPU
+    row: 5
+    width: 4
+  - col: 4
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bytes
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,openshift.clusterquota.memory.limit,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      - query: name,openshift.clusterquota.memory.used,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Memory
+    row: 5
+    width: 4
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,openshift.clusterquota.pods.limit,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      - query: name,openshift.clusterquota.pods.used,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Pods
+    row: 5
+    width: 4
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,openshift.clusterquota.services.limit,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      - query: name,openshift.clusterquota.services.used,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Services
+    row: 7
+    width: 4
+  - col: 4
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,openshift.clusterquota.services.nodeports.limit,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      - query: name,openshift.clusterquota.services.nodeports.used,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Services NodePort
+    row: 7
+    width: 4
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,openshift.clusterquota.services.loadbalancers.limit,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      - query: name,openshift.clusterquota.services.loadbalancers.used,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Services LoadBalancer
+    row: 7
+    width: 4
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,openshift.clusterquota.secrets.limit,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      - query: name,openshift.clusterquota.secrets.used,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Secrets
+    row: 9
+    width: 4
+  - col: 4
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,openshift.clusterquota.configmaps.limit,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      - query: name,openshift.clusterquota.configmaps.used,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: ConfigMaps
+    row: 9
+    width: 4
+  - col: 8
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,openshift.clusterquota.persistentvolumeclaims.limit,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      - query: name,openshift.clusterquota.persistentvolumeclaims.used,:eq,:max,:cf-max,(,name,cluster_quota_name,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: PersistentVolumeClaims
+    row: 9
+    width: 4
+  markdownWidgets:
+  - col: 0
+    height: 4
+    options:
+      content: |
+        <p><img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/openshift/resources/openshift.svg?sanitize=true" width="250"/></p>
+      markdown: <img src="https://raw.githubusercontent.com/outlyerapp/integrations/master/openshift/resources/openshift.svg?sanitize=true"
+        width="250" />
+    row: 0
+    width: 3
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Cluster Resource Quota for All Namespaces (Used vs Limit)</h1>
+      markdown: '# Cluster Resource Quota for All Namespaces (Used vs Limit)'
+    row: 4
+    width: 12
+  numberWidgets:
+  - col: 3
+    height: 2
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--redhat
+      query:
+        query: name,openshift.users,:eq,:sum,:cf-sum
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Users
+      unit: auto
+      unitPosition: After
+    row: 0
+    width: 2
+  - col: 3
+    height: 2
+    options:
+      color: '#4dccc5'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: Gauge
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: integration--redhat
+      query:
+        query: name,openshift.routes,:eq,:sum,:cf-sum
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: LastValue
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Routes
+      unit: auto
+      unitPosition: After
+    row: 2
+    width: 2
