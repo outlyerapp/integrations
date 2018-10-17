@@ -2,7 +2,7 @@
 title: OpenShift
 description: Outlyer Monitoring Integration for OpenShift Container Platform, Red Hat's on-premises private platform as a service product with orchestration and management provided by Kubernetes
 icon:
-  url: openshift.svg
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/openshift/resources/openshift.svg?sanitize=true
 version: 1.0.0
 author: Outlyer
 author-uri: https://www.outlyer.com
