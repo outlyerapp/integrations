@@ -2,10 +2,11 @@
 title: AWS SNS
 description: Outlyer Monitoring Integration to collect metrics from your AWS SNS Topics
 icon:
-  url: aws-sns.svg
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/aws-sns/resources/aws-sns.svg?sanitize=true
 version: 1.0.0
-author: Outlyer
-author-uri: https://www.outlyer.com
+author: 
+  name: Outlyer
+  url: https://www.outlyer.com
 license: MIT
-categories:
-  - aws
+labels:
+  aws: sns

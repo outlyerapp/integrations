@@ -2,10 +2,11 @@
 title: SSL
 description: Outlyer Monitoring Check the checks for the expiration of SSL certificates
 icon:
-  url: ssl.svg
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/ssl/resources/ssl.svg?sanitize=true
 version: 1.0.0
-author: Outlyer
-author-uri: https://www.outlyer.com
+author: 
+  name: Outlyer
+  url: https://www.outlyer.com
 license: MIT
-categories:
-  - ssl
+labels:
+  web: ssl

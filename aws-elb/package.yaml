@@ -2,11 +2,12 @@
 title: AWS ELB
 description: Outlyer Monitoring Integration to collect metrics from your AWS Elastic Load Balancers (ELBs)
 icon:
-  url: aws-elb.svg
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/aws-elb/resources/aws-elb.svg?sanitize=true
 version: 1.0.0
-author: Outlyer
-author-uri: https://www.outlyer.com
+author:
+  name: Outlyer
+  url: https://www.outlyer.com
 license: MIT
-categories:
-  - aws
-  - load-balancers
+labels:
+  aws: elb
+  load-balancers: elb

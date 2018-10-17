@@ -2,11 +2,12 @@
 title: AWS RDS
 description: Outlyer Monitoring Integration to collect metrics from your AWS RDS Instances
 icon:
-  url: aws-rds.svg
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/aws-rds/resources/aws-rds.svg?sanitize=true
 version: 1.0.0
-author: Outlyer
-author-uri: https://www.outlyer.com
+author: 
+  name: Outlyer
+  url: https://www.outlyer.com
 license: MIT
-categories:
-  - aws
-  - data-store
+labels:
+  aws: rds
+  data-store: rds

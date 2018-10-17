@@ -2,10 +2,11 @@
 title: Consul
 description: Outlyer Monitoring Integration for the Hashicorp Consul service discovery service
 icon:
-  url: consul.svg
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/consul/resources/consul.svg?sanitize=true
 version: 1.0.0
-author: Outlyer
-author-uri: https://www.outlyer.com
+author: 
+  name: Outlyer
+  url: https://www.outlyer.com
 license: MIT
-categories:
-  - configuration
+labels:
+  configuration: consul
