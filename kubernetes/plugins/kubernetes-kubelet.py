@@ -126,10 +126,11 @@ class KubeletPlugin(Plugin):
             pod_labels = {}
             for pod in pods_api_server.items:
                 label_list = []
-                for label_key,label_value in pod.metadata.labels.items():
-                    label = f'{label_key}: {label_value}'
-                    label_list.append(label)
-                pod_labels[pod.metadata.name] = tuple(label_list)
+                if pod.metadata.labels:
+                    for label_key,label_value in pod.metadata.labels.items():
+                        label = f'{label_key}: {label_value}'
+                        label_list.append(label)
+                    pod_labels[pod.metadata.name] = tuple(label_list)
 
             for family in text_string_to_metric_families(res):
                 for sample in family.samples:
@@ -139,12 +140,13 @@ class KubeletPlugin(Plugin):
                     value = sample[2]
                     if not math.isnan(value):
                         if labels['pod']:
-                            for label in pod_labels[labels['pod']]:
-                                labels['k8s.pod.label'] = label
-                                if sample[0] in COUNTER_METRICS:
-                                    self.counter(sample[0], labels).set(value)
-                                elif sample[0] in GAUGE_METRICS:
-                                    self.gauge(sample[0], labels).set(value)
+                            if pod_labels.get(labels['pod']) != None:
+                                for label in pod_labels[labels['pod']]:
+                                    labels['k8s.pod.label'] = label
+                                    if sample[0] in COUNTER_METRICS:
+                                        self.counter(sample[0], labels).set(value)
+                                    elif sample[0] in GAUGE_METRICS:
+                                        self.gauge(sample[0], labels).set(value)
 
             return Status.OK
 
