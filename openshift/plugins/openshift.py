@@ -31,17 +31,17 @@ class OpenShiftPlugin(Plugin):
             routes = self.__get_data('/apis/route.openshift.io/v1/routes')
             for route in routes['items']:
                 labels = {**cluster_global_labels}
-                labels['route_name'] = route['metadata']['name']
+                labels['route.name'] = route['metadata']['name']
                 labels['namespace'] = route['metadata']['namespace']
-                labels['route_host'] = route['spec']['host']
+                labels['route.host'] = route['spec']['host']
                 labels['to.kind'] = route['spec']['to']['kind']
                 labels['to.name'] = route['spec']['to']['name']
                 labels['to.weight'] = str(route['spec']['to']['weight'])
                 for ingress in route['status']['ingress']:
                     labels['ingress.host'] = ingress['host']
                     for condition in ingress['conditions']:
-                        labels['ingress.conditions.type'] = condition['type']
-                        labels['ingress.conditions.status'] = condition['status']
+                        labels['ingress.type'] = condition['type']
+                        labels['ingress.status'] = condition['status']
                         self.gauge('openshift.routes', labels).set(1)
 
             cluster_resource_quotas = self.__get_data('/apis/quota.openshift.io/v1/clusterresourcequotas')
