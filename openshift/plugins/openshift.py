@@ -142,7 +142,7 @@ class OpenShiftPlugin(Plugin):
 
     def __get_data(self, endpoint):
         TOKEN_PATH = self.get('token_path', '/var/run/secrets/kubernetes.io/serviceaccount/token')
-        API_SERVER = self.get('api_server', 'api.openshift-apiserver')
+        API_SERVER = self.get('api_server', 'kubernetes.default')
         TIMEOUT = self.get('timeout', 20)
 
         with open(TOKEN_PATH) as token_file: 
