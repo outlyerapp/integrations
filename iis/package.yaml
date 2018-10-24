@@ -2,7 +2,7 @@
 title: IIS
 description: Outlyer Monitoring Integration for Microsoft's Internet Information Services (IIS) webserver
 icon:
-  url: https://github.com/outlyerapp/integrations/raw/master/iis/resources/iis.png
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/iis/resources/iis.png?sanitize=true
 version: 1.0.0
 author: 
   name: Outlyer
