@@ -1,0 +1,17 @@
+command: kubernetes-api-server.py
+dashboards:
+- kubernetes-cluster-overview
+description: Monitors the Kubernetes Master ectd Healthz Endpoint
+disabled: false
+env:
+- key: endpoint
+  value: healthz/etcd
+handler: Native
+icon: integration--docker
+interval: 30
+name: kubernetes-etcd-health
+plugins:
+- kubernetes-api-server.py
+selectors: {{.selectors_k8s_api_server}}
+timeout: 30
+title: 'Kubernetes: etcd Health'

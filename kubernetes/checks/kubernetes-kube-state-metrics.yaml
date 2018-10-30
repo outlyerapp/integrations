@@ -1,0 +1,15 @@
+command: kube-state-metrics.py
+dashboards:
+- kubernetes-cluster-overview
+description: Monitors and collects metrics from Kube State Metrics
+disabled: false
+env: []
+handler: Native
+icon: integration--docker
+interval: 30
+name: kubernetes-kube-state-metrics
+plugins:
+- kube-state-metrics.py
+selectors: {{.selectors_k8s_kube_state_metrics}}
+timeout: 30
+title: 'Kubernetes: Kube State Metrics'

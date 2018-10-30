@@ -10,3 +10,20 @@ author:
 license: MIT
 labels:
   containers: kubernetes
+form:
+- name: selectors_k8s_api_server
+  description: "This selector is used by checks for querying the API Server. Select a single Kubernetes node, e.g.: instance.hostname: <K8S_NODE_HERE>"
+  prompt: "Select a single Kubernetes node"
+  type: labelSelectors
+- name: selectors_k8s_kube_state_metrics
+  description: "This selector is used by checks for querying kube-state-metrics"
+  prompt: "Select kube-state-metrics application"
+  type: labelSelectors
+  default:
+    - "k8s-app=kube-state-metrics,container.image_name=quay.io.coreos.kube-state-metrics"
+- name: selectors_k8s_kubelet
+  description: "This selector is used by checks for querying Kubelet metrics on each Kubernetes node"
+  prompt: "Select all Kubernetes nodes"
+  type: labelSelectors
+  default:
+    - "instance.type=host,instance.platform=kubernetes"
