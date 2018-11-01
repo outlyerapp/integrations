@@ -10,3 +10,8 @@ author:
 license: MIT
 labels:
   data-store: mongodb
+form:
+- name: selectors_mongodb
+  description: "This selector is used by the MongoDB check for querying MongoDB status and key metrics. Select all MongoDB instances, e.g.: app: mongodb"
+  prompt: "Select all MongoDB instances"
+  type: labelSelectors
