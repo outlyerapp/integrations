@@ -1,0 +1,15 @@
+command: kafka.py
+dashboards:
+- kafka-producer
+description: Monitors Kafka producer metrics via JMX.
+disabled: false
+env: []
+handler: Native
+icon: integration--java
+interval: 30
+name: kafka-producer
+plugins:
+- kafka.py
+selectors: {{.selectors_kafka_producer}}
+timeout: 30
+title: 'Kafka: Producers'

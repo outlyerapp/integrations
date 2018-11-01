@@ -11,3 +11,16 @@ license: MIT
 labels:
   messaging: kafka
   java: kafka
+form:
+- name: selectors_kafka_broker
+  description: "This selector is used by the Kafka broker check for querying broker metrics. Select all Kafka brokers, e.g.: app: kafka"
+  prompt: "Select all Kafka brokers"
+  type: labelSelectors
+- name: selectors_kafka_consumer
+  description: "This selector is used by the Kafka consumer check for querying consumer metrics. Select a Java Kafka consumer."
+  prompt: "Select a Java Kafka consumer"
+  type: labelSelectors
+- name: selectors_kafka_producer
+  description: "This selector is used by the Kafka producer check for querying producer metrics. Select a Java Kafka producer."
+  prompt: "Select a Java Kafka producer"
+  type: labelSelectors

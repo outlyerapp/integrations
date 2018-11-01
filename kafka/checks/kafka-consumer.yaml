@@ -1,0 +1,15 @@
+command: kafka.py
+dashboards:
+- kafka-consumer
+description: Monitors Kafka consumer metrics via JMX.
+disabled: false
+env: []
+handler: Native
+icon: integration--java
+interval: 30
+name: kafka-consumer
+plugins:
+- kafka.py
+selectors: {{.selectors_kafka_consumer}}
+timeout: 30
+title: 'Kafka: Consumers'
