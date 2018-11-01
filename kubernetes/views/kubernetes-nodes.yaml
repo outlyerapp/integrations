@@ -1,0 +1,14 @@
+description: Kubernetes Nodes organized by Cluster and Role
+groups:
+- k8s.cluster
+- k8s.node.role
+icon:
+  color: '#3a6db2'
+  name: integration--docker
+legend: []
+name: kubernetes-nodes
+selectors:
+- instance.platform=kubernetes
+- instance.type=host
+title: Kubernetes Nodes
+type: host
