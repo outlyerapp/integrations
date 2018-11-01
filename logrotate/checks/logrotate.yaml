@@ -1,0 +1,15 @@
+command: logrotate.py
+dashboards:
+- logrotate
+description: Monitors log files managed by Logrotate
+disabled: false
+env: []
+handler: Native
+icon: assignment_turned_in
+interval: 30
+name: logrotate
+plugins:
+- logrotate.py
+selectors: {{.selectors_logrotate}}
+timeout: 30
+title: Logrotate

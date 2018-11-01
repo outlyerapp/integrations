@@ -10,3 +10,8 @@ author:
 license: MIT
 label:
   system: logrotate
+form:
+- name: selectors_logrotate
+  description: "This selector is used by the logrotate check for querying log files sizes and last rotations. Select all instances that use logrotate, e.g.: instance.hostname: <INSTANCE_HERE>"
+  prompt: "Select all instances that use logrotate"
+  type: labelSelectors
