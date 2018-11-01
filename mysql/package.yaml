@@ -10,3 +10,8 @@ author:
 license: MIT
 labels:
   data-store: mysql
+form:
+- name: selectors_mysql
+  description: "This selector is used by the MySQL check for querying MySQL status and performance metrics. Select a MySQL instance, e.g.: app: mysql"
+  prompt: "Select a MySQL instance"
+  type: labelSelectors
