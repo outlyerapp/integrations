@@ -1,0 +1,15 @@
+command: docker-daemon.py
+dashboards:
+- docker
+description: Monitors metrics from Docker containers.
+disabled: false
+env: []
+handler: Native
+icon: integration--docker
+interval: 30
+name: docker-daemon
+plugins:
+- docker-daemon.py
+selectors: {{.selectors_docker}}
+timeout: 30
+title: Docker
