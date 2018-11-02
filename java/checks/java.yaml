@@ -3,7 +3,9 @@ dashboards:
 - java-jvm
 description: Monitors JVM metrics via JMX.
 disabled: false
-env: []
+env:
+- key: port
+  value: {{.jmx_port}}
 handler: Native
 icon: integration--java
 interval: 30
