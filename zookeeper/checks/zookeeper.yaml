@@ -1,0 +1,15 @@
+command: zookeeper.py
+dashboards:
+- zookeeper
+description: Monitors ZooKeeper metrics via four letter words commands
+disabled: false
+env: []
+handler: Native
+icon: integration--java
+interval: 30
+name: zookeeper
+plugins:
+- zookeeper.py
+selectors: {{.selectors_zookeeper}}
+timeout: 30
+title: ZooKeeper

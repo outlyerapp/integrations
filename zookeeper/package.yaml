@@ -10,3 +10,8 @@ author:
 license: MIT
 labels:
   configuration: zookeeper
+form:
+- name: selectors_zookeeper
+  description: "This selector is used by the ZooKeeper check for querying ZooKeeper status and performance metrics. Select all ZooKeeper instances, e.g.: app: zookeeper"
+  prompt: "Select all ZooKeeper instances"
+  type: labelSelectors
