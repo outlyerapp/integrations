@@ -1,0 +1,15 @@
+command: etcd.py
+dashboards:
+- etcd
+description: Monitors etcd status and performance metrics
+disabled: false
+env: []
+handler: Native
+icon: assignment_turned_in
+interval: 30
+name: etcd
+plugins:
+- etcd.py
+selectors: {{.selectors_etcd}}
+timeout: 30
+title: etcd
