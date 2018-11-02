@@ -1,0 +1,15 @@
+command: java.py
+dashboards:
+- java-jvm
+description: Monitors JVM metrics via JMX.
+disabled: false
+env: []
+handler: Native
+icon: integration--java
+interval: 30
+name: java
+plugins:
+- java.py
+selectors: {{.selectors_java}}
+timeout: 30
+title: Java
