@@ -1,0 +1,15 @@
+command: elasticsearch.py
+dashboards:
+- elasticsearch
+description: "Monitors Elasticsearch status and key metrics"
+disabled: false
+env: []
+handler: Native
+icon: assignment_turned_in
+interval: 30
+name: elasticsearch
+plugins:
+- elasticsearch.py
+selectors: {{.selectors_elasticsearch}}
+timeout: 30
+title: Elasticsearch

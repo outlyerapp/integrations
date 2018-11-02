@@ -9,4 +9,9 @@ author:
   url: https://www.outlyer.com
 license: MIT
 labels:
-  data-store: elasticsearch 
+  data-store: elasticsearch
+form:
+- name: selectors_elasticsearch
+  description: "This selector is used by the Elasticsearch check for querying Elasticsearch status and key metrics. Select all Elasticsearch instances, e.g.: app: elasticsearch"
+  prompt: "Select all Elasticsearch instances"
+  type: labelSelectors
