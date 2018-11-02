@@ -10,3 +10,18 @@ author:
 license: MIT
 labels:
   web: http
+form:
+- name: selectors_http
+  description: "This selector is used by the HTTP check for monitoring HTTP endpoints. Select a single instance, e.g.: instance.hostname: <INSTANCE_HERE>"
+  prompt: "Select a single instance"
+  type: labelSelectors
+- name: http_name
+  description: "Enter a name for the HTTP endpoint to be monitored, e.g.: Outlyer"
+  prompt: "Enter a name for the HTTP endpoint"
+  type: string
+  required: True
+- name: http_url
+  description: "Enter the URL to monitor, e.g.: https://www.outlyer.com"
+  prompt: "Enter the URL to monitor"
+  type: string
+  required: True
