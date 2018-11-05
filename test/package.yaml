@@ -22,3 +22,15 @@ form:
   type: labelSelectors
   default:
     - "role=web"
+- name: defaultInt
+  prompt: Enter a number
+  type: int
+  default: 12
+- name: defaultString
+  prompt: Enter a string
+  type: string
+  default: "12"
+- name: defaultFloat
+  prompt: Enter a floaty number
+  type: float
+  default: 12.34
