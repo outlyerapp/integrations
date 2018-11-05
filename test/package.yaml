@@ -19,18 +19,22 @@ form:
   required: True
 - name: selectors
   prompt: Select hosts to monitor
+  description: enter a selector for your check
   type: labelSelectors
   default:
     - "role=web"
 - name: defaultInt
   prompt: Enter a number
+  description: enter a number for your check
   type: int
   default: 12
 - name: defaultString
   prompt: Enter a string
+  description: enter a string for your check
   type: string
   default: "12"
 - name: defaultFloat
   prompt: Enter a floaty number
+  description: enter a FLOATY for your check
   type: float
   default: 12.34
