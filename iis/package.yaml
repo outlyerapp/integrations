@@ -11,3 +11,10 @@ license: MIT
 labels:
   microsoft: iis
   web: iis
+form:
+- name: selectors_iis
+  description: "This selector is used by the IIS check. Select all your windows hosts."
+  prompt: "Select all your windows hosts"
+  type: labelSelectors
+  default:
+    - "instance.os_name=windows"

@@ -1,0 +1,15 @@
+command: C:\outlyer\embedded\bin\python iis.py
+dashboards:
+- iis
+description: Monitor Microsoft's IIS Webserver on Windows
+disabled: false
+env: []
+handler: Native
+icon: integration--iis
+interval: 30
+name: iis
+plugins:
+- iis.py
+selectors: {{.selectors_iis}}
+timeout: 30
+title: IIS
