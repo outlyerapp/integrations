@@ -19,6 +19,5 @@ form:
   description: "Enter the JMX port to be used by the Java JMX check"
   prompt: "Enter the JMX port"
   type: string
-  default:
-    - "9999"
+  default: "9999"
   required: True
