@@ -10,3 +10,10 @@ author:
 license: MIT
 labels:
   containers: docker
+form:
+- name: selectors_docker
+  description: "This selector is used by the Docker check for querying container metrics. Select all instances running Docker containers, e.g.: instance.hostname: <INSTANCE_HERE>"
+  prompt: "Select all instances running Docker containers"
+  type: labelSelectors
+  default:
+    - "instance.type=host,instance.platform=kubernetes"
