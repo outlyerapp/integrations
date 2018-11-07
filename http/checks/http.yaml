@@ -1,0 +1,18 @@
+command: http_check.py
+dashboards: []
+description: Monitors HTTP endpoints
+disabled: false
+env:
+- key: name
+  value: {{.http_name}}
+- key: url
+  value: {{.http_url}}
+handler: Native
+icon: http
+interval: 30
+name: http
+plugins:
+- http_check.py
+selectors: {{.selectors_http}}
+timeout: 30
+title: HTTP
