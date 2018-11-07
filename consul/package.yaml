@@ -10,3 +10,8 @@ author:
 license: MIT
 labels:
   configuration: consul
+form:
+- name: selectors_consul
+  description: "This selector is used by the Consul check for querying Consul status and key metrics. Select all Consul instances, e.g.: app: consul"
+  prompt: "Select all Consul instances"
+  type: labelSelectors
