@@ -10,3 +10,8 @@ author:
 license: MIT
 labels:
   data-store: cassandra
+form:
+- name: selectors_cassandra
+  description: "This selector is used by the Cassandra check for querying Cassandra status and key metrics. Select all Cassandra instances, e.g.: app: cassandra"
+  prompt: "Select all Cassandra instances"
+  type: labelSelectors

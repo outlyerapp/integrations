@@ -1,0 +1,15 @@
+command: cassandra.py
+dashboards:
+- cassandra
+description: Monitors Cassandra status and key metrics
+disabled: false
+env: []
+handler: Native
+icon: assignment_turned_in
+interval: 30
+name: cassandra
+plugins:
+- cassandra.py
+selectors: {{.selectors_cassandra}}
+timeout: 30
+title: 'Cassandra'
