@@ -1,0 +1,17 @@
+command: kubernetes-api-server.py
+dashboards:
+- kubernetes-cluster-overview
+description: Monitors the Kubernetes Master APIs for key metrics and availability
+disabled: false
+env:
+- key: endpoint
+  value: metrics
+handler: Native
+icon: integration--docker
+interval: 30
+name: kubernetes-api-server-metrics
+plugins:
+- kubernetes-api-server.py
+selectors: {{.selectors_k8s_api_server}}
+timeout: 30
+title: 'Kubernetes: API Server Metrics'
