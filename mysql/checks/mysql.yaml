@@ -1,0 +1,15 @@
+command: mysql.py
+dashboards:
+- mysql
+description: Monitors MySQL status and key metrics
+disabled: false
+env: []
+handler: Native
+icon: integration--mysql
+interval: 30
+name: mysql
+plugins:
+- mysql.py
+selectors: {{.selectors_mysql}}
+timeout: 30
+title: 'MySQL'
