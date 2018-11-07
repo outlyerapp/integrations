@@ -1,0 +1,15 @@
+command: mongodb.py
+dashboards:
+- mongodb
+description: Monitors MongoDB status and key metrics
+disabled: false
+env: []
+handler: Native
+icon: integration--mongodb
+interval: 30
+name: mongodb
+plugins:
+- mongodb.py
+selectors: {{.selectors_mongodb}}
+timeout: 30
+title: 'MongoDB'
