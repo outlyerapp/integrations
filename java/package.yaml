@@ -10,3 +10,15 @@ author:
 license: MIT
 labels:
   java: jmx
+form:
+- name: selectors_java
+  description: "This selector is used by the Java JMX check for querying JDK metrics via JMX. Select a JDK instance, e.g.: app: my_java_app"
+  prompt: "Select a JDK instance"
+  type: labelSelectors
+- name: jmx_port
+  description: "Enter the JMX port to be used by the Java JMX check"
+  prompt: "Enter the JMX port"
+  type: string
+  default:
+    - "9999"
+  required: True
