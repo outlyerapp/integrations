@@ -1,0 +1,20 @@
+command: aws-dynamodb.py
+dashboards: []
+description: Monitors AWS DynamoDB Metrics from CloudWatch
+disabled: false
+env:
+- key: AWS_ACCESS_KEY_ID
+  value: {{.dynamodb_aws_access_key}}
+- key: AWS_SECRET_ACCESS_KEY
+  value: {{.dynamodb_aws_secret_key}}
+- key: AWS_REGION
+  value: {{.dynamodb_aws_region}}
+handler: Native
+icon: integration--aws
+interval: 300
+name: aws-dynamodb
+plugins:
+- aws-dynamodb.py
+selectors: {{.selectors_dynamodb}}
+timeout: 60
+title: AWS DynamoDB
