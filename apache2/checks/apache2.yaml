@@ -1,0 +1,14 @@
+command: apache2.py
+dashboards: []
+description: Monitors Apache 2 status and key metrics
+disabled: false
+env: []
+handler: Native
+icon: integration--apache
+interval: 30
+name: apache2
+plugins:
+- apache2.py
+selectors: {{.selectors_apache2}}
+timeout: 30
+title: Apache 2
