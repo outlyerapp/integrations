@@ -9,3 +9,8 @@ author-uri: https://www.outlyer.com
 license: MIT
 categories:
   - containers
+form:
+- name: selectors_openshift
+  description: "This selector is used by the OpenShift check for querying the API Server. Select a single Kubernetes node, e.g.: instance.hostname: <K8S_NODE_HERE>"
+  prompt: "Select a single Kubernetes node"
+  type: labelSelectors
