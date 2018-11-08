@@ -1,0 +1,19 @@
+command: aws-billing.py
+dashboards:
+- aws-billing
+description: Monitors your AWS Account Billing Metrics from CloudWatch
+disabled: false
+env:
+- key: AWS_ACCESS_KEY_ID
+  value: {{.billing_aws_access_key}}
+- key: AWS_SECRET_ACCESS_KEY
+  value: {{.billing_aws_secret_key}}
+handler: Native
+icon: integration--aws
+interval: 300
+name: aws-billing
+plugins:
+- aws-billing.py
+selectors: {{.selectors_billing}}
+timeout: 60
+title: AWS Billing
