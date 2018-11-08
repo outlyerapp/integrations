@@ -16,4 +16,4 @@ form:
   prompt: "Select all your hosts"
   type: labelSelectors
   default:
-    - "instance.type:host"
+    - "instance.type: host"
