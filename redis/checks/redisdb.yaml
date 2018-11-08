@@ -1,0 +1,15 @@
+command: redisdb.py
+dashboards:
+- redis
+description: Monitors Redis status and key metrics
+disabled: false
+env: []
+handler: Native
+icon: integration--redis
+interval: 30
+name: redisdb
+plugins:
+- redisdb.py
+selectors: {{.selectors_redis}}
+timeout: 30
+title: 'Redis'
