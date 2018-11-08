@@ -18,8 +18,10 @@ form:
 - name: billing_aws_access_key
   description: "The AWS ACCESS KEY is used by the Billing check for querying the AWS API"
   prompt: "Provide the AWS ACCESS KEY"
-  type: labelSelectors
+  type: string
+  required: True
 - name: billing_aws_secret_key
   description: "The AWS SECRET KEY is used by the Billing check for querying the AWS API"
   prompt: "Provide the AWS SECRET KEY"
-  type: labelSelectors
+  type: string
+  required: True
