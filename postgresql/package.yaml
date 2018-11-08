@@ -10,3 +10,8 @@ author:
 license: MIT
 labels:
   data-store: postgresql
+form:
+- name: selectors_postgresql
+  description: "This selector is used by the PostgreSQL check for querying PostgreSQL status and performance metrics. Select a PostgreSQL instance, e.g.: app: postgresql"
+  prompt: "Select a PostgreSQL instance"
+  type: labelSelectors
