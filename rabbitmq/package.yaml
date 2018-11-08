@@ -10,3 +10,8 @@ author:
 license: MIT
 labels:
   messaging: rabbitmq
+form:
+- name: selectors_rabbitmq
+  description: "This selector is used by the RabbitMQ check for querying RabbitMQ status and performance metrics. Select a RabbitMQ instance, e.g.: app: rabbitmq"
+  prompt: "Select a RabbitMQ instance"
+  type: labelSelectors
