@@ -1,0 +1,15 @@
+command: solr.py
+dashboards:
+- solr
+description: "Monitors Solr status and key metrics"
+disabled: false
+env: []
+handler: Native
+icon: integration--solr
+interval: 30
+name: solr
+plugins:
+- solr.py
+selectors: {{.selectors_solr}}
+timeout: 30
+title: Solr
