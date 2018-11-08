@@ -1,0 +1,15 @@
+command: ntp.py
+dashboards:
+- ntp-drift
+description: Monitors the time offset between the servers and NTP servers
+disabled: false
+env: []
+handler: Native
+icon: assignment_turned_in
+interval: 30
+name: ntp
+plugins:
+- ntp.py
+selectors: {{.selectors_ntp}}
+timeout: 30
+title: NTP
