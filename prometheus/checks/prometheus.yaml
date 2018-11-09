@@ -7,7 +7,7 @@ env:
   value: {{.prometheus_port}}
 - key: PROMPATH
   value: {{.prometheus_endpoint}}
-handler: Native
+handler: Prometheus
 icon: assignment_turned_in
 interval: 30
 name: prometheus
