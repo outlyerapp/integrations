@@ -11,3 +11,23 @@ license: MIT
 labels:
   aws: kinesis
   messaging: kinesis
+form:
+- name: selectors_kinesis
+  description: "This selector is used by the AWS Kinesis check for querying the AWS CloudWatch API. Select an instance, e.g.: instance.hostname: <INSTANCE_HERE>"
+  prompt: "Select an instance"
+  type: labelSelectors
+- name: kinesis_aws_access_key
+  description: "The AWS ACCESS KEY is used by the Kinesis check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS ACCESS KEY"
+  type: string
+  required: True
+- name: kinesis_aws_secret_key
+  description: "The AWS SECRET KEY is used by the Kinesis check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS SECRET KEY"
+  type: string
+  required: True
+- name: kinesis_aws_region
+  description: "The AWS REGION is used by the Kinesis check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS REGION"
+  type: string
+  required: True

@@ -1,0 +1,20 @@
+command: aws-kinesis.py
+dashboards: []
+description: Monitors AWS Kinesis Metrics from CloudWatch
+disabled: false
+env:
+- key: AWS_ACCESS_KEY_ID
+  value: {{.kinesis_aws_access_key}}
+- key: AWS_SECRET_ACCESS_KEY
+  value: {{.kinesis_aws_secret_key}}
+- key: AWS_REGION
+  value: {{.kinesis_aws_region}}
+handler: Native
+icon: integration--aws
+interval: 300
+name: aws-kinesis
+plugins:
+- aws-kinesis.py
+selectors: {{.selectors_kinesis}}
+timeout: 60
+title: AWS Kinesis
