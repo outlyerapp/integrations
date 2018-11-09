@@ -13,7 +13,7 @@ labels:
 form:
 - name: selectors_prometheus
   description: "This selector is used by the Prometheus check for scraping Prometheus endpoints. Select the application that contains the Prometheus endpoint, e.g.: app: kuard"
-  prompt: "Select the app that contains the Prometheus endpoint"
+  prompt: "Select the app with the Prometheus endpoint"
   type: labelSelectors
 - name: prometheus_port
   description: "Enter the application port, e.g.: 8080"
