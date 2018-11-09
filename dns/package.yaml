@@ -10,3 +10,13 @@ author:
 license: MIT
 labels:
   web: dns
+form:
+- name: selectors_dns
+  description: "This selector is used by the DNS check to monitor the resolvability of and lookup times for DNS records. Select an instance, e.g.: instance.hostname: <INSTANCE_HERE>"
+  prompt: "Select an instance"
+  type: labelSelectors
+- name: dns_hostname
+  description: "The hostname to look up, e.g.: outlyer.com"
+  prompt: "The hostname to look up"
+  type: string
+  required: True
