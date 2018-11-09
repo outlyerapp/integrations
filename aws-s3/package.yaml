@@ -10,3 +10,23 @@ author:
 license: MIT
 labels:
   aws: s3
+form:
+- name: selectors_s3
+  description: "This selector is used by the AWS S3 check for querying the AWS CloudWatch API. Select an instance, e.g.: instance.hostname: <INSTANCE_HERE>"
+  prompt: "Select an instance"
+  type: labelSelectors
+- name: s3_aws_access_key
+  description: "The AWS ACCESS KEY is used by the S3 check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS ACCESS KEY"
+  type: string
+  required: True
+- name: s3_aws_secret_key
+  description: "The AWS SECRET KEY is used by the S3 check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS SECRET KEY"
+  type: string
+  required: True
+- name: s3_aws_region
+  description: "The AWS REGION is used by the S3 check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS REGION"
+  type: string
+  required: True
