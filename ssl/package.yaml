@@ -15,7 +15,6 @@ form:
   description: "This selector is used by the SSL check to monitor your SSL certificates by collecting their expiration time. Select an instance, e.g.: instance.hostname: <INSTANCE_HERE>"
   prompt: "Select an instance"
   type: labelSelectors
-  required: True
 - name: ssl_host
   description: "The remote host where the certificate is installed, e.g.: outlyer.com"
   prompt: "The remote host where the certificate is installed"
