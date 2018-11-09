@@ -11,3 +11,23 @@ license: MIT
 labels:
   aws: lambda
   serverless: lambda
+form:
+- name: selectors_lambda
+  description: "This selector is used by the AWS Lambda check for querying the AWS CloudWatch API. Select an instance, e.g.: instance.hostname: <INSTANCE_HERE>"
+  prompt: "Select an instance"
+  type: labelSelectors
+- name: lambda_aws_access_key
+  description: "The AWS ACCESS KEY is used by the Lambda check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS ACCESS KEY"
+  type: string
+  required: True
+- name: lambda_aws_secret_key
+  description: "The AWS SECRET KEY is used by the Lambda check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS SECRET KEY"
+  type: string
+  required: True
+- name: lambda_aws_region
+  description: "The AWS REGION is used by the Lambda check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS REGION"
+  type: string
+  required: True

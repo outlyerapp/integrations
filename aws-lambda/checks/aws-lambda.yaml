@@ -1,0 +1,21 @@
+command: aws-lambda.py
+dashboards:
+- aws-lambda
+description: Monitors AWS Lambda metrics from CloudWatch
+disabled: false
+env:
+- key: AWS_ACCESS_KEY_ID
+  value: {{.lambda_aws_access_key}}
+- key: AWS_SECRET_ACCESS_KEY
+  value: {{.lambda_aws_secret_key}}
+- key: AWS_REGION
+  value: {{.lambda_aws_region}}
+handler: Native
+icon: integration--lambda
+interval: 300
+name: aws-lambda
+plugins:
+- aws-lambda.py
+selectors: {{.selectors_lambda}}
+timeout: 60
+title: AWS Lambda
