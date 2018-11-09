@@ -10,3 +10,18 @@ author:
 license: MIT
 labels:
   monitoring: prometheus
+form:
+- name: selectors_prometheus
+  description: "This selector is used by the Prometheus check for scraping Prometheus endpoints. Select the application that contains the Prometheus endpoint, e.g.: app: kuard"
+  prompt: "Select the app that contains the Prometheus endpoint"
+  type: labelSelectors
+- name: prometheus_port
+  description: "Enter the application port, e.g.: 8080"
+  prompt: "Enter the application port"
+  type: string
+  required: True
+- name: prometheus_endpoint
+  description: "Enter the prometheus endpoint, e.g.: metrics"
+  prompt: "Enter the prometheus endpoint"
+  type: string
+  required: True
