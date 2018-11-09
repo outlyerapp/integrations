@@ -10,7 +10,7 @@ env:
 - key: AWS_REGION
   value: {{.kinesis_aws_region}}
 handler: Native
-icon: integration--aws
+icon: integration--kinesis
 interval: 300
 name: aws-kinesis
 plugins:
