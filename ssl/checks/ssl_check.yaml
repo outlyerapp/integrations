@@ -1,0 +1,17 @@
+command: ssl_check.py
+dashboards:
+- ssl
+description: Monitors SSL certificates by collecting their expiration time
+disabled: false
+env:
+- key: host
+  value: {{.ssl_host}}
+handler: Native
+icon: integration--ssl
+interval: 30
+name: ssl_check
+plugins:
+- ssl_check.py
+selectors: {{.selectors_ssl}}
+timeout: 30
+title: SSL
