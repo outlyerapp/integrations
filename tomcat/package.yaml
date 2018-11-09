@@ -11,3 +11,13 @@ license: MIT
 labels:
   web: tomcat
   java: tomcat
+form:
+- name: selectors_tomcat
+  description: "This selector is used by the Tomcat check for querying Tomcat performance metrics via JMX. Select the Tomcat instance, e.g.: app: tomcat"
+  prompt: "Select the Tomcat instance"
+  type: labelSelectors
+- name: tomcat_jmx_port
+  description: "Enter the Tomcat JMX port, e.g.: 9012"
+  prompt: "Enter the Tomcat JMX port"
+  type: string
+  required: True
