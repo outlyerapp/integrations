@@ -89,50 +89,52 @@ class OpenShiftPlugin(Plugin):
                 if limits.get('persistentvolumeclaims'):
                     self.gauge('openshift.clusterquota.persistentvolumeclaims.used', labels).set(float(used.get('persistentvolumeclaims')))
 
-                for namespace in cluster_quota['status']['namespaces']:
-                    labels = {**cluster_global_labels}
-                    labels['cluster_quota_name'] = cluster_quota['metadata']['name']
-                    labels['namespace'] = namespace['namespace']
+                namespaces = cluster_quota['status'].get('namespaces')
+                if namespaces:
+                    for namespace in namespaces:
+                        labels = {**cluster_global_labels}
+                        labels['cluster_quota_name'] = cluster_quota['metadata']['name']
+                        labels['namespace'] = namespace['namespace']
 
-                    limits = namespace['status']['hard']
-                    if limits.get('cpu'):
-                        self.gauge('openshift.appliedclusterquota.cpu.limit', labels).set(self.__to_core(limits.get('cpu')))
-                    if limits.get('memory'):
-                        self.gauge('openshift.appliedclusterquota.memory.limit', labels).set(self.__to_byte(limits.get('memory')))
-                    if limits.get('pods'):
-                        self.gauge('openshift.appliedclusterquota.pods.limit', labels).set(float(limits.get('pods')))
-                    if limits.get('services'):
-                        self.gauge('openshift.appliedclusterquota.services.limit', labels).set(float(limits.get('services')))
-                    if limits.get('services.nodeports'):
-                        self.gauge('openshift.appliedclusterquota.services.nodeports.limit', labels).set(float(limits.get('services.nodeports')))
-                    if limits.get('services.loadbalancers'):
-                        self.gauge('openshift.appliedclusterquota.services.loadbalancers.limit', labels).set(float(limits.get('services.loadbalancers')))
-                    if limits.get('secrets'):
-                        self.gauge('openshift.appliedclusterquota.secrets.limit', labels).set(float(limits.get('secrets')))
-                    if limits.get('configmaps'):
-                        self.gauge('openshift.appliedclusterquota.configmaps.limit', labels).set(float(limits.get('configmaps')))
-                    if limits.get('persistentvolumeclaims'):
-                        self.gauge('openshift.appliedclusterquota.persistentvolumeclaims.limit', labels).set(float(limits.get('persistentvolumeclaims')))
+                        limits = namespace['status']['hard']
+                        if limits.get('cpu'):
+                            self.gauge('openshift.appliedclusterquota.cpu.limit', labels).set(self.__to_core(limits.get('cpu')))
+                        if limits.get('memory'):
+                            self.gauge('openshift.appliedclusterquota.memory.limit', labels).set(self.__to_byte(limits.get('memory')))
+                        if limits.get('pods'):
+                            self.gauge('openshift.appliedclusterquota.pods.limit', labels).set(float(limits.get('pods')))
+                        if limits.get('services'):
+                            self.gauge('openshift.appliedclusterquota.services.limit', labels).set(float(limits.get('services')))
+                        if limits.get('services.nodeports'):
+                            self.gauge('openshift.appliedclusterquota.services.nodeports.limit', labels).set(float(limits.get('services.nodeports')))
+                        if limits.get('services.loadbalancers'):
+                            self.gauge('openshift.appliedclusterquota.services.loadbalancers.limit', labels).set(float(limits.get('services.loadbalancers')))
+                        if limits.get('secrets'):
+                            self.gauge('openshift.appliedclusterquota.secrets.limit', labels).set(float(limits.get('secrets')))
+                        if limits.get('configmaps'):
+                            self.gauge('openshift.appliedclusterquota.configmaps.limit', labels).set(float(limits.get('configmaps')))
+                        if limits.get('persistentvolumeclaims'):
+                            self.gauge('openshift.appliedclusterquota.persistentvolumeclaims.limit', labels).set(float(limits.get('persistentvolumeclaims')))
 
-                    used = namespace['status']['used']
-                    if limits.get('cpu'):
-                        self.gauge('openshift.appliedclusterquota.cpu.used', labels).set(self.__to_core(used.get('cpu')))
-                    if limits.get('memory'):
-                        self.gauge('openshift.appliedclusterquota.memory.used', labels).set(self.__to_byte(used.get('memory')))
-                    if limits.get('pods'):
-                        self.gauge('openshift.appliedclusterquota.pods.used', labels).set(float(used.get('pods')))
-                    if limits.get('services'):
-                        self.gauge('openshift.appliedclusterquota.services.used', labels).set(float(used.get('services')))
-                    if limits.get('services.nodeports'):
-                        self.gauge('openshift.appliedclusterquota.services.nodeports.used', labels).set(float(used.get('services.nodeports')))
-                    if limits.get('services.loadbalancers'):
-                        self.gauge('openshift.appliedclusterquota.services.loadbalancers.used', labels).set(float(used.get('services.loadbalancers')))
-                    if limits.get('secrets'):
-                        self.gauge('openshift.appliedclusterquota.secrets.used', labels).set(float(used.get('secrets')))
-                    if limits.get('configmaps'):
-                        self.gauge('openshift.appliedclusterquota.configmaps.used', labels).set(float(used.get('configmaps')))
-                    if limits.get('persistentvolumeclaims'):
-                        self.gauge('openshift.appliedclusterquota.persistentvolumeclaims.used', labels).set(float(used.get('persistentvolumeclaims'))) 
+                        used = namespace['status']['used']
+                        if limits.get('cpu'):
+                            self.gauge('openshift.appliedclusterquota.cpu.used', labels).set(self.__to_core(used.get('cpu')))
+                        if limits.get('memory'):
+                            self.gauge('openshift.appliedclusterquota.memory.used', labels).set(self.__to_byte(used.get('memory')))
+                        if limits.get('pods'):
+                            self.gauge('openshift.appliedclusterquota.pods.used', labels).set(float(used.get('pods')))
+                        if limits.get('services'):
+                            self.gauge('openshift.appliedclusterquota.services.used', labels).set(float(used.get('services')))
+                        if limits.get('services.nodeports'):
+                            self.gauge('openshift.appliedclusterquota.services.nodeports.used', labels).set(float(used.get('services.nodeports')))
+                        if limits.get('services.loadbalancers'):
+                            self.gauge('openshift.appliedclusterquota.services.loadbalancers.used', labels).set(float(used.get('services.loadbalancers')))
+                        if limits.get('secrets'):
+                            self.gauge('openshift.appliedclusterquota.secrets.used', labels).set(float(used.get('secrets')))
+                        if limits.get('configmaps'):
+                            self.gauge('openshift.appliedclusterquota.configmaps.used', labels).set(float(used.get('configmaps')))
+                        if limits.get('persistentvolumeclaims'):
+                            self.gauge('openshift.appliedclusterquota.persistentvolumeclaims.used', labels).set(float(used.get('persistentvolumeclaims'))) 
 
             return Status.OK
 

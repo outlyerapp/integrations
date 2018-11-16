@@ -67,7 +67,8 @@ The OpenShift plugin can be customized via environment variables.
 
 == Changelog ==
 
-|Version|Release Date|Description                                             |
-|-------|------------|--------------------------------------------------------|
-|1.0.1  |24-Oct-2018 |Fix openshift.routes metric labels.                     |
-|1.0    |16-Oct-2018 |Initial version of our OpenShift monitoring integration.|
+|Version|Release Date|Description                                                                                       |
+|-------|------------|--------------------------------------------------------------------------------------------------|
+|1.0.2  |16-Nov-2018 |Fix plugin: it should work even when there are no namespaces associated to a clusterresourcequota.|
+|1.0.1  |24-Oct-2018 |Fix openshift.routes metric labels.                                                               |
+|1.0    |16-Oct-2018 |Initial version of our OpenShift monitoring integration.                                          |
