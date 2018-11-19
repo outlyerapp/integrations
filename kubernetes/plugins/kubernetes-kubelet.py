@@ -51,11 +51,8 @@ class KubeletPlugin(Plugin):
             res = res.json()
 
             node = res.get('node')
-            pods = res.get('pods')
 
-            labels = {**cluster_global_labels}
-
-            node_api_server = api_server_client.list_node(field_selector='metadata.name='+labels['k8s.node.name'])
+            node_api_server = api_server_client.list_node(field_selector='metadata.name='+cluster_global_labels['k8s.node.name'])
 
             node_labels = []
             for label_key, label_value in node_api_server.items[0].metadata.labels.items():
@@ -63,6 +60,7 @@ class KubeletPlugin(Plugin):
                 node_labels.append(label)
 
             for label in node_labels:
+                labels = {**cluster_global_labels}
                 labels['k8s.node.label'] = label
                 node_memory_usage_bytes = node['memory']['workingSetBytes']
                 node_allocatable_memory_bytes = self.__to_byte(node_api_server.items[0].status.allocatable['memory'])
@@ -74,10 +72,13 @@ class KubeletPlugin(Plugin):
                 self.gauge('kube_node_cpu_usage_cores', labels).set(node_cpu_usage_cores)
                 self.gauge('kube_node_cpu_usage_pct', labels).set(node_cpu_usage_cores/node_allocatable_cpu_cores*100)
 
-                self.counter('kube_node_network_rx_bytes', labels).set(node['network']['rxBytes'])
-                self.counter('kube_node_network_tx_bytes', labels).set(node['network']['txBytes'])
-                self.counter('kube_node_network_rx_errors', labels).set(node['network']['rxErrors'])
-                self.counter('kube_node_network_tx_errors', labels).set(node['network']['txErrors'])
+                for network_interface in node['network']['interfaces']:
+                    labels_network = {**labels}
+                    labels_network['interface'] = network_interface['name']
+                    self.counter('kube_node_network_rx_bytes', labels_network).set(network_interface['rxBytes'])
+                    self.counter('kube_node_network_tx_bytes', labels_network).set(network_interface['txBytes'])
+                    self.counter('kube_node_network_rx_errors', labels_network).set(network_interface['rxErrors'])
+                    self.counter('kube_node_network_tx_errors', labels_network).set(network_interface['txErrors'])
 
                 node_fs_nodefs_used_bytes = node['fs']['usedBytes']
                 node_fs_nodefs_capacity_bytes = node['fs']['capacityBytes']
