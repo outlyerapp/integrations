@@ -84,7 +84,6 @@ The Kafka plugin can be customized via environment variables.
 
 |Variable |Default     |Description                       |
 |---------|------------|----------------------------------|
-|ip       |localhost   |Broker/Producer/Consumer host.    |
 |port     |9999        |Broker/Producer/Consumer JMX port.|
 
 == Changelog ==
