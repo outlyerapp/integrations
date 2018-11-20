@@ -93,7 +93,6 @@ The Apache plugin can be customized via environment variables.
 |Variable       |Default            |Description                          |
 |---------------|-------------------|-------------------------------------|
 |protocol       |http               |The protocol used (http or https).   |
-|ip             |127.0.0.1          |The Apache host.                     |
 |port           |80                 |The Apache port.                     |
 |status_location|/server-status?auto|The configured `mod_status` location.|
 
