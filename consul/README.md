@@ -48,4 +48,5 @@ The Consul plugin can be customized via environment variables.
 
 |Version|Release Date|Description                                          |
 |-------|------------|-----------------------------------------------------|
+|1.0.1  |20-Nov-2018 |Plugin fix: get host from ip env var instead of host.|
 |1.0    |31-May-2018 |Initial version of our Consul monitoring integration.|

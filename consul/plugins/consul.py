@@ -135,7 +135,7 @@ class ConsulPlugin(Plugin):
         :return:            Returns the JSON response as json if successful
         """
         protocol = self.get('protocol', 'http')
-        host = self.get('host', 'localhost')
+        host = self.get('ip', 'localhost')
         port = self.get('port', 8500)
         url = "%s://%s:%s%s" % (protocol, host, port, endpoint)
 
