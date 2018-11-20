@@ -41,7 +41,6 @@ The ZooKeeper plugin can be customized via environment variables.
 
 |Variable |Default  |Description    |
 |---------|---------|---------------|
-|ip       |localhost|ZooKeeper host.|
 |port     |2181     |ZooKeeper port.|
 
 == Changelog ==

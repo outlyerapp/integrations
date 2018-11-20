@@ -44,7 +44,6 @@ The MongoDB plugin can be customized via environment variables.
 
 |Variable       |Default  |Description                                                                |
 |---------------|---------|---------------------------------------------------------------------------|
-|ip             |127.0.0.1|MongoDB host.                                                              |
 |port           |27017    |MongoDB port.                                                              |
 |username       |         |MongoDB username when MongoDB Auth is enabled.                             |
 |password       |         |MongoDB password when MongoDB Auth is enabled.                             |

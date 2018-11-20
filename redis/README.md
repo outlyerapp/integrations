@@ -45,7 +45,6 @@ The Redis plugin can be customized via environment variables.
 
 |Variable|Default     |Description                                                   |
 |--------|------------|--------------------------------------------------------------|
-|ip      |127.0.0.1   |Redis IP address.                                             |
 |port    |6379        |Redis port.                                                   |
 |password|            |Redis password. Only used in password-protected Redis servers.|
 
