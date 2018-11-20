@@ -20,7 +20,7 @@ class PostgreSQLPlugin(Plugin):
 
     def collect(self, _) -> Status:
 
-        self.host = self.get('host', 'localhost')
+        self.host = self.get('ip', 'localhost')
         self.port = self.get('port', 5432)
         self.dbname = self.get('dbname', 'postgres')
         self.user = self.get('username', None)
