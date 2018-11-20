@@ -38,12 +38,12 @@ The Cassandra plugin can be customized via environment variables.
 
 |Variable |Default     |Description        |
 |---------|------------|-------------------|
-|host     |localhost   |Cassandra host.    |
 |port     |7199        |Cassandra JMX port.|
 
 
 == Changelog ==
 
-|Version|Release Date|Description                                             |
-|-------|------------|--------------------------------------------------------|
-|1.0    |9-Jul-2018  |Initial version of our Cassandra monitoring integration.|
+|Version|Release Date|Description                                              |
+|-------|------------|---------------------------------------------------------|
+|1.0.1  |20-Nov-2018 |Plugin fix: get host from the ip env var instead of host.|
+|1.0    |9-Jul-2018  |Initial version of our Cassandra monitoring integration. |

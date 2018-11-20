@@ -31,7 +31,7 @@ GAUGE_METRICS = [
 class CassandraPlugin(Plugin):
 
     def collect(self, _):
-        host = self.get('host', 'localhost')
+        host = self.get('ip', 'localhost')
         port = self.get('port', 7199)
         jmx_url = f'service:jmx:rmi:///jndi/rmi://{host}:{port}/jmxrmi'
 
