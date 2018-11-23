@@ -83,11 +83,11 @@ Once enabled you will get default dashboards and alert rules to help you get sta
 == Installation ==
 
 ### Kubernetes API Server: kubernetes-api-server.py
-This plugin can be used not only to check API Server and etcd health, but also to collect metrics from API Server.
+This plugin can is used to check API Server, the health of etcd and to collect metrics from API Server.
 
-1. API Server Health Check: run it against any Kubernetes Node.
-2. etcd Health Check: provide the environment variable `endpoint: healthz/etcd` and run it against any Kubernetes Node.
-3. API Server Metrics: provide the environment variable `endpoint: metrics` and run it against any Kubernetes Node.
+1. API Server Health: run it against any single Kubernetes node.
+2. etcd Health: provide the environment variable `endpoint: healthz/etcd` and run it against any single Kubernetes node.
+3. API Server Metrics: provide the environment variable `endpoint: metrics` and run it against any single Kubernetes node.
 
 |Variable|Default|Description                       |
 |--------|-------|----------------------------------|
