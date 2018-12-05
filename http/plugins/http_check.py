@@ -9,7 +9,7 @@ class HttpRequestPlugin(Plugin):
 
     def collect(self, _) -> Status:
 
-        name = self.get('name')
+        name = self.get('site')
         url = self.get('url')
         if not url or not name:
             self.logger.error('HTTP plugin is not configured')
