@@ -25,7 +25,7 @@ The HTTP plugin can be customized via environment variables.
 
 |Variable         |Default     |Description                                                                                                               |
 |-----------------|------------|--------------------------------------------------------------------------------------------------------------------------|
-|name             |            |The name to assign to this check (available as the `site` label in the dashboard scope)                                   |
+|site             |            |The name to assign to this check (available as the `site` label in the dashboard scope)                                   |
 |url              |            |The URL to check.                                                                                                         |
 |method           |GET         |The HTTP request method. Possible values: GET, POST, PUT, HEAD, PATCH, DELETE and OPTIONS.                                |
 |params           |            |The parameters to be added as the URL query string, e.g.: key1:value1,key2:value2 (separated by comma with no whitespaces)|
