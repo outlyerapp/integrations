@@ -1,7 +1,7 @@
 command: kafka.py
 dashboards:
 - kafka-cluster-overview
-description: Monitors Kafka broker metrics via JMX.
+description: Monitors Kafka broker metrics.
 disabled: false
 env: []
 handler: Native
@@ -13,3 +13,7 @@ plugins:
 selectors: {{.selectors_kafka_broker}}
 timeout: 30
 title: 'Kafka: Brokers'
+- kafka_consumer_lag.py
+selectors: {{.selectors_kafka_broker}}
+timeout: 30
+title: 'Kafka: Consumers'
