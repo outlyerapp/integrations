@@ -5,12 +5,18 @@
 Kafka is used for building real-time data pipelines and streaming apps. It is horizontally scalable, fault-tolerant, 
 wicked fast, and runs in production in thousands of companies.
 
-This integration collects all Kafka metrics via JMX so JMX must be enabled for the plugin to connect too. It will automatically
-get all metrics for the Kafka Broker, Kafka Consumer (Java only) and Kafka Producers (Java only) across your environment with a single
+This integration collects all Kafka metrics via JMX and a Kafka consumer client so JMX must be enabled for the plugin to work properly.
+It will automatically gather all metrics for the Kafka Broker, Kafka Consumer (Java only) and Kafka Producers (Java only) across your environment with a single
 plugin.
+
+#### Known limitations
+
+- Consumer lag monitoring requires agent version v1.4.16 or above, otherwise follow optional installation steps.
+- Consumer lag monitoring currently does not support access to brokers over SSL encrypted connections.
 
 == Metrics Collected ==
 
+### Kafka JMX: kafka.py
 |Metric Name                                                         |MBean Query                                                                           |Type   |Labels |Unit        |Description                                                                                                                                                 |
 |--------------------------------------------------------------------|--------------------------------------------------------------------------------------|-------|-------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
 |kafka_server_brokertopicmetrics_messagesinpersec_count              |kafka.server:type=BrokerTopicMetrics, name=MessagesInPerSec/Count                     |Counter|       |message/sec |Aggregate incoming message rate.                                                                                                                            |
@@ -56,7 +62,15 @@ plugin.
 |kafka_consumer_consumer-coordinator-metrics_join-rate               |kafka.consumer:type=consumer-coordinator-metrics, client-id=*/join-rate               |Gauge  |       |event/sec   |The number of group joins per second.                                                                                                                       |
 |kafka_consumer_consumer-coordinator-metrics_sync-rate               |kafka.consumer:type=consumer-coordinator-metrics, client-id=*/sync-rate               |Gauge  |       |event/sec   |The number of group syncs per second.                                                                                                                       |
 
+### Kafka Consumer Lag: kafka-consumer-lag.py
+
+|Metric Name       |Type |Labels                                                    |Unit   |
+|------------------|-----|----------------------------------------------------------|-------|
+|kafka_consumer_lag|Gauge|topic, topic_partition, consumer_group, consumer_client_id|records|
+
 == Installation ==
+
+### Kafka JMX
 
 This integration requires that JMX be enabled on Kafka servers, producers and consumers. To enable JMX on a Kafka broker, first edit the `kafka-run-class.sh` script and add the `-Djava.rmi.server.hostname` parameter with the corresponding server IP:
 
@@ -78,17 +92,36 @@ If you have already setup JMX for Kafka, make sure you supply the correct port n
 
 Similarly, producers and consumers should also have JMX enabled.
 
-### Plugin Environment Variables
+### Kafka Consumer Lag
 
-The Kafka plugin can be customized via environment variables.
+For agent versions below v1.4.16 you will need to install the `pykafka` python module in the agent using the following command: 
+
+```
+sudo /opt/outlyer/embedded/bin/pip3 install pykafka==2.8.0
+```
+
+### JMX Plugin Environment Variables
+
+The Kafka JMX plugin can be customized via environment variables.
 
 |Variable |Default     |Description                       |
 |---------|------------|----------------------------------|
 |port     |9999        |Broker/Producer/Consumer JMX port.|
 
+### Consumer Lag Envionment Variables
+
+The Kafka consumer lag plugin can be configured by environment variables, although it should work out of the box.
+
+|Variable            |Default|Description                                                                      |
+|--------------------|-------|---------------------------------------------------------------------------------|
+|port                |9092   |Broker service port                                                              |
+|consumer_group_regex|.*     |Regex filter for consumer groups, default is allow all                           |
+|consumer_groups     |       |Comma separated whitelist of consumer groups, if set will superceed regex setting|
+
 == Changelog ==
 
 |Version|Release Date|Description                                          |
 |-------|------------|-----------------------------------------------------|
+|1.1.0  |14-Dec-2018 |Add consumer lag plugin.                             |
 |1.0.1  |28-Sep-2018 |Uses ip environment variable instead of host.        |
 |1.0    |17-May-2018 |Initial version of our Kafka  monitoring integration.|
