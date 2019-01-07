@@ -48,7 +48,7 @@ widgets:
       title: Clean Vs. Unclean Leader Election Rate
     row: 0
     width: 6
-  - col: 4
+  - col: 3
     height: 2
     options:
       axes:
@@ -81,8 +81,8 @@ widgets:
         threshold: 0
       title: Network Requests Per Sec
     row: 8
-    width: 5
-  - col: 9
+    width: 7
+  - col: 3
     height: 2
     options:
       axes:
@@ -95,7 +95,7 @@ widgets:
           title: ""
           unit: ""
           unitPosition: After
-      chartType: Line
+      chartType: StackedBar
       description: ""
       externalLink:
         linkType: dashboard
@@ -115,8 +115,8 @@ widgets:
         threshold: 0
       title: Messages In Per Sec (Per Broker)
     row: 4
-    width: 9
-  - col: 9
+    width: 7
+  - col: 10
     height: 2
     options:
       axes:
@@ -150,9 +150,9 @@ widgets:
         status: Error
         threshold: 0
       title: Bytes In / Bytes Out Per Sec
-    row: 6
-    width: 9
-  - col: 9
+    row: 4
+    width: 8
+  - col: 10
     height: 2
     options:
       axes:
@@ -185,8 +185,8 @@ widgets:
         threshold: 0
       title: Total Request Time
     row: 8
-    width: 5
-  - col: 6
+    width: 8
+  - col: 14
     height: 2
     options:
       axes:
@@ -219,7 +219,7 @@ widgets:
         threshold: 1
       title: ISR Delta Rate of Change
     row: 10
-    width: 6
+    width: 4
   - col: 12
     height: 2
     options:
@@ -291,7 +291,7 @@ widgets:
       title: Heap Memory Committed Vs. Used
     row: 15
     width: 6
-  - col: 12
+  - col: 0
     height: 2
     options:
       axes:
@@ -324,8 +324,8 @@ widgets:
         threshold: 0
       title: ISR Shrinks Per Sec
     row: 10
-    width: 6
-  - col: 0
+    width: 5
+  - col: 5
     height: 2
     options:
       axes:
@@ -358,7 +358,7 @@ widgets:
         threshold: 0
       title: ISR Expands Per Sec
     row: 10
-    width: 6
+    width: 5
   - col: 9
     height: 2
     options:
@@ -393,7 +393,7 @@ widgets:
       title: Partition Leader Per Broker
     row: 2
     width: 3
-  - col: 14
+  - col: 10
     height: 2
     options:
       axes:
@@ -425,7 +425,7 @@ widgets:
         status: Error
         threshold: 0
       title: MaxLag Per Broker
-    row: 8
+    row: 10
     width: 4
   - col: 12
     height: 2
@@ -500,7 +500,7 @@ widgets:
         threshold: 0
       title: Opened vs Total File Descriptors
     row: 8
-    width: 4
+    width: 3
   - col: 6
     height: 2
     options:
@@ -512,7 +512,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: auto
           unitPosition: After
       chartType: Line
       description: ""
@@ -536,7 +536,75 @@ widgets:
     row: 15
     width: 6
   - col: 0
-    height: 4
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: '%'
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,sys.disk.used_pct,:eq,role,kafka,:eq,:and,mountpoint,data,:eq,:and,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Data Disk Space
+    row: 17
+    width: 9
+  - col: 9
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: '%'
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,sys.disk.used_pct,:eq,role,kafka,:eq,:and,mountpoint,root_partition,:eq,:and,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: / Disk Space
+    row: 17
+    width: 9
+  - col: 0
+    height: 2
     options:
       axes:
         xAxis:
@@ -567,8 +635,76 @@ widgets:
         status: Error
         threshold: 0
       title: Consumer Lag
-    row: 4
+    row: 19
     width: 9
+  - col: 10
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bs
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_server_brokertopicmetrics_bytesinpersecpertopic,:eq,:max,:cf-max,(,topic,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Bytes In Per Sec Per Topic
+    row: 6
+    width: 8
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_server_brokertopicmetrics_messagesinpersecpertopic,:eq,role,kafka,:eq,:and,:max,:cf-max,(,topic,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Messages In Per Sec Per Topic
+    row: 6
+    width: 10
   imageWidgets:
   - col: 0
     height: 2
@@ -766,6 +902,32 @@ widgets:
       unit: ""
       unitPosition: After
     row: 0
+    width: 3
+  - col: 0
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,kafka_server_brokertopicmetrics_messagesinpersec_count,:eq,kafka-broker,true,:eq,:and,:sum
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: Max
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Total Messages In
+      unit: ""
+      unitPosition: After
+    row: 4
     width: 3
   - col: 9
     height: 2

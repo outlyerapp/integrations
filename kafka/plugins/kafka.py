@@ -5,9 +5,13 @@ from jmxquery import JMXConnection, JMXQuery
 from outlyer_plugin import Status, Plugin
 
 COUNTER_METRICS = [
+    'kafka_producer_producer-metrics_record-send-total',
+    'kafka_consumer_consumer-fetch-manager-metrics_records-consumed-total',
     'kafka_server_brokertopicmetrics_messagesinpersec_count',
+    'kafka_server_brokertopicmetrics_messagesinpersecpertopic',
     'kafka_server_brokertopicmetrics_bytesoutpersec_count',
     'kafka_server_brokertopicmetrics_bytesinpersec_count',
+    'kafka_server_brokertopicmetrics_bytesinpersecpertopic',
     'kafka_network_requestmetrics_requestspersec_count',
     'kafka_network_requestmetrics_totaltimems_count',
 ]
@@ -15,13 +19,43 @@ COUNTER_METRICS = [
 class KafkaPlugin(Plugin):
     def collect(self, _):
         try:
-            host = self.get('ip', 'localhost')
+            host = self.get('host', 'localhost')
             port = self.get('port', 9999)
             jmx_url = f'service:jmx:rmi:///jndi/rmi://{host}:{port}/jmxrmi'
 
             jmxConnection = JMXConnection(jmx_url)
 
+            # HELP: https://docs.confluent.io/current/kafka/monitoring.html
+
+            # HELP: use `beans` in jmxterm to figure out what can be fetched https://rmoff.net/2018/09/19/exploring-jmx-with-jmxterm/
+
+            # HELP: try this if lost
+            # https://pypi.org/project/jmxquery/
+            '''
+            jmxQuery = [JMXQuery("kafka.server:type=*,name=*,topic=*",
+            metric_name="kafka_cluster_{type}_{name}",
+            metric_labels={"topic" : "{topic}", "partition" : "{partition}"})]
+            metrics = jmxConnection.query(jmxQuery)
+            for metric in metrics:
+                print(f"{metric.metric_name}<{metric.metric_labels}> == {metric.value}")
+            '''
+
             jmxQuery = [
+                    # BytesInPerSec per topic
+                    JMXQuery("kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec,topic=*/Count",
+                             metric_name="kafka_server_BrokerTopicMetrics_BytesInPerSecPerTopic",
+                             metric_labels={"topic" : "{topic}"}),
+
+                    # BytesOutPerSec per topic
+                    JMXQuery("kafka.server:type=BrokerTopicMetrics,name=BytesOutPerSec,topic=*/Count",
+                             metric_name="kafka_server_BrokerTopicMetrics_BytesOutPerSec",
+                             metric_labels={"topic" : "{topic}"}),
+
+                    # MessagesInPerSec per topic
+                    JMXQuery("kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec,topic=*/Count",
+                             metric_name="kafka_server_BrokerTopicMetrics_MessagesInPerSecPerTopic",
+                             metric_labels={"topic" : "{topic}"}),
+
                     # UnderReplicatedPartitions
                     JMXQuery("kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions/Value",
                               metric_name="kafka_server_ReplicaManager_UnderReplicatedPartitions"),
