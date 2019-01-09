@@ -546,74 +546,6 @@ widgets:
           min: 0
           showGridLines: true
           title: ""
-          unit: '%'
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,sys.disk.used_pct,:eq,role,kafka,:eq,:and,mountpoint,data,:eq,:and,:max,:cf-max,(,host,),:by
-        scoped: true
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: Data Disk Space
-    row: 17
-    width: 9
-  - col: 9
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: true
-        yAxis:
-          min: 0
-          showGridLines: true
-          title: ""
-          unit: '%'
-          unitPosition: After
-      chartType: Line
-      description: ""
-      externalLink:
-        linkType: dashboard
-        path: ""
-      queries:
-      - query: name,sys.disk.used_pct,:eq,role,kafka,:eq,:and,mountpoint,root_partition,:eq,:and,:max,:cf-max,(,host,),:by
-        scoped: true
-        visible: true
-      seriesStyle:
-        color: '#588fd8'
-        palette: MultiColor
-      summarization: Avg
-      thresholds:
-      - display: None
-        lineStyle: Solid
-        status: Error
-        threshold: 0
-      title: / Disk Space
-    row: 17
-    width: 9
-  - col: 0
-    height: 2
-    options:
-      axes:
-        xAxis:
-          mode: Time
-          showGridLines: true
-        yAxis:
-          min: 0
-          showGridLines: true
-          title: ""
           unit: none
           unitPosition: After
       chartType: Line
@@ -635,7 +567,7 @@ widgets:
         status: Error
         threshold: 0
       title: Consumer Lag
-    row: 19
+    row: 17
     width: 9
   - col: 10
     height: 2
