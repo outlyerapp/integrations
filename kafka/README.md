@@ -2,7 +2,7 @@
 
 == Description ==
 
-Kafka is used for building real-time data pipelines and streaming apps. It is horizontally scalable, fault-tolerant, 
+Kafka is used for building real-time data pipelines and streaming apps. It is horizontally scalable, fault-tolerant,
 wicked fast, and runs in production in thousands of companies.
 
 This integration collects all Kafka metrics via JMX and a Kafka consumer client so JMX must be enabled for the plugin to work properly.
@@ -98,7 +98,7 @@ Similarly, producers and consumers should also have JMX enabled.
 
 ### Kafka Consumer Lag
 
-For agent versions below v1.4.16 you will need to install the `pykafka` python module in the agent using the following command: 
+For agent versions below v1.4.16 you will need to install the `pykafka` python module in the agent using the following command:
 
 ```
 sudo /opt/outlyer/embedded/bin/pip3 install pykafka==2.8.0
