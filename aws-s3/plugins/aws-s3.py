@@ -295,6 +295,7 @@ INSTANCE_METRICS = [
     },
 ]
 
+
 class AWSS3(Plugin):
 
     def collect(self, _):
@@ -338,9 +339,9 @@ class AWSS3(Plugin):
             return Status.OK
         except Exception as err:
             raise err
-            return Status.UNKNOWN
 
-    def build_instance_query(self, instance: str):
+    @staticmethod
+    def build_instance_query(instance: str):
         query = []
         id = 0
         for instance_metric in INSTANCE_METRICS:

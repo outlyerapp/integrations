@@ -71,8 +71,8 @@ class AWSLambda(Plugin):
 
             # Get metrics for each function
             cloudwatch = boto3.client('cloudwatch', aws_region,
-                                     aws_access_key_id=self.get('AWS_ACCESS_KEY_ID'),
-                                     aws_secret_access_key=self.get('AWS_SECRET_ACCESS_KEY'))
+                                      aws_access_key_id=self.get('AWS_ACCESS_KEY_ID'),
+                                      aws_secret_access_key=self.get('AWS_SECRET_ACCESS_KEY'))
             end_time = datetime.utcnow()
             start_time = end_time - timedelta(minutes=int(time_range))
             for instance in instances:
@@ -94,14 +94,14 @@ class AWSLambda(Plugin):
                         value = metric['Values'][-1]
                         self.gauge(metric_name, metric_labels).set(value)
                     else:
-                      	self.gauge(metric_name, metric_labels).set(0)
+                        self.gauge(metric_name, metric_labels).set(0)
 
             return Status.OK
         except Exception as err:
             raise err
-            return Status.UNKNOWN
 
-    def build_instance_query(self, instance: str):
+    @staticmethod
+    def build_instance_query(instance: str):
         query = []
         id = 0
         for instance_metric in INSTANCE_METRICS:

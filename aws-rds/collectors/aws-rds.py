@@ -153,6 +153,7 @@ INSTANCE_METRICS = [
     },
 ]
 
+
 class AWSRDS(Plugin):
 
     def collect(self, _):
@@ -188,17 +189,24 @@ class AWSRDS(Plugin):
                     ts = int(metric['Timestamps'][-1].utcnow().timestamp() * 1000)
                     self.gauge(metric_name, metric_labels).set(value, ts=ts)
                     if metric['Id'] == 'rds_cpuutalization_max':
-                    	self.gauge('sys.cpu.pct', metric_labels).set(value, ts=ts)
+                        self.sample('sys.cpu.pct',
+                                    value,
+                                    timestamp=ts,
+                                    labels=metric_labels)
                 else:
                     self.gauge(metric_name, metric_labels).set(0)
                     if metric['Id'] == 'rds_cpuutalization_max':
-                    	self.gauge('sys.cpu.pct', metric_labels).set(value, ts=ts)
+                        self.sample('sys.cpu.pct',
+                                    value,
+                                    timestamp=ts,
+                                    labels=metric_labels)
 
             return Status.OK
         except Exception as err:
             raise err
 
-    def build_instance_query(self, instance: str):
+    @staticmethod
+    def build_instance_query(instance: str):
         query = []
         id = 0
         for instance_metric in INSTANCE_METRICS:

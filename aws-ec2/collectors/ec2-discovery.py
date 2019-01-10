@@ -5,6 +5,7 @@ import sys
 import os
 import json
 
+
 class EC2Discovery(object):
 
     def discover(self):
@@ -60,17 +61,19 @@ class EC2Discovery(object):
 
         except Exception as err:
             raise err
-            return 3
 
-    def _get_aws_account_id(self) -> str:
+    @staticmethod
+    def _get_aws_account_id() -> str:
         """
         Gets the AWS Account ID for the current API key user
 
         :return:    The AWS Account ID for the current API key user
         """
-        return boto3.client('sts',
-                     aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID'),
-                     aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')).get_caller_identity().get('Account')
+        client = boto3.client('sts',
+                              aws_access_key_id=os.environ.get('AWS_ACCESS_KEY_ID'),
+                              aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY'))
+        return client.get_caller_identity().get('Account')
+
 
 if __name__ == '__main__':
     sys.exit(EC2Discovery().discover())
