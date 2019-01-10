@@ -19,6 +19,10 @@ plugin.
 ### Kafka JMX: kafka.py
 |Metric Name                                                         |MBean Query                                                                           |Type   |Labels |Unit        |Description                                                                                                                                                 |
 |--------------------------------------------------------------------|--------------------------------------------------------------------------------------|-------|-------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
+|kafka_producer_producer-metrics_record-send-total                   |kafka.producer:type=producer-metrics,client-id=*/record-send-total                    |Gauge  |       |record      |The total number of records sent.                                                                                                                           |
+|kafka_consumer_consumer-fetch-manager-metrics_records-consumed-total|kafka.consumer:type=consumer-fetch-manager-metrics,client-id=*/records-consumed-total |Gauge  |       |record      |The total number of records consumed.                                                                                                                           |
+|kafka_server_brokertopicmetrics_messagesinpersecpertopic            |kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec,topic=*/Count              |Counter|       |message/sec |Aggregate incoming message count per topics.                                                                                                                |
+|kafka_server_brokertopicmetrics_bytesinpersecpertopic               |kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec,topic=*/Count                 |Counter|       |byte/sec    |Aggregate incoming network traffic per topics.                                                                                                              |
 |kafka_server_brokertopicmetrics_messagesinpersec_count              |kafka.server:type=BrokerTopicMetrics, name=MessagesInPerSec/Count                     |Counter|       |message/sec |Aggregate incoming message rate.                                                                                                                            |
 |kafka_server_brokertopicmetrics_bytesinpersec_count                 |kafka.server:type=BrokerTopicMetrics, name=BytesInPerSec/Count                        |Counter|       |byte/sec    |Aggregate incoming byte rate.                                                                                                                               |
 |kafka_server_brokertopicmetrics_bytesoutpersec_count                |kafka.server:type=BrokerTopicMetrics, name=BytesOutPerSec/Count                       |Counter|       |byte/sec    |Aggregate outgoing byte rate.                                                                                                                               |
@@ -122,6 +126,7 @@ The Kafka consumer lag plugin can be configured by environment variables, althou
 
 |Version|Release Date|Description                                          |
 |-------|------------|-----------------------------------------------------|
+|1.2.0  |10-Jan-2019 |Add messages and network traffic per topics.         |
 |1.1.0  |14-Dec-2018 |Add consumer lag plugin.                             |
 |1.0.1  |28-Sep-2018 |Uses ip environment variable instead of host.        |
 |1.0    |17-May-2018 |Initial version of our Kafka  monitoring integration.|
