@@ -29,7 +29,7 @@ class KafkaConsumerLagPlugin(Plugin):
             logger = logging.getLogger("pykafka")
             logger.setLevel(logging.ERROR)
 
-            host = self.get('host', 'localhost')
+            host = self.get('ip', 'localhost')
             port = self.get('port', 9092)
             consumer_group_regex = re.compile(self.get('consumer_group_regex', '.*'))
             consumer_group_names = self.get('consumer_groups', '')

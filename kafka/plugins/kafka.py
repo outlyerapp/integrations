@@ -19,7 +19,7 @@ COUNTER_METRICS = [
 class KafkaPlugin(Plugin):
     def collect(self, _):
         try:
-            host = self.get('host', 'localhost')
+            host = self.get('ip', 'localhost')
             port = self.get('port', 9999)
             jmx_url = f'service:jmx:rmi:///jndi/rmi://{host}:{port}/jmxrmi'
 
