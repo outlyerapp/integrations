@@ -8,10 +8,10 @@ COUNTER_METRICS = [
     'kafka_producer_producer-metrics_record-send-total',
     'kafka_consumer_consumer-fetch-manager-metrics_records-consumed-total',
     'kafka_server_brokertopicmetrics_messagesinpersec_count',
-    'kafka_server_brokertopicmetrics_messagesinpersecpertopic',
+    'kafka_server_brokertopicmetrics_messagesinpersecbytopic',
     'kafka_server_brokertopicmetrics_bytesoutpersec_count',
     'kafka_server_brokertopicmetrics_bytesinpersec_count',
-    'kafka_server_brokertopicmetrics_bytesinpersecpertopic',
+    'kafka_server_brokertopicmetrics_bytesinpersecbytopic',
     'kafka_network_requestmetrics_requestspersec_count',
     'kafka_network_requestmetrics_totaltimems_count',
 ]
@@ -43,7 +43,7 @@ class KafkaPlugin(Plugin):
             jmxQuery = [
                     # BytesInPerSec per topic
                     JMXQuery("kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec,topic=*/Count",
-                             metric_name="kafka_server_BrokerTopicMetrics_BytesInPerSecPerTopic",
+                             metric_name="kafka_server_BrokerTopicMetrics_BytesInPerSecByTopic",
                              metric_labels={"topic" : "{topic}"}),
 
                     # BytesOutPerSec per topic
@@ -53,7 +53,7 @@ class KafkaPlugin(Plugin):
 
                     # MessagesInPerSec per topic
                     JMXQuery("kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec,topic=*/Count",
-                             metric_name="kafka_server_BrokerTopicMetrics_MessagesInPerSecPerTopic",
+                             metric_name="kafka_server_BrokerTopicMetrics_MessagesInPerSecByTopic",
                              metric_labels={"topic" : "{topic}"}),
 
                     # UnderReplicatedPartitions

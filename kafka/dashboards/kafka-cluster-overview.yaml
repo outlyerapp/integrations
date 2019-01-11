@@ -113,7 +113,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Messages In Per Sec (Per Broker)
+      title: Messages In Per Sec (By Broker)
     row: 4
     width: 7
   - col: 10
@@ -390,7 +390,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Partition Leader Per Broker
+      title: Partition Leader By Broker
     row: 2
     width: 3
   - col: 10
@@ -424,7 +424,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: MaxLag Per Broker
+      title: MaxLag By Broker
     row: 10
     width: 4
   - col: 12
@@ -588,7 +588,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kafka_server_brokertopicmetrics_bytesinpersecpertopic,:eq,:max,:cf-max,(,topic,),:by
+      - query: name,kafka_server_brokertopicmetrics_bytesinpersecbytopic,:eq,:max,:cf-max,(,topic,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -600,7 +600,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Bytes In Per Sec Per Topic
+      title: Bytes In Per Sec By Topic
     row: 6
     width: 8
   - col: 0
@@ -622,7 +622,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kafka_server_brokertopicmetrics_messagesinpersecpertopic,:eq,role,kafka,:eq,:and,:max,:cf-max,(,topic,),:by
+      - query: name,kafka_server_brokertopicmetrics_messagesinpersecbytopic,:eq,role,kafka,:eq,:and,:max,:cf-max,(,topic,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -634,7 +634,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Messages In Per Sec Per Topic
+      title: Messages In Per Sec By Topic
     row: 6
     width: 10
   imageWidgets:
