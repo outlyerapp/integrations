@@ -45,7 +45,7 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Clean Vs. Unclean Leader Election Rate
+      title: Clean Vs. Unclean Leader Election
     row: 0
     width: 6
   - col: 3
