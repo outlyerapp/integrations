@@ -8,7 +8,6 @@ icon:
 legend: []
 name: kubernetes-nodes
 selectors:
-- instance.platform=kubernetes
-- instance.type=host
+- instance.platform=kubernetes,instance.type=host
 title: Kubernetes Nodes
 type: host
