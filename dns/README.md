@@ -9,7 +9,7 @@ This integration monitors the resolvability of and lookup times for any DNS reco
 
 |Metric Name      |Type   |Labels                           |Unit   |Description                                          |
 |-----------------|-------|---------------------------------|-------|-----------------------------------------------------|
-|dns.response_time|gauge  |hostname, record_type, nameserver|Seconds|The response time of the DNS lookup on the nameserver|
+|dns.response_time|gauge  |record, record_type, nameserver|Seconds|The response time of the DNS lookup on the nameserver|
 
 == Installation ==
 
@@ -18,7 +18,7 @@ takes the following check variables:
 
 |Variable       |Default     |Required?|Description                                                                                                   |
 |---------------|------------|---------|--------------------------------------------------------------------------------------------------------------|
-|hostname       |            |Yes      |The hostname to look up.                                                                                      |
+|record         |            |Yes      |The hostname to look up.                                                                                      |
 |record_type    |A           |         |The DNS record type to look up.                                                                               |
 |nameserver     |            |         |Use a specific nameserver otherwise will use the local network settings nameserver. Must be set as IP address.|
 |nameserver_port|            |         |Set the port number of the nameserver if specifying a specific nameserver to use.                             |
