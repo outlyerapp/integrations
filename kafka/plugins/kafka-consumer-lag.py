@@ -25,7 +25,7 @@ class MemberLag(object):
 class KafkaConsumerLagPlugin(Plugin):
     def collect(self, _):
         try:
-            # Disable verbose logging for Kafka client lib 
+            # Disable verbose logging for Kafka client lib
             logger = logging.getLogger("pykafka")
             logger.setLevel(logging.ERROR)
 
