@@ -93,10 +93,12 @@ class MongoPlugin(Plugin):
                     uri += f'?authSource={auth_db}'
 
                 c = pymongo.MongoClient(uri,
+                                        serverSelectionTimeoutMS=connect_timeout,
                                         connectTimeoutMS=connect_timeout,
                                         socketTimeoutMS=socket_timeout)
             else:
                 c = pymongo.MongoClient(host=ip, port=port,
+                                        serverSelectionTimeoutMS=connect_timeout,
                                         connectTimeoutMS=connect_timeout,
                                         socketTimeoutMS=socket_timeout)
 
