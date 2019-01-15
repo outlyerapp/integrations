@@ -1,0 +1,330 @@
+description: Dashboard for statistics pertaining to your Outlyer account
+icon:
+  color: '#1fd2bf'
+  name: cloud
+labels:
+- key: outlyer
+  value: ""
+name: outlyer
+scopes: []
+theme: light
+title: Outlyer
+widgets:
+  chartWidgets:
+  - col: 0
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Area
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,outlyer_metric_count,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#ff7d12'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Total Metrics
+    row: 2
+    width: 7
+  - col: 0
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Area
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,outlyer_host_count,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#21b2ea'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Host Count
+    row: 10
+    width: 14
+  - col: 0
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Area
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,outlyer_container_count,:eq,:sum,:cf-max
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#ffd30e'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Container Count
+    row: 14
+    width: 7
+  - col: 7
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: '%'
+          unitPosition: After
+      chartType: Area
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,outlyer_metric_churn,:eq,:max,:cf-max
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#1fd2bf'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Metric Churn
+    row: 2
+    width: 7
+  - col: 7
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,outlyer_container_count,:eq,:max,:cf-max,(,host,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Container Count by Host
+    row: 14
+    width: 7
+  - col: 0
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Area
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,outlyer_invalid_metrics,:eq,:sum,:cf-max
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#c24455'
+        palette: Gradient
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Validation Failure Rate
+    row: 6
+    width: 7
+  - col: 7
+    height: 3
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,outlyer_invalid_metrics,:eq,:max,:cf-max,(,rule_name,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Validation Failure Rate by Rule
+    row: 6
+    width: 7
+  markdownWidgets:
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Metrics - Statistics on Metrics Stored in this Account</h1>
+      markdown: '# Metrics - Statistics on Metrics Stored in this Account'
+    row: 0
+    width: 14
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h1>Hosts and Containers - Counts of this Account’s Monitored Hosts and Containers</h1>
+      markdown: '# Hosts and Containers - Counts of this Account''s Monitored Hosts
+        and Containers'
+    row: 9
+    width: 14
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h2>Total</h2>
+
+        <p>Displays the number of metrics (including invalid) sent to this account.</p>
+      markdown: |-
+        ## Total
+        Displays the number of metrics (including invalid) sent to this account.
+    row: 1
+    width: 7
+  - col: 7
+    height: 1
+    options:
+      content: |
+        <h2>Churn</h2>
+
+        <p>Displays percentage change of series per hour. The higher the percentage the greater the impact on performance. <a href="http://www.outlyer.com/docs/analytics/performance-limits#churn" rel="nofollow noopener" target="_blank">More information.</a></p>
+      markdown: |-
+        ## Churn
+        Displays percentage change of series per hour. The higher the percentage the greater the impact on performance. [More information.](http://www.outlyer.com/docs/analytics/performance-limits#churn)
+    row: 1
+    width: 7
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h2>Invalid</h2>
+
+        <p>Displays validation failures for metrics sent to this account, Note that a single metric may have failed multiple rules. <a href="http://www.outlyer.com/docs/analytics/performance-limits#validation--limits" rel="nofollow noopener" target="_blank">More information on validation rules.</a></p>
+      markdown: |-
+        ## Invalid
+        Displays validation failures for metrics sent to this account, Note that a single metric may have failed multiple rules. [More information on validation rules.](http://www.outlyer.com/docs/analytics/performance-limits#validation--limits)
+    row: 5
+    width: 7
+  - col: 7
+    height: 1
+    options:
+      content: |
+        <h2>Invalid by Rule</h2>
+
+        <p>Displays validation failures for metrics sent to account, grouped by validation rule. Note that a single metric may have failed multiple rules. <a href="http://www.outlyer.com/docs/analytics/performance-limits#validation--limits" rel="nofollow noopener" target="_blank">More information on validation rules.</a></p>
+      markdown: |-
+        ## Invalid by Rule
+        Displays validation failures for metrics sent to account, grouped by validation rule. Note that a single metric may have failed multiple rules. [More information on validation rules.](http://www.outlyer.com/docs/analytics/performance-limits#validation--limits)
+    row: 5
+    width: 7
+  - col: 0
+    height: 1
+    options:
+      content: |
+        <h3>Container Counts</h3>
+
+        <p>Total counts for all containers in this account, regardless of state. This means that containers which are not running (terminated or waiting) will be included in these counts.</p>
+      markdown: |-
+        ### Container Counts
+
+        Total counts for all containers in this account, regardless of state. This means that containers which are not running (terminated or waiting) will be included in these counts.
+    row: 13
+    width: 14
