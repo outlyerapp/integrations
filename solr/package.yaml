@@ -10,3 +10,8 @@ author:
 license: MIT
 labels:
   search: solr
+form:
+- name: selectors_solr
+  description: "This selector is used by the Solr check for querying Solr status and key metrics. Select all Solr instances, e.g.: app: solr"
+  prompt: "Select all Solr instances"
+  type: labelSelectors

@@ -10,3 +10,23 @@ author:
 license: MIT
 labels:
   aws: sqs
+form:
+- name: selectors_sqs
+  description: "This selector is used by the AWS SQS check for querying the AWS CloudWatch API. Select an instance, e.g.: instance.hostname: <INSTANCE_HERE>"
+  prompt: "Select an instance"
+  type: labelSelectors
+- name: sqs_aws_access_key
+  description: "The AWS ACCESS KEY is used by the SQS check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS ACCESS KEY"
+  type: string
+  required: True
+- name: sqs_aws_secret_key
+  description: "The AWS SECRET KEY is used by the SQS check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS SECRET KEY"
+  type: string
+  required: True
+- name: sqs_aws_region
+  description: "The AWS REGION is used by the SQS check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS REGION"
+  type: string
+  required: True

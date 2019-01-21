@@ -1,0 +1,17 @@
+command: tomcat.py
+dashboards:
+- tomcat
+description: Monitors Tomcat performance metrics via JMX
+disabled: false
+env:
+- key: port
+  value: {{.tomcat_jmx_port}}
+handler: Native
+icon: integration--tomcat
+interval: 30
+name: tomcat
+plugins:
+- tomcat.py
+selectors: {{.selectors_tomcat}}
+timeout: 30
+title: Tomcat

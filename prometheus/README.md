@@ -13,7 +13,7 @@ labels will be collected by default.
 
 == Installation ==
 
-TODO
+Please refer to our [custom metrics documentation](https://www.outlyer.com/docs/getting-started/custom-metrics/) for a complete guide on how to collect Prometheus metrics.
 
 == Changelog ==
 

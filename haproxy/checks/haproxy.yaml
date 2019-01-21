@@ -1,0 +1,15 @@
+command: haproxy.py
+dashboards:
+- haproxy
+description: Monitors HAProxy status and key metrics
+disabled: false
+env: []
+handler: Native
+icon: integration--haproxy
+interval: 30
+name: haproxy
+plugins:
+- haproxy.py
+selectors: {{.selectors_haproxy}}
+timeout: 30
+title: HAProxy

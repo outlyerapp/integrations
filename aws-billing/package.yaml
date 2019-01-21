@@ -10,3 +10,18 @@ author:
 license: MIT
 labels:
   aws: billing
+form:
+- name: selectors_billing
+  description: "This selector is used by the AWS Billing check for querying the AWS CloudWatch API. Select an instance, e.g.: instance.hostname: <INSTANCE_HERE>"
+  prompt: "Select an instance"
+  type: labelSelectors
+- name: billing_aws_access_key
+  description: "The AWS ACCESS KEY is used by the Billing check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS ACCESS KEY"
+  type: string
+  required: True
+- name: billing_aws_secret_key
+  description: "The AWS SECRET KEY is used by the Billing check for querying the AWS CloudWatch API"
+  prompt: "Provide the AWS SECRET KEY"
+  type: string
+  required: True

@@ -8,7 +8,7 @@ author:
   name: Outlyer
   url: https://www.outlyer.com
 license: MIT
-label:
+labels:
   aws: dynamodb
   data-store: dynamodb
 form:

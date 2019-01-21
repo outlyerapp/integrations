@@ -2,7 +2,7 @@
 title: IIS
 description: Outlyer Monitoring Integration for Microsoft's Internet Information Services (IIS) webserver
 icon:
-  url: https://github.com/outlyerapp/integrations/raw/master/iis/resources/iis.png
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/iis/resources/iis.png?sanitize=true
 version: 1.0.0
 author: 
   name: Outlyer
@@ -11,3 +11,10 @@ license: MIT
 labels:
   microsoft: iis
   web: iis
+form:
+- name: selectors_iis
+  description: "This selector is used by the IIS check. Select all your windows hosts."
+  prompt: "Select all your windows hosts"
+  type: labelSelectors
+  default:
+    - "instance.os_name=windows"

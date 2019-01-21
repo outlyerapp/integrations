@@ -11,3 +11,8 @@ license: MIT
 labels:
   web: haproxy
   load-balancers: haproxy
+form:
+- name: selectors_haproxy
+  description: "This selector is used by the HAProxy check for querying HAProxy status and key metrics. Select all HAProxy instances, e.g.: app: haproxy"
+  prompt: "Select all HAProxy instances"
+  type: labelSelectors

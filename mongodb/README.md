@@ -44,7 +44,6 @@ The MongoDB plugin can be customized via environment variables.
 
 |Variable       |Default  |Description                                                                |
 |---------------|---------|---------------------------------------------------------------------------|
-|ip             |127.0.0.1|MongoDB host.                                                              |
 |port           |27017    |MongoDB port.                                                              |
 |username       |         |MongoDB username when MongoDB Auth is enabled.                             |
 |password       |         |MongoDB password when MongoDB Auth is enabled.                             |
@@ -56,4 +55,5 @@ The MongoDB plugin can be customized via environment variables.
 
 |Version|Release Date|Description                                           |
 |-------|------------|------------------------------------------------------|
+|1.1    |11-Jan-2019 |`serverSelectionTimeoutMS` for server connection timeout | 
 |1.0    |21-Jun-2018 |Initial version of our MongoDB monitoring integration.|

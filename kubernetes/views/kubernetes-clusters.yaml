@@ -8,6 +8,7 @@ icon:
 legend: []
 name: kubernetes-clusters
 selectors:
-- instance.type:container
+- instance.platform=kubernetes
+- instance.type=container
 title: Kubernetes Clusters
 type: host

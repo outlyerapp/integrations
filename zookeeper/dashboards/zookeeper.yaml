@@ -8,7 +8,9 @@ labels:
 - key: zookeeper
   value: ""
 name: zookeeper
-scopes: []
+scopes:
+- defaultValue: None
+  labelKey: host
 theme: light
 title: ZooKeeper
 widgets:
@@ -100,10 +102,10 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,zk_open_file_descriptor_count,:eq,:max,(,host,),:by
+      - query: name,zk_open_file_descriptor_count,:eq,:max,(,host,name,),:by
         scoped: true
         visible: true
-      - query: name,zk_max_file_descriptor_count,:eq,:max,(,host,),:by
+      - query: name,zk_max_file_descriptor_count,:eq,:max,(,host,name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -158,7 +160,7 @@ widgets:
       axes:
         xAxis:
           mode: Time
-          showGridLines: true
+          showGridLines: false
         yAxis:
           min: 0
           showGridLines: false
@@ -172,7 +174,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,sys.disk.used_pct,:eq,role,zookeeper,:eq,:and,:max,(,host,),:by
+      - query: name,zk_disk_used_pct,:eq,:max,(,host,device,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -200,16 +202,16 @@ widgets:
           title: ""
           unit: ""
           unitPosition: After
-      chartType: Bar
+      chartType: Line
       description: ""
       externalLink:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,zk_packets_received,:eq,:max
+      - query: name,zk_packets_received,:eq,:max,(,host,name,),:by
         scoped: true
         visible: true
-      - query: name,zk_packets_sent,:eq,:max
+      - query: name,zk_packets_sent,:eq,:max,(,host,name,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -368,7 +370,7 @@ widgets:
         path: ""
       icon: integration--java
       query:
-        query: name,zk_znode_count,:eq,:max
+        query: name,zk_znode_count,:eq,:sum,:cf-sum
         scoped: true
         visible: true
       rounding: None
@@ -392,7 +394,7 @@ widgets:
         path: ""
       icon: integration--java
       query:
-        query: name,zk_watch_count,:eq,:max
+        query: name,zk_watch_count,:eq,:sum,:cf-sum
         scoped: true
         visible: true
       rounding: None
@@ -408,25 +410,25 @@ widgets:
   - col: 2
     height: 2
     options:
-      color: '#588fd8'
+      color: '#4dccc5'
       description: ""
       displayMax: 0
       displayMin: 0
-      displayTrend: None
+      displayTrend: Gauge
       externalLink:
         linkType: dashboard
         path: ""
-      icon: insert_emoticon
+      icon: thumb_up
       query:
-        query: name,host.status,:eq,role,zookeeper,:eq,:and,:count,:cf-max
-        scoped: true
+        query: name,zk_znode_count,:eq,:count,:cf-max
+        scoped: false
         visible: true
       rounding: None
       statistic: LastValue
       thresholds:
       - status: Error
         threshold: 0
-      title: Nodes
+      title: Cluster Nodes
       unit: ""
       unitPosition: After
     row: 0
@@ -442,7 +444,7 @@ widgets:
         path: ""
       icon: integration--java
       query:
-        query: name,zk_pending_syncs,:eq,:max
+        query: name,zk_pending_syncs,:eq,:max,:cf-max
         scoped: true
         visible: true
       rounding: None

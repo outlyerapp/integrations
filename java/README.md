@@ -49,7 +49,6 @@ The Java plugin can be customized via environment variables.
 
 |Variable|Default  |Description|
 |--------|---------|-----------|
-|ip      |localhost|JMX host.  |
 |port    |9999     |JMX port.  |
 
 == Changelog ==

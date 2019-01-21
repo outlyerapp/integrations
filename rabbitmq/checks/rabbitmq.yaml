@@ -1,0 +1,15 @@
+command: rabbitmq.py
+dashboards:
+- rabbitmq
+description: Monitors RabbitMQ status and key metrics
+disabled: false
+env: []
+handler: Native
+icon: integration--rabbitmq
+interval: 30
+name: rabbitmq
+plugins:
+- rabbitmq.py
+selectors: {{.selectors_rabbitmq}}
+timeout: 30
+title: 'RabbitMQ'

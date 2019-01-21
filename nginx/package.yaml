@@ -10,3 +10,8 @@ author:
 license: MIT
 labels:
   web: nginx
+form:
+- name: selectors_nginx
+  description: "This selector is used by the Nginx check for querying Nginx status and key metrics. Select all Nginx instances, e.g.: app: nginx"
+  prompt: "Select all Nginx instances"
+  type: labelSelectors

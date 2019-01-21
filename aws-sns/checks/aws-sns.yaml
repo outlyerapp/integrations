@@ -1,0 +1,20 @@
+command: aws-sns.py
+dashboards: []
+description: Monitors AWS SNS metrics from CloudWatch
+disabled: false
+env:
+- key: AWS_ACCESS_KEY_ID
+  value: {{.sns_aws_access_key}}
+- key: AWS_SECRET_ACCESS_KEY
+  value: {{.sns_aws_secret_key}}
+- key: AWS_REGION
+  value: {{.sns_aws_region}}
+handler: Native
+icon: integration--sns
+interval: 300
+name: aws-sns
+plugins:
+- aws-sns.py
+selectors: {{.selectors_sns}}
+timeout: 60
+title: AWS SNS

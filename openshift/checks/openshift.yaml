@@ -1,0 +1,15 @@
+command: openshift.py
+dashboards:
+- openshift-container-platform
+description: Monitors OpenShift metrics from Kubernetes API Server
+disabled: false
+env: []
+handler: Native
+icon: integration--redhat
+interval: 30
+name: openshift
+plugins:
+- openshift.py
+selectors: {{.selectors_openshift}}
+timeout: 30
+title: OpenShift

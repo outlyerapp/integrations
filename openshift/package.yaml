@@ -1,0 +1,16 @@
+---
+title: OpenShift
+description: Outlyer Monitoring Integration for OpenShift Container Platform, Red Hat's on-premises private platform as a service product with orchestration and management provided by Kubernetes
+icon:
+  url: https://raw.githubusercontent.com/outlyerapp/integrations/master/openshift/resources/openshift.svg?sanitize=true
+version: 1.0.2
+author: Outlyer
+author-uri: https://www.outlyer.com
+license: MIT
+categories:
+  - containers
+form:
+- name: selectors_openshift
+  description: "This selector is used by the OpenShift check for querying the API Server. Select a single Kubernetes node, e.g.: instance.hostname: <K8S_NODE_HERE>"
+  prompt: "Select a single Kubernetes node"
+  type: labelSelectors

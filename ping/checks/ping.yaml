@@ -1,0 +1,15 @@
+command: ping.py
+dashboards:
+- ping
+description: Monitor the status of hosts by sending ICMP packets via ping command
+disabled: false
+env: []
+handler: Native
+icon: integration--ping
+interval: 30
+name: ping
+plugins:
+- ping.py
+selectors: {{.selectors_ping}}
+timeout: 30
+title: Ping

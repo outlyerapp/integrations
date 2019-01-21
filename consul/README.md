@@ -37,7 +37,6 @@ The Consul plugin can be customized via environment variables.
 |Variable        |Default              |Description                                                                  |
 |----------------|---------------------|-----------------------------------------------------------------------------|
 |protocol        |http                 |Consul REST API protocol. Use `https` when TLS is enabled.                   |
-|host            |localhost            |Consul host.                                                                 |
 |port            |8500                 |Consul REST API port.                                                        |
 |client_cert_file|                     |Path to a client cert file to use for TLS when `verify_incoming` is enabled. |
 |private_key_file|                     |Path to a client key file to use for TLS when `verify_incoming` is enabled.  |
@@ -48,4 +47,5 @@ The Consul plugin can be customized via environment variables.
 
 |Version|Release Date|Description                                          |
 |-------|------------|-----------------------------------------------------|
+|1.0.1  |20-Nov-2018 |Plugin fix: get host from ip env var instead of host.|
 |1.0    |31-May-2018 |Initial version of our Consul monitoring integration.|

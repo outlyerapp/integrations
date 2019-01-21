@@ -10,3 +10,8 @@ author:
 license: MIT
 labels:
   data-store: redis
+form:
+- name: selectors_redis
+  description: "This selector is used by the Redis check for querying Redis status and key metrics. Select all Redis instances, e.g.: app: redis"
+  prompt: "Select all Redis instances"
+  type: labelSelectors

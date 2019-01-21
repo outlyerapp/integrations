@@ -45,10 +45,10 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Clean Vs. Unclean Leader Election Rate
+      title: Clean Vs. Unclean Leader Election
     row: 0
     width: 6
-  - col: 6
+  - col: 3
     height: 2
     options:
       axes:
@@ -80,9 +80,9 @@ widgets:
         status: Error
         threshold: 0
       title: Network Requests Per Sec
-    row: 6
-    width: 6
-  - col: 6
+    row: 8
+    width: 7
+  - col: 3
     height: 2
     options:
       axes:
@@ -95,7 +95,7 @@ widgets:
           title: ""
           unit: ""
           unitPosition: After
-      chartType: Line
+      chartType: StackedBar
       description: ""
       externalLink:
         linkType: dashboard
@@ -113,10 +113,10 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Messages In Per Sec (Per Broker)
+      title: Messages In Per Sec (By Broker)
     row: 4
-    width: 6
-  - col: 12
+    width: 7
+  - col: 10
     height: 2
     options:
       axes:
@@ -151,8 +151,8 @@ widgets:
         threshold: 0
       title: Bytes In / Bytes Out Per Sec
     row: 4
-    width: 6
-  - col: 12
+    width: 8
+  - col: 10
     height: 2
     options:
       axes:
@@ -184,9 +184,9 @@ widgets:
         status: Error
         threshold: 0
       title: Total Request Time
-    row: 6
-    width: 6
-  - col: 12
+    row: 8
+    width: 8
+  - col: 14
     height: 2
     options:
       axes:
@@ -218,8 +218,8 @@ widgets:
         status: Error
         threshold: 1
       title: ISR Delta Rate of Change
-    row: 8
-    width: 6
+    row: 10
+    width: 4
   - col: 12
     height: 2
     options:
@@ -239,7 +239,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,java_lang_garbagecollector_collectiontime,:eq,:avg,(,host,),:by
+      - query: name,java_lang_garbagecollector_collectiontime,:eq,:avg,(,host,),:by,:derivative
         scoped: true
         visible: true
       seriesStyle:
@@ -252,7 +252,7 @@ widgets:
         status: Error
         threshold: 0
       title: Garbage Collection Time Rate
-    row: 13
+    row: 15
     width: 6
   - col: 0
     height: 2
@@ -289,7 +289,7 @@ widgets:
         status: Error
         threshold: 0
       title: Heap Memory Committed Vs. Used
-    row: 13
+    row: 15
     width: 6
   - col: 0
     height: 2
@@ -323,9 +323,9 @@ widgets:
         status: Error
         threshold: 0
       title: ISR Shrinks Per Sec
-    row: 8
-    width: 6
-  - col: 6
+    row: 10
+    width: 5
+  - col: 5
     height: 2
     options:
       axes:
@@ -357,8 +357,8 @@ widgets:
         status: Error
         threshold: 0
       title: ISR Expands Per Sec
-    row: 8
-    width: 6
+    row: 10
+    width: 5
   - col: 9
     height: 2
     options:
@@ -390,10 +390,10 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: Partition Leader Per Broker
+      title: Partition Leader By Broker
     row: 2
     width: 3
-  - col: 0
+  - col: 10
     height: 2
     options:
       axes:
@@ -424,9 +424,9 @@ widgets:
         lineStyle: Solid
         status: Error
         threshold: 0
-      title: MaxLag Per Broker
-    row: 6
-    width: 6
+      title: MaxLag By Broker
+    row: 10
+    width: 4
   - col: 12
     height: 2
     options:
@@ -462,7 +462,7 @@ widgets:
         status: Error
         threshold: 0
       title: Classes Loaded vs Unloaded
-    row: 11
+    row: 13
     width: 6
   - col: 0
     height: 2
@@ -499,8 +499,8 @@ widgets:
         status: Error
         threshold: 0
       title: Opened vs Total File Descriptors
-    row: 4
-    width: 6
+    row: 8
+    width: 3
   - col: 6
     height: 2
     options:
@@ -512,7 +512,7 @@ widgets:
           min: 0
           showGridLines: false
           title: ""
-          unit: ""
+          unit: auto
           unitPosition: After
       chartType: Line
       description: ""
@@ -520,7 +520,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,java_lang_garbagecollector_collectioncount,:eq,:max,(,host,),:by
+      - query: name,java_lang_garbagecollector_collectioncount,:eq,:max,(,host,),:by,:derivative
         scoped: true
         visible: true
       seriesStyle:
@@ -533,8 +533,110 @@ widgets:
         status: Error
         threshold: 0
       title: Garbage Collection Count Rate
-    row: 13
+    row: 15
     width: 6
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: true
+        yAxis:
+          min: 0
+          showGridLines: true
+          title: ""
+          unit: none
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_consumer_lag,:eq,:max,:cf-max,(,topic,consumer_group,topic_partition,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Avg
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Consumer Lag
+    row: 17
+    width: 9
+  - col: 10
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: bs
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_server_brokertopicmetrics_bytesinpersecbytopic,:eq,:max,:cf-max,(,topic,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Bytes In Per Sec By Topic
+    row: 6
+    width: 8
+  - col: 0
+    height: 2
+    options:
+      axes:
+        xAxis:
+          mode: Time
+          showGridLines: false
+        yAxis:
+          min: 0
+          showGridLines: false
+          title: ""
+          unit: auto
+          unitPosition: After
+      chartType: Line
+      description: ""
+      externalLink:
+        linkType: dashboard
+        path: ""
+      queries:
+      - query: name,kafka_server_brokertopicmetrics_messagesinpersecbytopic,:eq,role,kafka,:eq,:and,:max,:cf-max,(,topic,),:by
+        scoped: true
+        visible: true
+      seriesStyle:
+        color: '#588fd8'
+        palette: MultiColor
+      summarization: Max
+      thresholds:
+      - display: None
+        lineStyle: Solid
+        status: Error
+        threshold: 0
+      title: Messages In Per Sec By Topic
+    row: 6
+    width: 10
   imageWidgets:
   - col: 0
     height: 2
@@ -542,7 +644,7 @@ widgets:
       color: '#dd3e26'
       icon: integration--java
       sizing: stretched
-    row: 11
+    row: 13
     width: 3
   markdownWidgets:
   - col: 0
@@ -560,7 +662,7 @@ widgets:
       content: |
         <h1><strong>Java Virtual Machine</strong></h1>
       markdown: '# **Java Virtual Machine**'
-    row: 10
+    row: 12
     width: 18
   numberWidgets:
   - col: 3
@@ -733,6 +835,32 @@ widgets:
       unitPosition: After
     row: 0
     width: 3
+  - col: 0
+    height: 2
+    options:
+      color: '#588fd8'
+      description: ""
+      displayMax: 0
+      displayMin: 0
+      displayTrend: None
+      externalLink:
+        linkType: dashboard
+        path: ""
+      icon: check
+      query:
+        query: name,kafka_server_brokertopicmetrics_messagesinpersec_count,:eq,kafka-broker,true,:eq,:and,:sum
+        scoped: true
+        visible: true
+      rounding: None
+      statistic: Max
+      thresholds:
+      - status: Error
+        threshold: 0
+      title: Total Messages In
+      unit: ""
+      unitPosition: After
+    row: 4
+    width: 3
   - col: 9
     height: 2
     options:
@@ -783,7 +911,7 @@ widgets:
       title: Live Threads
       unit: ""
       unitPosition: After
-    row: 11
+    row: 13
     width: 3
   - col: 6
     height: 2
@@ -809,7 +937,7 @@ widgets:
       title: Peak Threads
       unit: ""
       unitPosition: After
-    row: 11
+    row: 13
     width: 3
   - col: 9
     height: 2
@@ -835,5 +963,5 @@ widgets:
       title: Daemon Threads
       unit: ""
       unitPosition: After
-    row: 11
+    row: 13
     width: 3

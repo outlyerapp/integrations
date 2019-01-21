@@ -333,8 +333,7 @@ class AWSS3(Plugin):
                     metric_name = "aws." + metric['Id']
                     if len(metric['Values']) > 0:
                         value = metric['Values'][-1]
-                        ts = int(metric['Timestamps'][-1].utcnow().timestamp() * 1000)
-                        self.gauge(metric_name, metric_labels).set(value,ts=ts)
+                        self.gauge(metric_name, metric_labels).set(value)
 
             return Status.OK
         except Exception as err:

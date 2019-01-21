@@ -1,0 +1,14 @@
+command: nginx.py
+dashboards: []
+description: Monitors Nginx status and key metrics
+disabled: false
+env: []
+handler: Native
+icon: integration--nginx
+interval: 30
+name: nginx
+plugins:
+- nginx.py
+selectors: {{.selectors_nginx}}
+timeout: 30
+title: Nginx

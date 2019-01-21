@@ -10,3 +10,8 @@ author:
 license: MIT
 labels:
   system: ping
+form:
+- name: selectors_ping
+  description: "This selector is used by the Ping check for querying the instance status and other performance metrics. Select all instances to ping, e.g.: instance.hostname: <INSTANCE_HERE>"
+  prompt: "Select all instances to ping"
+  type: labelSelectors

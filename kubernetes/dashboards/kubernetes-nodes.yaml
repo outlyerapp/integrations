@@ -210,7 +210,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_network_rx_bytes,:eq,:max,:cf-max,(,k8s.node.name,),:by
+      - query: name,kube_node_network_rx_bytes,:eq,:max,:cf-max,(,k8s.node.name,interface,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -244,7 +244,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_network_tx_bytes,:eq,:max,:cf-max,(,k8s.node.name,),:by
+      - query: name,kube_node_network_tx_bytes,:eq,:max,:cf-max,(,k8s.node.name,interface,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -346,7 +346,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_network_rx_errors,:eq,:max,:cf-max,(,k8s.node.name,),:by
+      - query: name,kube_node_network_rx_errors,:eq,:max,:cf-max,(,k8s.node.name,interface,),:by
         scoped: true
         visible: true
       seriesStyle:
@@ -380,7 +380,7 @@ widgets:
         linkType: dashboard
         path: ""
       queries:
-      - query: name,kube_node_network_tx_errors,:eq,:max,:cf-max,(,k8s.node.name,),:by
+      - query: name,kube_node_network_tx_errors,:eq,:max,:cf-max,(,k8s.node.name,interface,),:by
         scoped: true
         visible: true
       seriesStyle:

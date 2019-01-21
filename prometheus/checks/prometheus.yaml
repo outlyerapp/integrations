@@ -1,0 +1,18 @@
+command: prometheus.py
+dashboards: []
+description: Scrapes a Prometheus endpoint
+disabled: false
+env:
+- key: PROMPORT
+  value: {{.prometheus_port}}
+- key: PROMPATH
+  value: {{.prometheus_endpoint}}
+handler: Prometheus
+icon: assignment_turned_in
+interval: 30
+name: prometheus
+plugins:
+- prometheus.py
+selectors: {{.selectors_prometheus}}
+timeout: 30
+title: Prometheus

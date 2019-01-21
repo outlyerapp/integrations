@@ -10,3 +10,10 @@ author:
 license: MIT
 labels:
   system: ntp
+form:
+- name: selectors_ntp
+  description: "This selector is used by the NTP check. Select all your hosts, e.g.: instance.type: host"
+  prompt: "Select all your hosts"
+  type: labelSelectors
+  default:
+    - "instance.type=host"

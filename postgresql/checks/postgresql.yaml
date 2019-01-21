@@ -1,0 +1,15 @@
+command: postgresql.py
+dashboards:
+- postgresql
+description: Monitors PostgreSQL status and key metrics
+disabled: false
+env: []
+handler: Native
+icon: integration--postgresql
+interval: 30
+name: postgresql
+plugins:
+- postgresql.py
+selectors: {{.selectors_postgresql}}
+timeout: 30
+title: 'PostgreSQL'

@@ -2,20 +2,30 @@
 
 == Description ==
 
-Kafka is used for building real-time data pipelines and streaming apps. It is horizontally scalable, fault-tolerant, 
+Kafka is used for building real-time data pipelines and streaming apps. It is horizontally scalable, fault-tolerant,
 wicked fast, and runs in production in thousands of companies.
 
-This integration collects all Kafka metrics via JMX so JMX must be enabled for the plugin to connect too. It will automatically
-get all metrics for the Kafka Broker, Kafka Consumer (Java only) and Kafka Producers (Java only) across your environment with a single
+This integration collects all Kafka metrics via JMX and a Kafka consumer client so JMX must be enabled for the plugin to work properly.
+It will automatically gather all metrics for the Kafka Broker, Kafka Consumer (Java only) and Kafka Producers (Java only) across your environment with a single
 plugin.
+
+#### Known limitations
+
+- Consumer lag monitoring requires agent version v1.4.16 or above, otherwise follow optional installation steps.
+- Consumer lag monitoring currently does not support access to brokers over SSL encrypted connections.
 
 == Metrics Collected ==
 
+### Kafka JMX: kafka.py
 |Metric Name                                                         |MBean Query                                                                           |Type   |Labels |Unit        |Description                                                                                                                                                 |
 |--------------------------------------------------------------------|--------------------------------------------------------------------------------------|-------|-------|------------|------------------------------------------------------------------------------------------------------------------------------------------------------------|
-|kafka_server_brokertopicmetrics_messagesinpersec_count              |kafka.server:type=BrokerTopicMetrics, name=MessagesInPerSec/Count                     |Counter|       |message/sec |Aggregate incoming message rate.                                                                                                                            |
-|kafka_server_brokertopicmetrics_bytesinpersec_count                 |kafka.server:type=BrokerTopicMetrics, name=BytesInPerSec/Count                        |Counter|       |byte/sec    |Aggregate incoming byte rate.                                                                                                                               |
-|kafka_server_brokertopicmetrics_bytesoutpersec_count                |kafka.server:type=BrokerTopicMetrics, name=BytesOutPerSec/Count                       |Counter|       |byte/sec    |Aggregate outgoing byte rate.                                                                                                                               |
+|kafka_producer_producer-metrics_record-send-total                   |kafka.producer:type=producer-metrics,client-id=*/record-send-total                    |Counter|       |record      |The total number of records sent.                                                                                                                           |
+|kafka_consumer_consumer-fetch-manager-metrics_records-consumed-total|kafka.consumer:type=consumer-fetch-manager-metrics,client-id=*/records-consumed-total |Counter|       |record      |The total number of records consumed.                                                                                                                       |
+|kafka_server_brokertopicmetrics_messagesinpersecbytopic             |kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec,topic=*/Count              |Gauge  |       |message/sec |Incoming message rate by topics.                                                                                                                            |
+|kafka_server_brokertopicmetrics_bytesinpersecbytopic                |kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec,topic=*/Count                 |Gauge  |       |byte/sec    |Incoming network traffic rate by topics.                                                                                                                    |
+|kafka_server_brokertopicmetrics_messagesinpersec_count              |kafka.server:type=BrokerTopicMetrics, name=MessagesInPerSec/Count                     |Gauge  |       |message/sec |Incoming message rate.                                                                                                                                      |
+|kafka_server_brokertopicmetrics_bytesinpersec_count                 |kafka.server:type=BrokerTopicMetrics, name=BytesInPerSec/Count                        |Gauge  |       |byte/sec    |Incoming byte rate.                                                                                                                                         |
+|kafka_server_brokertopicmetrics_bytesoutpersec_count                |kafka.server:type=BrokerTopicMetrics, name=BytesOutPerSec/Count                       |Gauge  |       |byte/sec    |Outgoing byte rate.                                                                                                                                         |
 |kafka_server_replicamanager_underreplicatedpartitions               |kafka.server:type=ReplicaManager, name=UnderReplicatedPartitions/Value                |Gauge  |       |            |Number of under-replicated partitions.                                                                                                                      |
 |kafka_server_replicamanager_partitioncount                          |kafka.server:type=ReplicaManager, name=PartitionCount/Value                           |Gauge  |       |            |Number of partitions on this broker.                                                                                                                        |
 |kafka_server_replicamanager_isrshrinkspersec                        |kafka.server:type=ReplicaManager, name=IsrShrinksPerSec                               |Gauge  |       |node/sec    |If a broker goes down, ISR for some of the partitions will shrink. When that broker is up again, ISR will be expanded once the replicas are fully caught up.|
@@ -27,8 +37,8 @@ plugin.
 |kafka_server_replicafetchermanager_maxlag                           |kafka.server:type=ReplicaFetcherManager, name=MaxLag, clientId=Replica                |Gauge  |       |            |Number of messages the consumer lags behind the producer by.                                                                                                |
 |kafka_controller_kafkacontroller_offlinepartitionscount             |kafka.controller:type=KafkaController, name=OfflinePartitionsCount/Value              |Gauge  |       |            |Number of partitions that don’t have an active leader and are hence not writable or readable.                                                               |
 |kafka_controller_kafkacontroller_activecontrollercount              |kafka.controller:type=KafkaController, name=ActiveControllerCount/Value               |Gauge  |       |            |Number of active controllers in the cluster.                                                                                                                |
-|kafka_network_requestmetrics_requestspersec_count                   |kafka.network:type=RequestMetrics, name=RequestsPerSec, request=*/Count               |Counter|request|request/sec |Request rate.                                                                                                                                               |
-|kafka_network_requestmetrics_totaltimems_count                      |kafka.network:type=RequestMetrics, name=TotalTimeMs, request=*                        |Counter|request|millisecond|Rate of time in ms to serve the specified request.                                                                                                           |
+|kafka_network_requestmetrics_requestspersec_count                   |kafka.network:type=RequestMetrics, name=RequestsPerSec, request=*/Count               |Gauge  |request|request/sec |Request rate.                                                                                                                                               |
+|kafka_network_requestmetrics_totaltimems_count                      |kafka.network:type=RequestMetrics, name=TotalTimeMs, request=*                        |Gauge  |request|millisecond |Rate of time in ms to serve the specified request.                                                                                                          |
 |kafka_network_socketserver_networkprocessoravgidlepercent           |kafka.network:type=SocketServer, name=NetworkProcessorAvgIdlePercent/Value            |Gauge  |       |fraction    |Average fraction of time the network processor threads are idle.                                                                                            |
 |kafka_cluster_controllerstats_leaderelectionrateandtimems_count     |kafka.controller:type=ControllerStats, name=LeaderElectionRateAndTimeMs/Count         |Gauge  |       |millisecond |Leader election rate and latency.                                                                                                                           |
 |kafka_cluster_controllerstats_uncleanleaderelectionspersec_count    |kafka.controller:type=ControllerStats, name=UncleanLeaderElectionsPerSec/Count        |Gauge  |       |event/sec   |Unclean leader election rate.                                                                                                                               |
@@ -48,15 +58,23 @@ plugin.
 |kafka_consumer_consumer-fetch-manager-metrics_fetch-rate            |kafka.consumer:type=consumer-fetch-manager-metrics, client-id=*/fetch-rate            |Gauge  |       |            |The number of fetch requests per second.                                                                                                                    |
 |kafka_consumer_consumer-fetch-manager-metrics_fetch-latency-avg     |kafka.consumer:type=consumer-fetch-manager-metrics, client-id=*/fetch-latency-avg     |Gauge  |       |millisecond |The average time taken for a fetch request.                                                                                                                 |
 |kafka_consumer_consumer-coordinator-metrics_assigned-partitions     |kafka.consumer:type=consumer-coordinator-metrics, client-id=*/assigned-partitions     |Gauge  |       |            |The number of partitions currently assigned to this consumer.                                                                                               |
-|kafka_consumer_consumer-coordinator-metrics_commit-total            |kafka.consumer:type=consumer-coordinator-metrics, client-id=*/commit-total            |Gauge  |       |            |The total number of commit calls.                                                                                                                           |
-|kafka_consumer_consumer-coordinator-metrics_join-total              |kafka.consumer:type=consumer-coordinator-metrics, client-id=*/join-total              |Gauge  |       |            |The total number of group joins.                                                                                                                            |
-|kafka_consumer_consumer-coordinator-metrics_sync-total              |kafka.consumer:type=consumer-coordinator-metrics, client-id=*/sync-total              |Gauge  |       |            |The total number of group syncs.                                                                                                                            |
+|kafka_consumer_consumer-coordinator-metrics_commit-total            |kafka.consumer:type=consumer-coordinator-metrics, client-id=*/commit-total            |Counter|       |            |The total number of commit calls.                                                                                                                           |
+|kafka_consumer_consumer-coordinator-metrics_join-total              |kafka.consumer:type=consumer-coordinator-metrics, client-id=*/join-total              |Counter|       |            |The total number of group joins.                                                                                                                            |
+|kafka_consumer_consumer-coordinator-metrics_sync-total              |kafka.consumer:type=consumer-coordinator-metrics, client-id=*/sync-total              |Counter|       |            |The total number of group syncs.                                                                                                                            |
 |kafka_consumer_consumer-coordinator-metrics_commit-rate             |kafka.consumer:type=consumer-coordinator-metrics, client-id=*/commit-rate             |Gauge  |       |commit/sec  |The number of commit calls per second.                                                                                                                      |
 |kafka_consumer_consumer-coordinator-metrics_commit-latency-avg      |kafka.consumer:type=consumer-coordinator-metrics, client-id=*/commit-latency-avg      |Gauge  |       |millisecond |The average time taken for a commit request.                                                                                                                |
 |kafka_consumer_consumer-coordinator-metrics_join-rate               |kafka.consumer:type=consumer-coordinator-metrics, client-id=*/join-rate               |Gauge  |       |event/sec   |The number of group joins per second.                                                                                                                       |
 |kafka_consumer_consumer-coordinator-metrics_sync-rate               |kafka.consumer:type=consumer-coordinator-metrics, client-id=*/sync-rate               |Gauge  |       |event/sec   |The number of group syncs per second.                                                                                                                       |
 
+### Kafka Consumer Lag: kafka-consumer-lag.py
+
+|Metric Name       |Type |Labels                                                    |Unit   |
+|------------------|-----|----------------------------------------------------------|-------|
+|kafka_consumer_lag|Gauge|topic, topic_partition, consumer_group, consumer_client_id|records|
+
 == Installation ==
+
+### Kafka JMX
 
 This integration requires that JMX be enabled on Kafka servers, producers and consumers. To enable JMX on a Kafka broker, first edit the `kafka-run-class.sh` script and add the `-Djava.rmi.server.hostname` parameter with the corresponding server IP:
 
@@ -78,18 +96,37 @@ If you have already setup JMX for Kafka, make sure you supply the correct port n
 
 Similarly, producers and consumers should also have JMX enabled.
 
-### Plugin Environment Variables
+### Kafka Consumer Lag
 
-The Kafka plugin can be customized via environment variables.
+For agent versions below v1.4.16 you will need to install the `pykafka` python module in the agent using the following command:
+
+```
+sudo /opt/outlyer/embedded/bin/pip3 install pykafka==2.8.0
+```
+
+### JMX Plugin Environment Variables
+
+The Kafka JMX plugin can be customized via environment variables.
 
 |Variable |Default     |Description                       |
 |---------|------------|----------------------------------|
-|ip       |localhost   |Broker/Producer/Consumer host.    |
 |port     |9999        |Broker/Producer/Consumer JMX port.|
+
+### Consumer Lag Envionment Variables
+
+The Kafka consumer lag plugin can be configured by environment variables, although it should work out of the box.
+
+|Variable            |Default|Description                                                                      |
+|--------------------|-------|---------------------------------------------------------------------------------|
+|port                |9092   |Broker service port                                                              |
+|consumer_group_regex|.*     |Regex filter for consumer groups, default is allow all                           |
+|consumer_groups     |       |Comma separated whitelist of consumer groups, if set will superceed regex setting|
 
 == Changelog ==
 
 |Version|Release Date|Description                                          |
 |-------|------------|-----------------------------------------------------|
+|1.2.0  |10-Jan-2019 |Add messages and network traffic per topics.         |
+|1.1.0  |14-Dec-2018 |Add consumer lag plugin.                             |
 |1.0.1  |28-Sep-2018 |Uses ip environment variable instead of host.        |
 |1.0    |17-May-2018 |Initial version of our Kafka  monitoring integration.|

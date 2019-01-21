@@ -10,3 +10,8 @@ author:
 license: MIT
 labels:
   web: apache
+form:
+- name: selectors_apache2
+  description: "This selector is used by the Apache 2 check for querying Apache status and key metrics. Select all Apache instances, e.g.: app: apache"
+  prompt: "Select all Apache instances"
+  type: labelSelectors

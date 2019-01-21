@@ -1,0 +1,16 @@
+command: dns_check.py
+dashboards: []
+description: Monitors the resolvability of and lookup times for DNS records
+disabled: false
+env:
+- key: hostname
+  value: {{.dns_hostname}}
+handler: Native
+icon: dns
+interval: 30
+name: dns_check
+plugins:
+- dns_check.py
+selectors: {{.selectors_dns}}
+timeout: 30
+title: DNS

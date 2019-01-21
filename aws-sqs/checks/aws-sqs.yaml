@@ -1,0 +1,20 @@
+command: aws-sqs.py
+dashboards: []
+description: Monitors AWS SQS metrics from CloudWatch
+disabled: false
+env:
+- key: AWS_ACCESS_KEY_ID
+  value: {{.sqs_aws_access_key}}
+- key: AWS_SECRET_ACCESS_KEY
+  value: {{.sqs_aws_secret_key}}
+- key: AWS_REGION
+  value: {{.sqs_aws_region}}
+handler: Native
+icon: integration--sqs
+interval: 300
+name: aws-sqs
+plugins:
+- aws-sqs.py
+selectors: {{.selectors_sqs}}
+timeout: 60
+title: AWS SQS

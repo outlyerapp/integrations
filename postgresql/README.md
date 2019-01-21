@@ -71,7 +71,6 @@ The PostgreSQL plugin can be customized via environment variables.
 
 |Variable|Default  |Description                    |
 |--------|---------|-------------------------------|
-|host    |localhost|PostgreSQL host.               |
 |port    |5432     |PostgreSQL port.               |
 |dbname  |postgres |PostgreSQL database name.      |
 |username|         |PostgreSQL username (required).|
@@ -81,4 +80,5 @@ The PostgreSQL plugin can be customized via environment variables.
 
 |Version|Release Date|Description                                              |
 |-------|------------|---------------------------------------------------------|
+|1.0.1  |20-Nov-2018 |Plugin fix: get host from the ip env var instead of host.|
 |1.0    |19-Jun-2018 |Initial version of our PostgreSQL monitoring integration.|

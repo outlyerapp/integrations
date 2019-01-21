@@ -65,7 +65,6 @@ The Elasticsearch plugin can be customized via environment variables.
 |Variable        |Default              |Description                                           |
 |----------------|---------------------|------------------------------------------------------|
 |protocol        |http                 |Elasticsearch REST API protocol.                      |
-|host            |localhost            |Elasticsearch host.                                   |
 |port            |9200                 |Elasticsearch REST API port.                          |
 |username        |                     |Basic authentication username.                        |
 |password        |                     |Basic authentication password.                        |

@@ -75,19 +75,19 @@ Once enabled you will get default dashboards and alert rules to help you get sta
 |kube_node_memory_available_bytes         |Gauge  |k8s.cluster, k8s.node.name, k8s.node.label                                                      |byte        |The memory available in the node.                         |
 |kube_node_memory_usage_byte              |Gauge  |k8s.cluster, k8s.node.name, k8s.node.label                                                      |byte        |The memory used by the node.                              |
 |kube_node_memory_usage_pct               |Gauge  |k8s.cluster, k8s.node.name, k8s.node.label                                                      |fraction    |The percentage of memory used in the node.                |
-|kube_node_network_rx_bytes               |Counter|k8s.cluster, k8s.node.name, k8s.node.label                                                      |byte/sec    |Rate of bytes received.                                   |
-|kube_node_network_tx_bytes               |Counter|k8s.cluster, k8s.node.name, k8s.node.label                                                      |byte/sec    |Rate of bytes transmitted.                                |
-|kube_node_network_rx_errors              |Counter|k8s.cluster, k8s.node.name, k8s.node.label                                                      |error/sec   |Rate of errors encountered while receiving.               |        
-|kube_node_network_tx_errors              |Counter|k8s.cluster, k8s.node.name, k8s.node.label                                                      |error/sec   |Rate of errors encountered while transmitting.            |
+|kube_node_network_rx_bytes               |Counter|k8s.cluster, k8s.node.name, k8s.node.label, interface                                           |byte/sec    |Rate of bytes received.                                   |
+|kube_node_network_tx_bytes               |Counter|k8s.cluster, k8s.node.name, k8s.node.label, interface                                           |byte/sec    |Rate of bytes transmitted.                                |
+|kube_node_network_rx_errors              |Counter|k8s.cluster, k8s.node.name, k8s.node.label, interface                                           |error/sec   |Rate of errors encountered while receiving.               |
+|kube_node_network_tx_errors              |Counter|k8s.cluster, k8s.node.name, k8s.node.label, interface                                           |error/sec   |Rate of errors encountered while transmitting.            |
 
 == Installation ==
 
 ### Kubernetes API Server: kubernetes-api-server.py
-This plugin can be used not only to check API Server and etcd health, but also to collect metrics from API Server.
+This plugin can is used to check API Server, the health of etcd and to collect metrics from API Server.
 
-1. API Server Health Check: run it against any Kubernetes Node.
-2. etcd Health Check: provide the environment variable `endpoint: healthz/etcd` and run it against any Kubernetes Node.
-3. API Server Metrics: provide the environment variable `endpoint: metrics` and run it against any Kubernetes Node.
+1. API Server Health: run it against any single Kubernetes node.
+2. etcd Health: provide the environment variable `endpoint: healthz/etcd` and run it against any single Kubernetes node.
+3. API Server Metrics: provide the environment variable `endpoint: metrics` and run it against any single Kubernetes node.
 
 |Variable|Default|Description                       |
 |--------|-------|----------------------------------|
@@ -117,11 +117,13 @@ This plugin is used to scrape container and pod metrics from the embedded cAdvis
 
 == Changelog ==
 
-|Version|Release Date|Description                                                       |
-|-------|------------|------------------------------------------------------------------|
-|1.3.2  |27-Sep-2018 |Fixes node memory and cpu allocatable units.                      |
-|1.3.1  |20-Sep-2018 |Add timeout to KSM query.                                         |
-|1.3    |21-Aug-2018 |Creates Nodes Dashboard.                                          |
-|1.2    |10-Aug-2018 |Creates Pods Dashboard.                                           |
-|1.1    |25-Jun-2018 |Adds k8s.cluster label and collects new API Server latency metric.|
-|1.0    |24-May-2018 |Initial version of our Kubernetes monitoring integration.         |
+|Version|Release Date|Description                                                         |
+|-------|------------|--------------------------------------------------------------------|
+|1.3.4  |19-Nov-2018 |Kubelet plugin fix: collect node metrics for each network interface.|
+|1.3.3  |23-Oct-2018 |Kubelet plugin fix: verify if labels returned from API Server exist.|
+|1.3.2  |27-Sep-2018 |Fixes node memory and cpu allocatable units.                        |
+|1.3.1  |20-Sep-2018 |Add timeout to KSM query.                                           |
+|1.3    |21-Aug-2018 |Creates Nodes Dashboard.                                            |
+|1.2    |10-Aug-2018 |Creates Pods Dashboard.                                             |
+|1.1    |25-Jun-2018 |Adds k8s.cluster label and collects new API Server latency metric.  |
+|1.0    |24-May-2018 |Initial version of our Kubernetes monitoring integration.           |

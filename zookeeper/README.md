@@ -29,7 +29,7 @@ Once enabled you will get a default ZooKeeper dashboard and alert rules to help 
 |zk_followers                 |Gauge  |      |           |Number of followers.                                                                                                     |
 |zk_synced_followers          |Gauge  |      |           |Current number of synced followers.                                                                                      |
 |zk_pending_syncs             |Gauge  |      |           |Current number of pending syncs.                                                                                         |
-
+|zk_disk_used_pct             |Gauge  |device|fraction   |The percentage of disk used per partition.                                                                               |
 
 == Installation ==
 
@@ -41,13 +41,13 @@ The ZooKeeper plugin can be customized via environment variables.
 
 |Variable |Default  |Description    |
 |---------|---------|---------------|
-|ip       |localhost|ZooKeeper host.|
 |port     |2181     |ZooKeeper port.|
 
 == Changelog ==
 
 |Version|Release Date|Description                                             |
 |-------|------------|--------------------------------------------------------|
+|1.0.3  |04-Oct-2018 |Adds dashboard scope and fixes widgets.                 |
 |1.0.2  |28-Sep-2018 |Fixes ZooKeeper dashboard logo URL and updates docs.    |
 |1.0.1  |28-Sep-2018 |Uses ip environment variable instead of host.           |
 |1.0    |25-May-2018 |Initial version of our ZooKeeper monitoring integration.|

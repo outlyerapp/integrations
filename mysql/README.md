@@ -63,7 +63,6 @@ The MySQL plugin can be customized via environment variables.
 
 |Variable|Default  |Description    |
 |--------|---------|---------------|
-|ip      |127.0.0.1|MySQL host.    |
 |port    |3306     |MySQL port.    |
 |username|root     |MySQL username.|
 |password|mysql    |MySQL password.|

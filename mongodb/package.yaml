@@ -3,7 +3,7 @@ title: MongoDB
 description: Outlyer Monitorign Integration for MongoDB, the Open source document-oriented NoSQL database
 icon:
   url: https://raw.githubusercontent.com/outlyerapp/integrations/master/mongodb/resources/mongodb.svg?sanitize=true
-version: 1.0.0
+version: 1.1.0
 author: 
   name: Outlyer
   url: https://www.outlyer.com

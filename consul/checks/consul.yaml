@@ -1,0 +1,15 @@
+command: consul.py
+dashboards:
+- consul
+description: Monitors Consul status and key metrics
+disabled: false
+env: []
+handler: Native
+icon: assignment_turned_in
+interval: 30
+name: consul
+plugins:
+- consul.py
+selectors: {{.selectors_consul}}
+timeout: 30
+title: Consul
