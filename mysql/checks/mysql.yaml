@@ -3,7 +3,13 @@ dashboards:
 - mysql
 description: Monitors MySQL status and key metrics
 disabled: false
-env: []
+env:
+- key: port
+  value: {{.mysql_port}}
+- key: username
+  value: {{.mysql_username}}
+- key: password
+  value: {{.mysql_password}}
 handler: Native
 icon: integration--mysql
 interval: 30

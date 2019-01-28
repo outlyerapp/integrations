@@ -15,3 +15,18 @@ form:
   description: "This selector is used by the MySQL check for querying MySQL status and performance metrics. Select a MySQL instance, e.g.: app: mysql"
   prompt: "Select a MySQL instance"
   type: labelSelectors
+- name: mysql_port
+  description: "Enter the port number MySQL is running on"
+  prompt: "MySQL Port"
+  type: string
+  default: "3306"
+- name: mysql_username
+  description: "Enter the username to connect to MySQL on"
+  prompt: "MySQL Username"
+  type: string
+  default: "root"
+- name: mysql_password
+  description: "Enter the password to connect to MySQL on"
+  prompt: "MySQL Password"
+  type: string
+  default: "root"
