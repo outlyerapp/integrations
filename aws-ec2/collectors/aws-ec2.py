@@ -186,7 +186,7 @@ class AWSEC2(Plugin):
                     else:
                         self.sample(metric_name,
                                     value,
-                                    timestampe=ts,
+                                    timestamp=ts,
                                     labels=metric_labels)
                 else:
                     if metric['Id'] == 'ec2_cpuutilization_max':
