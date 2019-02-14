@@ -60,21 +60,25 @@ class ELBDiscovery(object):
         except Exception as err:
             raise err
 
-    def _get_aws_account_id(self) -> str:
+    @staticmethod
+    def _get_aws_account_id() -> str:
         """
         Gets the AWS Account ID for the current API key user
 
         :return:    The AWS Account ID for the current API key user
         """
-        return boto3.client('sts',
-                     aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID'),
-                     aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY')).get_caller_identity().get('Account')
+        client = boto3.client('sts',
+                              aws_access_key_id = os.environ.get('AWS_ACCESS_KEY_ID'),
+                              aws_secret_access_key = os.environ.get('AWS_SECRET_ACCESS_KEY'))
+        return client.get_caller_identity().get('Account')
 
-    def ip_from_hostname(self, name):
+    @staticmethod
+    def ip_from_hostname(name):
         try:
             return socket.gethostbyname(name)
         except:
             return name
+
 
 if __name__ == '__main__':
     sys.exit(ELBDiscovery().discover())

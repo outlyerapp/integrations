@@ -124,6 +124,7 @@ INSTANCE_METRICS = [
     },
 ]
 
+
 class AWSSNS(Plugin):
 
     def collect(self, _):
@@ -169,14 +170,14 @@ class AWSSNS(Plugin):
                         value = metric['Values'][-1]
                         self.gauge(metric_name, metric_labels).set(value)
                     else:
-                      	self.gauge(metric_name, metric_labels).set(0)
+                        self.gauge(metric_name, metric_labels).set(0)
 
             return Status.OK
         except Exception as err:
             raise err
-            return Status.UNKNOWN
 
-    def build_instance_query(self, instance: str):
+    @staticmethod
+    def build_instance_query(instance: str):
         query = []
         id = 0
         for instance_metric in INSTANCE_METRICS:

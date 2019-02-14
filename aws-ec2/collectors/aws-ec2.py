@@ -137,6 +137,7 @@ INSTANCE_METRICS = [
     },
 ]
 
+
 class AWSEC2(Plugin):
 
     def collect(self, _):
@@ -178,12 +179,18 @@ class AWSEC2(Plugin):
                     value = metric['Values'][-1]
                     ts = int(metric['Timestamps'][-1].utcnow().timestamp() * 1000)
                     if metric['Id'] == 'ec2_cpuutilization_max':
-                    	self.gauge('sys.cpu.pct', metric_labels).set(value, ts=ts)
+                        self.sample('sys.cpu.pct',
+                                    value,
+                                    timestamp=ts,
+                                    labels=metric_labels)
                     else:
-                        self.gauge(metric_name, metric_labels).set(value, ts=ts)
+                        self.sample(metric_name,
+                                    value,
+                                    timestampe=ts,
+                                    labels=metric_labels)
                 else:
                     if metric['Id'] == 'ec2_cpuutilization_max':
-                    	self.gauge('sys.cpu.pct', metric_labels).set(0)
+                        self.gauge('sys.cpu.pct', metric_labels).set(0)
                     else:
                         self.gauge(metric_name, metric_labels).set(0)
 
@@ -191,7 +198,8 @@ class AWSEC2(Plugin):
         except Exception as err:
             raise err
 
-    def build_instance_query(self, instance: str):
+    @staticmethod
+    def build_instance_query(instance: str):
         query = []
         id = 0
         for instance_metric in INSTANCE_METRICS:

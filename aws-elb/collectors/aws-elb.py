@@ -145,6 +145,7 @@ INSTANCE_METRICS = [
     },
 ]
 
+
 class AWSELB(Plugin):
 
     def collect(self, _):
@@ -177,7 +178,10 @@ class AWSELB(Plugin):
                 if len(metric['Values']) > 0:
                     value = metric['Values'][-1]
                     ts = int(metric['Timestamps'][-1].utcnow().timestamp() * 1000)
-                    self.gauge(metric_name, metric_labels).set(value, ts=ts)
+                    self.sample(metric_name,
+                                value,
+                                timestamp=ts,
+                                labels=metric_labels)
                 else:
                     self.gauge(metric_name, metric_labels).set(0)
 
@@ -185,7 +189,8 @@ class AWSELB(Plugin):
         except Exception as err:
             raise err
 
-    def build_instance_query(self, instance: str):
+    @staticmethod
+    def build_instance_query(instance: str):
         query = []
         id = 0
         for instance_metric in INSTANCE_METRICS:

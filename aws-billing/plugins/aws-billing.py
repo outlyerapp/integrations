@@ -57,7 +57,7 @@ class AWSBilling(Plugin):
 
             for value in values['MetricDataResults']:
                 metric = metrics[value['Id']]
-                metric_labels = self.convertDimensionToDict(metric['Dimensions'])
+                metric_labels = self.dimension_to_dict(metric['Dimensions'])
                 metric_value = 0
                 if len(value['Values']) > 0:
                     metric_value = value['Values'][-1]
@@ -67,9 +67,9 @@ class AWSBilling(Plugin):
 
         except Exception as err:
             raise err
-            return Status.UNKNOWN
 
-    def convertDimensionToDict(self, dimensions):
+    @staticmethod
+    def dimension_to_dict(dimensions):
         labels = {}
         for label in dimensions:
             labels[label['Name']] = label['Value']
