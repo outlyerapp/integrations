@@ -187,7 +187,10 @@ class AWSRDS(Plugin):
                 if len(metric['Values']) > 0:
                     value = metric['Values'][-1]
                     ts = int(metric['Timestamps'][-1].utcnow().timestamp() * 1000)
-                    self.gauge(metric_name, metric_labels).set(value, timestamp=ts)
+                    self.sample(metric_name, 
+                                value,
+                                timestamp=ts,
+                                labels=metric_labels)
                     if metric['Id'] == 'rds_cpuutalization_max':
                         self.sample('sys.cpu.pct',
                                     value,
