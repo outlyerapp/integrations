@@ -186,7 +186,7 @@ class AWSRDS(Plugin):
                 metric_name = "aws." + metric['Id']
                 if len(metric['Values']) > 0:
                     value = metric['Values'][-1]
-                    ts = int(metric['Timestamps'][-1].utcnow().timestamp() * 1000)
+                    ts = int(metric['Timestamps'][-1].timestamp() * 1000)
                     self.sample(metric_name, 
                                 value,
                                 timestamp=ts,

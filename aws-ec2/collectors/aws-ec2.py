@@ -177,7 +177,7 @@ class AWSEC2(Plugin):
                 metric_name = "aws." + metric['Id']
                 if len(metric['Values']) > 0:
                     value = metric['Values'][-1]
-                    ts = int(metric['Timestamps'][-1].utcnow().timestamp() * 1000)
+                    ts = int(metric['Timestamps'][-1].timestamp() * 1000)
                     if metric['Id'] == 'ec2_cpuutilization_max':
                         self.sample('sys.cpu.pct',
                                     value,
